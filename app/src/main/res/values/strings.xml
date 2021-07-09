@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">NightOut</string>
+    <string name="txt_progress">Please Wait…</string>
+    <string name="No_Internet">No Internet Connection !!</string>
+    <string name="Login">Login</string>
+    <string name="Hello">Hello, Welcome!</string>
+    <string name="EnterCode">Enter Code</string>
+    <string name="OTP">OTP</string>
+    <string name="didnot_get_pwd">Didn\'t get a text</string>
+    <string name="SendAgain">Send Again</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forgot ID / Password?</string>
+    <string name="reset">Reset</string>
+    <string name="forget_password_label">Forgot Password</string>
+    <string name="email_id">Email Id</string>
+    <string name="enter_email_address">Enter email address</string>
+    <string name="send">Send</string>
+    <string name="create_account">Create account</string>
+    <string name="registration">Registration</string>
+    <string name="food_store_name">Food Store Name</string>
+    <string name="information">Information</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="address">Address</string>
+    <string name="next">Next</string>
+    <string name="upload_document">Upload Documents</string>
+    <string name="id_verification">ID Verification</string>
+    <string name="proof_of_permises_license">Proof of premises license <font color='#FF0000'>*</font></string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="lisence_number">License Number</string>
+    <string name="proof_of_alcohol_license">Proof of Alcohol license number <font color='#FF0000'>*</font></string>
+    <string name="proof_of_unique_tax">Proof Unique tax reference number <font color='#FF0000'>*</font></string>
+    <string name="submit">Submit</string>
+</resources>

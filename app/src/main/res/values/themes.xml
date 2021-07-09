@@ -1,0 +1,62 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.NightOut" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_clr</item>
+        <item name="colorPrimaryVariant">@color/primary_clr</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/primary_clr</item>
+        <item name="colorSecondaryVariant">@color/primary_clr</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Status bar color. -->
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">@string/txt_progress</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="DialogSpotCount">8</item>
+    </style>
+
+    <style name="Custom_white" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">@string/txt_progress</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="DialogSpotCount">8</item>
+    </style>
+
+    <style name="buttonTextStyle">
+        <item name="android:textSize">@dimen/_15sdp</item>
+        <item name="android:fontFamily">@font/proximanova_bold</item>
+        <item name="android:textColor">@color/text_blk</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="cornerRadius">@dimen/_3sdp</item>
+        <item name="android:padding">@dimen/_8sdp</item>
+        <item name="textAllCaps">false</item>
+
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <style name="textRegular">
+        <item name="fontFamily">@font/proximanova_reg</item>
+    </style>
+
+    <style name="textBold">
+        <item name="fontFamily">@font/proximanova_bold</item>
+    </style>
+
+    <style name="textNormal">
+        <item name="fontFamily">@font/proximanova_light</item>
+    </style>
+</resources>

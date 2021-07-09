@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:pinview="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gray">
+
+    <ImageView
+        android:id="@+id/loginLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:src="@drawable/login_logo_ic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:fontFamily="@font/proximanova_reg"
+        android:text="@string/OTP"
+
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/text_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
+
+
+    <TextView
+        android:id="@+id/loginWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:fontFamily="@font/proximanova_reg"
+        android:text="@string/EnterCode"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_2ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginText" />
+
+    <com.dpizarro.pinview.library.PinView
+        android:id="@+id/otpPinView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        pinview:colorSplit="@color/primary_clr"
+        pinview:colorTextPinBox="@android:color/black"
+        pinview:colorTextTitles="@color/color_title"
+        pinview:numberPinBoxes="4"
+        app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
+        pinview:password="true"
+        pinview:textSizePinBox="@dimen/size_text_pinbox"
+        pinview:textSizeTitles="@dimen/size_titles"
+        pinview:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/otpDidnot"
+        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_bold"
+        android:layout_marginStart="@dimen/_15ssp"
+        android:text="@string/didnot_get_pwd"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
+        app:layout_constraintStart_toEndOf="@+id/otpDidnot"
+        android:layout_width="wrap_content"
+        android:textColor="@color/text_yello"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_bold"
+        android:layout_marginStart="@dimen/_4ssp"
+        android:text="@string/SendAgain"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/otpTimer"
+        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
+       android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_width="wrap_content"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+
+        android:text="00:24"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

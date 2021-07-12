@@ -3,6 +3,8 @@ package com.nightout.utils
 import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 
 class Util {
 
@@ -18,6 +20,19 @@ class Util {
         fun pxToDp(context: Context, px: Int): Int {
             val displayMetrics = context.resources.displayMetrics
             return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+        }
+
+        fun tintColor(context: Context?, imageView: ImageView, color: Int) {
+            if (color == 0) {
+                imageView.clearColorFilter()
+            } else {
+                imageView.setColorFilter(ContextCompat.getColor(context!!, color))
+            }
+        }
+        fun getScreenWidth(context: Context): Int {
+            val displayMetrics = DisplayMetrics()
+            (context as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+            return displayMetrics.widthPixels
         }
     }
 }

@@ -3,7 +3,7 @@ package com.nightout.utils
 import android.content.Context
 import android.content.Intent
 import android.os.Process
-import com.nightout.ui.SplashActivity
+import com.nightout.ui.activity.SplashActivity
 
 
 import java.io.PrintWriter

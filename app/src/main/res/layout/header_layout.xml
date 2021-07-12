@@ -7,14 +7,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:background="@color/primary_clr">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/headerSideMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_side_menu"
+            android:padding="@dimen/_10ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,6 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hi Rakesh"
+            android:fontFamily="@font/proximanova_bold"
+            android:textSize="@dimen/_13ssp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
@@ -35,6 +37,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_search"
+            android:paddingTop="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_7ssp"
+            android:paddingStart="@dimen/_7ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/headerNotification"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,6 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_bell"
+            android:paddingTop="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_7ssp"
+            android:paddingStart="@dimen/_7ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/headerSetting"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,6 +64,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_setting"
+            android:paddingTop="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_10ssp"
+            android:paddingStart="@dimen/_7ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/headerCreateGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:background="@drawable/box_btn_bg_yello"
+            android:fontFamily="@font/proximanova_reg"
+            android:paddingTop="@dimen/_2ssp"
+            android:visibility="gone"
+            android:paddingBottom="@dimen/_2ssp"
+            android:paddingStart="@dimen/_4ssp"
+            android:paddingEnd="@dimen/_4ssp"
+            android:text="@string/Create_Group"
+            android:textColor="@color/text_blk"
+            android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

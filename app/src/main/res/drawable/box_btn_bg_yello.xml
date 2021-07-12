@@ -9,5 +9,5 @@
 
         />
 
-    <solid android:color="@color/white" />
+    <solid android:color="@color/text_yello" />
 </shape>

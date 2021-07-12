@@ -1,4 +1,4 @@
-package com.nightout.ui
+package com.nightout.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -35,7 +35,8 @@ class SplashActivity : BaseActivity() {
 
     private fun startSplash() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+            overridePendingTransition(0,0)
             finish()
         }, 1000)
     }

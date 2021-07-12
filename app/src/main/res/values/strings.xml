@@ -32,4 +32,13 @@
     <string name="proof_of_alcohol_license">Proof of Alcohol license number <font color='#FF0000'>*</font></string>
     <string name="proof_of_unique_tax">Proof Unique tax reference number <font color='#FF0000'>*</font></string>
     <string name="submit">Submit</string>
+    <string name="First_Name">First Name</string>
+    <string name="Last_Name">Last Name</string>
+    <string name="Save">Save</string>
+    <string name="Create_Group">Create Group</string>
+    <string name="Home">Home</string>
+    <string name="My_Profile">My Profile</string>
+    <string name="Transport">Transport</string>
+    <string name="Chat">Chat</string>
+    <string name="Bar_Crawl">Bar Crawl</string>
 </resources>

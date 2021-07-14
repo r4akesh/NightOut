@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_30sdp"
+
+        android:layout_marginStart="@dimen/_5ssp"
+        android:layout_marginEnd="@dimen/_5ssp"
+       >
+
+        <TextView
+            android:id="@+id/venuItemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:fontFamily="@font/proximanova_reg"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10ssp"
+            android:paddingTop="@dimen/_5ssp"
+            android:paddingEnd="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_5ssp"
+            android:text="Club"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

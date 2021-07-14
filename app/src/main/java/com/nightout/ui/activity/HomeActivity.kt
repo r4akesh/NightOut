@@ -70,6 +70,13 @@ class HomeActivity : BaseActivity() {
                 showFragment(ChatFragment())
             }
         }
+        else if(v==binding.header.headerSideMenu){
+            if (slidingRootNav!!.isMenuOpened) {
+                slidingRootNav!!.closeMenu()
+            } else {
+                slidingRootNav!!.openMenu()
+            }
+        }
     }
 
     private fun showFragmentIcon(btmMyprofleIc: Int, btmTranportIc: Int, btmHomeIc: Int, btmChatIc: Int, btmBarcrawlIc: Int) {
@@ -92,6 +99,7 @@ class HomeActivity : BaseActivity() {
     private fun inItView() {
         setTouchNClick(binding.bottomChat)
         setTouchNClick(binding.bottomHome)
+        setTouchNClick(binding.header.headerSideMenu)
     }
 
     private fun showFragment(fragment: Fragment) {

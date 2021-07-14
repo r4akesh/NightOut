@@ -7,6 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
         <ImageView
@@ -26,11 +27,24 @@
             android:layout_height="wrap_content"
             android:text="Hi Rakesh"
             android:fontFamily="@font/proximanova_bold"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_14ssp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/headerAddrs"
+            android:drawablePadding="@dimen/_2sdp"
+            android:drawableStart="@drawable/addrs_home"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:textColor="@color/text_gray"
+            app:layout_constraintTop_toBottomOf="@+id/headerTitle"
+            android:layout_width="match_parent"
+            android:text="A 629 Fairclough "
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/headerSearch"

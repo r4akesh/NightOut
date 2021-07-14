@@ -41,4 +41,20 @@
     <string name="Transport">Transport</string>
     <string name="Chat">Chat</string>
     <string name="Bar_Crawl">Bar Crawl</string>
+    <string name="Venues">Venues</string>
+    <string name="Foods">Foods</string>
+    <string name="Events">Events</string>
+    <string name="TrackNTrace"><![CDATA[Track & Trace]]></string>
+    <string name="Reffer_friend">Refer a friend</string>
+    <string name="CMS_Pages">CMS Pages</string>
+    <string name="About">About</string>
+    <string name="FAQ">FAQ</string>
+    <string name="Trems_Condition">Terms and Condition</string>
+    <string name="Contact_Us">Contact Us</string>
+    <string name="Settings">Settings</string>
+    <string name="Emergency_Contact">Emergency Contact</string>
+    <string name="Panic_Situation">Panic Situation</string>
+    <string name="Logout">Logout</string>
+    <string name="Savetobarcrawl">Save to Bar Crawl</string>
+    <string name="search_here">Search here</string>
 </resources>

@@ -38,7 +38,7 @@ class SplashActivity : BaseActivity() {
             startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
             overridePendingTransition(0,0)
             finish()
-        }, 1000)
+        }, 100)
     }
 
     fun showCrashDialog(report: String) {

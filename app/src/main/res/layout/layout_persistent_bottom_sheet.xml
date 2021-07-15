@@ -43,7 +43,7 @@
                     android:id="@+id/bottomSheet_recycleVenuList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp" />
+                     />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

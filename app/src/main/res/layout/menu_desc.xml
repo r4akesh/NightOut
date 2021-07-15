@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Description"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/duumyText"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_5ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text=" Sed cursus velit orci, non lacinia mattis."
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text=" Tincidunt scelerisque donec ullamcorper nulla massa. "
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Lectus dui id faucibus tortor justo, velit, vitae augue"
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

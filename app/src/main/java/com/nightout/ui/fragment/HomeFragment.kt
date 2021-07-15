@@ -1,5 +1,6 @@
 package com.nightout.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.nightout.model.StoryModel
 import com.nightout.model.VenuBotmSheetModel
 import com.nightout.model.VenuBotmSheetTitleModel
 import com.nightout.model.VenuListModel
+import com.nightout.ui.activity.VenuListActvity
 import kotlinx.android.synthetic.main.layout_persistent_bottom_sheet.*
 
 class HomeFragment : Fragment() {
@@ -64,7 +66,8 @@ class HomeFragment : Fragment() {
         listTile.add(VenuBotmSheetTitleModel("Pubs",listSub))
         venuTitleBotmSheetAdapter = VenuTitleBotmSheetAdapter(requireContext(),listTile,object :VenuTitleBotmSheetAdapter.ClickListener{
             override fun onClick(pos: Int) {
-
+                startActivity(Intent(requireActivity(),VenuListActvity::class.java))
+                requireActivity().overridePendingTransition(0,0)
             }
 
         } )

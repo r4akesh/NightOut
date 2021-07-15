@@ -19,15 +19,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include
-                android:id="@+id/venulistingToolBar"
+                android:id="@+id/venuMapToolBar"
                 layout="@layout/toolbar_common"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/venulisting_toprecycler"
+            android:id="@+id/venumap_toprecycler"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_8sdp"
 
@@ -37,15 +36,15 @@
             app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/venulisting_recyclersub"
+        <fragment
+            android:id="@+id/venumap_Map"
+
+            android:layout_marginTop="@dimen/_10sdp"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            app:layout_constraintTop_toBottomOf="@+id/venumap_toprecycler"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_12ssp"
-            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/venulisting_toprecycler" />
+            android:layout_height="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

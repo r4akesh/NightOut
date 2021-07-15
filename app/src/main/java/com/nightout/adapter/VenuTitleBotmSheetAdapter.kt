@@ -49,7 +49,7 @@ class VenuTitleBotmSheetAdapter(
             it.adapter= venuBotmSheetAdapter
         }
 
-        viewHolder.itemView.setOnClickListener {
+        viewHolder.binding.venuTitleBotmShetRightImage.setOnClickListener {
             clickListener.onClick(position)
 
         }

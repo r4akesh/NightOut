@@ -57,4 +57,16 @@
     <string name="Logout">Logout</string>
     <string name="Savetobarcrawl">Save to Bar Crawl</string>
     <string name="search_here">Search here</string>
+    <string name="press_again">Press again to exit!</string>
+    <string name="Facilities">Facilities</string>
+    <string name="Pre_Booking">Pre Booking</string>
+    <string name="Menu">Menu</string>
+    <string name="duumyText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing libero varius tempus duis vulputate orci. Pretium in posuere et tortor ipsum tellus sit tortor vel.</string>
+    <string name="Discounts">Discounts</string>
+    <string name="More">More</string>
+    <string name="discount10">10% Discount on</string>
+    <string name="firsLine">Quick Noodles + Grey Goose</string>
+    <string name="secondLine">Crioc + Sprouts</string>
+    <string name="thridLine">1 Glass Belvedra + Dim Sums</string>
+
 </resources>

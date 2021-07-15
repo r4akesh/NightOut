@@ -1,21 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
 
 
-        <include layout="@layout/toolbar_common" />
+        <ImageView
+            android:id="@+id/toolbar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="@dimen/_10ssp"
+            android:src="@drawable/back_ic_toolbar"
+
+            app:layout_constraintBottom_toBottomOf="@+id/searchLocation_editText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/searchLocation_editText" />
 
 
         <EditText
-            android:layout_width="match_parent"
+            android:id="@+id/searchLocation_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:background="@drawable/box_serch"
+            android:drawableStart="@drawable/search_ic"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/proximanova_reg"
             android:hint="@string/search_here"
-            android:layout_height="wrap_content"/>
+            android:padding="@dimen/_10ssp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/text_hint2"
+            android:textCursorDrawable="@drawable/cursor_white"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/searchLocation_editText">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/box_primaryclr"
+                    android:drawableEnd="@drawable/arrow_down_white"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:padding="@dimen/_10ssp"
+                    android:text="United Kingdom"
+
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7ssp"
+                    android:background="@drawable/box_primaryclr"
+                    android:drawableEnd="@drawable/arrow_down_white"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:padding="@dimen/_10ssp"
+                    android:text="United Kingdom"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="See All London"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:background="@drawable/box_primaryclr_drk"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:padding="@dimen/_10sdp"
+                    android:text="East London"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Shoereditch"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Stratford"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Stratford"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:background="@drawable/box_primaryclr_drk"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:padding="@dimen/_10sdp"
+                    android:text="West London"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Chelsea"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Fulham"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Marylebone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Fitzrovia"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="White City"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:background="@drawable/box_primaryclr_drk"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Central London"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Chelsea"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Fulham"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Marylebone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:drawableRight="@drawable/arrow_right_21"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Fitzrovia"
+                    android:layout_marginBottom="@dimen/_10ssp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

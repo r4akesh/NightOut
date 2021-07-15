@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NightOut"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".ui.activity.StoreDetail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,6 +61,29 @@
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.SearchLocationActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".ui.activity.VenuListActvity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".ui.activity.VenuListMapActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+       <!-- <activity
+            android:name=".ui.activity.StoreDetail"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />-->
     </application>
 
 </manifest>

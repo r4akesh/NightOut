@@ -1,6 +1,7 @@
 package com.nightout.ui.activity
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -77,6 +79,10 @@ class HomeActivity : BaseActivity() {
                 slidingRootNav!!.openMenu()
             }
         }
+        else if(v==binding.header.headerSearch){
+            startActivity(Intent(this@HomeActivity,SearchLocationActivity::class.java))
+            overridePendingTransition(0,0)
+        }
     }
 
     private fun showFragmentIcon(btmMyprofleIc: Int, btmTranportIc: Int, btmHomeIc: Int, btmChatIc: Int, btmBarcrawlIc: Int) {
@@ -100,6 +106,7 @@ class HomeActivity : BaseActivity() {
         setTouchNClick(binding.bottomChat)
         setTouchNClick(binding.bottomHome)
         setTouchNClick(binding.header.headerSideMenu)
+        setTouchNClick(binding.header.headerSearch)
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -114,5 +121,19 @@ class HomeActivity : BaseActivity() {
         //   binding.bottomMyProfile.setColorFilter(ContextCompat.getColor(this@HomeActivity,R.color.primary_clr))
         //   binding.bottomTransport.setColorFilter(ContextCompat.getColor(this@HomeActivity,R.color.primary_clr))
         //  binding.bottomHome.setColorFilter(ContextCompat.getColor(this@HomeActivity,R.color.white))
+    }
+    private var back_pressed_time: Long = 0
+    private val PERIOD: Long = 2000
+    override fun onBackPressed() {
+       // super.onBackPressed()
+        if (back_pressed_time + PERIOD > System.currentTimeMillis())
+            finishAffinity()
+        else
+            Toast.makeText(
+                this@HomeActivity,
+                getResources().getString(R.string.press_again),
+                Toast.LENGTH_SHORT
+            ).show();
+        back_pressed_time = System.currentTimeMillis();
     }
 }

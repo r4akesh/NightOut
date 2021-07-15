@@ -12,6 +12,7 @@
     <color name="text_blk">#131313</color>
     <color name="text_yello">#ffc800</color>
     <color name="text_hint">#B0B0B0</color>
+    <color name="text_hint2">#7687aa</color>
     <color name="view_line_clr">#211F40</color>
     <color name="view_line_gray">#1a2861</color>
     <color name="bg_clr_venu">#283e70</color>
@@ -19,5 +20,9 @@
     <color name="bg_clr_venu2">#19294c</color>
     <color name="white_second">#D4D4D4</color>
     <color name="border_color">#1c2d56</color>
+    <color name="srchbox_color">#071530</color>
+    <color name="srchbox_brdercolor">#1d3159</color>
+    <color name="primary_box_clr">#1f273d</color>
 
+    #1f273d
 </resources>

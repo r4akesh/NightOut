@@ -12,23 +12,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.VenuItemBinding
+import com.nightout.databinding.FoodItemBinding
 import com.nightout.model.ChatModel
-import com.nightout.model.VenuModel
+import com.nightout.model.StorDetailFoodModel
 
 
-class VenuAdapterAdapter(
+class StorDetailFoodHorizontalAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuModel>,
+    var arrayList: ArrayList<StorDetailFoodModel>,
     var clickListener: ClickListener,
 ) :
-    RecyclerView.Adapter<VenuAdapterAdapter.ViewHolder>() {
+    RecyclerView.Adapter<StorDetailFoodHorizontalAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: VenuItemBinding = DataBindingUtil.inflate(
+        val binding: FoodItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.venu_item, parent, false
+            R.layout.food_item, parent, false
         )
 
 
@@ -36,15 +36,16 @@ class VenuAdapterAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.venuItemTitle.text=arrayList[position].title
-        if(arrayList[position].isSelected){
-            viewHolder.binding.venuItemTitle.setBackgroundResource(R.drawable.border_yello)
-            viewHolder.binding.venuItemTitle.setTextColor(context.resources.getColor(R.color.text_yello))
-        }else{
-            viewHolder.binding.venuItemTitle.setBackgroundResource(R.drawable.border_primaryclr)
-            viewHolder.binding.venuItemTitle.setTextColor(context.resources.getColor(R.color.white))
-        }
 
+
+        viewHolder.binding.foodItemTitle.text=arrayList[position].title
+        if(arrayList[position].isSelected){
+            viewHolder.binding.foodItemTitle.setTextColor(context.resources.getColor(R.color.text_yello))
+            viewHolder.binding.foodItemView.visibility= VISIBLE
+        }else{
+            viewHolder.binding.foodItemTitle.setTextColor(context.resources.getColor(R.color.text_gray))
+            viewHolder.binding.foodItemView.visibility= GONE
+        }
 
 
         viewHolder.itemView.setOnClickListener {
@@ -59,9 +60,9 @@ class VenuAdapterAdapter(
     }
 
 
-    inner class ViewHolder(itemView: VenuItemBinding) :
+    inner class ViewHolder(itemView: FoodItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: VenuItemBinding = itemView
+        var binding: FoodItemBinding = itemView
 
     }
 

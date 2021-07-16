@@ -17,7 +17,7 @@ import com.nightout.model.VenuModel
 class VenuListActvity : BaseActivity() {
     lateinit var binding: VenulistingActivityBinding
     lateinit var venuAdapterAdapter: VenuAdapterAdapter
-   // lateinit var venuAdapterAdapter: VenuAdapterAdapter
+    // lateinit var venuAdapterAdapter: VenuAdapterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +34,12 @@ class VenuListActvity : BaseActivity() {
         setTouchNClick(binding.venulistingToolBar.toolbarBack)
         setTouchNClick(binding.venulistingToolBar.toolbar3dot)
 
-        binding.venulistingToolBar.toolbarBack.setOnClickListener{
+        binding.venulistingToolBar.toolbarBack.setOnClickListener {
             finish()
             overridePendingTransition(0, 0)
         }
-        binding.venulistingToolBar.toolbar3dot.setOnClickListener{
-            this.showPopMenu( )
+        binding.venulistingToolBar.toolbar3dot.setOnClickListener {
+            this.showPopMenu()
         }
     }
 
@@ -49,8 +49,8 @@ class VenuListActvity : BaseActivity() {
         //Inflating the Popup using xml file
         popup.getMenuInflater().inflate(R.menu.popup_map_menu, popup.getMenu())
         popup.setOnMenuItemClickListener { item ->
-          startActivity(Intent(this@VenuListActvity,VenuListMapActivity::class.java))
-            overridePendingTransition(0,0)
+            startActivity(Intent(this@VenuListActvity, VenuListMapActivity::class.java))
+            overridePendingTransition(0, 0)
             true
         }
 
@@ -70,7 +70,8 @@ class VenuListActvity : BaseActivity() {
             list,
             object : VenuSubAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-
+                    startActivity(Intent(this@VenuListActvity,StoreDetail::class.java))
+                    overridePendingTransition(0,0)
                 }
 
             })
@@ -87,7 +88,7 @@ class VenuListActvity : BaseActivity() {
 
 
     private fun setTopListTopDummy() {
-         var list = ArrayList<VenuModel>()
+        var list = ArrayList<VenuModel>()
         list.add(VenuModel("Club", true))
         list.add(VenuModel("Bar", false))
         list.add(VenuModel("Pub", false))
@@ -99,7 +100,14 @@ class VenuListActvity : BaseActivity() {
             list,
             object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-
+                    for (i in 0 until list.size) {
+                        if (pos == i) {
+                            list[i].isSelected = true
+                        } else {
+                            list[i].isSelected = false
+                        }
+                    }
+                    venuAdapterAdapter.notifyDataSetChanged()
                 }
 
             })

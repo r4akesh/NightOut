@@ -47,10 +47,10 @@ class VenuSubAdapter(
             viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
         }
 
-//        viewHolder.binding.weekCloseTime.setOnClickListener {
-//            clickListener.onClickCloseTime(position)
-//
-//        }
+        viewHolder.itemView.setOnClickListener {
+            clickListener.onClick(position)
+
+        }
     }
 
 

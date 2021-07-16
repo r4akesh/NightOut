@@ -23,6 +23,9 @@
     <color name="srchbox_color">#071530</color>
     <color name="srchbox_brdercolor">#1d3159</color>
     <color name="primary_box_clr">#1f273d</color>
+    <color name="boxclr_primary">#303041</color>
+    <color name="view_line_clrfood">#1c1c34</color>
+    <color name="green_clr_light">#00e809</color>
 
-    #1f273d
+
 </resources>

@@ -35,7 +35,7 @@ class SplashActivity : BaseActivity() {
 
     private fun startSplash() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+            startActivity(Intent(this@SplashActivity, RegisterActivity::class.java))
             overridePendingTransition(0,0)
             finish()
         }, 100)

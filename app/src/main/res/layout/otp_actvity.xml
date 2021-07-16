@@ -64,9 +64,11 @@
         pinview:numberPinBoxes="4"
         app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
         pinview:password="true"
+        pinview:split="-"
         pinview:textSizePinBox="@dimen/size_text_pinbox"
         pinview:textSizeTitles="@dimen/size_titles"
-        pinview:ignore="MissingConstraints" />
+         />
+
 
 
     <TextView
@@ -107,6 +109,20 @@
 
         android:text="00:24"
         android:layout_height="wrap_content"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/buttonTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:text="@string/submit"
+        android:id="@+id/submitBtn"
+        android:background="@drawable/gredient_bg"
+        app:layout_constraintTop_toBottomOf="@+id/otpTimer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

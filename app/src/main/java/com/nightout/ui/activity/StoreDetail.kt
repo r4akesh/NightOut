@@ -7,9 +7,16 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
+import com.nightout.adapter.DrinksAdapter
+import com.nightout.adapter.DrinksSubAdapter
+import com.nightout.adapter.StorDetailFoodHorizontalAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.StoredetailActivityBinding
+import com.nightout.model.StorDetailFoodModel
+import com.nightout.model.StoreDetailDrinksModel
+import com.nightout.model.SubFoodModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
 
 
@@ -17,22 +24,232 @@ class StoreDetail : BaseActivity() {
     lateinit var binding: StoredetailActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //  setContentView(R.layout.storedetail_activity)
+        //  setContentView(R.layout.storedetail_activity)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
 
         initView()
+        setListHorizntalFood()
+        setListDrinksDummy()//first time set
+    }
 
+    lateinit var storDetailFoodHorizontalAdapter: StorDetailFoodHorizontalAdapter
+    private fun setListHorizntalFood() {
+        var listFood = ArrayList<StorDetailFoodModel>()
+        listFood.add(StorDetailFoodModel("Drinks", true))
+        listFood.add(StorDetailFoodModel("Food", false))
+        listFood.add(StorDetailFoodModel("Snacks", false))
+        listFood.add(StorDetailFoodModel("Packages", false))
+
+        storDetailFoodHorizontalAdapter = StorDetailFoodHorizontalAdapter(
+            this@StoreDetail,
+            listFood,
+            object : StorDetailFoodHorizontalAdapter.ClickListener {
+                override fun onClick(pos: Int) {
+
+                    for (i in 0 until listFood.size) {
+                        listFood[i].isSelected = pos == i
+                    }
+                    storDetailFoodHorizontalAdapter.notifyDataSetChanged()
+                    if(pos==0)
+                    setListDrinksDummy()
+                    else if(pos==1)
+                        setListFoodDummy()
+                    else if(pos==2)
+                        setListSnakesDummy()
+                    else if(pos==3)
+                        setListPackgesDummy()
+                }
+
+            })
+
+
+        binding.storeDeatilHorizintalRecycler.also {
+            it.layoutManager =
+                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.HORIZONTAL, false)
+            it.adapter = storDetailFoodHorizontalAdapter
+        }
+
+    }
+    lateinit var subAdapter : DrinksSubAdapter
+    private fun setListPackgesDummy() {
+        var listDrinks = ArrayList<SubFoodModel>()
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+
+          subAdapter = DrinksSubAdapter(this@StoreDetail,listDrinks,object : DrinksSubAdapter.ClickListener{
+            override fun onClickChk(subPos: Int) {
+
+            }
+
+        })
+        binding.storeDeatilDrinksRecycler.also {
+            it.layoutManager =
+                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+            it.adapter = subAdapter
+        }
+    }
+
+
+    private fun setListFoodDummy() {
+        var listDrinks = ArrayList<StoreDetailDrinksModel>()
+        var listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Quick Noodles", "1 Plate", R.drawable.chiness_img1, "Price : $10", false))
+        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
+        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
+        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.chiness_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.chiness_img2, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Italian", false, listSub))
+
+          listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Quick Noodles", "1 Plate", R.drawable.chiness_img1, "Price : $10", false))
+        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
+        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
+        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.chiness_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.chiness_img2, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Chinese", false, listSub))
+
+        drinksAdapter = DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+                override fun onClick(pos: Int) {
+                    listDrinks[pos].isSelected = !listDrinks[pos].isSelected
+                    drinksAdapter.notifyDataSetChanged()
+                }
+
+                override fun onClickSub(pos: Int, subPos: Int) {
+
+                    listDrinks[pos].list[subPos].isChekd = !listDrinks[pos].list[subPos].isChekd
+
+                    drinksAdapter.notifyDataSetChanged()
+                }
+
+
+            })
+
+        binding.storeDeatilDrinksRecycler.also {
+            it.layoutManager =
+                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+            it.adapter = drinksAdapter
+        }
+
+    }
+    private fun setListSnakesDummy() {
+        var listDrinks = ArrayList<StoreDetailDrinksModel>()
+        var listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Sprouts", "1 Plate", R.drawable.snaks_img1, "Price : $10", false))
+        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
+        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
+        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.chiness_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.snaks_img1, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Non-Veg", false, listSub))
+
+
+        listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Quick Noodles", "1 Plate", R.drawable.snaks_img1, "Price : $10", false))
+        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
+        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
+        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.snaks_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.chiness_img2, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Veg", false, listSub))
+
+
+
+        drinksAdapter =
+            DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+                override fun onClick(pos: Int) {
+                    listDrinks[pos].isSelected = !listDrinks[pos].isSelected
+                    drinksAdapter.notifyDataSetChanged()
+                }
+
+                override fun onClickSub(pos: Int, subPos: Int) {
+
+                    listDrinks[pos].list[subPos].isChekd = !listDrinks[pos].list[subPos].isChekd
+
+                    drinksAdapter.notifyDataSetChanged()
+                }
+
+
+            })
+
+        binding.storeDeatilDrinksRecycler.also {
+            it.layoutManager =
+                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+            it.adapter = drinksAdapter
+        }
+    }
+
+
+    lateinit var drinksAdapter: DrinksAdapter
+    private fun setListDrinksDummy() {
+        var listDrinks = ArrayList<StoreDetailDrinksModel>()
+        var listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img1, "Price : $10", false))
+        listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img2, "Price : $40", false))
+        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img2, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Scotch", false, listSub))
+
+        listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img1, "Price : $10", false))
+        listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img1, "Price : $40", false))
+        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img2, "Price : $20", false))
+        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img1, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Vodka", false, listSub))
+
+        listSub = ArrayList<SubFoodModel>()
+        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img2, "Price : $10", false))
+        listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img1, "Price : $40", false))
+        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img2, "Price : $20", false))
+        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img1, "Price : $60", false))
+        listDrinks.add(StoreDetailDrinksModel("Rum", false, listSub))
+
+
+        drinksAdapter =
+            DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+                override fun onClick(pos: Int) {
+                    listDrinks[pos].isSelected = !listDrinks[pos].isSelected
+                    drinksAdapter.notifyDataSetChanged()
+                }
+
+                override fun onClickSub(pos: Int, subPos: Int) {
+
+                    listDrinks[pos].list[subPos].isChekd = !listDrinks[pos].list[subPos].isChekd
+
+                    drinksAdapter.notifyDataSetChanged()
+                }
+
+
+            })
+
+        binding.storeDeatilDrinksRecycler.also {
+            it.layoutManager =
+                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+            it.adapter = drinksAdapter
+        }
     }
 
     private fun initView() {
-         setTouchNClick(binding.storeDeatilMenu)
-         setTouchNClick(binding.storeDeatilDiscount)
-         setTouchNClick(binding.storeDeatilMore)
+        setTouchNClick(binding.storeDeatilMenu)
+        setTouchNClick(binding.storeDeatilDiscount)
+        setTouchNClick(binding.storeDeatilMore)
+        setTouchNClick(binding.storeDeatilBakBtn)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if(v==binding.storeDeatilMenu){
+        if(v==binding.storeDeatilBakBtn){
+            finish()
+            overridePendingTransition(0,0)
+        }
+
+
+       else  if (v == binding.storeDeatilMenu) {
             binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))
             binding.storeDeatilDiscount.setBackgroundResource(0)
@@ -40,10 +257,13 @@ class StoreDetail : BaseActivity() {
             binding.storeDeatilMore.setBackgroundResource(0)
             binding.storeDeatilMore.setTextColor(resources.getColor(R.color.white_second))
 
-            binding.storeDeatilMenuDesc.visibility=VISIBLE
-            binding.storeDeatilDiscount.visibility=GONE
-        }
-       else if(v==binding.storeDeatilDiscount){
+
+            binding.storeDeatilMenuDesc.visibility = VISIBLE
+            binding.storeDeatilDisDesc.visibility = GONE
+            binding.storeDeatilMoreDesc.visibility = GONE
+
+
+        } else if (v == binding.storeDeatilDiscount) {
             binding.storeDeatilMenu.setBackgroundResource(0)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
             binding.storeDeatilDiscount.setBackgroundResource(R.drawable.box_yelo)
@@ -53,36 +273,65 @@ class StoreDetail : BaseActivity() {
 
             val str1 = resources.getString(R.string.discount10)
             var str2 = resources.getString(R.string.firsLine)
-            var settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.firstLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            var settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.firstLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
-              str2 = resources.getString(R.string.secondLine)
-              settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.secondLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            str2 = resources.getString(R.string.secondLine)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.secondLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
 
             str2 = resources.getString(R.string.thridLine)
-            settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.thrdLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.thrdLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
             str2 = resources.getString(R.string.firsLine)
-            settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.fourthLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.fourthLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
             str2 = resources.getString(R.string.secondLine)
-            settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.fifthLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.fifthLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
-            binding.storeDeatilMenuDesc.visibility=GONE
-            binding.storeDeatilDiscount.visibility=VISIBLE
-        }
-       else if(v==binding.storeDeatilMore){
+            binding.storeDeatilMenuDesc.visibility = GONE
+            binding.storeDeatilDisDesc.visibility = VISIBLE
+            binding.storeDeatilMoreDesc.visibility = GONE
+        } else if (v == binding.storeDeatilMore) {
             binding.storeDeatilMenu.setBackgroundResource(0)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
             binding.storeDeatilDiscount.setBackgroundResource(0)
             binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
             binding.storeDeatilMore.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMore.setTextColor(resources.getColor(R.color.black))
+
+            binding.storeDeatilMoreDesc.visibility = VISIBLE
+            binding.storeDeatilDisDesc.visibility = GONE
+            binding.storeDeatilMenuDesc.visibility = GONE
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
     }
 }

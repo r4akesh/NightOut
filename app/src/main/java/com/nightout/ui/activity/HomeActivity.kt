@@ -60,17 +60,17 @@ class HomeActivity : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.bottomChat) {
-            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
-            binding.header.headerTitle.setText("Chat Group")
-            binding.header.headerCreateGroup.visibility = VISIBLE
-            binding.header.headerSearch.visibility = GONE
-            binding.header.headerNotification.visibility = GONE
-            binding.header.headerSetting.visibility = GONE
-            if (currentFragment !is ChatFragment) {
-                //appBarAndStatusBarProfile()
-                showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
-                showFragment(ChatFragment())
-            }
+//            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+//            binding.header.headerTitle.setText("Chat Group")
+//            binding.header.headerCreateGroup.visibility = VISIBLE
+//            binding.header.headerSearch.visibility = GONE
+//            binding.header.headerNotification.visibility = GONE
+//            binding.header.headerSetting.visibility = GONE
+//            if (currentFragment !is ChatFragment) {
+//                //appBarAndStatusBarProfile()
+//                showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
+//                showFragment(ChatFragment())
+//            }
         }
         else if(v==binding.header.headerSideMenu){
             if (slidingRootNav!!.isMenuOpened) {

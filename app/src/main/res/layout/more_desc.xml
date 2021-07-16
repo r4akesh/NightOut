@@ -7,10 +7,62 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="Sunday Spaicial"
+        android:text="Sunday Spaicial "
+
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Men and Women both can enjoy. "
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
         android:layout_height="wrap_content"/>
 
 
-    fdskfnkldfildi
+    <TextView
+        android:layout_width="match_parent"
+        android:text="In house Sports are available for everyone."
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Live Music"
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Hip Hop party"
+        android:drawableStart="@drawable/arrow_right_white"
+        android:drawablePadding="@dimen/_10ssp"
+        android:layout_marginStart="@dimen/_10ssp"
+        android:textColor="@color/white_second"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:fontFamily="@font/proximanova_reg"
+        android:textSize="@dimen/_12ssp"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

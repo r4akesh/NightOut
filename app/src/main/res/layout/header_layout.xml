@@ -39,6 +39,7 @@
             android:drawableStart="@drawable/addrs_home"
             android:layout_marginStart="@dimen/_40sdp"
             android:textSize="@dimen/_11sdp"
+            android:gravity="center_vertical"
             android:fontFamily="@font/proximanova_reg"
             android:textColor="@color/text_gray"
             app:layout_constraintTop_toBottomOf="@+id/headerTitle"

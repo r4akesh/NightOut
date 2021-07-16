@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
@@ -59,7 +60,14 @@ class VenuListMapActivity : BaseActivity() {
             list,
             object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-
+                    for (i in 0 until list.size ){
+                        if(pos==i){
+                            list[i].isSelected=true
+                        }else{
+                            list[i].isSelected=false
+                        }
+                    }
+                    venuAdapterAdapter.notifyDataSetChanged()
                 }
 
             })
@@ -68,5 +76,10 @@ class VenuListMapActivity : BaseActivity() {
             it.layoutManager = LinearLayoutManager(this@VenuListMapActivity, LinearLayoutManager.HORIZONTAL, false)
            it.adapter = venuAdapterAdapter
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
     }
 }

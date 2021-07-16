@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/drinkSubItemImgCard"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_10ssp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/drinkSubItemImg"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/_1ssp"
+                android:layout_height="match_parent"
+               android:scaleType="fitXY"
+
+                android:background="@null"
+                android:src="@drawable/drink_img1" />
+
+            <TextView
+                android:id="@+id/drinkSubItemImgText"
+                android:layout_width="match_parent"
+                android:textColor="@color/white"
+                android:text="$80"
+                android:gravity="center"
+                 android:layout_margin="@dimen/_1ssp"
+                android:fontFamily="@font/proximanova_bold"
+                android:textSize="@dimen/_13ssp"
+                android:background="@color/green_clr_light"
+                android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/drinkSubItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10ssp"
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@+id/drinkSubItemImgCard"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/drinkSubItemSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Title"
+            android:textColor="@color/white_second"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintStart_toEndOf="@+id/drinkSubItemImgCard"
+            app:layout_constraintTop_toBottomOf="@+id/drinkSubItemTitle" />
+
+        <TextView
+            android:id="@+id/drinkSubItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Title"
+            android:textColor="@color/text_yello"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@+id/drinkSubItemImgCard"
+            app:layout_constraintTop_toBottomOf="@+id/drinkSubItemSubTitle" />
+
+
+        <ImageView
+            android:id="@+id/drinkSubItemChk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10ssp"
+
+            android:src="@drawable/unchk_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:background="@color/text_gray"
+            app:layout_constraintTop_toBottomOf="@+id/drinkSubItemPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

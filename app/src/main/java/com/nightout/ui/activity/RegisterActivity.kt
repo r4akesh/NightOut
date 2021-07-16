@@ -25,6 +25,7 @@ class RegisterActivity : BaseActivity() {
         super.onClick(v)
         if(v==binding.registerSaveBtn){
             startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+            overridePendingTransition(0,0)
         }
     }
 }

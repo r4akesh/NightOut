@@ -9,28 +9,37 @@
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_400sdp"
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="@dimen/_150sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/gredient_btmshet_bg"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_2ssp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_7ssp"
+                android:background="@drawable/box_btn_bg_white2" />
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_gray"
+
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_2ssp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_7ssp"
-                    android:background="@drawable/box_btn_bg_white2" />
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bottomSheet_recyclerstory"
@@ -47,5 +56,6 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
     </LinearLayout>
 </layout>

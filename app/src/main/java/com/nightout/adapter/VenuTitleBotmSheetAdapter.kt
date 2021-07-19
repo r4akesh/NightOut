@@ -39,7 +39,7 @@ class VenuTitleBotmSheetAdapter(
 
         var venuBotmSheetAdapter =  VenuBotmSheetAdapter(context,arrayList[position].list,object : VenuBotmSheetAdapter.ClickListener{
             override fun onClick(pos: Int) {
-
+                clickListener.onWholeClickdd(pos,position)
             }
 
         })
@@ -69,6 +69,7 @@ class VenuTitleBotmSheetAdapter(
 
     interface ClickListener {
         fun onClick(pos: Int)
+        fun onWholeClickdd(subPos: Int,mainPos : Int)
 
 
     }

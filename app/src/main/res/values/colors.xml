@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_clr">#293940</color>
     <color name="text_gray">#737687</color>
+    <color name="text_whitegray">#eaebed</color>
     <color name="text_blk">#131313</color>
     <color name="text_yello">#ffc800</color>
     <color name="text_hint">#B0B0B0</color>
@@ -26,6 +27,10 @@
     <color name="boxclr_primary">#303041</color>
     <color name="view_line_clrfood">#1c1c34</color>
     <color name="green_clr_light">#00e809</color>
+    <color name="botmsheet_listcolor">#15213f</color>
+    <color name="srchmenu_color">#283e70</color>
+    <color name="transcolor_color">#95000000</color>
+    <color name="dialog_view_lineclr">#334878</color>
 
 
 </resources>

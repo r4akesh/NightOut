@@ -1,19 +1,24 @@
 package com.nightout.ui.activity
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Html
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.Window
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.adapter.DrinksAdapter
 import com.nightout.adapter.DrinksSubAdapter
+import com.nightout.adapter.FacilityAdapter
 import com.nightout.adapter.StorDetailFoodHorizontalAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.StoredetailActivityBinding
+import com.nightout.model.FacilityModel
 import com.nightout.model.StorDetailFoodModel
 import com.nightout.model.StoreDetailDrinksModel
 import com.nightout.model.SubFoodModel
@@ -50,13 +55,13 @@ class StoreDetail : BaseActivity() {
                         listFood[i].isSelected = pos == i
                     }
                     storDetailFoodHorizontalAdapter.notifyDataSetChanged()
-                    if(pos==0)
-                    setListDrinksDummy()
-                    else if(pos==1)
+                    if (pos == 0)
+                        setListDrinksDummy()
+                    else if (pos == 1)
                         setListFoodDummy()
-                    else if(pos==2)
+                    else if (pos == 2)
                         setListSnakesDummy()
-                    else if(pos==3)
+                    else if (pos == 3)
                         setListPackgesDummy()
                 }
 
@@ -70,23 +75,83 @@ class StoreDetail : BaseActivity() {
         }
 
     }
-    lateinit var subAdapter : DrinksSubAdapter
+
+    lateinit var subAdapter: DrinksSubAdapter
     private fun setListPackgesDummy() {
         var listDrinks = ArrayList<SubFoodModel>()
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
-        listDrinks.add(SubFoodModel("Drinks Package 1","1 Bottle of Prosecco & x 4 Glasses",0,"Free : 4 Tequilas Shots",false))
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
 
-          subAdapter = DrinksSubAdapter(this@StoreDetail,listDrinks,object : DrinksSubAdapter.ClickListener{
-            override fun onClickChk(subPos: Int) {
+        subAdapter =
+            DrinksSubAdapter(this@StoreDetail, listDrinks, object : DrinksSubAdapter.ClickListener {
+                override fun onClickChk(subPos: Int) {
+                    listDrinks[subPos].isChekd = !listDrinks[subPos].isChekd
 
-            }
+                    subAdapter.notifyDataSetChanged()
+                }
 
-        })
+            })
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
                 LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
@@ -98,22 +163,103 @@ class StoreDetail : BaseActivity() {
     private fun setListFoodDummy() {
         var listDrinks = ArrayList<StoreDetailDrinksModel>()
         var listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Quick Noodles", "1 Plate", R.drawable.chiness_img1, "Price : $10", false))
-        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
-        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
-        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.chiness_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.chiness_img2, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Quick Noodles",
+                "1 Plate",
+                R.drawable.chiness_img1,
+                "Price : $10",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Dim Sums",
+                "3 Plate",
+                R.drawable.chiness_img2,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Hot and Sour Soup",
+                "2 Plate",
+                R.drawable.chiness_img3,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Szechwan Chilli Chicken",
+                "5 Plate",
+                R.drawable.chiness_img1,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Spring Rolls",
+                "2 Plate",
+                R.drawable.chiness_img2,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Italian", false, listSub))
 
-          listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Quick Noodles", "1 Plate", R.drawable.chiness_img1, "Price : $10", false))
-        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
-        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
-        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.chiness_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.chiness_img2, "Price : $60", false))
+        listSub = ArrayList<SubFoodModel>()
+        listSub.add(
+            SubFoodModel(
+                "Quick Noodles",
+                "1 Plate",
+                R.drawable.chiness_img1,
+                "Price : $10",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Dim Sums",
+                "3 Plate",
+                R.drawable.chiness_img2,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Hot and Sour Soup",
+                "2 Plate",
+                R.drawable.chiness_img3,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Szechwan Chilli Chicken",
+                "5 Plate",
+                R.drawable.chiness_img1,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Spring Rolls",
+                "2 Plate",
+                R.drawable.chiness_img2,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Chinese", false, listSub))
 
-        drinksAdapter = DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+        drinksAdapter =
+            DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     listDrinks[pos].isSelected = !listDrinks[pos].isSelected
                     drinksAdapter.notifyDataSetChanged()
@@ -136,23 +282,96 @@ class StoreDetail : BaseActivity() {
         }
 
     }
+
     private fun setListSnakesDummy() {
         var listDrinks = ArrayList<StoreDetailDrinksModel>()
         var listSub = ArrayList<SubFoodModel>()
         listSub.add(SubFoodModel("Sprouts", "1 Plate", R.drawable.snaks_img1, "Price : $10", false))
-        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
-        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
-        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.chiness_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.snaks_img1, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Dim Sums",
+                "3 Plate",
+                R.drawable.chiness_img2,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Hot and Sour Soup",
+                "2 Plate",
+                R.drawable.chiness_img3,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Szechwan Chilli Chicken",
+                "5 Plate",
+                R.drawable.chiness_img1,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Spring Rolls",
+                "2 Plate",
+                R.drawable.snaks_img1,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Non-Veg", false, listSub))
 
 
         listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Quick Noodles", "1 Plate", R.drawable.snaks_img1, "Price : $10", false))
-        listSub.add(SubFoodModel("Dim Sums", "3 Plate", R.drawable.chiness_img2, "Price : $20", false))
-        listSub.add(SubFoodModel("Hot and Sour Soup", "2 Plate", R.drawable.chiness_img3, "Price : $40", false))
-        listSub.add(SubFoodModel("Szechwan Chilli Chicken", "5 Plate", R.drawable.snaks_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Spring Rolls", "2 Plate", R.drawable.chiness_img2, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Quick Noodles",
+                "1 Plate",
+                R.drawable.snaks_img1,
+                "Price : $10",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Dim Sums",
+                "3 Plate",
+                R.drawable.chiness_img2,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Hot and Sour Soup",
+                "2 Plate",
+                R.drawable.chiness_img3,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Szechwan Chilli Chicken",
+                "5 Plate",
+                R.drawable.snaks_img1,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Spring Rolls",
+                "2 Plate",
+                R.drawable.chiness_img2,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Veg", false, listSub))
 
 
@@ -186,27 +405,123 @@ class StoreDetail : BaseActivity() {
     private fun setListDrinksDummy() {
         var listDrinks = ArrayList<StoreDetailDrinksModel>()
         var listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img1, "Price : $10", false))
+        listSub.add(
+            SubFoodModel(
+                "Grey Goose",
+                "1 Glass",
+                R.drawable.drink_img1,
+                "Price : $10",
+                false
+            )
+        )
         listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img2, "Price : $40", false))
-        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img2, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Belvedere",
+                "2 Glass",
+                R.drawable.drink_img2,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Ketel One",
+                "5 Glass",
+                R.drawable.drink_img1,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Finlandia One",
+                "2 Glass",
+                R.drawable.drink_img2,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Scotch", false, listSub))
 
         listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img1, "Price : $10", false))
+        listSub.add(
+            SubFoodModel(
+                "Grey Goose",
+                "1 Glass",
+                R.drawable.drink_img1,
+                "Price : $10",
+                false
+            )
+        )
         listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img1, "Price : $40", false))
-        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img2, "Price : $20", false))
-        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img1, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Belvedere",
+                "2 Glass",
+                R.drawable.drink_img1,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Ketel One",
+                "5 Glass",
+                R.drawable.drink_img2,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Finlandia One",
+                "2 Glass",
+                R.drawable.drink_img1,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Vodka", false, listSub))
 
         listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img2, "Price : $10", false))
+        listSub.add(
+            SubFoodModel(
+                "Grey Goose",
+                "1 Glass",
+                R.drawable.drink_img2,
+                "Price : $10",
+                false
+            )
+        )
         listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img1, "Price : $40", false))
-        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img2, "Price : $20", false))
-        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img1, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Belvedere",
+                "2 Glass",
+                R.drawable.drink_img1,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Ketel One",
+                "5 Glass",
+                R.drawable.drink_img2,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Finlandia One",
+                "2 Glass",
+                R.drawable.drink_img1,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Rum", false, listSub))
 
 
@@ -239,17 +554,18 @@ class StoreDetail : BaseActivity() {
         setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)
         setTouchNClick(binding.storeDeatilBakBtn)
+        setTouchNClick(binding.storeDeatilFacilityBtn)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if(v==binding.storeDeatilBakBtn){
+
+        if (v == binding.storeDeatilFacilityBtn) {
+            showPopUpFacilities()
+        } else if (v == binding.storeDeatilBakBtn) {
             finish()
-            overridePendingTransition(0,0)
-        }
-
-
-       else  if (v == binding.storeDeatilMenu) {
+            overridePendingTransition(0, 0)
+        } else if (v == binding.storeDeatilMenu) {
             binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))
             binding.storeDeatilDiscount.setBackgroundResource(0)
@@ -330,8 +646,49 @@ class StoreDetail : BaseActivity() {
         }
     }
 
+    private fun showPopUpFacilities() {
+
+        val adDialog = Dialog(this@StoreDetail, R.style.MyDialogThemeBlack)
+        adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        //adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        adDialog.setContentView(R.layout.facility_dialog)
+        adDialog.setCancelable(false)
+        val listRecyclerview: RecyclerView = adDialog.findViewById(R.id.dialog_recycler)
+        var list = setListFacility()
+        var facilityAdapter =
+            FacilityAdapter(this@StoreDetail, list, object : FacilityAdapter.ClickListener {
+                override fun onClick(pos: Int) {
+
+                }
+
+            })
+
+        listRecyclerview.also {
+            it.layoutManager = LinearLayoutManager(this@StoreDetail,LinearLayoutManager.VERTICAL,false)
+            it.adapter = facilityAdapter
+        }
+
+        adDialog.show();
+
+    }
+
+    private fun setListFacility(): ArrayList<FacilityModel> {
+        var listFacility = ArrayList<FacilityModel>()
+        listFacility.add(FacilityModel("Smoking", true))
+        listFacility.add(FacilityModel("Cloakroom", true))
+        listFacility.add(FacilityModel("Dance", false))
+        listFacility.add(FacilityModel("Sky Sports", true))
+        listFacility.add(FacilityModel("BT Sport", false))
+        listFacility.add(FacilityModel("Beer Garden", true))
+        listFacility.add(FacilityModel("Rooftop Terrace", true))
+        listFacility.add(FacilityModel("Snooker", false))
+        listFacility.add(FacilityModel("Table Tennis", true))
+
+        return listFacility;
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(0,0)
+        overridePendingTransition(0, 0)
     }
 }

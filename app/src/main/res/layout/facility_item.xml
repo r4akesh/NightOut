@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data></data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginTop="@dimen/_10ssp"
+        android:id="@+id/facilityItemTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/_20ssp"
+        android:drawablePadding="@dimen/_10ssp"
+        android:drawableStart="@drawable/cross_white"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/text_whitegray"
+        android:fontFamily="@font/proximanova_reg"
+        android:text="title"
+        android:layout_height="wrap_content"/>
+
+
+    <View
+
+        app:layout_constraintTop_toBottomOf="@+id/facilityItemTitle"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:background="@color/dialog_view_lineclr"
+        android:layout_height="1dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

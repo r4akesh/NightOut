@@ -54,20 +54,19 @@
     <com.dpizarro.pinview.library.PinView
         android:id="@+id/otpPinView"
         android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         pinview:colorSplit="@color/primary_clr"
         pinview:colorTextPinBox="@android:color/black"
         pinview:colorTextTitles="@color/color_title"
+        pinview:drawablePinBox="@drawable/box_gry_bg"
         pinview:numberPinBoxes="4"
-        app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
-        pinview:password="true"
-        pinview:split="-"
+
         pinview:textSizePinBox="@dimen/size_text_pinbox"
-        pinview:textSizeTitles="@dimen/size_titles"
-         />
+        pinview:textSizeTitles="@dimen/size_titles" />
 
 
 

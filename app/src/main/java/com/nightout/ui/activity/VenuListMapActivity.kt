@@ -5,13 +5,19 @@ import android.os.Bundle
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.nightout.R
 import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.VenumapActivityBinding
 import com.nightout.model.VenuModel
 
-class VenuListMapActivity : BaseActivity() {
+class VenuListMapActivity : BaseActivity(),OnMapReadyCallback {
     lateinit var binding : VenumapActivityBinding
     lateinit var venuAdapterAdapter: VenuAdapterAdapter
 
@@ -21,6 +27,8 @@ class VenuListMapActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@VenuListMapActivity,R.layout.venumap_activity)
         setTopListTopDummy()
         setToolBar()
+        val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.venumap_Map) as SupportMapFragment?)!!
+        supportMapFragment.getMapAsync(this@VenuListMapActivity)
     }
 
     private fun setToolBar() {
@@ -81,5 +89,11 @@ class VenuListMapActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(0,0)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+
+        val success = googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
+        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(55.3781, 3.4360)))
     }
 }

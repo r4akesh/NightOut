@@ -11,10 +11,9 @@ import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.VenuItemBinding
+
 import com.nightout.databinding.VenusubItemBinding
-import com.nightout.model.ChatModel
+
 import com.nightout.model.VenuListModel
 import com.nightout.model.VenuModel
 

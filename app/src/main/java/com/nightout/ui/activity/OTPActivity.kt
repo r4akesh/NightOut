@@ -17,8 +17,9 @@ class OTPActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@OTPActivity,R.layout.otp_actvity)
         setTouchNClick(binding.submitBtn)
-        binding.otpPinView.setMaskPassword(true)
-        binding.otpPinView.split = "***"
+        binding.otpPinView.isMaskPassword = true
+      //  binding.otpPinView.split = "***"
+
         binding.otpPinView.setOnCompleteListener(PinView.OnCompleteListener { completed, pinResults -> //Do what you want
             if (completed) {
 

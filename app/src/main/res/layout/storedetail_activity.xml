@@ -56,7 +56,7 @@
             android:layout_marginEnd="@dimen/_10ssp"
             android:layout_marginBottom="@dimen/_10ssp"
             android:elevation="@dimen/_10ssp"
-            app:cardBackgroundColor="@color/white_second"
+            app:cardBackgroundColor="@color/bg_clr_venu2"
             app:cardCornerRadius="@dimen/_5ssp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
@@ -461,7 +461,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/storeDeatilDrinksRecycler"
                             android:layout_width="match_parent"
-
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@+id/storeDeatilHorizintalRecycler" />
 

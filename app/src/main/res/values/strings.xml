@@ -69,5 +69,7 @@
     <string name="secondLine">Crioc + Sprouts</string>
     <string name="thridLine">1 Glass Belvedra + Dim Sums</string>
     <string name="Place_Order">Place Order</string>
+    <string name="dummyText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="Have_query">Have a query</string>
 
 </resources>

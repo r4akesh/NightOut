@@ -1,12 +1,14 @@
 package com.nightout.ui.activity
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -555,12 +557,15 @@ class StoreDetail : BaseActivity() {
         setTouchNClick(binding.storeDeatilMore)
         setTouchNClick(binding.storeDeatilBakBtn)
         setTouchNClick(binding.storeDeatilFacilityBtn)
+        setTouchNClick(binding.storeDeatilPlaceOrder)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
-
-        if (v == binding.storeDeatilFacilityBtn) {
+        if (v == binding.storeDeatilPlaceOrder) {
+            startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
+            overridePendingTransition(0, 0)
+        } else if (v == binding.storeDeatilFacilityBtn) {
             showPopUpFacilities()
         } else if (v == binding.storeDeatilBakBtn) {
             finish()
@@ -650,10 +655,13 @@ class StoreDetail : BaseActivity() {
 
         val adDialog = Dialog(this@StoreDetail, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-        //adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
         adDialog.setContentView(R.layout.facility_dialog)
         adDialog.setCancelable(false)
+
         val listRecyclerview: RecyclerView = adDialog.findViewById(R.id.dialog_recycler)
+        val dialog_close: ImageView = adDialog.findViewById(R.id.dialog_close)
+        setTouchNClick(dialog_close)
         var list = setListFacility()
         var facilityAdapter =
             FacilityAdapter(this@StoreDetail, list, object : FacilityAdapter.ClickListener {
@@ -664,11 +672,15 @@ class StoreDetail : BaseActivity() {
             })
 
         listRecyclerview.also {
-            it.layoutManager = LinearLayoutManager(this@StoreDetail,LinearLayoutManager.VERTICAL,false)
+            it.layoutManager =
+                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
             it.adapter = facilityAdapter
         }
 
-        adDialog.show();
+        dialog_close.setOnClickListener {
+            adDialog.dismiss()
+        }
+        adDialog.show()
 
     }
 

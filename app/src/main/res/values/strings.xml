@@ -71,5 +71,10 @@
     <string name="Place_Order">Place Order</string>
     <string name="dummyText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="Have_query">Have a query</string>
+    <string name="Book_Now">Book Now</string>
+    <string name="didnot_signup">Don’t have an account?</string>
+    <string name="Sign_Up">Sign Up</string>
+    <string name="chngMobNo">Change Mobile Number</string>
+    <string name="Change">Change?</string>
 
 </resources>

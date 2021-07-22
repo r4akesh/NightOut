@@ -9,19 +9,29 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:background="@drawable/background_gray"
 
         >
 
         <ImageView
+            android:id="@+id/reigisterActivityBakBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:padding="@dimen/_10ssp"
+            android:src="@drawable/back_ic_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
             android:id="@+id/loginLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:src="@drawable/login_logo_ic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/reigisterActivityBakBtn" />
 
         <TextView
             android:id="@+id/createaccount"
@@ -90,10 +100,11 @@
                     android:background="@null"
                     android:paddingTop="@dimen/_2ssp"
                     android:paddingBottom="@dimen/_2ssp"
-                    android:fontFamily="@font/proximanova_bold"
+                    android:fontFamily="@font/proximanova_reg"
                     android:singleLine="true"
                     android:textColor="@color/text_blk"
                     android:textSize="@dimen/_14ssp"
+                    android:hint="eg: John"
                     app:layout_constraintTop_toBottomOf="@+id/firstNameText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -126,10 +137,12 @@
                     android:background="@null"
                     android:paddingTop="@dimen/_2ssp"
                     android:paddingBottom="@dimen/_2ssp"
-                    android:fontFamily="@font/proximanova_bold"
+                    android:fontFamily="@font/proximanova_reg"
                     android:singleLine="true"
+
                     android:textColor="@color/text_blk"
                     android:textSize="@dimen/_14ssp"
+                    android:hint="eg: Doe"
                     app:layout_constraintTop_toBottomOf="@+id/lastNameText" />
 
 
@@ -172,8 +185,9 @@
                 android:background="@null"
                 android:paddingTop="@dimen/_2ssp"
                 android:paddingBottom="@dimen/_2ssp"
-                android:fontFamily="@font/proximanova_bold"
+                android:fontFamily="@font/proximanova_reg"
                 android:singleLine="true"
+                android:hint="eg: johndoe@example.com"
                 android:textColor="@color/text_blk"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintTop_toBottomOf="@+id/emailText" />
@@ -235,6 +249,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/registerActivityPhno"
                 android:layout_width="0dp"
                 android:background="@null"
                 android:layout_height="wrap_content"
@@ -253,93 +268,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/constrentPwdConfrmPwd"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            app:layout_constraintTop_toBottomOf="@+id/constrentPhno">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrentPwd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:background="@drawable/box_btn_bg"
-                android:padding="@dimen/_7sdp"
-                app:layout_constraintEnd_toStartOf="@+id/constrentConfrmPwd"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-
-                <TextView
-                    android:id="@+id/pwdText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password"
-                    android:textColor="@color/text_hint"
-                    android:textSize="@dimen/_11ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:paddingTop="@dimen/_2ssp"
-                    android:paddingBottom="@dimen/_2ssp"
-                    android:fontFamily="@font/proximanova_bold"
-                    android:singleLine="true"
-                    android:inputType="textPassword"
-                    android:textColor="@color/text_blk"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintTop_toBottomOf="@+id/pwdText" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrentConfrmPwd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:background="@drawable/box_btn_bg"
-                android:padding="@dimen/_7sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/constrentPwd"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/confirmPwdText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/confirm_password"
-                    android:textColor="@color/text_hint"
-                    android:textSize="@dimen/_11ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:paddingTop="@dimen/_2ssp"
-                    android:paddingBottom="@dimen/_2ssp"
-                    android:fontFamily="@font/proximanova_bold"
-                    android:singleLine="true"
-
-                    android:inputType="textPassword"
-                    android:textColor="@color/text_blk"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintTop_toBottomOf="@+id/confirmPwdText" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -353,7 +282,10 @@
             android:text="@string/Save"
             android:id="@+id/registerSaveBtn"
             android:background="@drawable/gredient_bg"
-            app:layout_constraintTop_toBottomOf="@+id/constrentPwdConfrmPwd" />
+            app:layout_constraintTop_toBottomOf="@+id/constrentPhno" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

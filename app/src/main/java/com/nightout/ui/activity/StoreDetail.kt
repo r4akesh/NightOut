@@ -558,11 +558,17 @@ class StoreDetail : BaseActivity() {
         setTouchNClick(binding.storeDeatilBakBtn)
         setTouchNClick(binding.storeDeatilFacilityBtn)
         setTouchNClick(binding.storeDeatilPlaceOrder)
+        setTouchNClick(binding.storeDeatilPreBookingBtn)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v == binding.storeDeatilPlaceOrder) {
+
+        if(v== binding.storeDeatilPreBookingBtn){
+            startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
+            overridePendingTransition(0, 0)
+        }
+        else if (v == binding.storeDeatilPlaceOrder) {
             startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
             overridePendingTransition(0, 0)
         } else if (v == binding.storeDeatilFacilityBtn) {
@@ -594,12 +600,8 @@ class StoreDetail : BaseActivity() {
 
             val str1 = resources.getString(R.string.discount10)
             var str2 = resources.getString(R.string.firsLine)
-            var settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.firstLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
+            var settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.firstLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
 
             str2 = resources.getString(R.string.secondLine)
             settext =
@@ -619,12 +621,8 @@ class StoreDetail : BaseActivity() {
             )
 
             str2 = resources.getString(R.string.firsLine)
-            settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.fourthLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
+            settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.fourthLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
 
             str2 = resources.getString(R.string.secondLine)
             settext =

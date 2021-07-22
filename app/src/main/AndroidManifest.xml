@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NightOut"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.PreBookingActivity">
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,7 +56,7 @@
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-     <activity
+        <activity
             android:name=".ui.activity.HomeActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
@@ -79,7 +79,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-         <activity
+        <activity
             android:name=".ui.activity.StoreDetail"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
@@ -89,6 +89,13 @@
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".ui.activity.PreBookingActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
     </application>
 
 </manifest>

@@ -97,7 +97,15 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
             listTile,
             object : VenuTitleBotmSheetAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-                    startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                    if(pos == 0 || pos ==1) {
+                        startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                    }
+                    else if(pos==2){
+                        startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                    }
+                    else if(pos==3){
+                        startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                    }
                     requireActivity().overridePendingTransition(0, 0)
                 }
 

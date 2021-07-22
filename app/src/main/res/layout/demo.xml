@@ -93,13 +93,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_subTitle"
                 app:textColorSelected="#FFFF" />
 
-
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-
                 android:background="@drawable/background_gray"
-                android:fillViewport="true"
+
                 app:layout_constraintBottom_toTopOf="@+id/preBookingBokNow"
                 app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
@@ -109,9 +107,7 @@
                     android:layout_marginStart="@dimen/_10ssp"
                     android:layout_marginTop="@dimen/_15ssp"
                     android:layout_marginEnd="@dimen/_10ssp"
-                    android:layout_marginBottom="@dimen/_10ssp"
-                   android:paddingBottom="@dimen/_30sdp"
-                   >
+                    android:layout_marginBottom="@dimen/_10ssp">
 
 
                     <TextView
@@ -220,6 +216,7 @@
                         android:layout_marginTop="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
                         android:background="@drawable/border_prebookoing"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/constrentAddPeople">
@@ -261,10 +258,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
 
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/preBookingLine"
-                            tools:listitem="@layout/drink_subitem" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/preBookingLine" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -395,7 +390,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10ssp"
                             android:text="Total Amount"
-
                             android:textColor="@color/white"
                             android:textSize="@dimen/_18ssp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -422,7 +416,6 @@
 
             </androidx.core.widget.NestedScrollView>
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/preBookingBokNow"
                 style="@style/buttonTextStyle"
@@ -433,7 +426,7 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_10ssp"
                 android:background="@drawable/gredient_bg"
-                android:text="@string/Book_Now"
+                android:text="@string/Login"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

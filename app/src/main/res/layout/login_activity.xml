@@ -8,136 +8,193 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gray">
+        android:background="@drawable/background_gray"
+        android:fitsSystemWindows="true">
 
-
-        <ImageView
-            android:id="@+id/loginLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:src="@drawable/login_logo_ic"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/loginActvityBtmCnstrent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/loginText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:fontFamily="@font/proximanova_reg"
-            android:text="@string/Login"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/text_gray"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
+                <ImageView
+                    android:id="@+id/loginLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:src="@drawable/login_logo_ic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/loginText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/Login"
+
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_15sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
 
 
-        <TextView
-            android:id="@+id/loginWelcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:fontFamily="@font/proximanova_bold"
-            android:text="@string/Hello"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_25sdp"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/_2ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginText" />
+                <TextView
+                    android:id="@+id/loginWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    android:fontFamily="@font/proximanova_bold"
+                    android:text="@string/Hello"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_25sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginText" />
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loginConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/box_white_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginWelcome">
+
+                    <ImageView
+                        android:id="@+id/loginFlag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:background="@null"
+                        android:src="@drawable/uk_flag_ic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/loginCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="+44"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginFlag"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:id="@+id/loginPipe"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@color/text_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginCountryCode"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="(000) 00 00 000"
+                        android:inputType="number"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/text_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginPipe"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loginBtn"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/gredient_bg"
+                    android:text="@string/Login"
+                    app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/loginConstrent"
+            android:id="@+id/loginActvityBtmCnstrent"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:background="@drawable/box_white_bg"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_30sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginWelcome">
-
-            <ImageView
-                android:id="@+id/loginFlag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:background="@null"
-                android:src="@drawable/uk_flag_ic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/loginCountryCode"
+                android:id="@+id/didnotText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5ssp"
-                android:text="+44"
-                android:fontFamily="@font/proximanova_bold"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/loginFlag"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <View
-                android:id="@+id/loginPipe"
-                android:layout_width="1dp"
-                android:layout_marginStart="@dimen/_5ssp"
-                android:layout_height="@dimen/_15sdp"
-                android:background="@color/text_gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/loginCountryCode"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:background="@null"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5ssp"
                 android:fontFamily="@font/proximanova_reg"
-                android:hint="(000) 00 00 000"
+                android:paddingStart="@dimen/_10ssp"
+                android:paddingTop="@dimen/_10ssp"
+                android:paddingBottom="@dimen/_10ssp"
+                android:text="@string/didnot_signup"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/loginActvitySignUp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:fontFamily="@font/proximanova_reg"
+                android:paddingStart="@dimen/_2sdp"
                 android:paddingTop="@dimen/_10ssp"
                 android:paddingEnd="@dimen/_10ssp"
                 android:paddingBottom="@dimen/_10ssp"
-                android:textColor="@color/black"
-                android:inputType="number"
-                android:textColorHint="@color/text_gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/loginPipe"
+                android:text="@string/Sign_Up"
+                android:textColor="@color/text_yello"
+                android:textSize="@dimen/_12ssp"
+
+
+                app:layout_constraintStart_toEndOf="@+id/didnotText"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/buttonTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/Login"
-            android:id="@+id/loginBtn"
-            android:background="@drawable/gredient_bg"
-            app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

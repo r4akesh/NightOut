@@ -4,9 +4,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
+import com.nightout.adapter.DrinksSubAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.PrebookingActivityBinding
+import com.nightout.model.SubFoodModel
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.model.CalendarEvent
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate
@@ -23,13 +26,16 @@ class PreBookingActivity : BaseActivity() {
             DataBindingUtil.setContentView(this@PreBookingActivity, R.layout.prebooking_activity)
         initView()
         setListPkg()
+        setCalendra()
+    }
+
+    private fun setCalendra() {
         // Default Date set to Today.
         var defaultSelectedDate = Calendar.getInstance();
         val startDate: Calendar = Calendar.getInstance()
         startDate.add(Calendar.MONTH, -1)
 
 /* ends after 1 month from now */
-
 /* ends after 1 month from now */
         val endDate: Calendar = Calendar.getInstance()
         endDate.add(Calendar.MONTH, 2)
@@ -57,9 +63,92 @@ class PreBookingActivity : BaseActivity() {
         }
     }
 
-//    private fun setListPkg() {
-//      //  binding.preBookingSpclPkgRecyle
-//    }
+    lateinit var subAdapter: DrinksSubAdapter
+    private fun setListPkg() {
+        var listDrinks = ArrayList<SubFoodModel>()
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 1",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+        listDrinks.add(
+            SubFoodModel(
+                "Drinks Package 8",
+                "1 Bottle of Prosecco & x 4 Glasses",
+                0,
+                "Free : 4 Tequilas Shots",
+                false
+            )
+        )
+
+        subAdapter =
+            DrinksSubAdapter(
+                this@PreBookingActivity,
+                listDrinks,
+                object : DrinksSubAdapter.ClickListener {
+                    override fun onClickChk(subPos: Int) {
+                        listDrinks[subPos].isChekd = !listDrinks[subPos].isChekd
+
+                        subAdapter.notifyDataSetChanged()
+                    }
+
+                })
+        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
+        binding.preBookingSpclPkgRecyle.also {
+            it.layoutManager =
+                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
+            it.adapter = subAdapter
+        }
+    }
 
     private fun initView() {
         setTouchNClick(binding.preBookingPlus)

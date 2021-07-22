@@ -7,122 +7,195 @@
 
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_gray">
-
-    <ImageView
-        android:id="@+id/loginLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:src="@drawable/login_logo_ic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/loginText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:fontFamily="@font/proximanova_reg"
-        android:text="@string/OTP"
-
-        android:textSize="@dimen/_15sdp"
-        android:textColor="@color/text_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
-
-
-    <TextView
-        android:id="@+id/loginWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:fontFamily="@font/proximanova_reg"
-        android:text="@string/EnterCode"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_25sdp"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/_2ssp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText" />
-
-    <com.dpizarro.pinview.library.PinView
-        android:id="@+id/otpPinView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        pinview:colorSplit="@color/primary_clr"
-        pinview:colorTextPinBox="@android:color/black"
-        pinview:colorTextTitles="@color/color_title"
-        pinview:drawablePinBox="@drawable/box_gry_bg"
-        pinview:numberPinBoxes="4"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/background_gray">
 
-        pinview:textSizePinBox="@dimen/size_text_pinbox"
-        pinview:textSizeTitles="@dimen/size_titles" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/otpActvityBtmCnstrent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-
-    <TextView
-        android:id="@+id/otpDidnot"
-        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp"
-        android:layout_marginTop="@dimen/_10ssp"
-        android:fontFamily="@font/proximanova_bold"
-        android:layout_marginStart="@dimen/_15ssp"
-        android:text="@string/didnot_get_pwd"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
-        app:layout_constraintStart_toEndOf="@+id/otpDidnot"
-        android:layout_width="wrap_content"
-        android:textColor="@color/text_yello"
-        android:textSize="@dimen/_12ssp"
-        android:layout_marginTop="@dimen/_10ssp"
-        android:fontFamily="@font/proximanova_bold"
-        android:layout_marginStart="@dimen/_4ssp"
-        android:text="@string/SendAgain"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/otpTimer"
-        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
-       android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_width="wrap_content"
-        android:textColor="@color/text_gray"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/_10ssp"
-        android:fontFamily="@font/proximanova_reg"
-
-        android:text="00:24"
-        android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/otpActivityBakBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:padding="@dimen/_10ssp"
+                    android:src="@drawable/back_ic_toolbar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/buttonTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/loginLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:src="@drawable/login_logo_ic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otpActivityBakBtn" />
 
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/submit"
-        android:id="@+id/submitBtn"
-        android:background="@drawable/gredient_bg"
-        app:layout_constraintTop_toBottomOf="@+id/otpTimer" />
+                <TextView
+                    android:id="@+id/loginText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/OTP"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_15sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
+
+
+                <TextView
+                    android:id="@+id/loginWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/EnterCode"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_25sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginText" />
+
+                <com.dpizarro.pinview.library.PinView
+                    android:id="@+id/otpPinView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
+                    pinview:colorSplit="@color/primary_clr"
+                    pinview:colorTextPinBox="@android:color/black"
+                    pinview:colorTextTitles="@color/color_title"
+                    pinview:drawablePinBox="@drawable/box_gry_bg"
+                    pinview:numberPinBoxes="4"
+
+                    pinview:textSizePinBox="@dimen/size_text_pinbox"
+                    pinview:textSizeTitles="@dimen/size_titles" />
+
+
+                <TextView
+                    android:id="@+id/otpDidnot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/didnot_get_pwd"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otpPinView" />
+
+                <TextView
+                    android:id="@+id/otpActivitySendAgain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/SendAgain"
+                    android:textColor="@color/text_yello"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toEndOf="@+id/otpDidnot"
+                    app:layout_constraintTop_toBottomOf="@+id/otpPinView" />
+
+                <TextView
+                    android:id="@+id/otpTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="00:24"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_12ssp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otpPinView" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submitBtn"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/gredient_bg"
+                    android:text="@string/submit"
+                    app:layout_constraintTop_toBottomOf="@+id/otpTimer" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/otpActvityBtmCnstrent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_30sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/didnotText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/proximanova_reg"
+                android:paddingStart="@dimen/_10ssp"
+                android:paddingTop="@dimen/_10ssp"
+                android:paddingBottom="@dimen/_10ssp"
+                android:text="@string/chngMobNo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/otpActvityChange"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:fontFamily="@font/proximanova_reg"
+                android:paddingStart="@dimen/_2sdp"
+                android:paddingTop="@dimen/_10ssp"
+                android:paddingEnd="@dimen/_10ssp"
+                android:paddingBottom="@dimen/_10ssp"
+                android:text="@string/Change"
+                android:textColor="@color/text_yello"
+                android:textSize="@dimen/_12ssp"
+
+
+                app:layout_constraintStart_toEndOf="@+id/didnotText"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

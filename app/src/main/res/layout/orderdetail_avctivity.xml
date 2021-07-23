@@ -279,7 +279,7 @@
                     android:layout_marginStart="@dimen/_10ssp"
                     android:layout_marginTop="@dimen/_15ssp"
                     android:fontFamily="@font/proximanova_reg"
-                    android:text="Snacks"
+                    android:text="Snaks"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp" />
 
@@ -696,7 +696,7 @@
                     android:layout_marginStart="@dimen/_10ssp"
                     android:layout_marginTop="@dimen/_20ssp"
                     android:fontFamily="@font/proximanova_bold"
-                    android:text="Order Summery"
+                    android:text="@string/Order_Summery"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_13ssp" />
 
@@ -742,7 +742,7 @@
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_15ssp"
                         android:fontFamily="@font/proximanova_reg"
-                        android:text="Sarvice Charges"
+                        android:text="Service Charges"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp" />
 

@@ -153,16 +153,20 @@ class PreBookingActivity : BaseActivity() {
     private fun initView() {
         setTouchNClick(binding.preBookingPlus)
         setTouchNClick(binding.preBookingMinus)
+        setTouchNClick(binding.toolbarBack)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v == binding.preBookingPlus) {
+        if(v==binding.toolbarBack){
+            finish()
+        }
+        else if (v == binding.preBookingPlus) {
             intialValuePeople = intialValuePeople + 1
             binding.preBookingPeopleValue.setText("" + intialValuePeople)
         }
 
-        if (v == binding.preBookingMinus) {
+        else if (v == binding.preBookingMinus) {
 
             if (intialValuePeople > 0) {
                 intialValuePeople = intialValuePeople - 1

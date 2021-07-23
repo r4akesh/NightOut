@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -23,6 +24,7 @@ import com.nightout.ui.fragment.HomeFragment
 import com.nightout.utils.Util
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
+import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.home_activity.view.*
 
 class HomeActivity : BaseActivity() {
@@ -31,6 +33,7 @@ class HomeActivity : BaseActivity() {
     private var fragmentManager: FragmentManager? = null
     var currentFragment: Fragment? = null
     private var slidingRootNav: SlidingRootNav? = null
+    var sideMenuAbout: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +41,14 @@ class HomeActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@HomeActivity, R.layout.home_activity)
         appBarAndStatusBar()
 
+
+
         //sideMenu
         val widthRatio = Util.ratioOfScreen(this, 0.7f)
         Log.d("widthRatio_of_view", widthRatio.toString() + "")
         fragmentManager = supportFragmentManager
 
-        inItView()
+
         slidingRootNav = SlidingRootNavBuilder(this)
             .withDragDistance(widthRatio) //Horizontal translation of a view. Default == 180dp
             .withRootViewScale(1f) //Content view's scale will be interpolated between 1f and 0.7f. Default == 0.65f;
@@ -54,6 +59,7 @@ class HomeActivity : BaseActivity() {
         val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
         sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
         showFragment(HomeFragment())
+        inItView()
     }
 
 
@@ -83,6 +89,10 @@ class HomeActivity : BaseActivity() {
             startActivity(Intent(this@HomeActivity,SearchLocationActivity::class.java))
             overridePendingTransition(0,0)
         }
+        else if(v==sideMenuAbout){
+            slidingRootNav!!.closeMenu()
+            startActivity(Intent(this@HomeActivity,AboutActivity::class.java))
+        }
     }
 
     private fun showFragmentIcon(btmMyprofleIc: Int, btmTranportIc: Int, btmHomeIc: Int, btmChatIc: Int, btmBarcrawlIc: Int) {
@@ -107,6 +117,10 @@ class HomeActivity : BaseActivity() {
         setTouchNClick(binding.bottomHome)
         setTouchNClick(binding.header.headerSideMenu)
         setTouchNClick(binding.header.headerSearch)
+        setTouchNClick(R.id.sideMenuAbout)
+        sideMenuAbout = findViewById(R.id.sideMenuAbout)
+
+
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -117,7 +131,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun appBarAndStatusBar() {
-        binding.header.headerTitle.setText("Hi User")
+        binding.header.headerTitle.setText("Hi, User")
         //   binding.bottomMyProfile.setColorFilter(ContextCompat.getColor(this@HomeActivity,R.color.primary_clr))
         //   binding.bottomTransport.setColorFilter(ContextCompat.getColor(this@HomeActivity,R.color.primary_clr))
         //  binding.bottomHome.setColorFilter(ContextCompat.getColor(this@HomeActivity,R.color.white))

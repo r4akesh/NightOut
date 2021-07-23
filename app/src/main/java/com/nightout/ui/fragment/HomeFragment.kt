@@ -23,6 +23,8 @@ import com.nightout.databinding.FragmentHomeBinding
 import com.nightout.model.StoryModel
 import com.nightout.model.VenuBotmSheetModel
 import com.nightout.model.VenuBotmSheetTitleModel
+import com.nightout.ui.activity.EventDetail
+import com.nightout.ui.activity.FoodStoreActvity
 import com.nightout.ui.activity.VenuListActvity
 
 
@@ -66,32 +68,16 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
     private fun setListVenuListBootmShhetDuumy() {
         var listTile = ArrayList<VenuBotmSheetTitleModel>()
         var listSub = ArrayList<VenuBotmSheetModel>()
-        listSub.add(
-            VenuBotmSheetModel(
-                "Vanity Night Clubs",
-                "1 Fairclough St, Liverpool",
-                R.drawable.venusub_img1
-            )
-        )
-        listTile.add(VenuBotmSheetTitleModel("Club", listSub))
-
-        listSub.add(
-            VenuBotmSheetModel(
-                "Raise a Glass",
-                "Liverpool 1 Fairclough St",
-                R.drawable.venusub_img2
-            )
-        )
+        listSub.add(VenuBotmSheetModel("Vanity Night Clubs", "1 Fairclough St, Liverpool", R.drawable.venusub_img1))
+        listTile.add(VenuBotmSheetTitleModel("Clubs", listSub))
+        listSub.add(VenuBotmSheetModel("Raise a Glass", "Liverpool 1 Fairclough St", R.drawable.venusub_img2))
         listTile.add(VenuBotmSheetTitleModel("Bars", listSub))
-
-        listSub.add(
-            VenuBotmSheetModel(
-                "Neon Nights",
-                "25 Fairclough St, Lverol",
-                R.drawable.venusub_img3
-            )
-        )
+        listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
         listTile.add(VenuBotmSheetTitleModel("Pubs", listSub))
+        listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
+        listTile.add(VenuBotmSheetTitleModel("Food", listSub))
+        listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
+        listTile.add(VenuBotmSheetTitleModel("Event", listSub))
         venuTitleBotmSheetAdapter = VenuTitleBotmSheetAdapter(
             requireContext(),
             listTile,
@@ -104,14 +90,26 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
                         startActivity(Intent(requireActivity(), VenuListActvity::class.java))
                     }
                     else if(pos==3){
-                        startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                        startActivity(Intent(requireActivity(), FoodStoreActvity::class.java))
+                    } else if(pos==4){
+                        startActivity(Intent(requireActivity(), EventDetail::class.java))
                     }
-                    requireActivity().overridePendingTransition(0, 0)
+
                 }
 
                 override fun onWholeClickdd(subPos: Int, mainPos: Int) {
-                    startActivity(Intent(requireActivity(), VenuListActvity::class.java))
-                    requireActivity().overridePendingTransition(0, 0)
+                    if(mainPos == 0 || mainPos ==1) {
+                        startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                    }
+                    else if(mainPos==2){
+                        startActivity(Intent(requireActivity(), VenuListActvity::class.java))
+                    }
+                    else if(mainPos==3){
+                        startActivity(Intent(requireActivity(), FoodStoreActvity::class.java))
+                    }else if(mainPos==4){
+                        startActivity(Intent(requireActivity(), EventDetail::class.java))
+                    }
+
                 }
 
             })

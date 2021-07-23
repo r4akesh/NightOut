@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/foodstroe_bg">
+
+        <ImageView
+            android:id="@+id/eventDetailTopImag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/intersect_event"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/eventDetailBakBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:alpha="1"
+            android:background="@null"
+            android:padding="@dimen/_10ssp"
+            android:src="@drawable/back_pink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@null"
+            android:padding="@dimen/_10ssp"
+
+            android:src="@drawable/fav_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_170sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:elevation="@dimen/_10ssp"
+            app:cardBackgroundColor="@color/bg_clr_venu2"
+            app:cardCornerRadius="@dimen/_5ssp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toTopOf="@+id/eventDetailPlaceOrder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_gray"
+                    android:paddingBottom="@dimen/_20sdp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/eventDetailLogoCard"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        app:cardBackgroundColor="@color/text_yello"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/eventDetailLogo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/_1ssp"
+                            android:background="@drawable/border_yello"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/event_logo" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/eventDetailRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="$200"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetailTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:singleLine="true"
+                        android:text="URBN Saturdays"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toStartOf="@+id/eventDetailRating"
+                        app:layout_constraintStart_toEndOf="@+id/eventDetailLogoCard"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetailDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_3ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Discount: 50% off"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintStart_toEndOf="@+id/eventDetailLogoCard"
+                        app:layout_constraintTop_toBottomOf="@id/eventDetailTitle" />
+
+                    <TextView
+                        android:id="@+id/eventDetailOpenTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:text="Start at : 7:30 pm To 02:00 am"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailDis" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:text="2.3 miles"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailDis" />
+
+                    <TextView
+                        android:id="@+id/eventDetailPhno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:drawableStart="@drawable/phno_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="+91 896 22 54 896"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailOpenTime" />
+
+                    <TextView
+                        android:id="@+id/eventDetailEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:drawableStart="@drawable/email_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="vanitynight@gmai.com"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailPhno" />
+
+                    <View
+                        android:id="@+id/eventDetailViewemil"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:background="@color/foodstroe_bg"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailEmail" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetailDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:drawableStart="@drawable/calendra_ic44"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:text="Sturday 25 June 2021"
+                        android:textColor="@color/white_thred"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailViewemil" />
+
+                    <TextView
+                        android:id="@+id/eventDetailAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:drawableStart="@drawable/people_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:text="21+"
+                        android:textColor="@color/white_thred"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailDate" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetailMusic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:drawableStart="@drawable/music_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:text="Traffic Light party"
+                        android:textColor="@color/white_thred"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailAge" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetailCocktail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:drawableStart="@drawable/cocktail_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:text="Cocktail Dress"
+                        android:textColor="@color/white_thred"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailMusic" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetailAddCalndra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-10dp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:layout_marginEnd="-10dp"
+                        android:background="@drawable/box_primary"
+                        android:drawableEnd="@drawable/calendra_yello"
+                        android:elevation="@dimen/_10ssp"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_20ssp"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingEnd="@dimen/_20ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="Add to calendar"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailCocktail" />
+
+
+                    <ImageView
+                        android:id="@+id/eventDetailMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8ssp"
+                        android:layout_marginTop="@dimen/_4ssp"
+                        android:layout_marginEnd="@dimen/_8ssp"
+                        android:background="@null"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/map_duumy_img"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailAddCalndra" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:src="@drawable/share_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/eventDetailMap" />
+
+
+                    <TextView
+                        android:id="@+id/eventDetaiAddrs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:maxLines="2"
+                        android:minLines="1"
+                        android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_11sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/eventDetaiDirection"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailMap" />
+
+                    <TextView
+                        android:id="@+id/eventDetaiDirection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:padding="@dimen/_10ssp"
+                        android:text="Direction"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetailMap" />
+
+                    <TextView
+                        android:id="@+id/eventDetaiNearBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:background="@drawable/border_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="Near By Stations"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetaiDirection" />
+
+                    <LinearLayout
+                        android:id="@+id/eventDetaiLinerMenuDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/eventDetaiNearBy">
+
+                        <include
+                            android:id="@+id/eventDetaiMenuDesc"
+                            layout="@layout/menu_desc"
+                            android:visibility="visible" />
+
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/eventDetailPlaceOrder"
+            style="@style/buttonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10ssp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Buy_Ticket"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

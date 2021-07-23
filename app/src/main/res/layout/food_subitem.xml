@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <TextView
+            android:id="@+id/foodSubItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+           android:layout_margin="@dimen/_10ssp"
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Title"
+            android:textColor="@color/white_thred"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/foodSubItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/white_thred"
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Title"
+            app:layout_constraintEnd_toStartOf="@+id/foodSubItemChk"
+            android:textSize="@dimen/_12ssp"
+             app:layout_constraintTop_toTopOf="@+id/foodSubItemTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/foodSubItemTitle" />
+        
+
+
+        <ImageView
+            android:id="@+id/foodSubItemChk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10ssp"
+
+            android:src="@drawable/unchk_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/foodSubItemTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/foodSubItemTitle"
+
+            />
+
+        <View
+            android:id="@+id/foodSubViewLine"
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:background="@color/view_line_gray2"
+            app:layout_constraintTop_toBottomOf="@+id/foodSubItemTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

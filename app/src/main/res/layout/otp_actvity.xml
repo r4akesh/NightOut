@@ -57,7 +57,7 @@
                     android:text="@string/OTP"
 
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/_15sdp"
+                    android:textSize="@dimen/_13sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
 
@@ -72,7 +72,7 @@
                     android:text="@string/EnterCode"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_25sdp"
-                    android:textStyle="bold"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/loginText" />
 
@@ -80,9 +80,9 @@
                     android:id="@+id/otpPinView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
                     pinview:colorSplit="@color/primary_clr"
                     pinview:colorTextPinBox="@android:color/black"

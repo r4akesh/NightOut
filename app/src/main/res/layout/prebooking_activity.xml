@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/toolbar_back"
+                android:id="@+id/toolbarBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
@@ -53,22 +53,33 @@
                 android:text="@string/Pre_Booking"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toEndOf="@+id/toolbar_back"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
+                app:layout_constraintStart_toEndOf="@+id/toolbarBack"
+                app:layout_constraintTop_toTopOf="@+id/toolbarBack" />
 
+            <ImageView
+                android:id="@+id/imgToolBarMap"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                app:layout_constraintStart_toStartOf="@+id/toolbar_title"
+                android:src="@drawable/map_toolbar"
+                app:layout_constraintStart_toEndOf="@+id/toolbarBack"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_title"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/toolbar_subTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/addrs_home"
+              android:layout_marginStart="@dimen/_2ssp"
                 android:fontFamily="@font/proximanova_reg"
+                android:gravity="center_vertical"
+                android:text="Vanity Night Club"
 
-                android:text="@string/Pre_Booking"
                 android:textColor="@color/text_gray"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintStart_toEndOf="@+id/toolbar_back"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_title" />
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintStart_toEndOf="@+id/imgToolBarMap"
+                app:layout_constraintBottom_toBottomOf="@+id/imgToolBarMap"
+                app:layout_constraintTop_toTopOf="@+id/imgToolBarMap" />
 
             <ImageView
                 android:id="@+id/toolbar_celendra"
@@ -79,7 +90,7 @@
                 android:src="@drawable/calendra_ic"
                 app:layout_constraintEnd_toEndOf="parent"
 
-                app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
+                app:layout_constraintTop_toTopOf="@+id/toolbarBack" />
 
 
             <devs.mulham.horizontalcalendar.HorizontalCalendarView
@@ -283,7 +294,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/proximanova_bold"
-                            android:text="Order Summery "
+                            android:text="Order Summary"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp"
                             app:layout_constraintStart_toStartOf="parent"

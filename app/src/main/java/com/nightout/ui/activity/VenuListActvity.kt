@@ -93,7 +93,7 @@ class VenuListActvity : BaseActivity() {
         list.add(VenuModel("Bar", false))
         list.add(VenuModel("Pub", false))
         list.add(VenuModel("Food", false))
-        list.add(VenuModel("Food2", false))
+        list.add(VenuModel("Event", false))
 
         venuAdapterAdapter = VenuAdapterAdapter(
             this@VenuListActvity,

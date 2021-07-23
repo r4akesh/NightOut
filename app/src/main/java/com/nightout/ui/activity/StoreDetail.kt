@@ -44,7 +44,7 @@ class StoreDetail : BaseActivity() {
         var listFood = ArrayList<StorDetailFoodModel>()
         listFood.add(StorDetailFoodModel("Drinks", true))
         listFood.add(StorDetailFoodModel("Food", false))
-        listFood.add(StorDetailFoodModel("Snacks", false))
+        listFood.add(StorDetailFoodModel("Snaks", false))
         listFood.add(StorDetailFoodModel("Packages", false))
 
         storDetailFoodHorizontalAdapter = StorDetailFoodHorizontalAdapter(
@@ -407,43 +407,11 @@ class StoreDetail : BaseActivity() {
     private fun setListDrinksDummy() {
         var listDrinks = ArrayList<StoreDetailDrinksModel>()
         var listSub = ArrayList<SubFoodModel>()
-        listSub.add(
-            SubFoodModel(
-                "Grey Goose",
-                "1 Glass",
-                R.drawable.drink_img1,
-                "Price : $10",
-                false
-            )
-        )
+        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img1, "Price : $10", false))
         listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(
-            SubFoodModel(
-                "Belvedere",
-                "2 Glass",
-                R.drawable.drink_img2,
-                "Price : $40",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Ketel One",
-                "5 Glass",
-                R.drawable.drink_img1,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Finlandia One",
-                "2 Glass",
-                R.drawable.drink_img2,
-                "Price : $60",
-                false
-            )
-        )
+        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img2, "Price : $40", false))
+        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img1, "Price : $20", false))
+        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img2, "Price : $60", false))
         listDrinks.add(StoreDetailDrinksModel("Scotch", false, listSub))
 
         listSub = ArrayList<SubFoodModel>()
@@ -566,16 +534,16 @@ class StoreDetail : BaseActivity() {
 
         if(v== binding.storeDeatilPreBookingBtn){
             startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
-            overridePendingTransition(0, 0)
+
         }
         else if (v == binding.storeDeatilPlaceOrder) {
             startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
-            overridePendingTransition(0, 0)
+
         } else if (v == binding.storeDeatilFacilityBtn) {
             showPopUpFacilities()
         } else if (v == binding.storeDeatilBakBtn) {
             finish()
-            overridePendingTransition(0, 0)
+
         } else if (v == binding.storeDeatilMenu) {
             binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))

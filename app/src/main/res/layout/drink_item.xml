@@ -29,7 +29,7 @@
                 android:padding="@dimen/_10ssp"
                 android:text="Title"
 
-                android:textColor="@color/white"
+                android:textColor="@color/white_thred"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

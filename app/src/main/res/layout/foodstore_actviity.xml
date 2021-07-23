@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/foodstroe_bg">
+
+        <ImageView
+            android:id="@+id/foodstoreTopImag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/foodstore_topimg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/foodstoreBakBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@null"
+            android:padding="@dimen/_10ssp"
+            android:alpha="1"
+            android:src="@drawable/back_pink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@null"
+            android:padding="@dimen/_10ssp"
+
+            android:src="@drawable/fav_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_170sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:elevation="@dimen/_10ssp"
+            app:cardBackgroundColor="@color/bg_clr_venu2"
+            app:cardCornerRadius="@dimen/_5ssp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toTopOf="@+id/foodstorePlaceOrder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/_20sdp"
+                    android:background="@drawable/background_gray">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/foodstoreLogoCard"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        app:cardBackgroundColor="@color/text_yello"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/foodstoreLogo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/_1ssp"
+                            android:background="@drawable/border_yello"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/foodstore_logo" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/foodstoreRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:drawableStart="@drawable/star_storedetail"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="4.5"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/foodstoreTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:singleLine="true"
+                        android:text="Bliss Vista Foods"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintEnd_toStartOf="@+id/foodstoreRating"
+                        app:layout_constraintStart_toEndOf="@+id/foodstoreLogoCard"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+
+                    <TextView
+                        android:id="@+id/foodstoreDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_3ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Discount: 50% off"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toEndOf="@+id/foodstoreLogoCard"
+                        app:layout_constraintTop_toBottomOf="@id/foodstoreTitle" />
+
+                    <TextView
+                        android:id="@+id/foodstoreOpenTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:text="Open at : 7:30 pm To 02:00 am"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_13ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreDis" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:text="2.3 miles"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreDis" />
+
+                    <TextView
+                        android:id="@+id/foodstorePhno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:drawableStart="@drawable/phno_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="+91 896 22 54 896"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreOpenTime" />
+
+                    <TextView
+                        android:id="@+id/foodstoreEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:drawableStart="@drawable/email_ic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:text="vanitynight@gmai.com"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstorePhno" />
+
+
+                    <ImageView
+                        android:id="@+id/foodstoreMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8ssp"
+                        android:layout_marginTop="@dimen/_8ssp"
+                        android:layout_marginEnd="@dimen/_8ssp"
+                        android:background="@null"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/map_duumy_img"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreEmail" />
+
+                    <ImageView
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/foodstoreMap"
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/share_icon"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/foodstoreAddrs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:maxLines="2"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:minLines="1"
+                        android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
+                        android:textColor="@color/white_second"
+                        app:layout_constraintEnd_toStartOf="@+id/foodstoreDirection"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreMap" />
+
+                    <TextView
+                        android:id="@+id/foodstoreDirection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10ssp"
+                        android:text="Direction"
+                        android:textSize="@dimen/_12ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:textColor="@color/text_yello"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreMap" />
+
+                    <TextView
+                        android:id="@+id/foodstoreNearBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:background="@drawable/border_yello"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="Near By Stations"
+                        android:textSize="@dimen/_12ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:textColor="@color/text_yello"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreDirection" />
+
+
+                    <LinearLayout
+                        android:id="@+id/foodstoreAllBtn"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:background="@drawable/box_primaryclr_drk"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreNearBy">
+
+                        <TextView
+                            android:id="@+id/foodstoreMenu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:background="@drawable/box_yelo"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:gravity="center"
+                            android:padding="@dimen/_7sdp"
+                            android:text="@string/Menu"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp" />
+
+
+
+                        <TextView
+                            android:id="@+id/foodstoreDiscount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:gravity="center"
+                            android:padding="@dimen/_7sdp"
+                            android:text="@string/Discounts"
+                            android:textColor="@color/white_second"
+                            android:textSize="@dimen/_12ssp" />
+
+                     
+
+                        
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/foodstoreLinerMenuDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreAllBtn">
+
+                        <include
+                            android:id="@+id/foodstoreMenuDesc"
+                            layout="@layout/menu_desc"
+                            android:visibility="visible" />
+
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:id="@+id/foodstoreRecyle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/foodstoreLinerMenuDesc"
+                        android:layout_height="wrap_content"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/foodstorePlaceOrder"
+            style="@style/buttonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10ssp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Place_Order"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

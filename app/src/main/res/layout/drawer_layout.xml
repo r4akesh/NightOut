@@ -153,7 +153,7 @@
                     android:paddingStart="@dimen/_15ssp"
                     android:text="@string/TrackNTrace"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                     android:paddingStart="@dimen/_15ssp"
                     android:text="@string/Reffer_friend"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -189,6 +189,7 @@
                     android:textSize="@dimen/_13ssp" />
 
                 <TextView
+                    android:id="@+id/sideMenuAbout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_25ssp"

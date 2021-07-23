@@ -100,7 +100,7 @@
             android:layout_marginStart="@dimen/_10ssp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10ssp"
-            android:background="@color/text_gray"
+            android:background="@color/view_line_gray2"
             app:layout_constraintTop_toBottomOf="@+id/drinkSubItemPrice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

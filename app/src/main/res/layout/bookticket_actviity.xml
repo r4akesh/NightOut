@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrent_toolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/venulistingToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fillViewport="true"
+
+            app:layout_constraintBottom_toTopOf="@+id/bookticketPay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bookTicketTopConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_bookticket"
+                    android:paddingBottom="@dimen/_10ssp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/bookTicketImageContrent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/bookTicketImageMain"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_150sdp"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+
+                            android:src="@drawable/bookticket_img"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/bookTicketPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:fontFamily="@font/proximanova_bold"
+                            android:text="Price : $200"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_16ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/bookTicketImageMain"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/bookTicketPerPerson"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_2ssp"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="per person"
+                            android:textColor="@color/white_thred"
+                            android:textSize="@dimen/_11ssp"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/bookTicketPrice"
+                            app:layout_constraintStart_toEndOf="@+id/bookTicketPrice"
+                            app:layout_constraintTop_toTopOf="@+id/bookTicketPrice" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <View
+                        android:id="@+id/bookTicketViewLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bg_clr_venu"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketImageContrent" />
+
+                    <TextView
+                        android:id="@+id/bookTicketViewEvemt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:text="Event"
+                        android:textColor="@color/text_gray2"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketImageContrent" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:text="Date"
+                        android:textColor="@color/text_gray2"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketViewEvemt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketViewEvemt" />
+
+
+                    <TextView
+                        android:id="@+id/bookTicketURBN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="URBN"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_16ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketViewEvemt" />
+
+
+                    <TextView
+                        android:id="@+id/bookTicketDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:drawableStart="@drawable/calendra_ic44"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="25 June 2021"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_16ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketURBN"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketURBN" />
+
+
+                    <TextView
+                        android:id="@+id/bookTicketDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="Saturdays"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_16ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketURBN" />
+
+
+                    <TextView
+                        android:id="@+id/bookTicketTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Start at : 08:30 pm To 02:00 am"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketDays"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketDays" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrentAddPeople"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_botomsheet"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bookTicketTopConstrent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_10ssp"
+
+
+                        android:paddingTop="@dimen/_15ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_15ssp"
+                        android:text="Add Person"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_hint3"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/preBookingPlus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10ssp"
+                        android:src="@drawable/icon_plus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/preBookingPeopleValue"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center"
+                        android:text="4"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/preBookingPlus"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/preBookingMinus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10ssp"
+                        android:src="@drawable/icon_minus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/preBookingPeopleValue"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_bookticket"
+                    android:paddingBottom="@dimen/_10ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/constrentAddPeople">
+
+                    <ImageView
+                        android:id="@+id/bookTicketSourceImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:src="@drawable/map_source"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="@dimen/_2ssp"
+                        android:src="@drawable/horizontal_dashline"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketSourceImg"
+                        app:layout_constraintEnd_toStartOf="@+id/bookTicketDesinationImg"
+                        app:layout_constraintStart_toEndOf="@+id/bookTicketSourceImg"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketSourceImg" />
+
+                    <ImageView
+                        android:id="@+id/bookTicketCar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/car_img"
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketSourceImg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketSourceImg" />
+
+
+                    <ImageView
+                        android:id="@+id/bookTicketDesinationImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:src="@drawable/desi_img"
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketSourceImg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketSourceImg" />
+
+                    <TextView
+                        android:id="@+id/bookTicketKM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8.5 km away"
+                        android:textColor="@color/text_gray2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketCar" />
+
+
+                    <TextView
+                        android:id="@+id/bookTicketUrLoc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Your Location"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketKM" />
+
+
+                    <TextView
+                        android:id="@+id/bookTicketEventLoc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Event Location"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketUrLoc"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/bookTicketUrLoc" />
+
+                    <TextView
+                        android:id="@+id/bookTicketSAddrs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="1 Fairclough St, Liverpool..."
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toStartOf="@+id/bookTicketDAddrs"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketUrLoc" />
+
+                    <TextView
+                        android:id="@+id/bookTicketDAddrs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="15 Beeston Pl, London SW1W"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bookTicketSAddrs"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketUrLoc" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bookticketPay"
+            style="@style/buttonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/gredient_bg"
+            android:drawableEnd="@drawable/arrow_union"
+            android:gravity="start"
+            android:textStyle="bold"
+            android:paddingStart="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_10ssp"
+            android:text="Pay $600"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -6,7 +6,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_5sdp"
 
         android:background="@color/bg_clr_venu2"
         android:layout_height="@dimen/_225sdp">
@@ -97,7 +97,7 @@
             android:fontFamily="@font/proximanova_reg"
             android:singleLine="true"
             android:text="title"
-            android:textColor="@color/white"
+            android:textColor="@color/white_thred"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/venusubitem_topimg" />
@@ -111,7 +111,7 @@
             android:singleLine="true"
             android:layout_marginTop="@dimen/_2ssp"
             android:text="1 Fairclough St, Liverpool1 "
-            android:textColor="@color/white"
+            android:textColor="@color/white_second"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/venusubitem_title" />

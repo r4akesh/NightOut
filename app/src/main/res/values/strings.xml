@@ -70,11 +70,15 @@
     <string name="thridLine">1 Glass Belvedra + Dim Sums</string>
     <string name="Place_Order">Place Order</string>
     <string name="dummyText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="dummyText2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrmollit non des erunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam</string>
     <string name="Have_query">Have a query</string>
     <string name="Book_Now">Book Now</string>
     <string name="didnot_signup">Don’t have an account?</string>
     <string name="Sign_Up">Sign Up</string>
     <string name="chngMobNo">Change Mobile Number</string>
     <string name="Change">Change?</string>
+    <string name="Buy_Ticket">Buy Ticket</string>
+    <string name="Download_Ticket">Download Ticket</string>
+    <string name="Order_Summery">Order Summary</string>
 
 </resources>

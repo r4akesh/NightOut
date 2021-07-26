@@ -34,6 +34,7 @@ class HomeActivity : BaseActivity() {
     var currentFragment: Fragment? = null
     private var slidingRootNav: SlidingRootNav? = null
     var sideMenuAbout: TextView? = null
+    var sideMenuTermCond: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +94,11 @@ class HomeActivity : BaseActivity() {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity,AboutActivity::class.java))
         }
+
+        else if(v==sideMenuTermCond){
+            slidingRootNav!!.closeMenu()
+            startActivity(Intent(this@HomeActivity,TermsNCondActivity::class.java))
+        }
     }
 
     private fun showFragmentIcon(btmMyprofleIc: Int, btmTranportIc: Int, btmHomeIc: Int, btmChatIc: Int, btmBarcrawlIc: Int) {
@@ -119,6 +125,8 @@ class HomeActivity : BaseActivity() {
         setTouchNClick(binding.header.headerSearch)
         setTouchNClick(R.id.sideMenuAbout)
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
+        setTouchNClick(R.id.sideMenuTermCond)
+        sideMenuTermCond = findViewById(R.id.sideMenuTermCond)
 
 
     }

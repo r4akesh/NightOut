@@ -207,6 +207,7 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
+                    android:id="@+id/sideMenuFAQ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_25ssp"
@@ -224,6 +225,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp" />
                 <TextView
+                     android:id="@+id/sideMenuTermCond"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_25ssp"

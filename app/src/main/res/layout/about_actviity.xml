@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_14ssp"
                 android:fontFamily="@font/proximanova_reg"
                 android:text="NightOut Community guidelines"
                 android:layout_height="wrap_content"/>
@@ -82,8 +82,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textColor="@color/white"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textSize="@dimen/_12ssp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textSize="@dimen/_14ssp"
                 android:fontFamily="@font/proximanova_reg"
                 android:text="Exercitation veniam consequat sunt nostrud."
                 android:layout_height="wrap_content"/>
@@ -91,9 +91,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textColor="@color/white_second"
-                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:text="@string/dummyText2"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/proximanova_reg"
                 android:layout_height="wrap_content"/>
 
@@ -101,8 +101,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textColor="@color/white"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textSize="@dimen/_12ssp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:textSize="@dimen/_14ssp"
                 android:fontFamily="@font/proximanova_reg"
                 android:text="Amet minim mollit non deserunt ullamco."
                 android:layout_height="wrap_content"/>
@@ -112,7 +112,7 @@
                 android:textColor="@color/white_second"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:text="@string/dummyText2"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_12ssp"
                 android:fontFamily="@font/proximanova_reg"
                 android:layout_height="wrap_content"/>
             <TextView

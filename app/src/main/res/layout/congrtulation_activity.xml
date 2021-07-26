@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/congrets_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/congrtulationActvityMask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/round_mask"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+               android:id="@+id/congrtulationActvityThumb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/thumb_ic"
+              android:layout_marginTop="@dimen/_30sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/congrtulationActvityCongrts"
+                app:layout_constraintTop_toBottomOf="@+id/congrtulationActvityThumb"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/_20ssp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_thred"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/Congratulation"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/congrtulationActvityOrder"
+                app:layout_constraintTop_toBottomOf="@+id/congrtulationActvityCongrts"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/_12ssp"
+                android:gravity="center"
+
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_thred"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/Your_Confirmed"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/congrtulationActvityFeedback"
+                style="@style/buttonTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_60sdp"
+                android:layout_marginEnd="@dimen/_60sdp"
+                android:layout_marginBottom="@dimen/_25sdp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:background="@drawable/gredient_bg"
+                android:text="@string/Give_Feedback"
+              />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/viewKonfetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

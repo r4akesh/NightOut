@@ -12,21 +12,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
+import com.nightout.databinding.CommentItemBinding
 import com.nightout.model.ChatModel
+import com.nightout.model.CommentModel
 
 
-class ChatAdapter(
+class CommentAdapter(
     var context: Context,
-    var arrayList: ArrayList<ChatModel>,
+    var arrayList: ArrayList<CommentModel>,
     var clickListener: ClickListener,
 ) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+    RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ChatItemBinding = DataBindingUtil.inflate(
+        val binding: CommentItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.chat_item, parent, false
+            R.layout.comment_item, parent, false
         )
 
 
@@ -36,20 +38,16 @@ class ChatAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.chatItemTitle.text=arrayList[position].title
+        viewHolder.binding.commentItemTitle.text=arrayList[position].title
+        viewHolder.binding.commentItemDays.text=arrayList[position].days
 
-        viewHolder.binding.chatItemProfile.setImageResource(arrayList[position].imgProfile)
-        viewHolder.binding.chatItemCount.setText(arrayList[position].chatCount)
-        if(position%2==0){
-            viewHolder.binding.chatItemCount.visibility=VISIBLE
-        }else{
-            viewHolder.binding.chatItemCount.visibility= GONE
-        }
+        viewHolder.binding.commentItemProfile.setImageResource(arrayList[position].imgProfile)
 
-        viewHolder.itemView.setOnClickListener {
-            clickListener.onClick(position)
 
-        }
+//        viewHolder.binding.weekCloseTime.setOnClickListener {
+//            clickListener.onClickCloseTime(position)
+//
+//        }
     }
 
 
@@ -58,9 +56,9 @@ class ChatAdapter(
     }
 
 
-    inner class ViewHolder(itemView: ChatItemBinding) :
+    inner class ViewHolder(itemView: CommentItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: ChatItemBinding = itemView
+        var binding: CommentItemBinding = itemView
 
     }
 

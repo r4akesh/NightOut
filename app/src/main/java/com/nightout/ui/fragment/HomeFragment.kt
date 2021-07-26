@@ -16,6 +16,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
+
 import com.nightout.R
 import com.nightout.adapter.StoryAdapter
 import com.nightout.adapter.VenuTitleBotmSheetAdapter

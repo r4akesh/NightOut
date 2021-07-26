@@ -80,5 +80,11 @@
     <string name="Buy_Ticket">Buy Ticket</string>
     <string name="Download_Ticket">Download Ticket</string>
     <string name="Order_Summery">Order Summary</string>
+    <string name="give_feedback">Give Feedback</string>
+    <string name="Congratulation">Congratulation</string>
+    <string name="Your_Confirmed">Your Order is Confirmed</string>
+    <string name="Give_Feedback">Give Feedback</string>
+    <string name="Review_Rating"><![CDATA[Review & Rating]]></string>
+    <string name="Excellent">Excellent!</string>
 
 </resources>

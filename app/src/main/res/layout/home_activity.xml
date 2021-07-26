@@ -69,6 +69,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <RelativeLayout
+                android:id="@+id/bottomHomeRel"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/_5ssp"
                 android:layout_marginBottom="@dimen/_10ssp"
@@ -79,6 +80,7 @@
                     android:id="@+id/bottmHomeYello"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
+                    android:visibility="visible"
                     android:layout_centerInParent="true"
                     android:src="@drawable/gredient_bg_small" />
 
@@ -87,6 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:background="@null"
                     android:src="@drawable/btm_home_ic" />
 
             </RelativeLayout>

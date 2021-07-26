@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -67,18 +66,54 @@ class HomeActivity : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.bottomChat) {
-//            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
-//            binding.header.headerTitle.setText("Chat Group")
-//            binding.header.headerCreateGroup.visibility = VISIBLE
-//            binding.header.headerSearch.visibility = GONE
-//            binding.header.headerNotification.visibility = GONE
-//            binding.header.headerSetting.visibility = GONE
-//            if (currentFragment !is ChatFragment) {
-//                //appBarAndStatusBarProfile()
-//                showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
-//                showFragment(ChatFragment())
-//            }
+            binding.header.headerMapIcon.visibility= INVISIBLE
+            binding.header.headerAddrs.visibility=INVISIBLE
+            binding.bottmHomeYello.visibility=GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
+
+            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.btm_chat_ic_selected,0,0)
+            binding.bottomChat.setTextColor(resources.getColor(R.color.text_yello))
+
+
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            binding.header.headerTitle.setText("Chat Group")
+            binding.header.headerCreateGroup.visibility = VISIBLE
+            binding.header.headerSearch.visibility = GONE
+            binding.header.headerNotification.visibility = GONE
+            binding.header.headerSetting.visibility = GONE
+            if (currentFragment !is ChatFragment) {
+                //appBarAndStatusBarProfile()
+              //  showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
+                showFragment(ChatFragment())
+            }
         }
+
+        else if(v== binding.bottomHomeRel){
+            binding.header.headerMapIcon.visibility= VISIBLE
+            binding.header.headerAddrs.visibility= VISIBLE
+            binding.bottmHomeYello.visibility= VISIBLE
+            binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
+
+            //headerTop
+            binding.header.headerTitle.setText("Hi, User")
+            binding.header.headerCreateGroup.visibility = GONE
+            binding.header.headerSearch.visibility = VISIBLE
+            binding.header.headerNotification.visibility = VISIBLE
+            binding.header.headerSetting.visibility = VISIBLE
+
+            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.btm_chat_ic,0,0)
+            binding.bottomChat.setTextColor(resources.getColor(R.color.white))
+            //do countine
+
+
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is HomeFragment) {
+                //appBarAndStatusBarProfile()
+               // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
+                showFragment(HomeFragment())
+            }
+        }
+
         else if(v==binding.header.headerSideMenu){
             if (slidingRootNav!!.isMenuOpened) {
                 slidingRootNav!!.closeMenu()
@@ -120,7 +155,8 @@ class HomeActivity : BaseActivity() {
 
     private fun inItView() {
         setTouchNClick(binding.bottomChat)
-        setTouchNClick(binding.bottomHome)
+        //setTouchNClick(binding.bottomHome)
+        setTouchNClick(binding.bottomHomeRel)
         setTouchNClick(binding.header.headerSideMenu)
         setTouchNClick(binding.header.headerSearch)
         setTouchNClick(R.id.sideMenuAbout)

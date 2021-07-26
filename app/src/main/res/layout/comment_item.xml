@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingTop="@dimen/_7sdp">
+
+        <ImageView
+            android:id="@+id/commentItemProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:src="@drawable/comment1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/commentItemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+
+
+            android:text="Title"
+            android:textColor="@color/text_hint"
+
+            app:layout_constraintStart_toEndOf="@+id/commentItemProfile"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/commentItemRaingImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ratimg_img"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@+id/commentItemProfile"
+            app:layout_constraintTop_toBottomOf="@+id/commentItemTitle" />
+
+
+        <View
+            android:id="@+id/commentItemCircle"
+            android:layout_width="@dimen/_5sdp"
+            android:layout_height="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:background="@drawable/circle_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/commentItemRaingImg"
+            app:layout_constraintStart_toEndOf="@+id/commentItemRaingImg"
+            app:layout_constraintTop_toTopOf="@+id/commentItemRaingImg" />
+
+        <TextView
+            android:id="@+id/commentItemDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:text="days"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/commentItemRaingImg"
+            app:layout_constraintStart_toEndOf="@+id/commentItemCircle"
+            app:layout_constraintTop_toTopOf="@+id/commentItemRaingImg" />
+
+
+        <TextView
+            android:id="@+id/commentItemValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:maxLines="4"
+            android:minLines="1"
+            android:text="@string/dummyText"
+
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/_10ssp"
+
+            app:layout_constraintStart_toEndOf="@+id/commentItemProfile"
+            app:layout_constraintTop_toBottomOf="@+id/commentItemRaingImg" />
+
+        <View
+
+            style="@style/view_line"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_7ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/_40sdp"
+            app:layout_constraintTop_toBottomOf="@+id/commentItemValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

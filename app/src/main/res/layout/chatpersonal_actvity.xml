@@ -38,17 +38,31 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/chatpersonalTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10ssp"
                 android:text="Vanity Night Club Group"
                 android:textColor="@color/white_thred"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/chatpersonalImage"
+
                 app:layout_constraintStart_toEndOf="@+id/chatpersonalImage"
                 app:layout_constraintTop_toTopOf="@+id/chatpersonalImage" />
 
+            <TextView
+                android:id="@+id/chatpersonalSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:text="8 Participants"
+                android:textColor="@color/white_second"
+                android:textSize="@dimen/_11ssp"
+
+                app:layout_constraintStart_toEndOf="@+id/chatpersonalImage"
+                app:layout_constraintTop_toBottomOf="@+id/chatpersonalTitle" />
+
             <ImageView
+                android:id="@+id/chatpersonalClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10ssp"
@@ -129,6 +143,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/consteren2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/_20sdp"
@@ -183,6 +198,64 @@
                         app:layout_constraintEnd_toEndOf="@+id/userNameText2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/userNameText2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/consteren3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/_20ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/consteren2">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:src="@drawable/chat1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/timeText3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:text="12:29"
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/userNameText3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_70sdp"
+                        android:text="Jane Cooper"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/timeText3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/timeText3" />
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:background="@drawable/shape_bg_outgoinging_bubble"
+                        android:padding="@dimen/_10ssp"
+                        android:text="@string/dummyText"
+                        android:textColor="@color/white_thred"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/userNameText3"
+                        app:layout_constraintTop_toBottomOf="@+id/userNameText3" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

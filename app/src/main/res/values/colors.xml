@@ -42,6 +42,7 @@
     <color name="dialog_view_lineclr">#334878</color>
     <color name="foodstroe_bg">#28375c</color>
     <color name="bookticket_bg">#0d162e</color>
+    <color name="seekbar_bg">#162144</color>
 
 
 </resources>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crateGroupConstrentToolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/header_top_ic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/toolbarBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@null"
+                android:paddingStart="@dimen/_15ssp"
+                android:paddingTop="@dimen/_10ssp"
+                android:paddingEnd="@dimen/_10ssp"
+                android:paddingBottom="@dimen/_10ssp"
+                android:src="@drawable/back_ic_toolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/proximanova_reg"
+                android:padding="@dimen/_10ssp"
+                android:text="Club Menu"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toEndOf="@+id/toolbarBack"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbarBack"
+                app:layout_constraintTop_toTopOf="@+id/toolbarBack" />
+
+
+            <TextView
+                android:id="@+id/headerCreateGroup"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/box_btn_bg_yello"
+                android:fontFamily="@font/proximanova_reg"
+
+                android:paddingTop="@dimen/_3ssp"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_3ssp"
+                android:text="@string/Create"
+                android:textColor="@color/black_pure"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@id/toolbarBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbarBack" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarBack">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/cratgrup_ic" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/cratgrup_camera" />
+
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/crateGroupConstrentToolbar">
+
+            <TextView
+                android:id="@+id/crateGroupText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:fontFamily="@font/proximanova_reg"
+                android:text="Create Group Name"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/crateGroupName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/box_botomsheet"
+                android:fontFamily="@font/proximanova_reg"
+                android:padding="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_2ssp"
+                android:singleLine="true"
+                android:text="Vanity Night Club Group"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintTop_toBottomOf="@+id/crateGroupText" />
+
+            <TextView
+                android:id="@+id/crateGroupAddPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+
+                android:fontFamily="@font/proximanova_reg"
+                android:text="Add Person"
+                android:textColor="@color/white_second"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/crateGroupSelectAll"
+                app:layout_constraintTop_toTopOf="@+id/crateGroupSelectAll" />
+
+
+            <TextView
+                android:id="@+id/crateGroupSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:drawableEnd="@drawable/unchk_box"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="Select All"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/crateGroupName" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/crateGroupRecycle"
+                android:layout_margin="@dimen/_10ssp"
+                android:background="@drawable/box_botomsheet"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/group_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/crateGroupAddPerson"
+                android:layout_height="0dp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -65,7 +65,12 @@ class HomeActivity : BaseActivity() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v == binding.bottomChat) {
+        if(v==binding.header.headerCreateGroup){
+            startActivity(Intent(this@HomeActivity,CreateGroupActvity::class.java))
+        }
+
+
+       else if (v == binding.bottomChat) {
             binding.header.headerMapIcon.visibility= INVISIBLE
             binding.header.headerAddrs.visibility=INVISIBLE
             binding.bottmHomeYello.visibility=GONE
@@ -154,6 +159,7 @@ class HomeActivity : BaseActivity() {
 
 
     private fun inItView() {
+        setTouchNClick(binding.header.headerCreateGroup)
         setTouchNClick(binding.bottomChat)
         //setTouchNClick(binding.bottomHome)
         setTouchNClick(binding.bottomHomeRel)

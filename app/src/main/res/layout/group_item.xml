@@ -8,10 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:paddingTop="@dimen/_8sdp">
+        android:paddingTop="@dimen/_7sdp">
 
         <ImageView
-            android:id="@+id/chatItemProfile"
+            android:id="@+id/grupItemProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10ssp"
@@ -20,57 +20,56 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/chatItemTitle"
+            android:id="@+id/grupItemTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_bold"
-            android:paddingTop="@dimen/_5sdp"
+            android:textSize="@dimen/_12ssp"
             android:text="Title"
             android:textColor="@color/white_thred"
-            app:layout_constraintEnd_toStartOf="@+id/chatItemCount"
-            app:layout_constraintStart_toEndOf="@+id/chatItemProfile"
+            app:layout_constraintEnd_toStartOf="@+id/grupItemChk"
+            app:layout_constraintStart_toEndOf="@+id/grupItemProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/chatItemSubTitle"
+            android:id="@+id/grupItemSubTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_reg"
             android:text="SubTitle"
+            android:textSize="@dimen/_11ssp"
             android:textColor="@color/white_second"
-            app:layout_constraintEnd_toStartOf="@+id/chatItemCount"
-            app:layout_constraintStart_toEndOf="@+id/chatItemProfile"
-            app:layout_constraintTop_toBottomOf="@+id/chatItemTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/grupItemTitle"
+            app:layout_constraintEnd_toStartOf="@+id/grupItemChk"
+            app:layout_constraintStart_toEndOf="@+id/grupItemProfile"
+            />
 
 
-        <TextView
-            android:id="@+id/chatItemCount"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
-            android:layout_marginEnd="@dimen/_10ssp"
-            android:background="@drawable/circle_yello"
-            android:gravity="center"
-            android:text="7"
-            android:fontFamily="@font/proximanova_reg"
-            android:textSize="@dimen/_10ssp"
-            android:textColor="@color/text_blk"
-            app:layout_constraintBottom_toBottomOf="@+id/chatItemProfile"
+        <ImageView
+            android:id="@+id/grupItemChk"
+            android:layout_width="wrap_content"
+            android:src="@drawable/unchk_box"
+            android:padding="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/grupItemProfile"
+            app:layout_constraintTop_toTopOf="@+id/grupItemProfile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/chatItemProfile" />
+            android:layout_height="wrap_content"/>
+
 
         <View
             style="@style/view_line"
-            android:layout_height="1dp"
+            android:background="@color/dialog_view_lineclr"
+            android:layout_height=".5dp"
+            android:layout_marginTop="@dimen/_10ssp"
             android:layout_marginStart="@dimen/_10ssp"
             android:layout_marginEnd="@dimen/_10ssp"
-            android:layout_marginTop="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chatItemProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/grupItemProfile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

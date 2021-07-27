@@ -86,5 +86,6 @@
     <string name="Give_Feedback">Give Feedback</string>
     <string name="Review_Rating"><![CDATA[Review & Rating]]></string>
     <string name="Excellent">Excellent!</string>
+    <string name="Create">Create</string>
 
 </resources>

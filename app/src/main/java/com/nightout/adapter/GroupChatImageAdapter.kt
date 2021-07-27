@@ -12,21 +12,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
+import com.nightout.databinding.GrupchatimgItemBinding
 import com.nightout.model.ChatModel
+import com.nightout.model.GroupChatImgModel
 
 
-class ChatAdapter(
+class GroupChatImageAdapter(
     var context: Context,
-    var arrayList: ArrayList<ChatModel>,
+    var arrayList: ArrayList<GroupChatImgModel>,
     var clickListener: ClickListener,
 ) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+    RecyclerView.Adapter<GroupChatImageAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ChatItemBinding = DataBindingUtil.inflate(
+        val binding: GrupchatimgItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.chat_item, parent, false
+            R.layout.grupchatimg_item, parent, false
         )
 
 
@@ -36,16 +38,10 @@ class ChatAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.chatItemTitle.text=arrayList[position].title
-        viewHolder.binding.chatItemSubTitle.text=arrayList[position].subTitle
 
-        viewHolder.binding.chatItemProfile.setImageResource(arrayList[position].imgProfile)
-        viewHolder.binding.chatItemCount.setText(arrayList[position].chatCount)
-        if(position%2==0){
-            viewHolder.binding.chatItemCount.visibility=VISIBLE
-        }else{
-            viewHolder.binding.chatItemCount.visibility= GONE
-        }
+
+        viewHolder.binding.grupchatimgitemImage.setImageResource(arrayList[position].imgProfile)
+
 
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)
@@ -59,9 +55,9 @@ class ChatAdapter(
     }
 
 
-    inner class ViewHolder(itemView: ChatItemBinding) :
+    inner class ViewHolder(itemView: GrupchatimgItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: ChatItemBinding = itemView
+        var binding: GrupchatimgItemBinding = itemView
 
     }
 

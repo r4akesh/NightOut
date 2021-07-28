@@ -65,7 +65,12 @@ class HomeActivity : BaseActivity() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if(v==binding.header.headerCreateGroup){
+
+        if(v==binding.header.headerSetting){
+            startActivity(Intent(this@HomeActivity,FillterActvity::class.java))
+        }
+
+       else if(v==binding.header.headerCreateGroup){
             startActivity(Intent(this@HomeActivity,CreateGroupActvity::class.java))
         }
 
@@ -165,6 +170,7 @@ class HomeActivity : BaseActivity() {
         setTouchNClick(binding.bottomHomeRel)
         setTouchNClick(binding.header.headerSideMenu)
         setTouchNClick(binding.header.headerSearch)
+        setTouchNClick(binding.header.headerSetting)
         setTouchNClick(R.id.sideMenuAbout)
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
         setTouchNClick(R.id.sideMenuTermCond)

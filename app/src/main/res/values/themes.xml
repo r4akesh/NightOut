@@ -95,6 +95,17 @@
         <item name="singleLine">true</item>
     </style>
 
+    <style name="myChip" parent="Base.Widget.MaterialComponents.Chip">
+        <item name="android:background">@drawable/box_botomsheet</item>
+        <item name="android:checkable">true</item>
+
+        <item name="chipIconVisible">false</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="closeIconVisible">false</item>
+
+
+    </style>
+
     <style name="appTextAreaEditText" parent="textRegular">
         <item name="android:textSize">16sp</item>
         <item name="android:background">@color/white</item>

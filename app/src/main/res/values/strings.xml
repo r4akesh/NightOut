@@ -128,5 +128,6 @@
     <string name="addressOne">Address 1</string>
     <string name="addressTwo">Address 2</string>
     <string name="about_me">About me</string>
+    <string name="Filter">Filter</string>
 
 </resources>

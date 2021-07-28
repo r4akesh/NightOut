@@ -129,5 +129,6 @@
     <string name="addressTwo">Address 2</string>
     <string name="about_me">About me</string>
     <string name="Filter">Filter</string>
+    <string name="Help">Help</string>
 
 </resources>

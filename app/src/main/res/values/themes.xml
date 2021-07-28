@@ -70,5 +70,37 @@
     </style>
 
 
+    <style name="appDarkEditText" parent="textRegular">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/proximanova_reg</item>
+        <item name="android:textColorHint">@color/text_gray</item>
+        <item name="singleLine">true</item>
+    </style>
+
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/text_gray</item>
+        <item name="colorControlActivated">@color/text_yello</item>
+        <item name="fontFamily">@font/proximanova_reg</item>
+    </style>
+
+    <style name="appEditText" parent="textRegular">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/text_blk</item>
+        <item name="fontFamily">@font/proximanova_reg</item>
+        <item name="singleLine">true</item>
+    </style>
+
+    <style name="appTextAreaEditText" parent="textRegular">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/text_blk</item>
+        <item name="fontFamily">@font/proximanova_reg</item>
+    </style>
 
 </resources>

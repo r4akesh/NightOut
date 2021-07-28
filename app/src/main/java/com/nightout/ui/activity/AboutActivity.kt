@@ -17,7 +17,7 @@ class AboutActivity : BaseActivity() {
     }
 
     private fun setToolBar() {
-         binding.venulistingToolBar.toolbarTitle.setText("About Us")
+        binding.venulistingToolBar.toolbarTitle.text = "About Us"
         binding.venulistingToolBar.toolbarBack.setOnClickListener {
             finish()
         }

@@ -43,6 +43,13 @@
     <color name="foodstroe_bg">#28375c</color>
     <color name="bookticket_bg">#0d162e</color>
     <color name="seekbar_bg">#162144</color>
+    <color name="color_05DC01">#05DC01</color>
+    <color name="color_8B8B8B">#8B8B8B</color>
+    <color name="color_283E70">#283E70</color>
+    <color name="color_111A2F">#111A2F</color>
+    <color name="color_10122D">#10122D</color>
+    <color name="color_122244">#122244</color>
+    <color name="color_C4C4C4">#C4C4C4</color>
 
 
 </resources>

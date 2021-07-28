@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/botmsheet_listcolor">
+
+    <TextView
+        android:id="@+id/cardTypeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_type"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        style="@style/textRegular"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
+        android:padding="5dp"/>
+
+    <TextView
+        android:id="@+id/cardNumberTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_dummy_number"
+        android:textColor="@color/color_8B8B8B"
+        android:textSize="14sp"
+        style="@style/textRegular"
+        app:layout_constraintTop_toBottomOf="@+id/cardTypeTv"
+        app:layout_constraintStart_toStartOf="@+id/cardTypeTv"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"/>
+
+    <TextView
+        android:id="@+id/expiryTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/expiry_date"
+        android:textColor="@color/color_8B8B8B"
+        android:textSize="14sp"
+        style="@style/textRegular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumberTv"
+        app:layout_constraintStart_toStartOf="@+id/cardTypeTv"
+        android:padding="5dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_visa_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/cardTypeTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardTypeTv" />
+
+    <TextView
+        style="@style/textRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/defaults"
+        android:textColor="@color/color_05DC01"
+        app:layout_constraintBottom_toBottomOf="@+id/expiryTv"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/cardNumberTv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

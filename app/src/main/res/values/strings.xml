@@ -128,5 +128,11 @@
     <string name="addressOne">Address 1</string>
     <string name="addressTwo">Address 2</string>
     <string name="about_me">About me</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="location">Location</string>
+    <string name="country">United Kingdom</string>
+    <string name="edit">Edit</string>
+    <string name="club_name">Club : Vanity Night Club</string>
+    <string name="dumy_date">12 July 2021</string>
 
 </resources>

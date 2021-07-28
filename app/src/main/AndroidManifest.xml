@@ -22,8 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NightOut"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.FillterActvity"/>
-        <activity android:name=".ui.activity.EditProfileActivity"></activity>
+        <activity android:name=".ui.activity.EmergencyContactActivity"></activity>
+        <activity android:name=".ui.activity.ProfileActivity" />
+        <activity android:name=".ui.activity.FillterActvity" />
+        <activity android:name=".ui.activity.EditProfileActivity" />
         <activity android:name=".ui.activity.NotificationActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
         <activity android:name=".ui.activity.PaymentActivity" />
@@ -147,12 +149,11 @@
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-  <activity
+        <activity
             android:name=".ui.activity.GroupInfoActvity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
     </application>
 
 </manifest>

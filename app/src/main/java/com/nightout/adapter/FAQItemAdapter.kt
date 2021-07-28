@@ -18,7 +18,7 @@ class FAQItemAdapter(private val mContext:Context):RecyclerView.Adapter<FAQItemA
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(mContext).inflate(R.layout.row_terms_cms_layout, parent, false)
+        val view: View = LayoutInflater.from(mContext).inflate(R.layout.row_faq_item_layout, parent, false)
         return ViewHolder(view)
     }
 

@@ -145,5 +145,13 @@
     <string name="Product_Details">Product Details</string>
     <string name="Write_here">Write here...</string>
     <string name="Choose_Venues">Choose Venues</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="dummy_time">02:00 am</string>
+    <string name="where_are_you_go">Where are you going</string>
+    <string name="change">Change?</string>
+    <string name="dummy_taxi_company_name">Uber taxi</string>
+    <string name="dummy_distance">2.2 km away</string>
+    <string name="select_taxi">Select Taxi</string>
+    <string name="select_your_taxi">Select your taxi</string>
 
 </resources>

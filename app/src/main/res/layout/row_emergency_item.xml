@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data></data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/background_gray">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -24,7 +26,7 @@
                 android:textSize="14sp"
                 style="@style/textRegular"
                 android:textColor="@color/white"
-                android:padding="5dp"
+                android:padding="10dp"
                 />
 
             <TextView
@@ -32,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:gravity="end"
                 android:text="@string/dumy_date"
                 android:textColor="@color/white"
@@ -42,21 +44,59 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/rounded_dark_blue">
 
-            <ImageView
-                android:id="@+id/locationView"
+            <TextView
+                android:id="@+id/contactPersonName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:text="@string/dummy_name"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:padding="5dp"
+                style="@style/textRegular"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/contactNumber"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_address"
+                android:textColor="@color/white_second"
+                android:textSize="13sp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:lineSpacingExtra="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contactPersonName"
+                app:layout_constraintStart_toStartOf="@+id/contactPersonName"/>
+
+
+            <TextView
+                style="@style/textNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/contactPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/contactPersonName"
+                android:text="@string/dummy_time"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

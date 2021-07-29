@@ -1,6 +1,9 @@
 package com.nightout.ui.activity
 
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +12,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,8 +22,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
+import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.ui.fragment.ChatFragment
 import com.nightout.ui.fragment.HomeFragment
+import com.nightout.ui.fragment.TransportFragment
 import com.nightout.utils.Util
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
@@ -25,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.home_activity.view.*
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
     lateinit var binding: HomeActivityBinding
     private var fragmentManager: FragmentManager? = null
@@ -66,6 +74,7 @@ class HomeActivity : BaseActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == sideMenuTrackTrace) {
@@ -130,6 +139,25 @@ class HomeActivity : BaseActivity() {
                 //appBarAndStatusBarProfile()
                 // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
                 showFragment(HomeFragment())
+            }
+        } else if (v == binding.bottomTransport) {
+            binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this,R.color.text_yello))
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this,R.color.text_yello))
+            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                R.drawable.btm_chat_ic,
+                0,
+                0
+            )
+            binding.bottomChat.setTextColor(resources.getColor(R.color.white))
+            //do countine
+
+
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is TransportFragment) {
+                //appBarAndStatusBarProfile()
+                // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
+                showFragment(TransportFragment(this))
             }
         } else if (v == binding.header.headerSideMenu) {
             if (slidingRootNav!!.isMenuOpened) {
@@ -228,6 +256,7 @@ class HomeActivity : BaseActivity() {
         setTouchNClick(R.id.sidemenu_profile)
         sideMenuProfile = findViewById(R.id.sidemenu_profile)
         sideMenuTrackTrace = findViewById(R.id.sideMenuTrackTrace)
+        setTouchNClick(binding.bottomTransport)
 
 
     }
@@ -259,5 +288,19 @@ class HomeActivity : BaseActivity() {
                 Toast.LENGTH_SHORT
             ).show();
         back_pressed_time = System.currentTimeMillis();
+    }
+
+    fun TextView.setDrawableColor(color: Int) {
+        compoundDrawables.filterNotNull().forEach {
+            it.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_IN)
+        }
+    }
+
+    override fun onOpenMenu() {
+        if (slidingRootNav!!.isMenuOpened) {
+            slidingRootNav!!.closeMenu()
+        } else {
+            slidingRootNav!!.openMenu()
+        }
     }
 }

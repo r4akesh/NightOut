@@ -22,26 +22,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/headerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/proximanova_bold"
-            android:text="Hi Rakesh"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
-
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/headerMapIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_40sdp"
             android:src="@drawable/addrs_home"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
 
@@ -56,49 +42,23 @@
             android:text="A 629 Fairclough "
             android:textColor="@color/text_gray"
             android:textSize="@dimen/_10sdp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/headerMapIcon"
             app:layout_constraintStart_toEndOf="@+id/headerMapIcon"
             app:layout_constraintTop_toBottomOf="@+id/headerTitle"
             app:layout_constraintTop_toTopOf="@+id/headerMapIcon" />
 
-        <ImageView
-            android:id="@+id/headerSearch"
+        <TextView
+            android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_7ssp"
-            android:paddingTop="@dimen/_10ssp"
-            android:paddingEnd="@dimen/_7ssp"
-            android:paddingBottom="@dimen/_10ssp"
-            android:src="@drawable/ic_search"
+            android:fontFamily="@font/proximanova_bold"
+            android:text="Chat Group"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/headerNotification"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
 
-
-        <ImageView
-            android:id="@+id/headerNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_7ssp"
-            android:paddingTop="@dimen/_10ssp"
-            android:paddingEnd="@dimen/_7ssp"
-            android:paddingBottom="@dimen/_10ssp"
-            android:src="@drawable/ic_bell"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/headerSetting"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/headerSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_7ssp"
-            android:paddingTop="@dimen/_10ssp"
-            android:paddingEnd="@dimen/_10ssp"
-            android:paddingBottom="@dimen/_10ssp"
-            android:src="@drawable/ic_setting"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -117,12 +77,11 @@
             android:text="@string/Create_Group"
             android:textColor="@color/black_pure"
             android:textSize="@dimen/_11ssp"
-            android:visibility="gone"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

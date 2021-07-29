@@ -56,6 +56,8 @@
     <color name="color_414141">#414141</color>
     <color name="clear_toolbar_clr">#CCCCCC</color>
     <color name="img_bg_clr">#0e1c3a</color>
+    <color name="speed_border">#343749</color>
+    <color name="speed_bg">#1d2546</color>
 
 
 </resources>

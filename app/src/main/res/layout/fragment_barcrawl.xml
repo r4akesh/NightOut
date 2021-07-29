@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/headerBarCrawl"
+            layout="@layout/barcrawl_header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_20ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+        <fragment
+            android:id="@+id/barcrawleMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_marginBottom="@dimen/_80sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/headerBarCrawl" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragmentBatRecyclerTop"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_4ssp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerBarCrawl" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/barcrawlBtmConstrent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gredient_btmshet_bg"
+            android:paddingBottom="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:id="@+id/barCrwalView"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_2ssp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_7ssp"
+                android:background="@drawable/box_btn_bg_white2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/barcrawlCar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20ssp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:background="@drawable/box_speed"
+                android:drawableStart="@drawable/car_ic"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:padding="@dimen/_5sdp"
+                android:text="08min"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barCrwalView" />
+
+            <TextView
+                android:id="@+id/barcrawlBus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:background="@drawable/box_speed"
+                android:drawableStart="@drawable/bus_ic"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:padding="@dimen/_5sdp"
+                android:text="20min"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toStartOf="@+id/barcrawlMan"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/barcrawlCar"
+                app:layout_constraintTop_toBottomOf="@+id/barCrwalView" />
+
+            <TextView
+                android:id="@+id/barcrawlMan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/box_speed"
+                android:drawableStart="@drawable/man_ic"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="30min"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barCrwalView"
+
+                />
+
+            <TextView
+                android:id="@+id/barcrawlSharBarCrawal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/gredient_bg"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:padding="@dimen/_10ssp"
+                android:text="Share bar crawl"
+                android:textColor="@color/black_pure"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+
+
+                app:layout_constraintTop_toBottomOf="@+id/barcrawlMan" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

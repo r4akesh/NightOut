@@ -15,14 +15,21 @@ import com.nightout.databinding.FragmentChatBinding
 import com.nightout.databinding.FragmentHomeBinding
 import com.nightout.model.ChatModel
 import com.nightout.ui.activity.ChatPersonalActvity
+import com.nightout.ui.activity.HomeActivity
 
-class ChatFragment : Fragment() {
+class ChatFragment : Fragment() , View.OnClickListener {
 
     lateinit var binding : FragmentChatBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         setDuumyList()
+        initView()
         return binding.root
+    }
+
+    private fun initView() {
+        binding.headerChat.headerSideMenu.setOnClickListener(this)
+        binding.headerChat.headerCreateGroup.setOnClickListener(this)
     }
 
     lateinit var chatAdapter: ChatAdapter
@@ -53,6 +60,16 @@ class ChatFragment : Fragment() {
         binding.fragmentChatRecycler.also {
             it.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             it.adapter = chatAdapter
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if(v==binding.headerChat.headerSideMenu){
+            (activity as HomeActivity?)?.sideMenuBtnClick()
+        }
+
+      else   if(v==binding.headerChat.headerCreateGroup){
+            (activity as HomeActivity?)?.crateGroupBtnClick()
         }
     }
 }

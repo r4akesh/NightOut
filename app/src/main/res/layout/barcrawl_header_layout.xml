@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        >
+
+        <ImageView
+            android:id="@+id/headerSideMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10ssp"
+            android:src="@drawable/ic_side_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/searchLocation_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:background="@drawable/box_serch"
+            android:drawableStart="@drawable/search_ic"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:hint="@string/search_here"
+            android:padding="@dimen/_8ssp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/text_hint2"
+            android:textCursorDrawable="@drawable/cursor_white"
+            android:textSize="@dimen/_13ssp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/headerSideMenu"
+            app:layout_constraintEnd_toStartOf="@+id/headerNotification"
+            app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
+            app:layout_constraintTop_toTopOf="@+id/headerSideMenu" />
+
+
+
+
+
+
+
+
+        <ImageView
+            android:id="@+id/headerNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_7ssp"
+            android:paddingTop="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_7ssp"
+            android:paddingBottom="@dimen/_10ssp"
+            android:src="@drawable/ic_bell"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/header3DotImg"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/header3DotImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_7ssp"
+            android:paddingTop="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_10ssp"
+
+            android:src="@drawable/setting_threedot"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

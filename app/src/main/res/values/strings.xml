@@ -153,5 +153,7 @@
     <string name="dummy_distance">2.2 km away</string>
     <string name="select_taxi">Select Taxi</string>
     <string name="select_your_taxi">Select your taxi</string>
+    <string name="Send">Send</string>
+    <string name="Share">Share</string>
 
 </resources>

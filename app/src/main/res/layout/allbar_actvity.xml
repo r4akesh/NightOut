@@ -2,35 +2,38 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
 
-
-        <include
-            android:id="@+id/headerChat"
-            layout="@layout/chat_header_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/allBarConstrentToolbar"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <include
+                android:id="@+id/allBarToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragmentChatRecycler"
             android:layout_width="match_parent"
+            android:id="@+id/allBarRecycle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerChat"
+            app:layout_constraintTop_toBottomOf="@+id/allBarConstrentToolbar"
             android:layout_height="0dp"/>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

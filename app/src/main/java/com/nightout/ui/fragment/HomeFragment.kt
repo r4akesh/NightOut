@@ -16,8 +16,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
-
 import com.nightout.R
 import com.nightout.adapter.StoryAdapter
 import com.nightout.adapter.VenuTitleBotmSheetAdapter
@@ -27,10 +25,11 @@ import com.nightout.model.VenuBotmSheetModel
 import com.nightout.model.VenuBotmSheetTitleModel
 import com.nightout.ui.activity.EventDetail
 import com.nightout.ui.activity.FoodStoreActvity
+import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.VenuListActvity
 
 
-class HomeFragment : Fragment() , OnMapReadyCallback {
+class HomeFragment : Fragment() , OnMapReadyCallback, View.OnClickListener {
 
     lateinit var binding : FragmentHomeBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
@@ -59,11 +58,19 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
         })
         val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this);
-
+        initView()
         setListStoryDummy()
         setListVenuListBootmShhetDuumy()
 
         return binding.root
+    }
+
+
+
+    private fun initView() {
+        binding.headerHome.headerSideMenu.setOnClickListener(this)
+        binding.headerHome.headerSearch.setOnClickListener(this)
+        binding.headerHome.headerSetting.setOnClickListener(this)
     }
 
     lateinit var venuTitleBotmSheetAdapter: VenuTitleBotmSheetAdapter
@@ -78,37 +85,39 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
         listTile.add(VenuBotmSheetTitleModel("Pubs", listSub))
         listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
         listTile.add(VenuBotmSheetTitleModel("Food", listSub))
-        listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
+        listSub.add(
+            VenuBotmSheetModel(
+                "Neon Nights",
+                "25 Fairclough St, Lverol",
+                R.drawable.venusub_img3
+            )
+        )
         listTile.add(VenuBotmSheetTitleModel("Event", listSub))
         venuTitleBotmSheetAdapter = VenuTitleBotmSheetAdapter(
             requireContext(),
             listTile,
             object : VenuTitleBotmSheetAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-                    if(pos == 0 || pos ==1) {
+                    if (pos == 0 || pos == 1) {
                         startActivity(Intent(requireActivity(), VenuListActvity::class.java))
-                    }
-                    else if(pos==2){
+                    } else if (pos == 2) {
                         startActivity(Intent(requireActivity(), VenuListActvity::class.java))
-                    }
-                    else if(pos==3){
+                    } else if (pos == 3) {
                         startActivity(Intent(requireActivity(), FoodStoreActvity::class.java))
-                    } else if(pos==4){
+                    } else if (pos == 4) {
                         startActivity(Intent(requireActivity(), EventDetail::class.java))
                     }
 
                 }
 
                 override fun onWholeClickdd(subPos: Int, mainPos: Int) {
-                    if(mainPos == 0 || mainPos ==1) {
+                    if (mainPos == 0 || mainPos == 1) {
                         startActivity(Intent(requireActivity(), VenuListActvity::class.java))
-                    }
-                    else if(mainPos==2){
+                    } else if (mainPos == 2) {
                         startActivity(Intent(requireActivity(), VenuListActvity::class.java))
-                    }
-                    else if(mainPos==3){
+                    } else if (mainPos == 3) {
                         startActivity(Intent(requireActivity(), FoodStoreActvity::class.java))
-                    }else if(mainPos==4){
+                    } else if (mainPos == 4) {
                         startActivity(Intent(requireActivity(), EventDetail::class.java))
                     }
 
@@ -164,6 +173,19 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(55.3781, 3.4360)))
         } catch (e: Exception) {
         }
+    }
+
+    override fun onClick(v: View?) {
+         if(v==binding.headerHome.headerSideMenu){
+             (activity as HomeActivity?)?.sideMenuBtnClick()
+         }
+
+        else if(v==binding.headerHome.headerSetting){
+            (activity as HomeActivity?)?.filtterBtnClick()
+        }
+         else if(v==binding.headerHome.headerSearch){
+             (activity as HomeActivity?)?.seacrhBtnClick()
+         }
     }
 
 

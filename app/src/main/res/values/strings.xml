@@ -145,5 +145,7 @@
     <string name="Product_Details">Product Details</string>
     <string name="Write_here">Write here...</string>
     <string name="Choose_Venues">Choose Venues</string>
+    <string name="Send">Send</string>
+    <string name="Share">Share</string>
 
 </resources>

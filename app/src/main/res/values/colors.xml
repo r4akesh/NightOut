@@ -16,6 +16,7 @@
     <color name="text_gray3">#6c7082</color>
     <color name="text_whitegray">#eaebed</color>
     <color name="text_blk">#131313</color>
+    <color name="red_clr">#ff0000</color>
     <color name="text_yello">#ffc800</color>
     <color name="text_hint">#B0B0B0</color>
     <color name="text_hint2">#7687aa</color>
@@ -51,6 +52,9 @@
     <color name="color_122244">#122244</color>
     <color name="color_C4C4C4">#C4C4C4</color>
     <color name="color_252342">#252342</color>
+    <color name="filter_btm_bg">#111c36</color>
+    <color name="clear_toolbar_clr">#CCCCCC</color>
+    <color name="img_bg_clr">#0e1c3a</color>
 
 
 </resources>

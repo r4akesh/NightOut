@@ -7,14 +7,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/constrent_toolbar"
         android:layout_width="match_parent"
-
-
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-
-
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -93,6 +88,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
+        <TextView
+            android:id="@+id/toolbarClearAll"
+            android:layout_width="wrap_content"
+            android:text="Clear All"
+            android:fontFamily="@font/proximanova_reg"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
+            android:padding="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back"
+            android:textColor="@color/clear_toolbar_clr"
+            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

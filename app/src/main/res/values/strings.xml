@@ -134,5 +134,16 @@
     <string name="edit">Edit</string>
     <string name="club_name">Club : Vanity Night Club</string>
     <string name="dumy_date">12 July 2021</string>
+    <string name="Filter">Filter</string>
+    <string name="Help">Help</string>
+    <string name="Lost_Item_Name">Lost Item Name</string>
+    <string name="Enter_Product_name">Enter Product name</string>
+    <string name="Full_Name">Full Name</string>
+    <string name="Enter_your_name">Enter your name</string>
+    <string name="Email_Id">Email Id</string>
+    <string name="Enter_mail">Enter mail</string>
+    <string name="Product_Details">Product Details</string>
+    <string name="Write_here">Write here...</string>
+    <string name="Choose_Venues">Choose Venues</string>
 
 </resources>

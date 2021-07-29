@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@drawable/background_gray">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrent_toolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/lostItemToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5ssp"
+            app:layout_constraintBottom_toTopOf="@+id/lostActvityChooseVenues"
+            app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lostActvityImageConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_margin="@dimen/_10ssp"
+                    android:background="@drawable/dotted_border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/img_pick"
+                        android:text="upload image"
+                        android:textColor="@color/white_second"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lostActvityLostItemConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_botomsheet"
+                    android:padding="@dimen/_10ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/lostActvityImageConstrent">
+
+                    <TextView
+                        android:id="@+id/textLost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="@string/Lost_Item_Name"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="@string/Enter_Product_name"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/textLost" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lostActvityFulNameConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_botomsheet"
+                    android:padding="@dimen/_10ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/lostActvityLostItemConstrent">
+
+                    <TextView
+                        android:id="@+id/textName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="@string/Full_Name"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="@string/Enter_your_name"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lostActvityEmailConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_botomsheet"
+                    android:padding="@dimen/_10ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/lostActvityFulNameConstrent">
+
+                    <TextView
+                        android:id="@+id/textEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="@string/Email_Id"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="@string/Enter_mail"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lostActvityPhnoConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_botomsheet"
+                    android:padding="@dimen/_10ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/lostActvityEmailConstrent">
+
+                    <ImageView
+                        android:id="@+id/loginFlag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@null"
+                        android:src="@drawable/uk_flag_ic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/loginCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="+44"
+                        android:textColor="@color/white_thred"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginFlag"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:id="@+id/loginPipe"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@color/text_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginCountryCode"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@null"
+
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="(000) 00 00 000"
+                        android:inputType="number"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingEnd="@dimen/_5ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginPipe"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lostActvityDetailConstrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:background="@drawable/box_botomsheet"
+                    android:padding="@dimen/_10ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/lostActvityPhnoConstrent">
+
+                    <TextView
+                        android:id="@+id/textDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="@string/Product_Details"
+                        android:textColor="@color/white_second"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_80sdp"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="@string/Write_here"
+                        android:gravity="top"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/text_gray"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/textDetail" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lostActvityChooseVenues"
+            style="@style/buttonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Choose_Venues"
+            android:layout_marginBottom="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

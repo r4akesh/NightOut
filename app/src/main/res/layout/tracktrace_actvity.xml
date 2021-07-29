@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrent_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+           app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <fragment
+                android:id="@+id/treactraceMap"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_back" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/header_top_ic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/toolbar_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@null"
+                android:paddingStart="@dimen/_15ssp"
+                android:paddingTop="@dimen/_10ssp"
+                android:paddingEnd="@dimen/_10ssp"
+                android:paddingBottom="@dimen/_10ssp"
+                android:src="@drawable/back_ic_toolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:padding="@dimen/_10ssp"
+                android:text="Club Menu"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toEndOf="@+id/toolbar_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/toolbarCreateGrop"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/box_btn_bg_yello"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:paddingTop="@dimen/_3ssp"
+                android:paddingBottom="@dimen/_3ssp"
+                android:text="@string/Help"
+                android:textColor="@color/black_pure"
+                android:textSize="@dimen/_11ssp"
+
+                app:layout_constraintBottom_toBottomOf="@id/toolbar_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tractraceaBtmConstrent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gredient_btmshet_bg"
+            android:paddingBottom="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:id="@+id/tractraceaView"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_2ssp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_7ssp"
+                android:background="@drawable/box_btn_bg_white2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tractraceaSetEndLoc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_7ssp"
+                android:background="@drawable/gredient_bg"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:padding="@dimen/_10ssp"
+                android:text="Set End Location"
+                android:textColor="@color/black_pure"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tractraceaLostitem"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tractraceaView" />
+
+            <TextView
+                android:id="@+id/tractraceaLostitem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/gredient_bg"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:padding="@dimen/_10ssp"
+                android:text="Lost Item"
+                android:textColor="@color/black_pure"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tractraceaSetEndLoc"
+                app:layout_constraintTop_toBottomOf="@+id/tractraceaView" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/box_red_bg"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:padding="@dimen/_10ssp"
+                android:text="Panic"
+                android:textColor="@color/black_pure"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tractraceaSetEndLoc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

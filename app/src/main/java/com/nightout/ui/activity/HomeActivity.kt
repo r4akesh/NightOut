@@ -37,6 +37,7 @@ class HomeActivity : BaseActivity() {
     var sideMenuContactUs: TextView? = null
     var sideMenuSetting: TextView? = null
     var sideMenuProfile: ImageView? = null
+    var sideMenuTrackTrace: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +68,13 @@ class HomeActivity : BaseActivity() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v == binding.header.headerCreateGroup) {
+        if (v == sideMenuTrackTrace) {
+            slidingRootNav!!.closeMenu()
+            startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
+        }
+       else if (v == binding.header.headerSetting) {
+            startActivity(Intent(this@HomeActivity, FillterActvity::class.java))
+        } else if (v == binding.header.headerCreateGroup) {
             startActivity(Intent(this@HomeActivity, CreateGroupActvity::class.java))
         } else if (v == binding.bottomChat) {
             binding.header.headerMapIcon.visibility = INVISIBLE
@@ -151,6 +158,8 @@ class HomeActivity : BaseActivity() {
         }else if (v == sideMenuProfile) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
+            slidingRootNav!!.closeMenu()
+            startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
         }
     }
 
@@ -204,9 +213,11 @@ class HomeActivity : BaseActivity() {
         setTouchNClick(binding.bottomHomeRel)
         setTouchNClick(binding.header.headerSideMenu)
         setTouchNClick(binding.header.headerSearch)
+        setTouchNClick(binding.header.headerSetting)
         setTouchNClick(R.id.sideMenuAbout)
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
         setTouchNClick(R.id.sideMenuTermCond)
+        setTouchNClick(R.id.sideMenuTrackTrace)
         sideMenuTermCond = findViewById(R.id.sideMenuTermCond)
         setTouchNClick(R.id.sideMenuFAQ)
         sideMenuFaq = findViewById(R.id.sideMenuFAQ)
@@ -216,6 +227,7 @@ class HomeActivity : BaseActivity() {
         sideMenuSetting = findViewById(R.id.sideMenuSetting)
         setTouchNClick(R.id.sidemenu_profile)
         sideMenuProfile = findViewById(R.id.sidemenu_profile)
+        sideMenuTrackTrace = findViewById(R.id.sideMenuTrackTrace)
 
 
     }

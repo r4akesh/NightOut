@@ -13,7 +13,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/filterActivityToolbar"
+            android:id="@+id/filterActivityToolbarConstrent"
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
@@ -22,126 +22,320 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include
-                android:id="@+id/venulistingToolBar"
+                android:id="@+id/filterActivityToolbar"
                 layout="@layout/toolbar_common" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/filterActivityNested"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/filterActivityFilter"
+            app:layout_constraintTop_toBottomOf="@+id/filterActivityToolbarConstrent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/filterActivityWhat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:text="What's The Farthest Distance You Want To Go?"
+                    android:textColor="@color/white_thred"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/filterActivitySlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5ssp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:stepSize="1"
+                    android:valueFrom="0"
+                    android:valueTo="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/filterActivityWhat"
+                    app:thumbColor="@color/text_yello"
+                    app:thumbRadius="@dimen/_10ssp"
+                    app:trackColorActive="@color/text_yello"
+                    app:trackColorInactive="@color/seekbar_bg"
+
+                    app:trackHeight="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/filterActivityStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_4sdp"
+
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="0 km"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/filterActivitySlider" />
+
+
+                <TextView
+                    android:id="@+id/filterActivityEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_4sdp"
+
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="10 km"
+                    android:textColor="@color/white_thred"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/filterActivityStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/filterActivityStart" />
+
+
+                <TextView
+                    android:id="@+id/filterActivityCategories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="Categories"
+                    android:textColor="@color/white_thred"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/filterActivityStart" />
+
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/filterGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/filterActivityCategories">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/filter_ss_chip"
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+
+                        android:text="Vibes"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states"
+
+                        app:chipIconTint="@color/green_clr_light" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/filter_ss_chip2"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Drinks"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clubs"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date Night"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Restaurants"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Activities"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Instagrammable"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sundowners"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LGBTQ+"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+
+                    <com.google.android.material.chip.Chip
+
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cafes"
+                        app:checkedIconEnabled="true"
+                        app:chipBackgroundColor="@color/chip_bg_states" />
+                </com.google.android.material.chip.ChipGroup>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filterActivityRecyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/filterGroup" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:background="@color/filter_btm_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/filterActivityRecyle">
+
+                    <TextView
+                        android:id="@+id/filterActivityOutDoorVenues"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Out Door Venues"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/filterActivityOutDoorAreas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Outdoor Areas"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/filterActivityOutDoorVenues" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/_10ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/filterActivityOutDoorAreas"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/filterActivityOutDoorAreas" />
+
+                    <View
+                        android:id="@+id/filterActivityViewBlk"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:background="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/filterActivityOutDoorAreas" />
+
+                    <TextView
+                        android:id="@+id/filterActivityOpenNow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Open Now"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/filterActivityViewBlk" />
+
+                    <TextView
+                        android:id="@+id/filterActivityOnly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Only Show Places Open Now"
+                        android:textColor="@color/white_thred"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/filterActivityOpenNow" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/_10ssp"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/filterActivityOnly"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/filterActivityOnly" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filterActivityFilter"
+            style="@style/buttonTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/filterActivityToolbar">
-
-            <TextView
-                android:id="@+id/filterActivityWhat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:layout_marginEnd="@dimen/_10ssp"
-                android:text="What's The Farthest Distance You Want To Go?"
-                android:textColor="@color/white_thred"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/filterActivitySlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5ssp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:stepSize="1"
-                android:valueFrom="0"
-                android:valueTo="10"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filterActivityWhat"
-                app:thumbColor="@color/text_yello"
-                app:thumbRadius="@dimen/_10ssp"
-                app:trackColorActive="@color/text_yello"
-                app:trackColorInactive="@color/seekbar_bg"
-
-                app:trackHeight="@dimen/_12ssp" />
-
-            <TextView
-                android:id="@+id/filterActivityStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:layout_marginTop="@dimen/_4sdp"
-
-                android:fontFamily="@font/proximanova_reg"
-                android:text="0 km"
-                android:textColor="@color/text_gray"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filterActivitySlider" />
-
-
-            <TextView
-                android:id="@+id/filterActivityEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:layout_marginTop="@dimen/_4sdp"
-
-                android:layout_marginEnd="@dimen/_10ssp"
-                android:fontFamily="@font/proximanova_reg"
-                android:text="10 km"
-                android:textColor="@color/white_thred"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/filterActivityStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/filterActivityStart" />
-
-
-            <TextView
-                android:id="@+id/filterActivityCategories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:fontFamily="@font/proximanova_reg"
-                android:text="Categories"
-                android:textColor="@color/white_thred"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filterActivityStart" />
-
-
-
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/filterGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filterActivityCategories"
-                app:singleSelection="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_ss_chip"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/box_botomsheet"
-                    android:text="Dogs" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_ss_chip2"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-
-                    android:background="@drawable/box_botomsheet"
-                    android:text="Cats" />
-            </com.google.android.material.chip.ChipGroup>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10ssp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Filter"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

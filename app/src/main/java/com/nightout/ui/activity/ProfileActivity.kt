@@ -18,12 +18,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setToolBar() {
-        binding.toolbarBack.setOnClickListener {
-            finish()
-        }
 
-        binding.editProfileBtn.setOnClickListener {
-            startActivity(Intent(this,EditProfileActivity::class.java))
-        }
+
     }
 }

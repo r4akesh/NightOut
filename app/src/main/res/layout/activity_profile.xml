@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/toolbar_back"
+                        android:id="@+id/menuOpenBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_30sdp"
@@ -39,7 +39,7 @@
                         android:paddingBottom="@dimen/_10ssp"
                         android:paddingStart="@dimen/_15ssp"
                         android:paddingEnd="@dimen/_10ssp"
-                        android:src="@drawable/back_ic_toolbar"
+                        android:src="@drawable/ic_side_menu"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,13 +47,13 @@
                         android:id="@+id/userProfile"
                         android:layout_width="122dp"
                         android:layout_height="122dp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_40sdp"
                         android:src="@drawable/boy"
                         app:civ_border_color="@color/text_yello"
                         app:civ_border_width="2dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/toolbar_back">
+                        app:layout_constraintTop_toTopOf="@+id/menuOpenBtn">
 
 
                     </de.hdodenhof.circleimageview.CircleImageView>

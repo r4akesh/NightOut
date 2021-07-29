@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -23,14 +22,10 @@ import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
 import com.nightout.interfaces.OnMenuOpenListener
-import com.nightout.ui.fragment.BarCrwalFragment
-import com.nightout.ui.fragment.ChatFragment
-import com.nightout.ui.fragment.HomeFragment
-import com.nightout.ui.fragment.TransportFragment
+import com.nightout.ui.fragment.*
 import com.nightout.utils.Util
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.home_activity.view.*
 
@@ -52,7 +47,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@HomeActivity, R.layout.home_activity)
 
-      //  binding.header.headerTitle.setText("Hi, User")
+        //  binding.header.headerTitle.setText("Hi, User")
 
         //sideMenu
         val widthRatio = Util.ratioOfScreen(this, 0.7f)
@@ -80,93 +75,32 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         if (v == sideMenuTrackTrace) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
-        }
-/*       else if (v == binding.header.headerSetting) {
-            startActivity(Intent(this@HomeActivity, FillterActvity::class.java))
-        } else if (v == binding.header.headerCreateGroup) {
-            startActivity(Intent(this@HomeActivity, CreateGroupActvity::class.java))
-        }
-        else if(v==binding.bottomBarCrawl){
-            binding.header.headerMapIcon.visibility = INVISIBLE
-            binding.header.headerAddrs.visibility = INVISIBLE
-            binding.bottmHomeYello.visibility = GONE
-            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
-
-            binding.bottomBarCrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_barcrawl_ic_selected, 0, 0)
-            binding.bottomBarCrawl.setTextColor(resources.getColor(R.color.text_yello))
-            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
-
-            binding.header.headerCreateGroup.visibility = GONE
-            binding.header.headerTitle.visibility = GONE
-            binding.header.headerSearch.visibility = GONE
-            binding.header.headerNotification.visibility = VISIBLE
-            binding.header.headerSetting.visibility = GONE
-
-
-        }
-
-
-        else if (v == binding.bottomChat) {
-            binding.header.headerMapIcon.visibility = INVISIBLE
-            binding.header.headerAddrs.visibility = INVISIBLE
-            binding.bottmHomeYello.visibility = GONE
-            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
-
-            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_chat_ic_selected, 0, 0)
-            binding.bottomChat.setTextColor(resources.getColor(R.color.text_yello))
-
-
-            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
-            binding.header.headerTitle.text = "Chat Group"
-            binding.header.headerCreateGroup.visibility = VISIBLE
-            binding.header.headerSearch.visibility = GONE
-            binding.header.headerNotification.visibility = GONE
-            binding.header.headerSetting.visibility = GONE
-            if (currentFragment !is ChatFragment) {
-                //appBarAndStatusBarProfile()
-                //  showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
-                showFragment(ChatFragment())
-            }
-        } else if (v == binding.bottomHomeRel) {
-            binding.header.headerMapIcon.visibility = VISIBLE
-            binding.header.headerAddrs.visibility = VISIBLE
-            binding.bottmHomeYello.visibility = VISIBLE
-            binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
-
-            //headerTop
-            binding.header.headerTitle.text = "Hi, User"
-            binding.header.headerCreateGroup.visibility = GONE
-            binding.header.headerSearch.visibility = VISIBLE
-            binding.header.headerNotification.visibility = VISIBLE
-            binding.header.headerSetting.visibility = VISIBLE
-
-            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                0,
-                R.drawable.btm_chat_ic,
-                0,
-                0
-            )
-            binding.bottomChat.setTextColor(resources.getColor(R.color.white))
-            //do countine
-
-
-            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
-            if (currentFragment !is HomeFragment) {
-                //appBarAndStatusBarProfile()
-                // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
-                showFragment(HomeFragment())
-            }
         } else if (v == binding.bottomTransport) {
-            binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this,R.color.text_yello))
-            binding.bottomTransport.setTextColor(ContextCompat.getColor(this,R.color.text_yello))
-            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                0,
-                R.drawable.btm_chat_ic,
-                0,
-                0
+
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_yello
+                )
             )
-            binding.bottomChat.setTextColor(resources.getColor(R.color.white))
-            //do countine
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottmHomeYello.visibility = GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
+
+            binding.bottomMyProfile.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
 
 
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
@@ -175,27 +109,33 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
                 // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
                 showFragment(TransportFragment(this))
             }
-        } else if (v == binding.header.headerSideMenu) {
-            if (slidingRootNav!!.isMenuOpened) {
-                slidingRootNav!!.closeMenu()
-            } else {
-                slidingRootNav!!.openMenu()
-            }
-        } else if (v == binding.header.headerSearch) {
-            startActivity(Intent(this@HomeActivity, SearchLocationActivity::class.java))
-            overridePendingTransition(0, 0)
-        } */
-        else if (v == binding.bottomHomeRel) {
+        } else if (v == binding.bottomHomeRel) {
 
             binding.bottmHomeYello.visibility = VISIBLE
             binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
 
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_chat_ic, 0, 0)
-            binding.bottomChat.setTextColor(resources.getColor(R.color.white))
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            binding.bottomBarCrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_barcrawl_ic, 0, 0)
-            binding.bottomBarCrawl.setTextColor(resources.getColor(R.color.white))
+            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomMyProfile.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
+
 
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is HomeFragment) {
@@ -203,136 +143,165 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
                 // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
                 showFragment(HomeFragment())
             }
-        }
-        else if (v == binding.bottomChat) {
+        } else if (v == binding.bottomChat) {
 
             binding.bottmHomeYello.visibility = GONE
             binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
 
-            binding.bottomBarCrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_barcrawl_ic, 0, 0)
-            binding.bottomBarCrawl.setTextColor(resources.getColor(R.color.white))
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_yello))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomMyProfile.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
 
 
-            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_chat_ic_selected, 0, 0)
-            binding.bottomChat.setTextColor(resources.getColor(R.color.text_yello))
+
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is ChatFragment) {
                 //appBarAndStatusBarProfile()
                 //  showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
                 showFragment(ChatFragment())
             }
-        }
-        else if(v==binding.bottomBarCrawl){
+        } else if (v == binding.bottomBarCrawl) {
             binding.bottmHomeYello.visibility = GONE
             binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
 
-            binding.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_chat_ic, 0, 0)
-            binding.bottomChat.setTextColor(resources.getColor(R.color.white))
+            binding.bottomBarCrawl.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_yello
+                )
+            )
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
 
-            binding.bottomBarCrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.btm_barcrawl_ic_selected, 0, 0)
-            binding.bottomBarCrawl.setTextColor(resources.getColor(R.color.text_yello))
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomMyProfile.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
+
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is BarCrwalFragment) {
 
                 showFragment(BarCrwalFragment())
             }
-        }
+        }else if (v == binding.bottomMyProfile) {
+            binding.bottmHomeYello.visibility = GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
 
-        else if (v == sideMenuAbout) {
+            binding.bottomMyProfile.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_yello
+                )
+            )
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomBarCrawl.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is ProfileFragment) {
+
+                showFragment(ProfileFragment(this))
+            }
+        } else if (v == sideMenuAbout) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, AboutActivity::class.java))
         } else if (v == sideMenuTermCond) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
-        }else if (v == sideMenuFaq) {
+        } else if (v == sideMenuFaq) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, FAQActivity::class.java))
-        }else if (v == sideMenuContactUs) {
+        } else if (v == sideMenuContactUs) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, ContactUsActivity::class.java))
-        }else if (v == sideMenuSetting) {
+        } else if (v == sideMenuSetting) {
             slidingRootNav!!.closeMenu()
             startActivity(Intent(this@HomeActivity, SettingActivity::class.java))
-        }else if (v == sideMenuProfile) {
-            slidingRootNav!!.closeMenu()
-            startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
-            slidingRootNav!!.closeMenu()
-            startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
         }
     }
 
-      fun sideMenuBtnClick (){
+    fun sideMenuBtnClick() {
         if (slidingRootNav!!.isMenuOpened) {
             slidingRootNav!!.closeMenu()
         } else {
             slidingRootNav!!.openMenu()
         }
     }
-    fun filtterBtnClick(){
+
+    fun filtterBtnClick() {
         startActivity(Intent(this@HomeActivity, FillterActvity::class.java))
     }
-    fun seacrhBtnClick(){
+
+    fun seacrhBtnClick() {
         startActivity(Intent(this@HomeActivity, SearchLocationActivity::class.java))
         overridePendingTransition(0, 0)
     }
 
     //chatScreen
-    fun crateGroupBtnClick(){
+    fun crateGroupBtnClick() {
         startActivity(Intent(this@HomeActivity, CreateGroupActvity::class.java))
         overridePendingTransition(0, 0)
-    }
-    private fun showFragmentIcon(
-        btmMyprofleIc: Int,
-        btmTranportIc: Int,
-        btmHomeIc: Int,
-        btmChatIc: Int,
-        btmBarcrawlIc: Int
-    ) {
-        binding.bottomBar.bottomChat.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            0,
-            R.drawable.btm_chat_ic_selected,
-            0,
-            0
-        )
-        binding.bottomBar.bottomChat.setTextColor(resources.getColor(R.color.text_yello))
-        // Util.tintColor(this, binding.bottomBar.bottomChat, R.color.text_yello)
-        binding.bottomBar.bottomBarCrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            0,
-            R.drawable.btm_barcrawl_ic,
-            0,
-            0
-        )
-        binding.bottomBar.bottomBarCrawl.setTextColor(resources.getColor(R.color.white))
-
-        binding.bottomBar.bottomTransport.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            0,
-            R.drawable.btm_tranport_ic,
-            0,
-            0
-        )
-        binding.bottomBar.bottomTransport.setTextColor(resources.getColor(R.color.white))
-
-        binding.bottomBar.bottomMyProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            0,
-            R.drawable.btm_myprofle_ic,
-            0,
-            0
-        )
-        binding.bottomBar.bottomMyProfile.setTextColor(resources.getColor(R.color.white))
-
-        binding.bottomBar.bottmHomeYello.visibility = GONE
     }
 
 
     private fun inItView() {
-     /*   setTouchNClick(binding.header.headerCreateGroup)
-        setTouchNClick(binding.header.headerSideMenu)
-        setTouchNClick(binding.header.headerSearch)
-        setTouchNClick(binding.header.headerSetting)*/
+        /*   setTouchNClick(binding.header.headerCreateGroup)
+           setTouchNClick(binding.header.headerSideMenu)
+           setTouchNClick(binding.header.headerSearch)
+           setTouchNClick(binding.header.headerSetting)*/
         setTouchNClick(binding.bottomChat)
         setTouchNClick(binding.bottomBarCrawl)
         setTouchNClick(binding.bottomHomeRel)
         setTouchNClick(R.id.sideMenuAbout)
+        setTouchNClick(binding.bottomMyProfile)
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
         setTouchNClick(R.id.sideMenuTermCond)
         setTouchNClick(R.id.sideMenuTrackTrace)
@@ -343,8 +312,6 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuContactUs = findViewById(R.id.sideMenuContactUs)
         setTouchNClick(R.id.sideMenuSetting)
         sideMenuSetting = findViewById(R.id.sideMenuSetting)
-        setTouchNClick(R.id.sidemenu_profile)
-        sideMenuProfile = findViewById(R.id.sidemenu_profile)
         sideMenuTrackTrace = findViewById(R.id.sideMenuTrackTrace)
         setTouchNClick(binding.bottomTransport)
 
@@ -357,7 +324,6 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
         transaction.replace(R.id.mainContainer, fragment).commit()
     }
-
 
 
     private var back_pressed_time: Long = 0
@@ -377,7 +343,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
     fun TextView.setDrawableColor(color: Int) {
         compoundDrawables.filterNotNull().forEach {
-            it.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_IN)
+            it.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
         }
     }
 

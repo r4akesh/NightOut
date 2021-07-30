@@ -20,19 +20,22 @@ import com.nightout.R
 import com.nightout.adapter.StoryAdapter
 import com.nightout.adapter.VenuTitleBotmSheetAdapter
 import com.nightout.databinding.FragmentHomeBinding
+import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.StoryModel
 import com.nightout.model.VenuBotmSheetModel
 import com.nightout.model.VenuBotmSheetTitleModel
-import com.nightout.ui.activity.EventDetail
-import com.nightout.ui.activity.FoodStoreActvity
-import com.nightout.ui.activity.HomeActivity
-import com.nightout.ui.activity.VenuListActvity
+import com.nightout.ui.activity.*
 
 
-class HomeFragment : Fragment() , OnMapReadyCallback, View.OnClickListener {
+class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
 
     lateinit var binding : FragmentHomeBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+    private var onMenuOpenListener: OnMenuOpenListener? = null
+
+    constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
+        this.onMenuOpenListener = onMenuOpenListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +69,20 @@ class HomeFragment : Fragment() , OnMapReadyCallback, View.OnClickListener {
     }
 
 
+    override fun onClick(v: View?) {
+        if(v==binding.headerHome.headerSideMenu){
+            onMenuOpenListener?.onOpenMenu()
+        }
+
+        else if(v==binding.headerHome.headerSetting){
+            startActivity(Intent(requireContext(), FillterActvity::class.java))
+
+        }
+        else if(v==binding.headerHome.headerSearch){
+            startActivity(Intent(requireContext(), SearchLocationActivity::class.java))
+            activity?.overridePendingTransition(0, 0)
+        }
+    }
 
     private fun initView() {
         binding.headerHome.headerSideMenu.setOnClickListener(this)
@@ -175,18 +192,7 @@ class HomeFragment : Fragment() , OnMapReadyCallback, View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View?) {
-         if(v==binding.headerHome.headerSideMenu){
-             (activity as HomeActivity?)?.sideMenuBtnClick()
-         }
 
-        else if(v==binding.headerHome.headerSetting){
-            (activity as HomeActivity?)?.filtterBtnClick()
-        }
-         else if(v==binding.headerHome.headerSearch){
-             (activity as HomeActivity?)?.seacrhBtnClick()
-         }
-    }
 
 
 }

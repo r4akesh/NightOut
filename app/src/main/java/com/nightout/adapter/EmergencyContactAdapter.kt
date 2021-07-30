@@ -21,7 +21,9 @@ class EmergencyContactAdapter(private val mContext: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener { mContext.startActivity(Intent(mContext,EmergencyContactListActivity::class.java)) }
+        holder.itemView.setOnClickListener {
+         //   mContext.startActivity(Intent(mContext,EmergencyContactListActivity::class.java))
+        }
     }
 
     override fun getItemCount(): Int = 1

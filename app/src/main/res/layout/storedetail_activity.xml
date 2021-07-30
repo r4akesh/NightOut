@@ -27,26 +27,26 @@
         <ImageView
             android:id="@+id/storeDeatilBakBtn"
             android:layout_width="wrap_content"
-            android:background="@null"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
-
+            android:background="@null"
             android:padding="@dimen/_10ssp"
+
             android:src="@drawable/back_pink"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
             android:layout_width="wrap_content"
-            android:background="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
-
+            android:background="@null"
             android:padding="@dimen/_10ssp"
+
             android:src="@drawable/fav_selected"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -68,19 +68,21 @@
 
             <ScrollView
                 android:layout_width="match_parent"
+               android:paddingTop="@dimen/_5ssp"
+                android:background="@drawable/background_gray"
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_gray">
+                    >
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/storeDeatilLogoCard"
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
-                        android:layout_marginTop="@dimen/_15ssp"
                         android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
                         app:cardBackgroundColor="@color/text_yello"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -211,9 +213,9 @@
                         android:layout_marginTop="@dimen/_4sdp"
                         android:drawableStart="@drawable/email_ic"
                         android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
                         android:text="vanitynight@gmai.com"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/proximanova_reg"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilPhno" />
@@ -236,6 +238,7 @@
                         android:text="@string/Facilities"
                         android:textColor="@color/text_blk"
                         android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/storeDeatilPreBookingBtn"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilEmail" />
@@ -257,34 +260,58 @@
                         android:text="@string/Pre_Booking"
                         android:textColor="@color/text_blk"
                         android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/storeDeatilFacilityBtn"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilEmail" />
 
 
-                    <TextView
-                        android:id="@+id/storeDeatilAddVenu"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/storeDeatilAddVenuRel"
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content"
                         android:layout_marginStart="-10dp"
                         android:layout_marginTop="@dimen/_10ssp"
                         android:layout_marginEnd="-10dp"
                         android:background="@drawable/box_primary"
-                        android:drawableEnd="@drawable/save_fav"
-                        android:elevation="@dimen/_10ssp"
-                        android:textAllCaps="true"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:paddingStart="@dimen/_20ssp"
-                        android:paddingTop="@dimen/_10ssp"
-                        android:paddingEnd="@dimen/_20ssp"
-                        android:paddingBottom="@dimen/_10ssp"
-                        android:text="Add venue into bar crawl"
-                        android:textColor="@color/text_yello"
-                        android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_17ssp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilFacilityBtn" />
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilFacilityBtn">
+
+                        <TextView
+                            android:id="@+id/storeDeatilAddVenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:elevation="@dimen/_10ssp"
+
+
+                            android:fontFamily="@font/proximanova_reg"
+                            android:paddingStart="@dimen/_20ssp"
+
+                            android:paddingEnd="@dimen/_10ssp"
+
+                            android:text="Add venue into bar crawl"
+                            android:textAllCaps="true"
+                            android:textColor="@color/text_yello"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginEnd="@dimen/_20ssp"
+                            android:src="@drawable/save_fav"
+                            app:layout_constraintBottom_toBottomOf="@+id/storeDeatilAddVenu"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/storeDeatilAddVenu" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <ImageView
@@ -300,30 +327,30 @@
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilAddVenu" />
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilAddVenuRel" />
 
 
                     <ImageView
-                        android:padding="@dimen/_10ssp"
-
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/storeDeatilMap"
                         android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10ssp"
                         android:src="@drawable/share_icon"
-                        android:layout_height="wrap_content"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/storeDeatilMap" />
 
                     <TextView
                         android:id="@+id/storeDeatilAddrs"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                            android:textSize="@dimen/_11sdp"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_10ssp"
-                        android:maxLines="2"
                         android:fontFamily="@font/proximanova_reg"
+                        android:maxLines="2"
                         android:minLines="1"
                         android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
                         android:textColor="@color/white_second"
+                        android:textSize="@dimen/_11sdp"
                         app:layout_constraintEnd_toStartOf="@+id/storeDeatilDirection"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilMap" />
@@ -332,11 +359,11 @@
                         android:id="@+id/storeDeatilDirection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_10ssp"
-                        android:text="Direction"
-                        android:textSize="@dimen/_12ssp"
                         android:fontFamily="@font/proximanova_reg"
+                        android:padding="@dimen/_10ssp"
+                        android:text="@string/Direction"
                         android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilMap" />
 
@@ -347,14 +374,14 @@
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_10ssp"
                         android:background="@drawable/border_yello"
+                        android:fontFamily="@font/proximanova_reg"
                         android:paddingStart="@dimen/_10ssp"
                         android:paddingTop="@dimen/_5ssp"
                         android:paddingEnd="@dimen/_10ssp"
                         android:paddingBottom="@dimen/_5ssp"
                         android:text="Near By Stations"
-                        android:textSize="@dimen/_12ssp"
-                        android:fontFamily="@font/proximanova_reg"
                         android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilAddrs" />
 
@@ -464,7 +491,8 @@
                             android:id="@+id/storeDeatilHorizintalRecycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:layout_marginStart="@dimen/_2ssp"
+                            android:layout_marginEnd="@dimen/_2ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -472,8 +500,8 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/storeDeatilDrinksRecycler"
                             android:layout_width="match_parent"
-                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
                             app:layout_constraintTop_toBottomOf="@+id/storeDeatilHorizintalRecycler" />
 
                         <View

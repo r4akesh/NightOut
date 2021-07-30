@@ -40,8 +40,16 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sideMenuFaq: TextView? = null
     var sideMenuContactUs: TextView? = null
     var sideMenuSetting: TextView? = null
+    var sideMenuHome: TextView? = null
+    var sideMenuVenues: TextView? = null
+    var sideMenuEmrgyHistry: TextView? = null
+    var sideMenuEmrgyContact: TextView? = null
     var sideMenuProfile: ImageView? = null
     var sideMenuTrackTrace: TextView? = null
+    var sideMenuEvent: TextView? = null
+    var sideMenuFood: TextView? = null
+    var sideMenuLostItem: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +62,6 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         Log.d("widthRatio_of_view", widthRatio.toString() + "")
         fragmentManager = supportFragmentManager
 
-
         slidingRootNav = SlidingRootNavBuilder(this)
             .withDragDistance(widthRatio) //Horizontal translation of a view. Default == 180dp
             .withRootViewScale(1f) //Content view's scale will be interpolated between 1f and 0.7f. Default == 0.65f;
@@ -62,9 +69,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             .withRootViewYTranslation(0) //
             .withMenuLayout(R.layout.drawer_layout) // Content view's translationY will be interpolated between 0 and 4. Default ==
             .inject()
-        val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
-        sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
-        showFragment(HomeFragment())
+      //  val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
+      //  sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
+        showFragment(HomeFragment(this))
         inItView()
     }
 
@@ -72,17 +79,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v == sideMenuTrackTrace) {
-            slidingRootNav!!.closeMenu()
-            startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
-        } else if (v == binding.bottomTransport) {
 
-            binding.bottomTransport.setDrawableColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.text_yello
-                )
-            )
+        if (v == binding.bottomTransport) {
+            binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this, R.color.text_yello))
             binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
 
             binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
@@ -105,12 +104,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is TransportFragment) {
-                //appBarAndStatusBarProfile()
-                // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
                 showFragment(TransportFragment(this))
             }
         } else if (v == binding.bottomHomeRel) {
-
             binding.bottmHomeYello.visibility = VISIBLE
             binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
 
@@ -139,12 +135,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is HomeFragment) {
-                //appBarAndStatusBarProfile()
-                // showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
-                showFragment(HomeFragment())
+                showFragment(HomeFragment(this))
             }
         } else if (v == binding.bottomChat) {
-
             binding.bottmHomeYello.visibility = GONE
             binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
 
@@ -169,14 +162,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
                 )
             )
             binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-
-
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is ChatFragment) {
-                //appBarAndStatusBarProfile()
-                //  showFragmentIcon(R.drawable.btm_myprofle_ic, R.drawable.btm_tranport_ic, R.drawable.btm_home_ic, R.drawable.btm_chat_ic, R.drawable.btm_barcrawl_ic)
-                showFragment(ChatFragment())
+                showFragment(ChatFragment(this))
             }
         } else if (v == binding.bottomBarCrawl) {
             binding.bottmHomeYello.visibility = GONE
@@ -212,9 +200,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is BarCrwalFragment) {
 
-                showFragment(BarCrwalFragment())
+                showFragment(BarCrwalFragment(this))
             }
-        }else if (v == binding.bottomMyProfile) {
+        } else if (v == binding.bottomMyProfile) {
             binding.bottmHomeYello.visibility = GONE
             binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
 
@@ -250,17 +238,77 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
                 showFragment(ProfileFragment(this))
             }
-        } else if (v == sideMenuAbout) {
+        }
+        if (v == sideMenuTrackTrace) {
             slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuTrackTrace?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
+        }
+        else if(v==sideMenuEvent){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuEvent?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, EventDetail::class.java))
+        }
+        else if(v==sideMenuLostItem){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuLostItem?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, LostitemActivity::class.java))
+        }
+        else if(v==sideMenuFood){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuFood?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, FoodStoreActvity::class.java))
+        }
+
+        else if(v==sideMenuEmrgyContact){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuEmrgyContact?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, EmergencyContactActivity::class.java))
+        }
+        else if(v==sideMenuVenues){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuVenues?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, VenuListActvity::class.java))
+        }
+        else if(v==sideMenuEmrgyHistry){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuEmrgyHistry?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, EmergencyContactListActivity::class.java))
+        }
+
+        else if(v==sideMenuHome){
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuHome?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+
+        }
+
+        else if (v == sideMenuAbout) {
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuAbout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, AboutActivity::class.java))
         } else if (v == sideMenuTermCond) {
             slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuTermCond?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
         } else if (v == sideMenuFaq) {
             slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuFaq?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FAQActivity::class.java))
         } else if (v == sideMenuContactUs) {
             slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuContactUs?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, ContactUsActivity::class.java))
         } else if (v == sideMenuSetting) {
             slidingRootNav!!.closeMenu()
@@ -268,52 +316,57 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         }
     }
 
-    fun sideMenuBtnClick() {
-        if (slidingRootNav!!.isMenuOpened) {
-            slidingRootNav!!.closeMenu()
-        } else {
-            slidingRootNav!!.openMenu()
-        }
-    }
-
-    fun filtterBtnClick() {
-        startActivity(Intent(this@HomeActivity, FillterActvity::class.java))
-    }
-
-    fun seacrhBtnClick() {
-        startActivity(Intent(this@HomeActivity, SearchLocationActivity::class.java))
-        overridePendingTransition(0, 0)
-    }
-
-    //chatScreen
-    fun crateGroupBtnClick() {
-        startActivity(Intent(this@HomeActivity, CreateGroupActvity::class.java))
-        overridePendingTransition(0, 0)
+    private fun setBtnBgBlank() {
+        sideMenuEmrgyContact?.setBackgroundResource(0)
+        sideMenuLostItem?.setBackgroundResource(0)
+        sideMenuTrackTrace?.setBackgroundResource(0)
+        sideMenuVenues?.setBackgroundResource(0)
+        sideMenuEmrgyHistry?.setBackgroundResource(0)
+        sideMenuHome?.setBackgroundResource(0)
+        sideMenuAbout?.setBackgroundResource(0)
+        sideMenuTermCond?.setBackgroundResource(0)
+        sideMenuFaq?.setBackgroundResource(0)
+        sideMenuContactUs?.setBackgroundResource(0)
+        sideMenuFood?.setBackgroundResource(0)
+        sideMenuEvent?.setBackgroundResource(0)
     }
 
 
     private fun inItView() {
-        /*   setTouchNClick(binding.header.headerCreateGroup)
-           setTouchNClick(binding.header.headerSideMenu)
-           setTouchNClick(binding.header.headerSearch)
-           setTouchNClick(binding.header.headerSetting)*/
         setTouchNClick(binding.bottomChat)
         setTouchNClick(binding.bottomBarCrawl)
         setTouchNClick(binding.bottomHomeRel)
-        setTouchNClick(R.id.sideMenuAbout)
         setTouchNClick(binding.bottomMyProfile)
-        sideMenuAbout = findViewById(R.id.sideMenuAbout)
+        setTouchNClick(binding.bottomTransport)
         setTouchNClick(R.id.sideMenuTermCond)
+        setTouchNClick(R.id.sideMenuAbout)
+        setTouchNClick(R.id.sideMenuHome)
         setTouchNClick(R.id.sideMenuTrackTrace)
-        sideMenuTermCond = findViewById(R.id.sideMenuTermCond)
         setTouchNClick(R.id.sideMenuFAQ)
-        sideMenuFaq = findViewById(R.id.sideMenuFAQ)
         setTouchNClick(R.id.sideMenuContactUs)
-        sideMenuContactUs = findViewById(R.id.sideMenuContactUs)
         setTouchNClick(R.id.sideMenuSetting)
+        setTouchNClick(R.id.sideMenuVenues)
+        setTouchNClick(R.id.sideMenuEmrgyHistry)
+        setTouchNClick(R.id.sideMenuEmrgyContact)
+        setTouchNClick(R.id.sideMenuFood)
+        setTouchNClick(R.id.sideMenuLostItem)
+        setTouchNClick(R.id.sideMenuEvent)
+
+
+        sideMenuAbout = findViewById(R.id.sideMenuAbout)
+        sideMenuTermCond = findViewById(R.id.sideMenuTermCond)
+        sideMenuFaq = findViewById(R.id.sideMenuFAQ)
+        sideMenuContactUs = findViewById(R.id.sideMenuContactUs)
         sideMenuSetting = findViewById(R.id.sideMenuSetting)
         sideMenuTrackTrace = findViewById(R.id.sideMenuTrackTrace)
-        setTouchNClick(binding.bottomTransport)
+        sideMenuHome = findViewById(R.id.sideMenuHome)
+        sideMenuEvent = findViewById(R.id.sideMenuEvent)
+        sideMenuFood = findViewById(R.id.sideMenuFood)
+        sideMenuLostItem = findViewById(R.id.sideMenuLostItem)
+        sideMenuVenues = findViewById(R.id.sideMenuVenues)
+        sideMenuEmrgyHistry = findViewById(R.id.sideMenuEmrgyHistry)
+        sideMenuEmrgyContact = findViewById(R.id.sideMenuEmrgyContact)
+
 
 
     }
@@ -332,13 +385,15 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         // super.onBackPressed()
         if (back_pressed_time + PERIOD > System.currentTimeMillis())
             finishAffinity()
-        else
-            Toast.makeText(
-                this@HomeActivity,
-                getResources().getString(R.string.press_again),
-                Toast.LENGTH_SHORT
-            ).show();
-        back_pressed_time = System.currentTimeMillis();
+        else {
+            if (slidingRootNav!!.isMenuOpened) {
+                slidingRootNav!!.closeMenu()
+            } else {
+                Toast.makeText(this@HomeActivity, getResources().getString(R.string.press_again), Toast.LENGTH_SHORT).show()
+                back_pressed_time = System.currentTimeMillis()
+            }
+        }
+
     }
 
     fun TextView.setDrawableColor(color: Int) {

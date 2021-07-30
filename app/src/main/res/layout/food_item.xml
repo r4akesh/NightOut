@@ -5,8 +5,11 @@
     <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/_70sdp"
-        android:padding="@dimen/_5ssp"
+        android:layout_width="@dimen/_65sdp"
+        android:paddingTop="@dimen/_5ssp"
+        android:paddingBottom="@dimen/_5ssp"
+        android:paddingStart="@dimen/_3ssp"
+        android:paddingEnd="@dimen/_3ssp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -14,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/proximanova_reg"
-            android:text="Title"
+            android:text="package"
 
             android:textColor="@color/text_gray"
             android:textSize="@dimen/_12ssp"

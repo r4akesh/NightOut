@@ -12,20 +12,24 @@
         android:background="@drawable/background_gray"
         android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10ssp"
                 android:orientation="vertical">
 
                 <include
                     android:id="@+id/termCondToolBar"
                     layout="@layout/toolbar_common" />
 
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/termCondToolBar"
+                    android:layout_above="@+id/loginBtn"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -317,30 +321,30 @@
                             android:lineSpacingExtra="5dp"
                             android:minLines="5"
                             android:maxHeight="@dimen/_150sdp"
-                            android:text="@string/dummyText2"
+                            android:text="@string/duumyText"
                             android:inputType="textMultiLine" />
 
                     </LinearLayout>
 
-                    <com.google.android.material.button.MaterialButton
+
+
+                </LinearLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginBtn"
                     style="@style/buttonTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_25sdp"
+
                     android:background="@drawable/gredient_bg"
                     android:text="@string/submit"
-                    app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+                    android:layout_margin="@dimen/_10ssp"
+                    android:layout_alignParentBottom="true"
+                 />
 
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-
-        </androidx.core.widget.NestedScrollView>
-
+            </RelativeLayout>
 
 
 

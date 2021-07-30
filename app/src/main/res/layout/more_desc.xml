@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="Sunday Spaicial "
+        android:text="Sunday Special"
 
         android:layout_marginStart="@dimen/_10ssp"
         android:textColor="@color/white"

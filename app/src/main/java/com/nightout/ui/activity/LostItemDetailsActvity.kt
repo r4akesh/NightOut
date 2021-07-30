@@ -7,13 +7,14 @@ import android.view.View.GONE
 import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.databinding.LostitemActivityBinding
+
+import com.nightout.databinding.LostitemdetailsActivityBinding
 
 class LostItemDetailsActvity : BaseActivity() {
-    lateinit var binding : LostitemActivityBinding
+    lateinit var binding : LostitemdetailsActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= DataBindingUtil.setContentView(this@LostItemDetailsActvity,R.layout.lostitem_activity)
+        binding= DataBindingUtil.setContentView(this@LostItemDetailsActvity,R.layout.lostitemdetails_activity)
         setToolBar()
         initView()
     }

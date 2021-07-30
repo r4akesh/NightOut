@@ -8,9 +8,10 @@ import com.nightout.R
 import com.nightout.adapter.PreviousEmergencyInfoAdatper
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityEmergencyContactBinding
+import com.nightout.databinding.ActivityEmergencyContactListBinding
 
 class EmergencyContactListActivity : BaseActivity() {
-    lateinit var binding: ActivityEmergencyContactBinding
+    lateinit var binding: ActivityEmergencyContactListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_emergency_contact_list)
@@ -18,7 +19,7 @@ class EmergencyContactListActivity : BaseActivity() {
     }
 
     private fun setToolBar() {
-        binding.termCondToolBar.toolbarTitle.text = resources.getString(R.string.Emergency_Contact)
+        binding.termCondToolBar.toolbarTitle.text = resources.getString(R.string.Emergency_History)
         binding.termCondToolBar.toolbarBack.setOnClickListener {
             finish()
         }
@@ -28,8 +29,8 @@ class EmergencyContactListActivity : BaseActivity() {
     }
 
     private fun init(){
-        binding.emergencyList.layoutManager = LinearLayoutManager(this)
+        binding.previousEmergencyList.layoutManager = LinearLayoutManager(this)
         val previousEmergencyInfoAdatper = PreviousEmergencyInfoAdatper(this)
-        binding.emergencyList.adapter = previousEmergencyInfoAdatper
+        binding.previousEmergencyList.adapter = previousEmergencyInfoAdatper
     }
 }

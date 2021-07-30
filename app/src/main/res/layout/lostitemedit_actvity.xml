@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lostEditConstrentToolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/lostItemEditToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/lostEditConstrentToolbar">
+
+            <ImageView
+                android:id="@+id/lostEditImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/watch_img"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/lostEditItemName"
+                app:layout_constraintTop_toBottomOf="@+id/lostEditImage"
+                android:layout_width="wrap_content"
+                android:text="Item Name : "
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/white_second"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/lostEditItemNameValue"
+                app:layout_constraintBottom_toBottomOf="@+id/lostEditItemName"
+               app:layout_constraintTop_toTopOf="@+id/lostEditItemName"
+                android:layout_width="wrap_content"
+                android:text="Wrist Watch"
+                android:layout_marginStart="@dimen/_30sdp"
+                 app:layout_constraintStart_toEndOf="@+id/lostEditItemName"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/white_thred"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/lostEditItemView1"
+                app:layout_constraintTop_toBottomOf="@+id/lostEditItemName"
+                android:layout_width="match_parent"
+                android:background="@color/dialog_view_lineclr"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:id="@+id/lostEditColor"
+                app:layout_constraintTop_toBottomOf="@+id/lostEditItemView1"
+                android:layout_width="wrap_content"
+                android:text="Color : "
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/white_second"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/lostEditColorValue"
+                app:layout_constraintBottom_toBottomOf="@+id/lostEditColor"
+                app:layout_constraintTop_toTopOf="@+id/lostEditColor"
+                android:layout_width="wrap_content"
+                android:text="Golden Black"
+                android:layout_marginStart="@dimen/_30sdp"
+                app:layout_constraintStart_toEndOf="@+id/lostEditColor"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/white_thred"
+                android:layout_height="wrap_content"/>
+
+
+            <View
+                android:id="@+id/lostEditItemView2"
+                app:layout_constraintTop_toBottomOf="@+id/lostEditColor"
+                android:layout_width="match_parent"
+                android:background="@color/dialog_view_lineclr"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:layout_height="1dp"/>
+
+
+
+            <TextView
+                android:id="@+id/lostEditVenues"
+                app:layout_constraintTop_toBottomOf="@+id/lostEditItemView2"
+                android:layout_width="wrap_content"
+                android:text="Color : "
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/white_second"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:id="@+id/lostEditVenuesValues"
+                app:layout_constraintBottom_toBottomOf="@+id/lostEditVenues"
+                app:layout_constraintTop_toTopOf="@+id/lostEditVenues"
+                android:layout_width="wrap_content"
+                android:text="Vanity Night Club"
+                android:layout_marginStart="@dimen/_30sdp"
+                app:layout_constraintStart_toEndOf="@+id/lostEditVenues"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/white_thred"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/lostEditVenuesValues2"
+
+                app:layout_constraintTop_toBottomOf="@+id/lostEditVenuesValues"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Feel the Beat"
+                android:layout_marginStart="@dimen/_30sdp"
+                app:layout_constraintStart_toEndOf="@+id/lostEditVenues"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/white_thred"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/lostEditVenuesValues3"
+
+                app:layout_constraintTop_toBottomOf="@+id/lostEditVenuesValues2"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="The Meeting Place"
+                android:layout_marginStart="@dimen/_30sdp"
+                app:layout_constraintStart_toEndOf="@+id/lostEditVenues"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/white_thred"
+                android:layout_height="wrap_content"/>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lostEditFound"
+                style="@style/buttonTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/gredient_bg"
+                android:text="@string/Found"
+                app:layout_constraintTop_toBottomOf="@+id/lostEditVenuesValues3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

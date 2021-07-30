@@ -527,6 +527,10 @@ class StoreDetail : BaseActivity() {
         setTouchNClick(binding.storeDeatilFacilityBtn)
         setTouchNClick(binding.storeDeatilPlaceOrder)
         setTouchNClick(binding.storeDeatilPreBookingBtn)
+        val str1 = resources.getString(R.string.Direction)
+        var settext = "<u>$str1 </u>"
+        binding.storeDeatilDirection.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+
     }
 
     override fun onClick(v: View?) {

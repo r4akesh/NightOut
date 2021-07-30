@@ -33,7 +33,7 @@
         <activity android:name=".ui.activity.ProfileActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- <activity android:name=".ui.activity.FillterActvity"/> -->
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".ui.activity.EditProfileActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
@@ -215,6 +215,21 @@
 
         <activity
             android:name=".ui.activity.AllBarCrawalActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.EmergencyContactListActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.LostitemActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.LostItemEditActvity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />

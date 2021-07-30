@@ -13,13 +13,20 @@ import com.nightout.R
 import com.nightout.adapter.ChatAdapter
 import com.nightout.databinding.FragmentChatBinding
 import com.nightout.databinding.FragmentHomeBinding
+import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.ChatModel
 import com.nightout.ui.activity.ChatPersonalActvity
+import com.nightout.ui.activity.CreateGroupActvity
 import com.nightout.ui.activity.HomeActivity
 
-class ChatFragment : Fragment() , View.OnClickListener {
+class ChatFragment() : Fragment() , View.OnClickListener {
 
     lateinit var binding : FragmentChatBinding
+    private var onMenuOpenListener: OnMenuOpenListener? = null
+
+    constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
+        this.onMenuOpenListener = onMenuOpenListener
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         setDuumyList()
@@ -27,6 +34,16 @@ class ChatFragment : Fragment() , View.OnClickListener {
         return binding.root
     }
 
+    override fun onClick(v: View?) {
+        if(v==binding.headerChat.headerSideMenu){
+            onMenuOpenListener?.onOpenMenu()
+        }
+
+        else   if(v==binding.headerChat.headerCreateGroup){
+            startActivity(Intent(requireContext(), CreateGroupActvity::class.java))
+
+        }
+    }
     private fun initView() {
         binding.headerChat.headerSideMenu.setOnClickListener(this)
         binding.headerChat.headerCreateGroup.setOnClickListener(this)
@@ -63,13 +80,4 @@ class ChatFragment : Fragment() , View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View?) {
-        if(v==binding.headerChat.headerSideMenu){
-            (activity as HomeActivity?)?.sideMenuBtnClick()
-        }
-
-      else   if(v==binding.headerChat.headerCreateGroup){
-            (activity as HomeActivity?)?.crateGroupBtnClick()
-        }
-    }
 }

@@ -5,13 +5,12 @@
     <data></data>
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_gray">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+
+            android:background="@drawable/background_gray"
             android:layout_height="match_parent">
 
 
@@ -40,8 +39,8 @@
                     android:layout_marginStart="@dimen/_7ssp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/proximanova_reg"
-                    android:text="John Wick"
                     android:singleLine="true"
+                    android:text="John Wick"
                     android:textColor="@color/text_yello"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintStart_toEndOf="@+id/sidemenu_profile"
@@ -53,9 +52,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_7ssp"
                     android:fontFamily="@font/proximanova_reg"
+                    android:singleLine="true"
                     android:text="johnwick@gmail.com"
                     android:textColor="@color/white"
-                    android:singleLine="true"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toEndOf="@+id/sidemenu_profile"
                     app:layout_constraintTop_toBottomOf="@+id/sidemenu_username" />
@@ -70,266 +69,298 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <LinearLayout
-                android:id="@+id/sideMenuLayoutLL"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sidemenu_header">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/sideMenuLayoutLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/gredient_bg_nocorner"
-                    android:drawableStart="@drawable/sidemenu_home3x"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Home"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:orientation="vertical"
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_venues"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Venues"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    >
 
+                    <TextView
+                        android:id="@+id/sideMenuHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_foods"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Foods"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                        android:drawableStart="@drawable/sidemenu_home3x"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Home"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_event"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Events"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    <TextView
+                        android:id="@+id/sideMenuVenues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_venues"
+                        android:drawablePadding="@dimen/_10ssp"
 
-                <TextView
-                    android:id="@+id/sideMenuTrackTrace"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_track"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/TrackNTrace"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_refer"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Reffer_friend"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_cms"
-                    android:drawableEnd="@drawable/arrow_right_white"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:paddingEnd="@dimen/_25ssp"
-
-                    android:text="@string/CMS_Pages"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp" />
-
-                <TextView
-                    android:id="@+id/sideMenuAbout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_25ssp"
-                    android:drawableStart="@drawable/arrow_right_18"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:paddingTop="@dimen/_7ssp"
-                    android:paddingEnd="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_7ssp"
-                    android:text="@string/About"
-
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-
-                <TextView
-                    android:id="@+id/sideMenuFAQ"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_25ssp"
-                    android:drawableStart="@drawable/arrow_right_18"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:paddingTop="@dimen/_7ssp"
-
-                    android:paddingEnd="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_7ssp"
-                    android:text="@string/FAQ"
-
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-                <TextView
-                     android:id="@+id/sideMenuTermCond"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_25ssp"
-                    android:drawableStart="@drawable/arrow_right_18"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:paddingTop="@dimen/_7ssp"
-
-                    android:paddingEnd="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_7ssp"
-                    android:text="@string/Trems_Condition"
-
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-
-                <TextView
-                    android:id="@+id/sideMenuContactUs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_25ssp"
-                    android:drawableStart="@drawable/arrow_right_18"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:paddingTop="@dimen/_7ssp"
-
-                    android:paddingEnd="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_7ssp"
-                    android:text="@string/Contact_Us"
-
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
-
-                <TextView
-                    android:id="@+id/sideMenuSetting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_setting"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Settings"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_emrgy"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Emergency_Contact"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_panic"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Panic_Situation"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2ssp"
-                    android:drawableStart="@drawable/sidemenu_logout"
-                    android:drawablePadding="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:gravity="center_vertical"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingStart="@dimen/_15ssp"
-                    android:text="@string/Logout"
-                    android:textColor="@color/white"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:textSize="@dimen/_14ssp" />
-            </LinearLayout>
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Venues"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
 
 
+                    <TextView
+                        android:id="@+id/sideMenuFood"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_foods"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Foods"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuEvent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_event"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Events"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuTrackTrace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_track"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/TrackNTrace"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_refer"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Reffer_friend"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_cms"
+                        android:drawableEnd="@drawable/arrow_right_white"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_25ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+
+                        android:text="@string/CMS_Pages"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25ssp"
+                        android:drawableStart="@drawable/arrow_right_18"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_7ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_7ssp"
+                        android:text="@string/About"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuFAQ"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25ssp"
+                        android:drawableStart="@drawable/arrow_right_18"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_7ssp"
+
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_7ssp"
+                        android:text="@string/FAQ"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuTermCond"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25ssp"
+                        android:drawableStart="@drawable/arrow_right_18"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_7ssp"
+
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_7ssp"
+                        android:text="@string/Trems_Condition"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuContactUs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25ssp"
+                        android:drawableStart="@drawable/arrow_right_18"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_7ssp"
+
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_7ssp"
+                        android:text="@string/Contact_Us"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuLostItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_lostitem"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Lost_Item"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+
+
+                    <TextView
+                        android:id="@+id/sideMenuSetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_setting"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Settings"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuEmrgyContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_emrgy"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Emergency_Contact"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuEmrgyHistry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_panic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Emergency_History"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:drawableStart="@drawable/sidemenu_logout"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Logout"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+                </LinearLayout>
+
+            </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+
 
 
 </layout>

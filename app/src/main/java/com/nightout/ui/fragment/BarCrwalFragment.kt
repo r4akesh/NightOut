@@ -21,16 +21,24 @@ import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.databinding.FragmentBarcrawlBinding
 import com.nightout.databinding.FragmentChatBinding
 import com.nightout.databinding.FragmentHomeBinding
+import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.ChatModel
 import com.nightout.model.VenuModel
 import com.nightout.ui.activity.ChatPersonalActvity
 import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.ListParticipteActvity
 
-class BarCrwalFragment : Fragment() , View.OnClickListener, OnMapReadyCallback {
+class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback {
 
     lateinit var binding : FragmentBarcrawlBinding
     lateinit var venuAdapterAdapter: VenuAdapterAdapter
+    private var onMenuOpenListener: OnMenuOpenListener? = null
+
+    constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
+        this.onMenuOpenListener = onMenuOpenListener
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_barcrawl, container, false)
 
@@ -39,6 +47,18 @@ class BarCrwalFragment : Fragment() , View.OnClickListener, OnMapReadyCallback {
 
         return binding.root
     }
+
+    override fun onClick(v: View?) {
+        if(v==binding.headerBarCrawl.headerSideMenu){
+            onMenuOpenListener?.onOpenMenu()
+        }
+
+        else if(v==binding.barcrawlSharBarCrawal){
+            startActivity(Intent(requireActivity(), ListParticipteActvity::class.java))
+        }
+
+    }
+
 
     private fun setlistTop() {
         var list = ArrayList<VenuModel>()
@@ -80,16 +100,6 @@ class BarCrwalFragment : Fragment() , View.OnClickListener, OnMapReadyCallback {
 
 
 
-    override fun onClick(v: View?) {
-        if(v==binding.headerBarCrawl.headerSideMenu){
-            (activity as HomeActivity?)?.sideMenuBtnClick()
-        }
-
-        else if(v==binding.barcrawlSharBarCrawal){
-            startActivity(Intent(requireActivity(), ListParticipteActvity::class.java))
-        }
-
-    }
 
     override fun onMapReady(googleMap: GoogleMap?) {
         val success = googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode

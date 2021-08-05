@@ -159,6 +159,12 @@
     <string name="Direction">Direction</string>
     <string name="Lost_Item">Lost Item</string>
     <string name="Found">Found</string>
+    <string name="please_enter_phno">Please enter mobile number</string>
+    <string name="please_enter_valid_phno">Please enter valid phone number</string>
+    <string name="please_enter_fname">Please enter first name</string>
+    <string name="please_enter_lname">Please enter last name</string>
+    <string name="please_enter_email">Please enter email</string>
+    <string name="please_enter_validemail">Please enter valid email</string>
 
 
 </resources>

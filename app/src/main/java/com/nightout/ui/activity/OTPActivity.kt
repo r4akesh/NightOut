@@ -2,12 +2,17 @@ package com.nightout.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.text.Editable
 import android.text.Html
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
-import com.dpizarro.pinview.library.PinView
-import com.dpizarro.pinview.library.PinViewSettings
+
+
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.OtpActvityBinding
@@ -20,17 +25,49 @@ class OTPActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@OTPActivity,R.layout.otp_actvity)
         initView()
 
-        binding.otpPinView.isMaskPassword = true
-      //  binding.otpPinView.split = "***"
+        binding.otpPinView.setPasswordHidden(true);
+        binding.otpPinView.isCursorVisible = false
+        binding.otpPinView.setCursorColor(
+            ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
+        showTimer()
 
-        binding.otpPinView.setOnCompleteListener(PinView.OnCompleteListener { completed, pinResults -> //Do what you want
+        binding.otpPinView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                Log.d("TAG", "afterTextChanged: "+s.toString())
+            }
+
+        })
+
+      /*  binding.otpPinView.setOnCompleteListener(PinView.OnCompleteListener { completed, pinResults -> //Do what you want
             if (completed) {
                 startActivity(Intent(this@OTPActivity, HomeActivity::class.java))
                 finish()
 
 
             }
-        })
+        })*/
+    }
+
+    private fun showTimer() {
+        object : CountDownTimer(30000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes: Long = millisUntilFinished / 1000 / 60
+                val seconds: Long = millisUntilFinished / 1000 % 60
+                binding.otpTimer.setText("" + minutes + ":" + seconds)
+            }
+
+            override fun onFinish() {
+                Log.d("seconds remaining: ", "DONE")
+            }
+        }.start()
     }
 
     private fun initView() {

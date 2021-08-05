@@ -66,23 +66,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <TextView
-                android:id="@+id/toolbarCreateGrop"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10ssp"
-                android:background="@drawable/box_btn_bg_yello"
-                android:fontFamily="@font/proximanova_reg"
-                android:gravity="center"
-                android:paddingTop="@dimen/_3ssp"
-                android:paddingBottom="@dimen/_3ssp"
-                android:text="@string/Help"
-                android:textColor="@color/black_pure"
-                android:textSize="@dimen/_11ssp"
-
-                app:layout_constraintBottom_toBottomOf="@id/toolbar_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
 
 

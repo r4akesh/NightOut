@@ -21,6 +21,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nightout.handlers.LoginHandler
+import com.nightout.handlers.RegisterHandler
+import com.nightout.ui.activity.LoginActivity
+import com.nightout.ui.activity.RegisterActivity
 
 
 import dmax.dialog.SpotsDialog
@@ -41,11 +45,10 @@ class MyApp : Application() {
         application = this
         ctx = applicationContext
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-       /* PaymentConfiguration.init(
-            applicationContext,
-            "pk_test_51IVri0GKSn9o9UAlRpmjyjrVxpcXf5C5fJkY39ES3OuDalA0aJtbBH4ygms5aq2xybTdhxUBtIdGBwbNbhza7NPt00TDSnm3Z6"
-        )*/
+
     }
+
+
     companion object {
 
         private var spotsDialog: SpotsDialog? = null
@@ -55,38 +58,26 @@ class MyApp : Application() {
 
         var SHARED_PREF_NAME = "Brng_Pref"
 
-
-        /*fun spinnerStart(context: Context) {
-            dialog = Dialog(context)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setContentView(R.layout.custom_progress_dialog)
-
-            dialog.setCancelable(false)
-            dialog.setCanceledOnTouchOutside(false)
-            dialog.show()
+        fun getLoginHandler(loginActivity: LoginActivity): LoginHandler {
+            return LoginHandler(loginActivity)
         }
-        fun spinnerStop() {
-            try {
 
-                if (dialog.isShowing) {
-                    dialog.dismiss()
+        fun getRegHandler(registerActivity: RegisterActivity): RegisterHandler {
+            return RegisterHandler(registerActivity)
+        }
 
-                }
-            }
-            catch (e:Exception){
-
-            }
-
-        }*/
         open fun showSoftKeyboard(activity: Activity) {
             val imm = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
         }
 
         fun hideSoftKeyboard(activity: Activity) {
-            val inputMethodManager: InputMethodManager = activity
-                .getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
+            try {
+                val inputMethodManager: InputMethodManager = activity
+                    .getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
+            } catch (e: Exception) {
+            }
         }
 
         @SuppressLint("SimpleDateFormat")

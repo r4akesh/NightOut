@@ -1,14 +1,13 @@
 package com.nightout.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.RegisterActivityBinding
-import com.nightout.model.RegisterModel
 import com.nightout.utils.MyApp
 import com.nightout.vendor.viewmodel.RegViewModel
 
@@ -19,6 +18,66 @@ class RegisterActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@RegisterActivity, R.layout.register_activity)
         initView()
+
+        binding.registerPhNo.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val text: String = binding.registerPhNo.getText().toString()
+                val textLength: Int = binding.registerPhNo.getText().toString().length
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" ")) return
+                if (textLength == 1) {
+                    if (!text.contains("(")) {
+                        binding.registerPhNo.setText(
+                            StringBuilder(text).insert(text.length - 1, "(").toString()
+                        )
+                        binding.registerPhNo.setSelection(binding.registerPhNo.getText().length)
+                    }
+                } else if (textLength == 5) {
+                    if (!text.contains(")")) {
+                        binding.registerPhNo.setText(
+                            StringBuilder(text).insert(text.length - 1, ")").toString()
+                        )
+                        binding.registerPhNo.setSelection(binding.registerPhNo.getText().length)
+                    }
+                } else if (textLength == 6) {
+                    binding.registerPhNo.setText(
+                        StringBuilder(text).insert(text.length - 1, " ").toString()
+                    )
+                    binding.registerPhNo.setSelection(binding.registerPhNo.getText().length)
+                } else if (textLength == 10) {
+                    if (!text.contains("-")) {
+                        binding.registerPhNo.setText(
+                            StringBuilder(text).insert(text.length - 1, "-").toString()
+                        )
+                        binding.registerPhNo.setSelection(binding.registerPhNo.getText().length)
+                    }
+
+
+                } else if (textLength == 15) {
+                    if (text.contains("-")) {
+                        binding.registerPhNo.setText(
+                            StringBuilder(text).insert(text.length - 1, "-").toString()
+                        )
+                        binding.registerPhNo.setSelection(binding.registerPhNo.getText().length)
+                    }
+                } else if (textLength == 18) {
+                    if (text.contains("-")) {
+                        binding.registerPhNo.setText(
+                            StringBuilder(text).insert(text.length - 1, "-").toString()
+                        )
+                        binding.registerPhNo.setSelection(binding.registerPhNo.getText().length)
+                    }
+                }
+
+            }
+        })
     }
 
     private fun initView() {

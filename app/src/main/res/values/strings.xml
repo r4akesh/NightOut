@@ -165,6 +165,8 @@
     <string name="please_enter_lname">Please enter last name</string>
     <string name="please_enter_email">Please enter email</string>
     <string name="please_enter_validemail">Please enter valid email</string>
+    <string name="please_enter_otp">Please enter OTP</string>
+    <string name="please_enter_complete_otp">Please enter complete OTP</string>
 
 
 </resources>

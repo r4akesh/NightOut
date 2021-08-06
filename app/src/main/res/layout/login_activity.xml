@@ -22,7 +22,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_30sdp"
+
             android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@+id/loginActvityBtmCnstrent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +31,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:paddingBottom="@dimen/_20sdp"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -167,7 +168,7 @@
             android:id="@+id/loginActvityBtmCnstrent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_30sdp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

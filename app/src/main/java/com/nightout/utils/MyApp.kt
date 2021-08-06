@@ -22,8 +22,10 @@ import androidx.appcompat.app.AppCompatDelegate
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nightout.handlers.LoginHandler
+import com.nightout.handlers.OtpHandler
 import com.nightout.handlers.RegisterHandler
 import com.nightout.ui.activity.LoginActivity
+import com.nightout.ui.activity.OTPActivity
 import com.nightout.ui.activity.RegisterActivity
 
 
@@ -64,6 +66,10 @@ class MyApp : Application() {
 
         fun getRegHandler(registerActivity: RegisterActivity): RegisterHandler {
             return RegisterHandler(registerActivity)
+        }
+
+        fun getOtpHandler(otpActivity: OTPActivity, mobNo:String): OtpHandler {
+            return OtpHandler(otpActivity,mobNo)
         }
 
         open fun showSoftKeyboard(activity: Activity) {

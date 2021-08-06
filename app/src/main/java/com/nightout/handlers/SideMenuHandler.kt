@@ -2,19 +2,18 @@ package com.nightout.handlers
 
 import android.content.Intent
 import com.nightout.model.LoginModel
+import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.ui.activity.RegisterActivity
-import com.nightout.utils.AppConstant
-import com.nightout.utils.MyApp
-import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Util
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.LoginViewModel
+import com.nightout.vendor.viewmodel.SideMenuViewModel
 
-open class LoginHandler(val activity: LoginActivity) {
-    private lateinit var loginViewModel : LoginViewModel
-    fun onClickLogin(loginViewModel: LoginViewModel) {
+open class SideMenuHandler(val activity: HomeActivity) {
+    private lateinit var sideMenuViewModl : SideMenuViewModel
+  /*  fun onClickLogin(loginViewModel: LoginViewModel) {
         this.loginViewModel = loginViewModel
         MyApp.hideSoftKeyboard(activity)
         if (loginViewModel.isValidation(activity)) {
@@ -26,15 +25,25 @@ open class LoginHandler(val activity: LoginActivity) {
             map["device_type"] = "1"
             loginCall(map, activity)
         }
+    }*/
+
+
+
+    fun doLogout(sideMenuViewModl : SideMenuViewModel) {
+        this.sideMenuViewModl = sideMenuViewModl
+        DialogCustmYesNo.getInstance().createDialog(activity,"Title","Are you sure you want to logout?",object:DialogCustmYesNo.Dialogclick{
+            override fun onYES() {
+                 logoutAPICall()
+            }
+
+            override fun onNO() {
+
+            }
+
+        })
     }
 
-
-
-    fun onClickSignUp() {
-        activity.startActivity(Intent(activity, RegisterActivity::class.java))
-    }
-
-    private fun loginCall(map: HashMap<String, Any>, activity: LoginActivity) {
+     private fun logoutAPICall(map: HashMap<String, Any>, activity: LoginActivity) {
         loginViewModel.login(map).observe(activity,{
             when (it.status) {
                 Status.SUCCESS -> {

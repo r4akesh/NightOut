@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.nightout.R
-
-import com.nightout.model.RegisterModel
+import com.nightout.model.LoginModel
 
 import com.nightout.ui.activity.RegisterActivity
 import com.nightout.utils.MyApp
@@ -24,7 +23,7 @@ class RegViewModel(application: Application) : AndroidViewModel(application) {
     var lName: String? = ""
     var emailId: String? = ""
 
-    private lateinit var regResponseModel: LiveData<Resource<RegisterModel>>
+    private lateinit var regResponseModel: LiveData<Resource<LoginModel>>
 
     fun isValidation(activity: RegisterActivity): Boolean {
         val isFormValidated: Boolean
@@ -65,7 +64,7 @@ class RegViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun register(map: HashMap<String, Any>): LiveData<Resource<RegisterModel>> {
+    fun register(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
         regResponseModel = webServiceRepository.register(map)
         return regResponseModel
     }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
 import com.google.gson.Gson
+import com.nightout.model.LoginModel
 
 /**
  * Class is used to save user data in preference.
@@ -18,13 +19,14 @@ class PreferenceKeeper private constructor(context: Context?) {
         editor.apply()
     }
 
-  /*  var loginResponse: LoginResponse?
-        get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.LOGIN_POJO, ""), LoginResponse::class.java)
+   var loginResponse: LoginModel.Data?
+        get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.LOGIN_POJO, ""), LoginModel.Data::class.java)
         set(type) {
             val json = Gson().toJson(type)
             prefs!!.edit().putString(AppConstant.PrefsName.LOGIN_POJO, json.toString()).apply()
         }
-    var isAppInstallFirstTime: Boolean
+
+    /*var isAppInstallFirstTime: Boolean
         get() = prefs!!.getBoolean(AppConstant.PrefsName.IS_APPINSTALL_FIRSTTIME, false)
         set(islogin) {
             prefs!!.edit().putBoolean(AppConstant.PrefsName.IS_APPINSTALL_FIRSTTIME, islogin)
@@ -37,8 +39,8 @@ class PreferenceKeeper private constructor(context: Context?) {
         get() = prefs!!.getString(AppConstant.PrefsName.NOTF_COUNT_UNREAD, "")
         set(cnt) {
             prefs!!.edit().putString(AppConstant.PrefsName.NOTF_COUNT_UNREAD, cnt).apply()
-        }
-    */
+        }*/
+
 
 
 

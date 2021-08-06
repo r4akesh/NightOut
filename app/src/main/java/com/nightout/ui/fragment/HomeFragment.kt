@@ -25,6 +25,7 @@ import com.nightout.model.StoryModel
 import com.nightout.model.VenuBotmSheetModel
 import com.nightout.model.VenuBotmSheetTitleModel
 import com.nightout.ui.activity.*
+import com.nightout.utils.PreferenceKeeper
 
 
 class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
@@ -37,16 +38,21 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
         this.onMenuOpenListener = onMenuOpenListener
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        setBottomSheet()
+        initView()
+        setListStoryDummy()
+        setListVenuListBootmShhetDuumy()
+
+        return binding.root
+    }
+
+    private fun setBottomSheet() {
         bottomSheetBehavior =BottomSheetBehavior.from(binding.btmShhetInclue.bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-       // bottomSheetBehavior.isHideable = false
-      //  bottomSheetBehavior.peekHeight = resources.getDimension(R.dimen._100sdp).toInt()
+        // bottomSheetBehavior.isHideable = false
+        //  bottomSheetBehavior.peekHeight = resources.getDimension(R.dimen._100sdp).toInt()
         bottomSheetBehavior.isDraggable = true
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
@@ -59,13 +65,6 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
 
             }
         })
-        val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this);
-        initView()
-        setListStoryDummy()
-        setListVenuListBootmShhetDuumy()
-
-        return binding.root
     }
 
 
@@ -85,9 +84,12 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
     }
 
     private fun initView() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
+        mapFragment!!.getMapAsync(this)
         binding.headerHome.headerSideMenu.setOnClickListener(this)
         binding.headerHome.headerSearch.setOnClickListener(this)
         binding.headerHome.headerSetting.setOnClickListener(this)
+        binding.headerHome.headerTitle.text = "Hi, "+PreferenceKeeper.instance.loginResponse?.name
     }
 
     lateinit var venuTitleBotmSheetAdapter: VenuTitleBotmSheetAdapter

@@ -5,7 +5,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nightout.model.LoginModel
-import com.nightout.model.RegisterModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +35,8 @@ class WebServiceRepository(application: Application) {
         return userLogin
     }
 
-    fun register(map: HashMap<String, Any>): LiveData<Resource<RegisterModel>> {
-        val userReg = MutableLiveData<Resource<RegisterModel>>()
+    fun register(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+        val userReg = MutableLiveData<Resource<LoginModel>>()
         CoroutineScope(Dispatchers.IO).launch {
             userReg.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()) {
@@ -52,6 +51,42 @@ class WebServiceRepository(application: Application) {
             }else userReg.postValue(Resource.error("No internet connection", null))
         }
         return userReg
+    }
+
+    fun otp(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+        val userOtp = MutableLiveData<Resource<LoginModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            userOtp.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterface.otpAPI(map)
+                if (request.isSuccessful) {
+                    userOtp.postValue(Resource.success(request.body()))
+                } else {
+                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                    println("json error>>>>>>>>>>>$jsonObj")
+                    userOtp.postValue(Resource.error(jsonObj.getString("message"), null)
+                    )}
+            }else userOtp.postValue(Resource.error("No internet connection", null))
+        }
+        return userOtp
+    }
+
+    fun otpResend(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+        val userOtp = MutableLiveData<Resource<LoginModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            userOtp.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterface.otpResendAPI(map)
+                if (request.isSuccessful) {
+                    userOtp.postValue(Resource.success(request.body()))
+                } else {
+                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                    println("json error>>>>>>>>>>>$jsonObj")
+                    userOtp.postValue(Resource.error(jsonObj.getString("message"), null)
+                    )}
+            }else userOtp.postValue(Resource.error("No internet connection", null))
+        }
+        return userOtp
     }
 }
 

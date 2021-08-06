@@ -23,6 +23,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.ui.fragment.*
+import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Util
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
@@ -54,14 +55,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@HomeActivity, R.layout.home_activity)
-
-        //  binding.header.headerTitle.setText("Hi, User")
-
+        fragmentManager = supportFragmentManager
         //sideMenu
         val widthRatio = Util.ratioOfScreen(this, 0.7f)
-        Log.d("widthRatio_of_view", widthRatio.toString() + "")
-        fragmentManager = supportFragmentManager
-
         slidingRootNav = SlidingRootNavBuilder(this)
             .withDragDistance(widthRatio) //Horizontal translation of a view. Default == 180dp
             .withRootViewScale(1f) //Content view's scale will be interpolated between 1f and 0.7f. Default == 0.65f;
@@ -73,6 +69,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
       //  sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
         showFragment(HomeFragment(this))
         inItView()
+
+
     }
 
 
@@ -333,6 +331,9 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
 
     private fun inItView() {
+        binding.handler
+
+
         setTouchNClick(binding.bottomChat)
         setTouchNClick(binding.bottomBarCrawl)
         setTouchNClick(binding.bottomHomeRel)

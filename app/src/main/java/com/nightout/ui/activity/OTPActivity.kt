@@ -11,11 +11,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 
 
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.OtpActvityBinding
+import com.nightout.utils.AppConstant
+import com.nightout.utils.MyApp
+import com.nightout.vendor.viewmodel.OtpViewModel
 
 class OTPActivity : BaseActivity() {
 
@@ -24,13 +28,18 @@ class OTPActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@OTPActivity,R.layout.otp_actvity)
         initView()
+        setPinView()
+        showTimer()
+//        var mob = intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)
+//        Log.d("TAG", "onCreate: "+mob)
 
+
+    }
+
+    private fun setPinView() {
         binding.otpPinView.setPasswordHidden(true);
         binding.otpPinView.isCursorVisible = false
-        binding.otpPinView.setCursorColor(
-            ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
-        showTimer()
-
+        binding.otpPinView.setCursorColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()))
         binding.otpPinView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -45,15 +54,6 @@ class OTPActivity : BaseActivity() {
             }
 
         })
-
-      /*  binding.otpPinView.setOnCompleteListener(PinView.OnCompleteListener { completed, pinResults -> //Do what you want
-            if (completed) {
-                startActivity(Intent(this@OTPActivity, HomeActivity::class.java))
-                finish()
-
-
-            }
-        })*/
     }
 
     private fun showTimer() {
@@ -82,23 +82,14 @@ class OTPActivity : BaseActivity() {
          str1 = resources.getString(R.string.Change)
           settext = "<font color='#ffc800'><u>$str1 </u></font>"
         binding.otpActvityChange.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
-    }
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        if(v==binding.submitBtn){
-            startActivity(Intent(this@OTPActivity, HomeActivity::class.java))
-            finish()
-
-        }
-        else if(binding.otpActvityChange==v || binding.otpActivityBakBtn==v){
-            finish()
-        }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
+        binding.otpHandler = MyApp.getOtpHandler(this,intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)!!)
+        binding.otpviewmodel = ViewModelProviders.of(this).get(OtpViewModel::class.java)
 
     }
+
+
+
+
 
 }

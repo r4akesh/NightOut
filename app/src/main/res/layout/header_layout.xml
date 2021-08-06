@@ -25,7 +25,8 @@
 
         <TextView
             android:id="@+id/headerTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/headerSearch"
             android:layout_height="wrap_content"
             android:fontFamily="@font/proximanova_bold"
             android:text="Hi, John"

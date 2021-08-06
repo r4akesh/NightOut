@@ -14,7 +14,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+        android:id="@+id/registerRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_gray"
@@ -211,6 +211,7 @@
                     android:paddingTop="@dimen/_2ssp"
                     android:paddingBottom="@dimen/_2ssp"
                     android:singleLine="true"
+                    android:inputType="textEmailAddress"
                     android:text="@={regviewmodel.emailId}"
                     android:textColor="@color/text_blk"
                     android:textSize="@dimen/_14ssp"
@@ -278,6 +279,7 @@
                     android:inputType="number"
                     android:paddingTop="@dimen/_10ssp"
                     android:paddingEnd="@dimen/_10ssp"
+                    android:maxLength="14"
                     android:paddingBottom="@dimen/_10ssp"
                     android:text="@={regviewmodel.phNo}"
                     android:textColor="@color/black"

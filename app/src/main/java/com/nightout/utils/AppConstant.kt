@@ -11,7 +11,7 @@ class AppConstant {
     }
 
     object INTENT_EXTRAS {
-        const val MOB_NO = "MOB_NO"
+        const val MOBILENO = "MOBILENO"
 
     }
 }

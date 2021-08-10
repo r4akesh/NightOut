@@ -113,5 +113,25 @@
         <item name="android:textColor">@color/text_blk</item>
         <item name="fontFamily">@font/proximanova_reg</item>
     </style>
+    <style name="Theme.MyApp.Dialog.Alert" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Text Color for Buttons -->
+        <item name="colorPrimary">@color/white</item>
 
+        <!-- Background Color-->
+        <item name="android:background">@color/boxclr_primary</item>
+        <!-- Text Color for title and message -->
+        <item name="colorOnSurface">@color/white_thred</item>
+        <!-- Style for positive button -->
+      <!--  <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>-->
+        <!-- Style for negative button -->
+       <!-- <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>-->
+    </style>
+
+
+    <style name="PositiveButtonStyle" parent="@style/Widget.MaterialComponents.Button">
+        <!-- text color for the button -->
+        <item name="android:textColor">@color/text_yello</item>
+        <!-- Background tint for the button -->
+        <item name="backgroundTint">@color/red_clr</item>
+    </style>
 </resources>

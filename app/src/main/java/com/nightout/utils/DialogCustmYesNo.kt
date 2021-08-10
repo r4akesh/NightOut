@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nightout.R
 import com.nightout.base.BaseActivity
 
 /**
@@ -39,7 +40,7 @@ class DialogCustmYesNo : BaseActivity() {
 //        customDialog!!.setCanceledOnTouchOutside(false)
 //        customDialog!!.show()
        // init()
-        val builder = MaterialAlertDialogBuilder(mContext)
+        val builder = MaterialAlertDialogBuilder(mContext, R.style.Theme_MyApp_Dialog_Alert)
         builder.setTitle(title).setMessage(errrMsg)
             .setPositiveButton("YES") { dialog, which ->
                 dialog.dismiss()

@@ -26,16 +26,16 @@ class PreferenceKeeper private constructor(context: Context?) {
             prefs!!.edit().putString(AppConstant.PrefsName.LOGIN_POJO, json.toString()).apply()
         }
 
-    /*var isAppInstallFirstTime: Boolean
-        get() = prefs!!.getBoolean(AppConstant.PrefsName.IS_APPINSTALL_FIRSTTIME, false)
+    var isUserLogin: Boolean
+        get() = prefs!!.getBoolean(AppConstant.PrefsName.IS_LOGIN, false)
         set(islogin) {
-            prefs!!.edit().putBoolean(AppConstant.PrefsName.IS_APPINSTALL_FIRSTTIME, islogin)
+            prefs!!.edit().putBoolean(AppConstant.PrefsName.IS_LOGIN, islogin)
                 .apply()
         }
 
 
 
-    var userNotfCountUnRead: String?
+    /*var userNotfCountUnRead: String?
         get() = prefs!!.getString(AppConstant.PrefsName.NOTF_COUNT_UNREAD, "")
         set(cnt) {
             prefs!!.edit().putString(AppConstant.PrefsName.NOTF_COUNT_UNREAD, cnt).apply()

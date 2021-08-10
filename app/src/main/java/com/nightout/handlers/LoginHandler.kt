@@ -43,8 +43,7 @@ open class LoginHandler(val activity: LoginActivity) {
                     it.data?.let {
                         var logModel: LoginModel.Data = it.data
                         PreferenceKeeper.instance.loginResponse = logModel
-                        var vv = PreferenceKeeper.instance.loginResponse
-                        var vv2 = PreferenceKeeper.instance.loginResponse
+                       PreferenceKeeper.instance.isUserLogin=true
                     }
                    Util.showSnackBarOnError(activity.binding.loginPhno,it.data?.message!!,activity)
                     activity.startActivity(Intent(activity,OTPActivity::class.java)

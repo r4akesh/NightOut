@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.utils.ExceptionHandler
+import com.nightout.utils.PreferenceKeeper
 
 class SplashActivity : BaseActivity() {
     private var crash: String? = null
@@ -35,7 +36,11 @@ class SplashActivity : BaseActivity() {
 
     private fun startSplash() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            if(PreferenceKeeper.instance.isUserLogin) {
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            }else {
+                startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+            }
             overridePendingTransition(0,0)
             finish()
         }, 1500)

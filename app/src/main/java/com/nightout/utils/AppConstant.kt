@@ -6,6 +6,7 @@ package com.nightout.utils
 class AppConstant {
     object PrefsName {
         const val LOGIN_POJO = "LOGIN_POJO"
+        const val IS_LOGIN = "IS_LOGIN"
 
 
     }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
@@ -38,7 +39,11 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
         this.onMenuOpenListener = onMenuOpenListener
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         setBottomSheet()
         initView()
@@ -50,7 +55,8 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
 
     private fun setBottomSheet() {
         bottomSheetBehavior =BottomSheetBehavior.from(binding.btmShhetInclue.bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+       // bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         // bottomSheetBehavior.isHideable = false
         //  bottomSheetBehavior.peekHeight = resources.getDimension(R.dimen._100sdp).toInt()
         bottomSheetBehavior.isDraggable = true
@@ -96,13 +102,37 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
     private fun setListVenuListBootmShhetDuumy() {
         var listTile = ArrayList<VenuBotmSheetTitleModel>()
         var listSub = ArrayList<VenuBotmSheetModel>()
-        listSub.add(VenuBotmSheetModel("Vanity Night Clubs", "1 Fairclough St, Liverpool", R.drawable.venusub_img1))
+        listSub.add(
+            VenuBotmSheetModel(
+                "Vanity Night Clubs",
+                "1 Fairclough St, Liverpool",
+                R.drawable.venusub_img1
+            )
+        )
         listTile.add(VenuBotmSheetTitleModel("Clubs", listSub))
-        listSub.add(VenuBotmSheetModel("Raise a Glass", "Liverpool 1 Fairclough St", R.drawable.venusub_img2))
+        listSub.add(
+            VenuBotmSheetModel(
+                "Raise a Glass",
+                "Liverpool 1 Fairclough St",
+                R.drawable.venusub_img2
+            )
+        )
         listTile.add(VenuBotmSheetTitleModel("Bars", listSub))
-        listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
+        listSub.add(
+            VenuBotmSheetModel(
+                "Neon Nights",
+                "25 Fairclough St, Lverol",
+                R.drawable.venusub_img3
+            )
+        )
         listTile.add(VenuBotmSheetTitleModel("Pubs", listSub))
-        listSub.add(VenuBotmSheetModel("Neon Nights", "25 Fairclough St, Lverol", R.drawable.venusub_img3))
+        listSub.add(
+            VenuBotmSheetModel(
+                "Neon Nights",
+                "25 Fairclough St, Lverol",
+                R.drawable.venusub_img3
+            )
+        )
         listTile.add(VenuBotmSheetTitleModel("Food", listSub))
         listSub.add(
             VenuBotmSheetModel(
@@ -152,6 +182,13 @@ class HomeFragment(): Fragment() , OnMapReadyCallback, View.OnClickListener {
             )
             it.adapter=venuTitleBotmSheetAdapter
         }
+
+        binding.btmShhetInclue.bottomSheetRecycleVenuList.setOnTouchListener(OnTouchListener { v, event ->
+            v.parent.requestDisallowInterceptTouchEvent(true)
+            v.onTouchEvent(event)
+
+            true
+        })
     }
 
     lateinit var storyAdapter: StoryAdapter

@@ -23,6 +23,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.ui.fragment.*
+import com.nightout.utils.DialogCustmYesNo
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Util
 import com.yarolegovich.slidingrootnav.SlidingRootNav
@@ -45,6 +46,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sideMenuVenues: TextView? = null
     var sideMenuEmrgyHistry: TextView? = null
     var sideMenuEmrgyContact: TextView? = null
+    var sideMenuLogout: TextView? = null
     var sideMenuProfile: ImageView? = null
     var sideMenuTrackTrace: TextView? = null
     var sideMenuEvent: TextView? = null
@@ -242,24 +244,28 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             setBtnBgBlank()
             sideMenuTrackTrace?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
+            overridePendingTransition(0,0)
         }
         else if(v==sideMenuEvent){
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEvent?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EventDetail::class.java))
+            overridePendingTransition(0,0)
         }
         else if(v==sideMenuLostItem){
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuLostItem?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, LostitemActivity::class.java))
+            overridePendingTransition(0,0)
         }
         else if(v==sideMenuFood){
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFood?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FoodStoreActvity::class.java))
+            overridePendingTransition(0,0)
         }
 
         else if(v==sideMenuEmrgyContact){
@@ -267,18 +273,21 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             setBtnBgBlank()
             sideMenuEmrgyContact?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EmergencyContactActivity::class.java))
+            overridePendingTransition(0,0)
         }
         else if(v==sideMenuVenues){
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuVenues?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, VenuListActvity::class.java))
+            overridePendingTransition(0,0)
         }
         else if(v==sideMenuEmrgyHistry){
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEmrgyHistry?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EmergencyContactListActivity::class.java))
+            overridePendingTransition(0,0)
         }
 
         else if(v==sideMenuHome){
@@ -293,25 +302,55 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             setBtnBgBlank()
             sideMenuAbout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, AboutActivity::class.java))
+            overridePendingTransition(0,0)
         } else if (v == sideMenuTermCond) {
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuTermCond?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
+            overridePendingTransition(0,0)
         } else if (v == sideMenuFaq) {
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFaq?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FAQActivity::class.java))
+            overridePendingTransition(0,0)
         } else if (v == sideMenuContactUs) {
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuContactUs?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, ContactUsActivity::class.java))
+            overridePendingTransition(0,0)
         } else if (v == sideMenuSetting) {
             slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuSetting?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, SettingActivity::class.java))
+            overridePendingTransition(0,0)
         }
+        else if (v == sideMenuLogout) {
+            slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuLogout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+           showAlertLogout()
+        }
+    }
+
+    private fun showAlertLogout() {
+        DialogCustmYesNo.getInstance().createDialog(this@HomeActivity,resources.getString(R.string.app_name),"Are you sure you want to logout?",object:
+            DialogCustmYesNo.Dialogclick{
+            override fun onYES() {
+                // logoutAPICall()
+                PreferenceKeeper.instance.isUserLogin=false
+                startActivity(Intent(this@HomeActivity,LoginActivity::class.java))
+                finish()
+            }
+
+            override fun onNO() {
+                //do nothing
+            }
+
+        })
     }
 
     private fun setBtnBgBlank() {
@@ -327,11 +366,13 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuContactUs?.setBackgroundResource(0)
         sideMenuFood?.setBackgroundResource(0)
         sideMenuEvent?.setBackgroundResource(0)
+        sideMenuSetting?.setBackgroundResource(0)
+        sideMenuLogout?.setBackgroundResource(0)
     }
 
 
     private fun inItView() {
-        binding.handler
+       // binding.handler
 
 
         setTouchNClick(binding.bottomChat)
@@ -352,6 +393,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         setTouchNClick(R.id.sideMenuFood)
         setTouchNClick(R.id.sideMenuLostItem)
         setTouchNClick(R.id.sideMenuEvent)
+        setTouchNClick(R.id.sideMenuLogout)
 
 
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
@@ -367,6 +409,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuVenues = findViewById(R.id.sideMenuVenues)
         sideMenuEmrgyHistry = findViewById(R.id.sideMenuEmrgyHistry)
         sideMenuEmrgyContact = findViewById(R.id.sideMenuEmrgyContact)
+        sideMenuLogout = findViewById(R.id.sideMenuLogout)
 
 
 

@@ -33,7 +33,7 @@ open class SideMenuHandler(val activity: HomeActivity) {
         this.sideMenuViewModl = sideMenuViewModl
         DialogCustmYesNo.getInstance().createDialog(activity,"Title","Are you sure you want to logout?",object:DialogCustmYesNo.Dialogclick{
             override fun onYES() {
-                 logoutAPICall()
+                // logoutAPICall()
             }
 
             override fun onNO() {
@@ -43,7 +43,7 @@ open class SideMenuHandler(val activity: HomeActivity) {
         })
     }
 
-     private fun logoutAPICall(map: HashMap<String, Any>, activity: LoginActivity) {
+/*     private fun logoutAPICall(map: HashMap<String, Any>, activity: LoginActivity) {
         loginViewModel.login(map).observe(activity,{
             when (it.status) {
                 Status.SUCCESS -> {
@@ -69,6 +69,6 @@ open class SideMenuHandler(val activity: HomeActivity) {
                 }
             }
         })
-    }
+    }*/
 
 }

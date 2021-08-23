@@ -27,6 +27,7 @@ import com.nightout.handlers.RegisterHandler
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.ui.activity.RegisterActivity
+import com.nightout.ui.fragment.HomeFragment
 
 
 import dmax.dialog.SpotsDialog
@@ -71,6 +72,10 @@ class MyApp : Application() {
         fun getOtpHandler(otpActivity: OTPActivity, mobNo:String): OtpHandler {
             return OtpHandler(otpActivity,mobNo)
         }
+
+       /* fun getHomeHandler(homeFragment: HomeFragment): HomeHandler {
+            return HomeHandler(homeFragment)
+        }*/
 
         open fun showSoftKeyboard(activity: Activity) {
             val imm = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

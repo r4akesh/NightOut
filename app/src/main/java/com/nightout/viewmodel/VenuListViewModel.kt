@@ -14,7 +14,7 @@ import com.nightout.vendor.services.WebServiceRepository
 
 
 
-class SideMenuViewModel(application: Application) : AndroidViewModel(application) {
+class VenuListViewModel(application: Application) : AndroidViewModel(application) {
     private val webServiceRepository: WebServiceRepository = WebServiceRepository(application)
     var PhNo: String? = ""
    // var password: String? = ""
@@ -49,10 +49,10 @@ class SideMenuViewModel(application: Application) : AndroidViewModel(application
     }
 
 
-    fun logout(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+  /*  fun login(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
         loginResponseModel = webServiceRepository.login(map)
         return loginResponseModel
-    }
+    }*/
 
 
 }

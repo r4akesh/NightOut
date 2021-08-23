@@ -8,25 +8,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nightout.R
-import com.nightout.databinding.StoryItemBinding
+import com.nightout.databinding.VenuBotmsheetItemBinding
 import com.nightout.model.DashboardModel
-import com.nightout.model.Story
+import com.nightout.model.Pub
 
 import com.nightout.utils.PreferenceKeeper
 
 
-class StoryAdapter(
+class PubsAdapter(
     var context: Context,
-    var arrayList: ArrayList<Story>,
+    var arrayList: ArrayList<Pub>,
     var clickListener: ClickListener,
 ) :
-    RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
+    RecyclerView.Adapter<PubsAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: StoryItemBinding = DataBindingUtil.inflate(
+        val binding: VenuBotmsheetItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.story_item, parent, false
+            R.layout.venu_botmsheet_item, parent, false
         )
 
 
@@ -35,13 +35,13 @@ class StoryAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         try {
-            viewHolder.binding.storyitemTitle.text = arrayList[position].vendor_detail.name
+            viewHolder.binding.venuBottmShhetItemTitle.text=arrayList[position].store_name
+            viewHolder.binding.venuBottmShhetItemSubTitle.text=arrayList[position].store_address
+            Glide.with(context)
+                .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].store_logo)
+                .error(R.drawable.no_image)
+                .into(viewHolder.binding.venuBottmShhetItemImg)
 
-            Glide
-                .with(context)
-                .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].storydetail[0].image)
-                 .error(R.drawable.app_icon)
-                .into(viewHolder.binding.storyitemImg)
             viewHolder.itemView.setOnClickListener {
                 clickListener.onClick(position)
 
@@ -57,9 +57,9 @@ class StoryAdapter(
     }
 
 
-    inner class ViewHolder(itemView: StoryItemBinding) :
+    inner class ViewHolder(itemView: VenuBotmsheetItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: StoryItemBinding = itemView
+        var binding: VenuBotmsheetItemBinding = itemView
 
     }
 

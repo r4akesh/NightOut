@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data></data>
-<androidx.constraintlayout.widget.ConstraintLayout
-   android:layout_width="@dimen/_65sdp"
-    android:layout_height="wrap_content">
 
-     <ImageView
-         android:id="@+id/storyitem_img"
-         android:layout_width="wrap_content"
-         android:background="@null"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         android:src="@drawable/stry_img1"
-         android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_70sdp"
 
-    <TextView
-        android:id="@+id/storyitem_title"
-        android:layout_width="wrap_content"
-        android:text="title"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:paddingStart="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_5sdp"
-        android:singleLine="true"
-        android:textSize="@dimen/_11ssp"
-        android:fontFamily="@font/proximanova_light"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/storyitem_img"
-        android:layout_height="wrap_content"/>
+        android:layout_height="@dimen/_65sdp">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/storyitem_img"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_border_color="@color/text_yello"
+            app:riv_border_width="2dp"
+            app:riv_corner_radius="5dp" />
+
+
+        <TextView
+            android:id="@+id/storyitem_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/proximanova_light"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:singleLine="true"
+            android:text="title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/storyitem_img" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data></data>
 
@@ -11,10 +12,9 @@
         android:layout_height="@dimen/_400sdp"
         android:background="@android:color/transparent"
         android:orientation="vertical"
-        app:behavior_hideable="false"
+        app:behavior_hideable="true"
         app:behavior_peekHeight="@dimen/_150sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
 
 
         <LinearLayout
@@ -43,21 +43,135 @@
 
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/bottomSheet_recyclerstory"
+                        android:id="@+id/bottomSheetrecyclerstory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_10ssp" />
 
+                    <TextView
+                        android:id="@+id/bottomSheetClubs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:drawableEnd="@drawable/arrow_right_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="Club"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bottomSheetrecyclerClubs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/bottomSheetBars"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:drawableEnd="@drawable/arrow_right_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="Bars"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bottomSheetrecyclerBars"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/bottomSheetPubs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:drawableEnd="@drawable/arrow_right_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="Pubs"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bottomSheetrecyclerPubs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/bottomSheetFoods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:drawableEnd="@drawable/arrow_right_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="@string/Foods"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bottomSheetrecyclerFoods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/bottomSheetEvents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:drawableEnd="@drawable/arrow_right_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_5ssp"
+                        android:text="@string/Events"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bottomSheetrecyclerEvents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/bottomSheet_recycleVenuList"
                         android:layout_width="match_parent"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
+                        android:layout_height="wrap_content"
                         android:focusableInTouchMode="true"
                         android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:layout_height="wrap_content" />
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>

@@ -7,9 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-
+        android:layout_height="@dimen/_50sdp"
         >
 
         <ImageView
@@ -22,12 +20,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/headerMapIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/addrs_home"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
+
+
+        <TextView
+            android:id="@+id/headerAddrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2ssp"
+            android:fontFamily="@font/proximanova_reg"
+            android:paddingTop="@dimen/_1ssp"
+            android:text="A 629 Fairclough "
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/headerMapIcon"
+            app:layout_constraintStart_toEndOf="@+id/headerMapIcon"
+            app:layout_constraintTop_toBottomOf="@+id/headerTitle"
+            app:layout_constraintTop_toTopOf="@+id/headerMapIcon" />
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/proximanova_bold"
+            android:text="Chat Group"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <EditText
             android:id="@+id/searchLocation_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_marginEnd="@dimen/_10ssp"
             android:background="@drawable/box_serch"
             android:drawableStart="@drawable/search_ic"
@@ -45,13 +80,6 @@
             app:layout_constraintEnd_toStartOf="@+id/headerNotification"
             app:layout_constraintStart_toEndOf="@+id/headerSideMenu"
             app:layout_constraintTop_toTopOf="@+id/headerSideMenu" />
-
-
-
-
-
-
-
 
         <ImageView
             android:id="@+id/headerNotification"
@@ -75,13 +103,12 @@
             android:paddingTop="@dimen/_10ssp"
             android:paddingEnd="@dimen/_10ssp"
             android:paddingBottom="@dimen/_10ssp"
-
             android:src="@drawable/setting_threedot"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

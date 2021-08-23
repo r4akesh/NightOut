@@ -96,8 +96,6 @@ class LoginActivity : BaseActivity() {
 //        var str2 = resources.getString(R.string.firsLine)
 //        var settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
         binding.loginActvitySignUp.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
-
-
         binding.loginHandler = MyApp.getLoginHandler(this)
         binding.loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 

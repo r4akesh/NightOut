@@ -4,12 +4,12 @@
 
     <data>
 
-        <variable
+      <!--  <variable
             name="sideViewModel"
             type="com.nightout.vendor.viewmodel.SideMenuViewModel" />
         <variable
             name="sideMenuHandler"
-            type="com.nightout.handlers.SideMenuHandler" />
+            type="com.nightout.handlers.SideMenuHandler" />-->
         
         
     </data>
@@ -358,7 +358,7 @@
                         android:layout_marginBottom="@dimen/_20sdp"
                         android:drawableStart="@drawable/sidemenu_logout"
                         android:drawablePadding="@dimen/_10ssp"
-                        android:onClick="@{()->sideMenuHandler.doLogout(sideViewModel)}"
+
                         android:fontFamily="@font/proximanova_reg"
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/_15ssp"

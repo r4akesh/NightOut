@@ -8,13 +8,15 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
+
 import com.nightout.databinding.VenuItemBinding
 import com.nightout.model.ChatModel
 import com.nightout.model.VenuModel
+import com.nightout.vendor.viewmodel.VenuListViewModel
 
 
 class VenuAdapterAdapter(
@@ -36,7 +38,11 @@ class VenuAdapterAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        var venuModel =  arrayList.get(position)
+      //  viewHolder.bind(venuModel)
+
         viewHolder.binding.venuItemTitle.text=arrayList[position].title
+
         if(arrayList[position].isSelected){
             viewHolder.binding.venuItemTitle.setBackgroundResource(R.drawable.border_yello)
             viewHolder.binding.venuItemTitle.setTextColor(context.resources.getColor(R.color.text_yello))

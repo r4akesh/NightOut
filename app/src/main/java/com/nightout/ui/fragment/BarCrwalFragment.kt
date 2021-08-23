@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,16 +15,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.nightout.R
-import com.nightout.adapter.ChatAdapter
+import com.nightout.adapter.PromotionAdapter
 import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.databinding.FragmentBarcrawlBinding
-import com.nightout.databinding.FragmentChatBinding
-import com.nightout.databinding.FragmentHomeBinding
 import com.nightout.interfaces.OnMenuOpenListener
-import com.nightout.model.ChatModel
 import com.nightout.model.VenuModel
-import com.nightout.ui.activity.ChatPersonalActvity
-import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.ListParticipteActvity
 
 class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback {
@@ -67,7 +61,9 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
         list.add(VenuModel("Pub", false))
         list.add(VenuModel("Food", false))
         list.add(VenuModel("Event", false))
-        venuAdapterAdapter = VenuAdapterAdapter(
+
+       // venuAdapterAdapter = PromotionAdapter(list)
+         venuAdapterAdapter = VenuAdapterAdapter(
             requireContext(),
             list,
             object : VenuAdapterAdapter.ClickListener {

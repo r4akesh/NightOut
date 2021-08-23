@@ -24,6 +24,7 @@ import com.nightout.model.FacilityModel
 import com.nightout.model.StorDetailFoodModel
 import com.nightout.model.StoreDetailDrinksModel
 import com.nightout.model.SubFoodModel
+import com.nightout.utils.AppConstant
 import kotlinx.android.synthetic.main.discount_desc.view.*
 
 
@@ -33,10 +34,15 @@ class StoreDetail : BaseActivity() {
         super.onCreate(savedInstanceState)
         //  setContentView(R.layout.storedetail_activity)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
-
+        //var dataPojo = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.VENU_POS)
+        user_venue_detailAPICALL()
         initView()
         setListHorizntalFood()
         setListDrinksDummy()//first time set
+    }
+
+    private fun user_venue_detailAPICALL() {
+
     }
 
     lateinit var storDetailFoodHorizontalAdapter: StorDetailFoodHorizontalAdapter

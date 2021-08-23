@@ -1,6 +1,5 @@
 package com.nightout.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil

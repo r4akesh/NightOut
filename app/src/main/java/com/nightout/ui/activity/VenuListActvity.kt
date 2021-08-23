@@ -6,26 +6,25 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
+import com.nightout.adapter.PromotionAdapter
 import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.adapter.VenuSubAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.VenulistingActivityBinding
-import com.nightout.model.VenuListModel
-import com.nightout.model.VenuModel
+import com.nightout.model.*
+import com.nightout.utils.AppConstant
 
 
 class VenuListActvity : BaseActivity() {
     lateinit var binding: VenulistingActivityBinding
     lateinit var venuAdapterAdapter: VenuAdapterAdapter
-    // lateinit var venuAdapterAdapter: VenuAdapterAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this@VenuListActvity,
-            R.layout.venulisting_activity
-        )
+        binding = DataBindingUtil.setContentView(this@VenuListActvity, R.layout.venulisting_activity)
         setToolBar()
+        var listVenu = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.VENU_LIST_POS) as Data
         setTopListTopDummy()
         setTopListSubDummy()
     }
@@ -65,10 +64,7 @@ class VenuListActvity : BaseActivity() {
         list.add(VenuListModel("Feel the Beat", "", R.drawable.venusub_img2))
         list.add(VenuListModel("Vanity Night Club", "", R.drawable.venusub_img3))
 
-        venuSubAdapter = VenuSubAdapter(
-            this@VenuListActvity,
-            list,
-            object : VenuSubAdapter.ClickListener {
+        venuSubAdapter = VenuSubAdapter(this@VenuListActvity, list, object : VenuSubAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     startActivity(Intent(this@VenuListActvity,StoreDetail::class.java))
                     overridePendingTransition(0,0)
@@ -94,18 +90,15 @@ class VenuListActvity : BaseActivity() {
         list.add(VenuModel("Pub", false))
         list.add(VenuModel("Food", false))
         list.add(VenuModel("Event", false))
+       // venuAdapterAdapter = PromotionAdapter(list)
 
-        venuAdapterAdapter = VenuAdapterAdapter(
+       venuAdapterAdapter = VenuAdapterAdapter(
             this@VenuListActvity,
             list,
             object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     for (i in 0 until list.size) {
-                        if (pos == i) {
-                            list[i].isSelected = true
-                        } else {
-                            list[i].isSelected = false
-                        }
+                        list[i].isSelected = pos == i
                     }
                     venuAdapterAdapter.notifyDataSetChanged()
                 }

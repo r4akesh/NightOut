@@ -35,14 +35,18 @@ class PreferenceKeeper private constructor(context: Context?) {
 
 
 
-    /*var userNotfCountUnRead: String?
-        get() = prefs!!.getString(AppConstant.PrefsName.NOTF_COUNT_UNREAD, "")
+     var bearerTokenSave: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.BearerTOKEN, "")
         set(cnt) {
-            prefs!!.edit().putString(AppConstant.PrefsName.NOTF_COUNT_UNREAD, cnt).apply()
-        }*/
+            prefs!!.edit().putString(AppConstant.PrefsName.BearerTOKEN, cnt).apply()
+        }
 
 
-
+    var imgPathSave: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.IMAGE_PATH, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.IMAGE_PATH, cnt).apply()
+        }
 
 
 

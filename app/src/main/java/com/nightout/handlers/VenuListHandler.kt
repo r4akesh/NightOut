@@ -1,18 +1,11 @@
 package com.nightout.handlers
 
-import android.content.Intent
-import com.nightout.model.LoginModel
+import com.nightout.model.VenuModel
 import com.nightout.ui.activity.HomeActivity
-import com.nightout.ui.activity.LoginActivity
-import com.nightout.ui.activity.OTPActivity
-import com.nightout.ui.activity.RegisterActivity
 import com.nightout.utils.*
-import com.nightout.vendor.services.Status
-import com.nightout.vendor.viewmodel.LoginViewModel
-import com.nightout.vendor.viewmodel.SideMenuViewModel
 
-open class SideMenuHandler(val activity: HomeActivity) {
-    private lateinit var sideMenuViewModl : SideMenuViewModel
+open class VenuListHandler(val activity: HomeActivity) {
+    private lateinit var sideMenuViewModl : VenuModel
   /*  fun onClickLogin(loginViewModel: LoginViewModel) {
         this.loginViewModel = loginViewModel
         MyApp.hideSoftKeyboard(activity)
@@ -29,9 +22,9 @@ open class SideMenuHandler(val activity: HomeActivity) {
 
 
 
-    fun doLogout(sideMenuViewModl : SideMenuViewModel) {
+    fun doDummyClick(sideMenuViewModl : VenuModel) {
         this.sideMenuViewModl = sideMenuViewModl
-        DialogCustmYesNo.getInstance().createDialog(activity,"Title","Are you sure you want to logout?",object:DialogCustmYesNo.Dialogclick{
+        DialogCustmYesNo.getInstance().createDialog(activity,"Dummy","Are you sure you want to logout?",object:DialogCustmYesNo.Dialogclick{
             override fun onYES() {
                 // logoutAPICall()
             }

@@ -1,8 +1,10 @@
 package com.nightout.vendor.services
 
+import com.nightout.model.DashboardModel
 import com.nightout.model.LoginModel
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 
@@ -20,4 +22,6 @@ interface APIInterface {
     @POST("resend_otp")
     suspend fun otpResendAPI(@Body params: HashMap<String, Any>): Response<LoginModel>
 
+    @GET("dashboard")
+    suspend fun dashboardAPI(): Response<DashboardModel>
 }

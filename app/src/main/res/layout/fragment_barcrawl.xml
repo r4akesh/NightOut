@@ -13,15 +13,13 @@
 
         <include
             android:id="@+id/headerBarCrawl"
-            layout="@layout/barcrawl_header_layout"
+            layout="@layout/barcrl_header_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
 
 
         <fragment
@@ -34,14 +32,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintTop_toBottomOf="@+id/headerBarCrawl" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragmentBatRecyclerTop"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_4ssp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerBarCrawl" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/barcrawlBtmConstrent"
             android:layout_width="match_parent"

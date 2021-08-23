@@ -2,7 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data></data>
+    <data>
+
+        <variable
+            name="venuModel"
+            type="com.nightout.model.VenuModel" />
+
+        <variable
+            name="clickHandler"
+            type="com.nightout.handlers.VenuListHandler" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_60sdp"
@@ -16,14 +26,15 @@
             android:id="@+id/venuItemTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:fontFamily="@font/proximanova_reg"
             android:gravity="center"
             android:paddingStart="@dimen/_10ssp"
             android:paddingTop="@dimen/_5ssp"
             android:paddingEnd="@dimen/_10ssp"
             android:paddingBottom="@dimen/_5ssp"
-            android:text="Club"
+
+
+
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -34,278 +34,278 @@
 
         <ScrollView
             android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reigisterActivityBakBtn"
-            android:layout_height="0dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-          >
-
-            <ImageView
-                android:id="@+id/loginLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:src="@drawable/login_logo_ic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/createaccount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:fontFamily="@font/proximanova_reg"
-                android:text="@string/create_account"
-
-                android:textColor="@color/text_gray"
-                android:textSize="@dimen/_13sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
-
-
-            <TextView
-                android:id="@+id/registration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_2ssp"
-                android:fontFamily="@font/proximanova_reg"
-                android:text="@string/registration"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_25sdp"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/createaccount" />
-
+            app:layout_constraintTop_toBottomOf="@+id/reigisterActivityBakBtn">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrentFnameLName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                app:layout_constraintTop_toBottomOf="@+id/registration">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constrentFname"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:background="@drawable/box_btn_bg"
-                    android:padding="@dimen/_7sdp"
-                    app:layout_constraintEnd_toStartOf="@+id/constrentLname"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-
-                    <TextView
-                        android:id="@+id/firstNameText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="@string/First_Name"
-                        android:textColor="@color/text_hint"
-                        android:textSize="@dimen/_11ssp"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/registerFName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:hint="eg: John"
-
-                        android:paddingTop="@dimen/_2ssp"
-                        android:paddingBottom="@dimen/_2ssp"
-                        android:singleLine="true"
-                        android:text="@={regviewmodel.FName}"
-                        android:textColor="@color/text_blk"
-                        android:textSize="@dimen/_14ssp"
-                        app:layout_constraintTop_toBottomOf="@+id/firstNameText" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constrentLname"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:background="@drawable/box_btn_bg"
-                    android:padding="@dimen/_7sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/constrentFname"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/lastNameText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="@string/Last_Name"
-                        android:textColor="@color/text_hint"
-                        android:textSize="@dimen/_11ssp"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/registerLName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:hint="eg: Doe"
-                        android:paddingTop="@dimen/_2ssp"
-                        android:paddingBottom="@dimen/_2ssp"
-                        android:singleLine="true"
-                        android:text="@={regviewmodel.LName}"
-                        android:textColor="@color/text_blk"
-                        android:textSize="@dimen/_14ssp"
-                        app:layout_constraintTop_toBottomOf="@+id/lastNameText" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrentEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/box_btn_bg"
-                android:padding="@dimen/_7sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constrentFnameLName">
-
-
-                <TextView
-                    android:id="@+id/emailText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="@string/email_id"
-                    android:textColor="@color/text_hint"
-                    android:textSize="@dimen/_11ssp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/registerEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:hint="eg: johndoe@example.com"
-                    android:paddingTop="@dimen/_2ssp"
-                    android:paddingBottom="@dimen/_2ssp"
-                    android:singleLine="true"
-                    android:inputType="textEmailAddress"
-                    android:text="@={regviewmodel.emailId}"
-                    android:textColor="@color/text_blk"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintTop_toBottomOf="@+id/emailText" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrentPhno"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/box_btn_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constrentEmail">
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/loginFlag"
+                    android:id="@+id/loginLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:background="@null"
-                    android:src="@drawable/uk_flag_ic"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/login_logo_ic"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/createaccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/create_account"
+
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginLogo" />
 
 
                 <TextView
-                    android:id="@+id/loginCountryCode"
+                    android:id="@+id/registration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5ssp"
-                    android:fontFamily="@font/proximanova_bold"
-                    android:text="+44"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/loginFlag"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/registration"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_25sdp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/createaccount" />
 
 
-                <View
-                    android:id="@+id/loginPipe"
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_marginStart="@dimen/_5ssp"
-                    android:background="@color/text_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/loginCountryCode"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrentFnameLName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/registration">
 
-                <EditText
-                    android:id="@+id/registerPhNo"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constrentFname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:background="@drawable/box_btn_bg"
+                        android:padding="@dimen/_7sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/constrentLname"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <TextView
+                            android:id="@+id/firstNameText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="@string/First_Name"
+                            android:textColor="@color/text_hint"
+                            android:textSize="@dimen/_11ssp"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <EditText
+                            android:id="@+id/registerFName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:hint="eg: John"
+
+                            android:paddingTop="@dimen/_2ssp"
+                            android:paddingBottom="@dimen/_2ssp"
+                            android:singleLine="true"
+                            android:text="@={regviewmodel.FName}"
+                            android:textColor="@color/text_blk"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintTop_toBottomOf="@+id/firstNameText" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constrentLname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@drawable/box_btn_bg"
+                        android:padding="@dimen/_7sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/constrentFname"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/lastNameText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="@string/Last_Name"
+                            android:textColor="@color/text_hint"
+                            android:textSize="@dimen/_11ssp"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <EditText
+                            android:id="@+id/registerLName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:hint="eg: Doe"
+                            android:paddingTop="@dimen/_2ssp"
+                            android:paddingBottom="@dimen/_2ssp"
+                            android:singleLine="true"
+                            android:text="@={regviewmodel.LName}"
+                            android:textColor="@color/text_blk"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintTop_toBottomOf="@+id/lastNameText" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrentEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5ssp"
-                    android:background="@null"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:hint="(000) 00 00 000"
-                    android:inputType="number"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:paddingEnd="@dimen/_10ssp"
-                    android:maxLength="14"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:text="@={regviewmodel.phNo}"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/text_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="@dimen/_15sdp"
+
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/box_btn_bg"
+                    android:padding="@dimen/_7sdp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/loginPipe"
-                    app:layout_constraintTop_toTopOf="parent" />
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constrentFnameLName">
 
 
+                    <TextView
+                        android:id="@+id/emailText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="@string/email_id"
+                        android:textColor="@color/text_hint"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/registerEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="eg: johndoe@example.com"
+                        android:inputType="textEmailAddress"
+                        android:paddingTop="@dimen/_2ssp"
+                        android:paddingBottom="@dimen/_2ssp"
+                        android:singleLine="true"
+                        android:text="@={regviewmodel.emailId}"
+                        android:textColor="@color/text_blk"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrentPhno"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/box_btn_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constrentEmail">
+
+                    <ImageView
+                        android:id="@+id/loginFlag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:background="@null"
+                        android:src="@drawable/uk_flag_ic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/loginCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="+44"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginFlag"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:id="@+id/loginPipe"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@color/text_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginCountryCode"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/registerPhNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5ssp"
+                        android:background="@null"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:hint="(000) 00 00 000"
+                        android:inputType="number"
+                        android:maxLength="14"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@={regviewmodel.phNo}"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/text_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/loginPipe"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/registerSaveBtn"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_22sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/gredient_bg"
+                    android:onClick="@{()->registerHandler.onClickReg(regviewmodel)}"
+                    android:text="@string/Save"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/constrentPhno" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/registerSaveBtn"
-                style="@style/buttonTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_22sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/gredient_bg"
-                android:onClick="@{()->registerHandler.onClickReg(regviewmodel)}"
-                android:text="@string/Save"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/constrentPhno" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 

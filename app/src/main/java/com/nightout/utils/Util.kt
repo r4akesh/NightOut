@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.nightout.R
 
@@ -49,6 +50,8 @@ class Util {
             snackBar.setTextColor(ContextCompat.getColor(context, R.color.white))
             snackBar.show()
         }
+
+
         private fun Snackbar.changeFont() {
             val tv = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
             val font = Typeface.createFromAsset(context.assets, "proximanova_reg.otf")

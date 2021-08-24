@@ -2,6 +2,7 @@ package com.nightout.vendor.services
 
 import com.nightout.model.DashboardModel
 import com.nightout.model.LoginModel
+import com.nightout.model.VenuDetailModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,4 +25,7 @@ interface APIInterface {
 
     @GET("dashboard")
     suspend fun dashboardAPI(): Response<DashboardModel>
+
+    @POST("user_venue_detail")
+    suspend fun userVenueDetailAPI(@Body params: HashMap<String, Any>): Response<VenuDetailModel>
 }

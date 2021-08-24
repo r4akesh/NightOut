@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,16 +11,19 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_gray">
 
-        <ImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/storeDeatilTopImag"
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_height="@dimen/_200sdp"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/intersect_img"
+            android:src="@drawable/no_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius" />
 
 
         <ImageView
@@ -68,14 +70,13 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-               android:paddingTop="@dimen/_5ssp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_gray"
-                android:layout_height="wrap_content">
+                android:paddingTop="@dimen/_5ssp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/storeDeatilLogoCard"
@@ -274,9 +275,9 @@
                         android:layout_marginTop="@dimen/_10ssp"
                         android:layout_marginEnd="-10dp"
                         android:background="@drawable/box_primary"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:paddingTop="@dimen/_10ssp"
                         android:paddingBottom="@dimen/_17ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilFacilityBtn">
 
@@ -314,13 +315,23 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                    <fragment
+                        android:id="@+id/storeDeatillocMap"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_110sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/storeDeatilMap"
+                        app:layout_constraintEnd_toEndOf="@+id/storeDeatilMap"
+                        app:layout_constraintStart_toStartOf="@+id/storeDeatilMap"
+                        app:layout_constraintTop_toTopOf="@+id/storeDeatilMap" />
+
                     <ImageView
                         android:id="@+id/storeDeatilMap"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8ssp"
+                        android:layout_height="@dimen/_110sdp"
+
                         android:layout_marginTop="@dimen/_8ssp"
-                        android:layout_marginEnd="@dimen/_8ssp"
+
                         android:background="@null"
                         android:scaleType="fitXY"
                         android:src="@drawable/map_duumy_img"
@@ -331,6 +342,7 @@
 
 
                     <ImageView
+                        android:id="@+id/storeDeatilSharLoc"
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"

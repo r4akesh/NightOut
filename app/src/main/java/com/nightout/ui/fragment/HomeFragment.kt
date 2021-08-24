@@ -1,5 +1,6 @@
 package com.nightout.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -63,6 +64,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+    }
 
     private fun dashboardAPICALL() {
         homeViewModel.dashBoard().observe(requireActivity(), {
@@ -270,11 +275,13 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
             ClubsAdapter(requireActivity(), clubsList, object : ClubsAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     var vv = clubsList[pos]
-                    startActivity(
-                        Intent(requireActivity(), StoreDetail::class.java)
-                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_POS, clubsList[pos] as Serializable)
+                    startActivity(Intent(requireActivity(), StoreDetail::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_POS, clubsList[pos])
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, ""+clubsList[pos].id)
                     )
                 }
+
+
 
             })
 

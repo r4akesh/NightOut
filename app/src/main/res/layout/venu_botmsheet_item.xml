@@ -72,7 +72,6 @@
                     android:background="@color/border_color"
                     app:layout_constraintTop_toBottomOf="@+id/venuBottmShhetItem_subTitle" />
 
-
                 <ImageView
                     android:id="@+id/venuBottmShhetItem_left"
                     android:layout_width="wrap_content"
@@ -83,63 +82,99 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/venuBottmShhetItem_view" />
 
-                <ImageView
-                    android:id="@+id/venuBottmShhetItem_per"
-                    android:layout_width="wrap_content"
+                <HorizontalScrollView
+                    android:id="@+id/hsview"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
-                    android:src="@drawable/per_img"
+                    android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
-                    app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left"
+                    app:layout_constraintEnd_toStartOf="@+id/venuBottmShhetItem_right"
                     app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_left"
-                   />
+                    app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left">
 
-                <View
-                    android:id="@+id/venuBottmShhetItem_view1"
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_15ssp"
-                    android:layout_marginStart="@dimen/_10ssp"
-
-                    android:background="@color/bg_view_ver"
-                    app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_per"
-                    app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
-                    app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left" />
-
-                <TextView
-                    android:id="@+id/venuBottmShhetItem_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Close : 2:00am"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_view1"
-                    app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
-                    app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
 
-                <View
-                    android:id="@+id/venuBottmShhetItem_view2"
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_15ssp"
-                    android:layout_marginStart="@dimen/_10ssp"
+                        <ImageView
+                            android:id="@+id/venuBottmShhetItem_per"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/per_img"
+                            app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
+                            app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_left"
+                            app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left"
 
-                    android:background="@color/bg_view_ver"
-                    app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_time"
-                    app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
-                    app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left" />
+                            />
+
+                        <View
+                            android:id="@+id/venuBottmShhetItem_view1"
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_15ssp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:background="@color/bg_view_ver"
+                            app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
+                            app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_per"
+                            app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left" />
+
+                        <TextView
+                            android:id="@+id/venuBottmShhetItem_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Close : 2:00am"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp" />
+
+
+                        <View
+                            android:id="@+id/venuBottmShhetItem_view2"
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_15ssp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:background="@color/bg_view_ver" />
+
+
+                        <TextView
+                            android:id="@+id/venusubitem_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:background="@null"
+                            android:drawableStart="@drawable/start_yellobg"
+                            android:drawablePadding="@dimen/_5ssp"
+                            android:fontFamily="@font/proximanova_bold"
+                            android:text="4.5"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_13ssp" />
+
+
+                    </LinearLayout>
+
+
+                </HorizontalScrollView>
 
                 <ImageView
                     android:id="@+id/venuBottmShhetItem_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:background="@null"
                     android:padding="@dimen/_10sdp"
                     android:src="@drawable/arrow_right_circle"
                     app:layout_constraintEnd_toEndOf="parent"
+
                     app:layout_constraintTop_toBottomOf="@+id/venuBottmShhetItem_view" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

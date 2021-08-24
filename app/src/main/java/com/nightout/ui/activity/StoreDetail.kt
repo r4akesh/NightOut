@@ -2,6 +2,7 @@ package com.nightout.ui.activity
 
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.View
@@ -11,8 +12,14 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.nightout.R
 import com.nightout.adapter.DrinksAdapter
 import com.nightout.adapter.DrinksSubAdapter
@@ -20,29 +27,98 @@ import com.nightout.adapter.FacilityAdapter
 import com.nightout.adapter.StorDetailFoodHorizontalAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.StoredetailActivityBinding
-import com.nightout.model.FacilityModel
-import com.nightout.model.StorDetailFoodModel
-import com.nightout.model.StoreDetailDrinksModel
-import com.nightout.model.SubFoodModel
+import com.nightout.model.*
 import com.nightout.utils.AppConstant
+import com.nightout.utils.Commons
+import com.nightout.utils.MyApp
+import com.nightout.utils.PreferenceKeeper
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.VenuDetailViewModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
 
 
-class StoreDetail : BaseActivity() {
+class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
+    lateinit var userVenueDetailViewModel: VenuDetailViewModel
+    lateinit var mMap: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //  setContentView(R.layout.storedetail_activity)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
-        //var dataPojo = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.VENU_POS)
-        user_venue_detailAPICALL()
         initView()
+        var venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)
+        if (!venuID.isNullOrBlank()) {
+            user_venue_detailAPICALL(venuID)
+        }
         setListHorizntalFood()
         setListDrinksDummy()//first time set
     }
 
-    private fun user_venue_detailAPICALL() {
+    private fun user_venue_detailAPICALL(venuID: String?) {
+        //progressBar.visibility = View.VISIBLE
+        var map = HashMap<String, Any>()
+        map["id"] = venuID!!
 
+        userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetail, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    //progressBar.visibility = View.GONE
+                    it.data?.let { detailData ->
+                        setData(detailData.data)
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    // progressBar.visibility = View.GONE
+                }
+            }
+        })
+    }
+
+    var facilityList = ArrayList<VenuDetailModel.Facility>()
+    private fun setData(dt: VenuDetailModel.Data) {
+        binding.storeDeatilTitle.text = dt.store_name
+        binding.storeDeatilRating.text = dt.rating.avg_rating
+        binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
+        binding.storeDeatilSubTitle.text =
+            "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
+        binding.storeDeatilPhno.text = dt.store_number
+        binding.storeDeatilEmail.text = dt.store_email
+        binding.storeDeatilAddrs.text = dt.store_address
+
+        Glide.with(this@StoreDetail)
+            .load(PreferenceKeeper.instance.imgPathSave+dt.store_logo)
+            .error(R.drawable.no_image)
+            .into(binding.storeDeatilTopImag)
+
+        facilityList = dt.facilities
+        showMapLoc(dt.store_lattitude, dt.store_longitude)
+
+    }
+
+
+    private fun showMapLoc(storeLattitude: String, storeLongitude: String) {
+        val latLng =
+            LatLng(Commons.strToDouble(storeLattitude), Commons.strToDouble(storeLongitude))
+        mMap.addMarker(MarkerOptions().position(latLng))
+        val yourLocation = CameraUpdateFactory.newLatLngZoom(latLng, 4.0f)
+        mMap.animateCamera(yourLocation)
+        binding.storeDeatilMap.setImageBitmap(null)
+        mMap.setOnMapLoadedCallback {
+            mMap.snapshot { bitmap ->
+                binding.storeDeatilMap.setImageBitmap(bitmap)
+                // If map won't be used afterwards, remove it's views
+                //              ((FrameLayout)findViewById(R.id.map)).removeAllViews();
+            }
+        }
+    }
+
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        mMap = googleMap!!
+        val success =
+            googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
     }
 
     lateinit var storDetailFoodHorizontalAdapter: StorDetailFoodHorizontalAdapter
@@ -413,11 +489,43 @@ class StoreDetail : BaseActivity() {
     private fun setListDrinksDummy() {
         var listDrinks = ArrayList<StoreDetailDrinksModel>()
         var listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Grey Goose", "1 Glass", R.drawable.drink_img1, "Price : $10", false))
+        listSub.add(
+            SubFoodModel(
+                "Grey Goose",
+                "1 Glass",
+                R.drawable.drink_img1,
+                "Price : $10",
+                false
+            )
+        )
         listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Belvedere", "2 Glass", R.drawable.drink_img2, "Price : $40", false))
-        listSub.add(SubFoodModel("Ketel One", "5 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(SubFoodModel("Finlandia One", "2 Glass", R.drawable.drink_img2, "Price : $60", false))
+        listSub.add(
+            SubFoodModel(
+                "Belvedere",
+                "2 Glass",
+                R.drawable.drink_img2,
+                "Price : $40",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Ketel One",
+                "5 Glass",
+                R.drawable.drink_img1,
+                "Price : $20",
+                false
+            )
+        )
+        listSub.add(
+            SubFoodModel(
+                "Finlandia One",
+                "2 Glass",
+                R.drawable.drink_img2,
+                "Price : $60",
+                false
+            )
+        )
         listDrinks.add(StoreDetailDrinksModel("Scotch", false, listSub))
 
         listSub = ArrayList<SubFoodModel>()
@@ -526,6 +634,12 @@ class StoreDetail : BaseActivity() {
     }
 
     private fun initView() {
+        val supportMapFragment =
+            (supportFragmentManager.findFragmentById(R.id.storeDeatillocMap) as SupportMapFragment?)!!
+        supportMapFragment.getMapAsync(this@StoreDetail)
+
+        userVenueDetailViewModel =
+            ViewModelProviders.of(this@StoreDetail).get(VenuDetailViewModel::class.java)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)
@@ -533,6 +647,8 @@ class StoreDetail : BaseActivity() {
         setTouchNClick(binding.storeDeatilFacilityBtn)
         setTouchNClick(binding.storeDeatilPlaceOrder)
         setTouchNClick(binding.storeDeatilPreBookingBtn)
+        setTouchNClick(binding.storeDeatilSharLoc)
+        setTouchNClick(binding.storeDeatilDirection)
         val str1 = resources.getString(R.string.Direction)
         var settext = "<u>$str1 </u>"
         binding.storeDeatilDirection.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
@@ -542,15 +658,21 @@ class StoreDetail : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
 
-        if(v== binding.storeDeatilPreBookingBtn){
+        if (v == binding.storeDeatilPreBookingBtn) {
             startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
 
-        }
-        else if (v == binding.storeDeatilPlaceOrder) {
+        } else if (v == binding.storeDeatilPlaceOrder) {
             startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
 
         } else if (v == binding.storeDeatilFacilityBtn) {
-            showPopUpFacilities()
+            if (facilityList != null && facilityList.size > 0)
+                showPopUpFacilities() else {
+                MyApp.popErrorMsg(
+                    "",
+                    resources.getString(R.string.facilitynot_avail),
+                    this@StoreDetail
+                )
+            }
         } else if (v == binding.storeDeatilBakBtn) {
             finish()
 
@@ -578,8 +700,12 @@ class StoreDetail : BaseActivity() {
 
             val str1 = resources.getString(R.string.discount10)
             var str2 = resources.getString(R.string.firsLine)
-            var settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.firstLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            var settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.firstLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
             str2 = resources.getString(R.string.secondLine)
             settext =
@@ -599,8 +725,12 @@ class StoreDetail : BaseActivity() {
             )
 
             str2 = resources.getString(R.string.firsLine)
-            settext = "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.fourthLine.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.fourthLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
 
             str2 = resources.getString(R.string.secondLine)
             settext =
@@ -624,6 +754,19 @@ class StoreDetail : BaseActivity() {
             binding.storeDeatilMoreDesc.visibility = VISIBLE
             binding.storeDeatilDisDesc.visibility = GONE
             binding.storeDeatilMenuDesc.visibility = GONE
+        } else if (v == binding.storeDeatilSharLoc) {
+            val latitude: Double = 26.906473
+            val longitude: Double = 75.772804
+            val uri = "http://maps.google.com/maps?saddr=$latitude,$longitude"
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            val ShareSub = "Here is my location"
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, ShareSub)
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, uri)
+            startActivity(Intent.createChooser(sharingIntent, "Share via"))
+        } else if (v == binding.storeDeatilDirection) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=26.906473,26.862470&daddr=75.772804,75.762410"))
+            startActivity(intent)
         }
     }
 
@@ -638,9 +781,9 @@ class StoreDetail : BaseActivity() {
         val listRecyclerview: RecyclerView = adDialog.findViewById(R.id.dialog_recycler)
         val dialog_close: ImageView = adDialog.findViewById(R.id.dialog_close)
         setTouchNClick(dialog_close)
-        var list = setListFacility()
+        //  var list = setListFacility()
         var facilityAdapter =
-            FacilityAdapter(this@StoreDetail, list, object : FacilityAdapter.ClickListener {
+            FacilityAdapter(this@StoreDetail, facilityList, object : FacilityAdapter.ClickListener {
                 override fun onClick(pos: Int) {
 
                 }
@@ -679,4 +822,6 @@ class StoreDetail : BaseActivity() {
         super.onBackPressed()
         overridePendingTransition(0, 0)
     }
+
+
 }

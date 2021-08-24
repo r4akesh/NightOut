@@ -1,5 +1,7 @@
 package com.nightout.model
 
+import java.io.Serializable
+
 data class VenuDetailModel(
     val `data`: Data,
     val image_path: String,
@@ -20,7 +22,7 @@ data class VenuDetailModel(
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
-        val facilities: List<Facility>,
+        val facilities: ArrayList<Facility>,
         val food_certificate_image: String,
         val food_certificate_number: String,
         val food_registration_image: String,
@@ -53,9 +55,15 @@ data class VenuDetailModel(
         val ticker_qty: String,
         val updated_at: String,
         val user_id: String,
-        val venue_gallery: List<VenueGallery>
+        val rating: Rating,
+        val venue_gallery: ArrayList<VenueGallery>
+
     )
 
+    data class Rating(
+        val avg_rating: String,
+        val total_rating: String
+    ): Serializable
     data class Facility(
         val created_at: String,
         val id: String,

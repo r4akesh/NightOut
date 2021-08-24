@@ -17,6 +17,7 @@ class AppConstant {
         const val MOBILENO = "MOBILENO"
         const val VENU_LIST_POS = "VENU_LIST_POS"
         const val VENU_POS = "VENU_POS"
+        const val VENU_ID = "VENU_ID"
 
     }
 }

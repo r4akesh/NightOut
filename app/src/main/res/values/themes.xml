@@ -134,4 +134,10 @@
         <!-- Background tint for the button -->
         <item name="backgroundTint">@color/red_clr</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.App.SelectedCornerRadius" parent="">
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+
+    </style>
 </resources>

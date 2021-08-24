@@ -46,6 +46,12 @@ class ClubsAdapter(
                 clickListener.onClick(position)
 
             }
+            viewHolder.binding.venuBottmShhetItemLeft.setOnClickListener{
+                viewHolder.binding.hsview.scrollTo(viewHolder.binding.hsview.getScrollX() as Int - 100, viewHolder.binding.hsview.getScrollY() as Int)
+            }
+            viewHolder.binding.venuBottmShhetItemRight.setOnClickListener{
+                viewHolder.binding.hsview.scrollTo(viewHolder.binding.hsview.getScrollX() as Int + 100, viewHolder.binding.hsview.getScrollY() as Int)
+            }
         } catch (e: Exception) {
             Log.d("ok", "$e.toString()")
         }
@@ -65,6 +71,7 @@ class ClubsAdapter(
 
     interface ClickListener {
         fun onClick(pos: Int)
+
 
 
     }

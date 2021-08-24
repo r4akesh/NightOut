@@ -62,7 +62,7 @@ open class LoginHandler(val activity: LoginActivity) {
                 }
                 Status.ERROR -> {
                     // progressBar.visibility = View.GONE
-                    Util.showSnackBarOnError(activity.binding.loginPhno, it.message!!, activity)
+                    Util.showSnackBarOnError(activity.binding.loginActvityRoot, it.message!!, activity)
                 }
             }
         })

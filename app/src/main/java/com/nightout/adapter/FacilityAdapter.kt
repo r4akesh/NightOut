@@ -15,11 +15,12 @@ import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.FacilityItemBinding
 import com.nightout.model.ChatModel
 import com.nightout.model.FacilityModel
+import com.nightout.model.VenuDetailModel
 
 
 class FacilityAdapter(
     var context: Context,
-    var arrayList: ArrayList<FacilityModel>,
+    var arrayList: ArrayList<VenuDetailModel.Facility>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FacilityAdapter.ViewHolder>() {
@@ -41,7 +42,7 @@ class FacilityAdapter(
         viewHolder.binding.facilityItemTitle.text=arrayList[position].title
 
 
-        if(arrayList[position].isAvail){
+        if(arrayList[position].status.equals("1")){
             viewHolder.binding.facilityItemTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.right_white,0,0,0)
         }else{
             viewHolder.binding.facilityItemTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.cross_white,0,0,0)

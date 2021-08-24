@@ -8,6 +8,7 @@ import com.nightout.R
 import com.nightout.model.DashboardModel
 
 import com.nightout.model.LoginModel
+import com.nightout.model.VenuDetailModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -108,6 +109,25 @@ class WebServiceRepository(application: Application) {
                     dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
                     )}
             }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+        }
+        return dashboardRes
+    }
+
+    fun userVenueDetail(map: HashMap<String, Any>): LiveData<Resource<VenuDetailModel>> {
+        val dashboardRes = MutableLiveData<Resource<VenuDetailModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            dashboardRes.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.userVenueDetailAPI(map)
+                if (request.isSuccessful) {
+                    dashboardRes.postValue(Resource.success(request.body(), ""))
+                } else {
+                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                    println("ok jsonObj$jsonObj")
+                    dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
+                    )}
+            }else
+                dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
         }
         return dashboardRes
     }

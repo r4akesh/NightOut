@@ -6,18 +6,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.nightout.model.DashboardModel
 import com.nightout.model.LoginModel
+import com.nightout.model.VenuDetailModel
 import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.services.WebServiceRepository
 
 class VenuDetailViewModel (application: Application) : AndroidViewModel(application) {
     private val webServiceRepository: WebServiceRepository = WebServiceRepository(application)
-    lateinit var dashboardModel: LiveData<Resource<VenuDetailModel>>
+    lateinit var userVenueDetailModel: LiveData<Resource<VenuDetailModel>>
 
 
-    fun dashBoard(): LiveData<Resource<VenuDetailModel>> {
-        dashboardModel = webServiceRepository.dashBoard()
-        return dashboardModel
+    fun userVenueDetail(map: HashMap<String, Any>): LiveData<Resource<VenuDetailModel>> {
+        userVenueDetailModel = webServiceRepository.userVenueDetail(map)
+        return userVenueDetailModel
     }
 
 

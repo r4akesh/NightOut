@@ -42,6 +42,13 @@ class FoodsAdapter(
                 .error(R.drawable.no_image)
                 .into(viewHolder.binding.venuBottmShhetItemImg)
 
+            viewHolder.binding.venuBottmShhetItemLeft.setOnClickListener{
+                viewHolder.binding.hsview.scrollTo(viewHolder.binding.hsview.getScrollX() as Int - 100, viewHolder.binding.hsview.getScrollY() as Int)
+            }
+            viewHolder.binding.venuBottmShhetItemRight.setOnClickListener{
+                viewHolder.binding.hsview.scrollTo(viewHolder.binding.hsview.getScrollX() as Int + 100, viewHolder.binding.hsview.getScrollY() as Int)
+            }
+
             viewHolder.itemView.setOnClickListener {
                 clickListener.onClick(position)
 

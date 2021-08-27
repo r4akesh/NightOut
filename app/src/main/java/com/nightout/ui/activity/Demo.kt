@@ -11,7 +11,7 @@ class Demo : BaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.demoactvituy)
-        var img   = findViewById<ImageView>(R.id.img)
+       // var img   = findViewById<ImageView>(R.id.img)
        // val radius = resources.getDimension(70)
 //        val shapeAppearanceModel = shapeableImageView.shapeAppearanceModel.toBuilder()
 //            .setTopRightCorner(CornerFamily.ROUNDED,radius)

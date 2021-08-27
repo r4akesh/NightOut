@@ -24,7 +24,7 @@ class VenuListMapActivity : BaseActivity(),OnMapReadyCallback {
         super.onCreate(savedInstanceState)
    //     setContentView(R.layout.venumap_activity)
         binding = DataBindingUtil.setContentView(this@VenuListMapActivity,R.layout.venumap_activity)
-        setTopListTopDummy()
+        //setTopListTopDummy()
         setToolBar()
         val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.venumap_Map) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@VenuListMapActivity)
@@ -54,36 +54,7 @@ class VenuListMapActivity : BaseActivity(),OnMapReadyCallback {
         popup.show() //showing popup menu
     }
 
-    private fun setTopListTopDummy() {
-        var list = ArrayList<VenuModel>()
-        list.add(VenuModel("Club", true))
-        list.add(VenuModel("Bar", false))
-        list.add(VenuModel("Pub", false))
-        list.add(VenuModel("Food", false))
-        list.add(VenuModel("Event", false))
 
-        venuAdapterAdapter = VenuAdapterAdapter(
-            this@VenuListMapActivity,
-            list,
-            object : VenuAdapterAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    for (i in 0 until list.size ){
-                        if(pos==i){
-                            list[i].isSelected=true
-                        }else{
-                            list[i].isSelected=false
-                        }
-                    }
-                    venuAdapterAdapter.notifyDataSetChanged()
-                }
-
-            })
-
-        binding.venumapToprecycler.also {
-            it.layoutManager = LinearLayoutManager(this@VenuListMapActivity, LinearLayoutManager.HORIZONTAL, false)
-           it.adapter = venuAdapterAdapter
-        }
-    }
 
     override fun onBackPressed() {
         super.onBackPressed()

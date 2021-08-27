@@ -40,13 +40,14 @@
 
 
         <ImageView
+            android:id="@+id/storeDeatilFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@null"
             android:padding="@dimen/_10ssp"
 
-            android:src="@drawable/fav_selected"
+            android:src="@drawable/fav_unselected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,7 +119,7 @@
                         android:id="@+id/storeDeatilTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginStart="@dimen/_7ssp"
                         android:layout_marginTop="@dimen/_15ssp"
                         android:fontFamily="@font/proximanova_bold"
                         android:singleLine="true"
@@ -134,13 +135,15 @@
                         android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginStart="@dimen/_7ssp"
                         android:layout_marginTop="@dimen/_2ssp"
                         android:fontFamily="@font/proximanova_reg"
                         android:singleLine="true"
                         android:text="Free Entry 9 to 10 pm"
                         android:textColor="@color/white_second"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/storeDeatilDisValue"
                         app:layout_constraintStart_toEndOf="@+id/storeDeatilLogoCard"
                         app:layout_constraintTop_toBottomOf="@id/storeDeatilTitle" />
 
@@ -151,20 +154,24 @@
                         android:layout_height="@dimen/_10ssp"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:visibility="gone"
                         android:background="@color/bg_view_ver"
                         app:layout_constraintStart_toEndOf="@+id/storeDeatilSubTitle"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilTitle" />
 
                     <TextView
+                        android:id="@+id/storeDeatilDisValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_3ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_reg"
                         android:text="50% off"
                         android:textColor="@color/text_yello"
                         android:textSize="@dimen/_12ssp"
-                        app:layout_constraintStart_toEndOf="@+id/storeDeatilViewDis"
+                        app:layout_constraintEnd_toEndOf="parent"
+
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilTitle" />
 
                     <TextView

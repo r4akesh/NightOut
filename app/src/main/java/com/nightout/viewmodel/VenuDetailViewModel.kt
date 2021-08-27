@@ -1,7 +1,9 @@
 package com.nightout.viewmodel
 
+import android.app.Activity
 import android.app.Application
 import android.util.Log
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.nightout.model.DashboardModel
@@ -11,8 +13,8 @@ import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.services.WebServiceRepository
 
-class VenuDetailViewModel (application: Application) : AndroidViewModel(application) {
-    private val webServiceRepository: WebServiceRepository = WebServiceRepository(application)
+class VenuDetailViewModel (activity: Activity) : BaseObservable() {
+    private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
     lateinit var userVenueDetailModel: LiveData<Resource<VenuDetailModel>>
 
 

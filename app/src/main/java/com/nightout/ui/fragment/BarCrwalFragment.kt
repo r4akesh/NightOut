@@ -55,21 +55,21 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
 
 
     private fun setlistTop() {
-        var list = ArrayList<VenuModel>()
-        list.add(VenuModel("Club", true))
-        list.add(VenuModel("Bar", false))
-        list.add(VenuModel("Pub", false))
-        list.add(VenuModel("Food", false))
-        list.add(VenuModel("Event", false))
+        var listStoreType = ArrayList<VenuModel>()
+        listStoreType.add(VenuModel(3,"Club", false))
+        listStoreType.add(VenuModel(1,"Bar", false))
+        listStoreType.add(VenuModel(2,"Pub", false))
+        listStoreType.add(VenuModel(4,"Food", false))
+        listStoreType.add(VenuModel(5,"Event", false))
 
        // venuAdapterAdapter = PromotionAdapter(list)
          venuAdapterAdapter = VenuAdapterAdapter(
             requireContext(),
-            list,
+             listStoreType,
             object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-                    for (i in 0 until list.size) {
-                        list[i].isSelected = pos == i
+                    for (i in 0 until listStoreType.size) {
+                        listStoreType[i].isSelected = pos == i
                     }
                     venuAdapterAdapter.notifyDataSetChanged()
                 }

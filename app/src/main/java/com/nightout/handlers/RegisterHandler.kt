@@ -7,15 +7,17 @@ import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
 
 import com.nightout.ui.activity.RegisterActivity
+import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Util
+import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.RegViewModel
 
 
 open class RegisterHandler(val activity: RegisterActivity) {
     private lateinit var regViewModel: RegViewModel
+    private val progressDialog = CustomProgressDialog()
     fun onClickReg(regViewModel: RegViewModel) {
         this.regViewModel = regViewModel
         MyApp.hideSoftKeyboard(activity)
@@ -35,10 +37,11 @@ open class RegisterHandler(val activity: RegisterActivity) {
 
 
     private fun regCall(map: HashMap<String, Any>, activity: RegisterActivity) {
+        progressDialog.dialog.show()
         regViewModel.register(map).observe(activity, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    //progressBar.visibility = View.GONE
+                    progressDialog.dialog.dismiss()
                     it.data?.let {
                         var regViewModel: LoginModel.Data = it.data
                         Log.d("TAG", "regCall: " + regViewModel)
@@ -46,7 +49,7 @@ open class RegisterHandler(val activity: RegisterActivity) {
                         activity.startActivity(Intent(activity, LoginActivity::class.java))
                         activity.finish()
                     }
-                    Util.showSnackBarOnError(
+                    Utills.showSnackBarOnError(
                         activity.binding.registerRootLayout,
                         it.data?.message!!,
                         activity
@@ -57,8 +60,8 @@ open class RegisterHandler(val activity: RegisterActivity) {
 
                 }
                 Status.ERROR -> {
-                    // progressBar.visibility = View.GONE
-                    Util.showSnackBarOnError(activity.binding.registerPhNo, it.message!!, activity)
+                    progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(activity.binding.registerPhNo, it.message!!, activity)
                 }
             }
         })

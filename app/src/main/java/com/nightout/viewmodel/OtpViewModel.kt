@@ -1,15 +1,13 @@
 package com.nightout.vendor.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.app.Activity
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import com.nightout.R
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.OTPActivity
 
-import com.nightout.ui.activity.RegisterActivity
-import com.nightout.utils.MyApp
-import com.nightout.utils.Util
+import com.nightout.utils.Utills
 
 
 import com.nightout.vendor.services.Resource
@@ -17,8 +15,8 @@ import com.nightout.vendor.services.WebServiceRepository
 
 
 
-class OtpViewModel(application: Application) : AndroidViewModel(application) {
-    private val webServiceRepository: WebServiceRepository = WebServiceRepository(application)
+class OtpViewModel(activity: Activity) : BaseObservable() {
+    private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
     var otp: String? = ""
     //var phno: String? = ""
 
@@ -30,11 +28,11 @@ class OtpViewModel(application: Application) : AndroidViewModel(application) {
         when {
             activity.binding.otpPinView.text.toString().isNullOrBlank() -> {
                 isFormValidated = false
-                Util.showSnackBarOnError(activity.binding.otpPinView, activity.resources.getString(R.string.please_enter_otp), activity)
+                Utills.showSnackBarOnError(activity.binding.otpPinView, activity.resources.getString(R.string.please_enter_otp), activity)
             }
             activity.binding.otpPinView.text.toString().length<4->{
                 isFormValidated = false
-                Util.showSnackBarOnError(activity.binding.otpPinView, activity.resources.getString(R.string.please_enter_complete_otp), activity)
+                Utills.showSnackBarOnError(activity.binding.otpPinView, activity.resources.getString(R.string.please_enter_complete_otp), activity)
             }
             else -> {
                 isFormValidated = true

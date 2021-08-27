@@ -56,6 +56,7 @@ data class VenuDetailModel(
         val updated_at: String,
         val user_id: String,
         val rating: Rating,
+        val favrouite: String,
         val venue_gallery: ArrayList<VenueGallery>
 
     )

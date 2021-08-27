@@ -1,12 +1,14 @@
 package com.nightout.vendor.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.app.Activity
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import com.nightout.R
+import com.nightout.model.DashboardModel
 import com.nightout.model.LoginModel
+import com.nightout.model.VenuListModel
 import com.nightout.ui.activity.LoginActivity
-import com.nightout.utils.Util
+import com.nightout.utils.Utills
 
 
 import com.nightout.vendor.services.Resource
@@ -14,45 +16,17 @@ import com.nightout.vendor.services.WebServiceRepository
 
 
 
-class VenuListViewModel(application: Application) : AndroidViewModel(application) {
-    private val webServiceRepository: WebServiceRepository = WebServiceRepository(application)
-    var PhNo: String? = ""
-   // var password: String? = ""
-    private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
+class VenuListViewModel(activity: Activity) : BaseObservable() {
+    private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
+    lateinit var venuListModel: LiveData<Resource<VenuListModel>>
 
-    fun isValidation(activity: LoginActivity): Boolean {
-        val isFormValidated: Boolean
-        when {
-            activity.binding.loginPhno.text.toString() == "" -> {
-                isFormValidated = false
-                Util.showSnackBarOnError(
-                    activity.binding.loginPhno,
-                    activity.resources.getString(R.string.please_enter_phno),
-                    activity
-                )
-            }
-            activity.binding.loginPhno.text.toString().length<14->{
-                isFormValidated = false
-                Util.showSnackBarOnError(
-                    activity.binding.loginPhno,
-                    activity.resources.getString(R.string.please_enter_valid_phno),
-                    activity
-                )
-            }
 
-            else -> {
-                isFormValidated = true
-            }
-        }
 
-        return isFormValidated
+
+    fun venulistData(storeType : HashMap<String,String>): LiveData<Resource<VenuListModel>> {
+        venuListModel = webServiceRepository.userVenueList(storeType)
+        return venuListModel
     }
-
-
-  /*  fun login(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
-        loginResponseModel = webServiceRepository.login(map)
-        return loginResponseModel
-    }*/
 
 
 }

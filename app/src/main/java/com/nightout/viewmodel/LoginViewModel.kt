@@ -1,12 +1,12 @@
 package com.nightout.vendor.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.app.Activity
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import com.nightout.R
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
-import com.nightout.utils.Util
+import com.nightout.utils.Utills
 
 
 import com.nightout.vendor.services.Resource
@@ -14,8 +14,8 @@ import com.nightout.vendor.services.WebServiceRepository
 
 
 
-class LoginViewModel(application: Application) : AndroidViewModel(application) {
-    private val webServiceRepository: WebServiceRepository = WebServiceRepository(application)
+class LoginViewModel(activity: Activity) : BaseObservable() {
+    private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
     var PhNo: String? = ""
    // var password: String? = ""
     private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
@@ -25,7 +25,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         when {
             activity.binding.loginPhno.text.toString() == "" -> {
                 isFormValidated = false
-                Util.showSnackBarOnError(
+                Utills.showSnackBarOnError(
                     activity.binding.loginPhno,
                     activity.resources.getString(R.string.please_enter_phno),
                     activity
@@ -33,7 +33,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             }
             activity.binding.loginPhno.text.toString().length<14->{
                 isFormValidated = false
-                Util.showSnackBarOnError(
+                Utills.showSnackBarOnError(
                     activity.binding.loginPhno,
                     activity.resources.getString(R.string.please_enter_valid_phno),
                     activity

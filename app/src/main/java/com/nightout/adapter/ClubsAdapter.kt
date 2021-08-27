@@ -37,6 +37,10 @@ class ClubsAdapter(
         try {
             viewHolder.binding.venuBottmShhetItemTitle.text=arrayList[position].store_name
             viewHolder.binding.venuBottmShhetItemSubTitle.text=arrayList[position].store_address
+            viewHolder.binding.venuBottmShhetItemClostTime.text="Close : "+arrayList[position].close_time
+            viewHolder.binding.venusubitemRating.text=arrayList[position].rating.avg_rating
+
+
             Glide.with(context)
                 .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].store_logo)
                 .error(R.drawable.no_image)

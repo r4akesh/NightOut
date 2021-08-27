@@ -5,20 +5,20 @@ import android.content.Intent
 import android.util.Log
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivity
-import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
+import com.nightout.utils.CustomProgressDialog
 
-import com.nightout.ui.activity.RegisterActivity
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Util
+import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.OtpViewModel
-import com.nightout.vendor.viewmodel.RegViewModel
 
 
 open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
     private lateinit var regViewModel: OtpViewModel
+    private val progressDialog = CustomProgressDialog()
+
     fun onClickSubmit(regViewModel: OtpViewModel) {
         this.regViewModel = regViewModel
         MyApp.hideSoftKeyboard(activity)
@@ -37,30 +37,33 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
 
 
     private fun otpCall(map: HashMap<String, Any>, activity: OTPActivity) {
+        progressDialog.show(activity)
         regViewModel.otp(map).observe(activity, {
             when (it.status) {
                 Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
                     //progressBar.visibility = View.GONE
                        it.data?.let {
-                          var regViewModel: LoginModel.Data = it.data
-                          Log.d("TAG", "regCall: " + regViewModel)
-                          PreferenceKeeper.instance.loginResponse = regViewModel
+                           var logModel: LoginModel.Data = it.data
+                           PreferenceKeeper.instance.bearerTokenSave = logModel.token
+                           PreferenceKeeper.instance.loginResponse = logModel
+                           PreferenceKeeper.instance.isUserLogin = true
+
                           activity.startActivity(Intent(activity, HomeActivity::class.java))
                           activity.finish()
                       }
-                    Util.showSnackBarOnError(
+                    Utills.showSnackBarOnError(
                         activity.binding.otpRootLyout,
                         it.data?.message!!,
                         activity
                     )
                 }
                 Status.LOADING -> {
-                    //progressBar.visibility = View.VISIBLE
 
                 }
                 Status.ERROR -> {
-                    // progressBar.visibility = View.GONE
-                    Util.showSnackBarOnError(activity.binding.otpRootLyout, it.message!!, activity)
+                    progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(activity.binding.otpRootLyout, it.message!!, activity)
                 }
             }
         })
@@ -68,6 +71,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
 
 
       fun sendAgain(regViewModel: OtpViewModel){
+          progressDialog.dialog.show()
           val map = HashMap<String, Any>()
           var mobNo = mobNo
           mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
@@ -77,11 +81,11 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
           regViewModel.otpResend(map).observe(activity, {
               when (it.status) {
                   Status.SUCCESS -> {
-                      //progressBar.visibility = View.GONE
+                      progressDialog.dialog.dismiss()
                       it.data?.let {
 
                       }
-                      Util.showSnackBarOnError(
+                      Utills.showSnackBarOnError(
                           activity.binding.otpRootLyout,
                           it.data?.message!!,
                           activity
@@ -92,8 +96,8 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
 
                   }
                   Status.ERROR -> {
-                      // progressBar.visibility = View.GONE
-                      Util.showSnackBarOnError(activity.binding.otpRootLyout, it.message!!, activity)
+                      progressDialog.dialog.dismiss()
+                      Utills.showSnackBarOnError(activity.binding.otpRootLyout, it.message!!, activity)
                   }
               }
           })

@@ -81,17 +81,22 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         binding.storeDeatilTitle.text = dt.store_name
         binding.storeDeatilRating.text = dt.rating.avg_rating
         binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
-        binding.storeDeatilSubTitle.text =
-            "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
+        binding.storeDeatilSubTitle.text = "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
         binding.storeDeatilPhno.text = dt.store_number
         binding.storeDeatilEmail.text = dt.store_email
         binding.storeDeatilAddrs.text = dt.store_address
-
+        if(dt.favrouite == "1"){
+            binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
+        }else{
+            binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+        }
+        //topImg
         Glide.with(this@StoreDetail)
             .load(PreferenceKeeper.instance.imgPathSave+dt.store_logo)
             .error(R.drawable.no_image)
             .into(binding.storeDeatilTopImag)
 
+        //faciltyList
         facilityList = dt.facilities
         showMapLoc(dt.store_lattitude, dt.store_longitude)
 
@@ -638,8 +643,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             (supportFragmentManager.findFragmentById(R.id.storeDeatillocMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@StoreDetail)
 
-        userVenueDetailViewModel =
-            ViewModelProviders.of(this@StoreDetail).get(VenuDetailViewModel::class.java)
+        userVenueDetailViewModel = VenuDetailViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)

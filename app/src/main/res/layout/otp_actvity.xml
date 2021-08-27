@@ -66,7 +66,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:fontFamily="@font/proximanova_reg"
                     android:text="@string/OTP"
-
+                    android:visibility="invisible"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/_13sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +86,21 @@
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/loginText" />
+
+
+                <TextView
+                    android:id="@+id/loginPhOtpText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="@string/entrotp_recivedmobno"
+
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginWelcome" />
 
 
                 <com.chaos.view.PinView
@@ -114,7 +129,7 @@
                     app:itemWidth="@dimen/_60sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/loginWelcome"
+                    app:layout_constraintTop_toBottomOf="@+id/loginPhOtpText"
                     app:lineColor="@color/white"
                     app:lineWidth="2dp"
 

@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="loginModel"
+            type="com.nightout.model.LoginModel.Data" />
+
+
 
     </data>
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_gray"
@@ -26,8 +31,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
+            app:layout_constraintTop_toBottomOf="@+id/menuOpenBtn"
+            app:layout_constraintBottom_toTopOf="@+id/editProfileBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_height="0dp"
+
             android:fillViewport="true">
 
             <LinearLayout
@@ -55,17 +64,16 @@
                             android:layout_height="match_parent"
 
                             android:src="@drawable/boy"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:civ_border_color="@color/text_yello"
                             app:civ_border_width="2dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                                android:visibility="gone"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:src="@drawable/select_pic_camera"
@@ -84,7 +92,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="@string/dummy_name"
+                        android:hint="name"
+                        android:text="@{loginModel.name}"
                         android:textColor="@color/text_yello"
                         android:textSize="22sp"
                         app:layout_constraintEnd_toEndOf="@id/userProfileRel"
@@ -98,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:padding="5dp"
+                        android:visibility="gone"
                         android:text="@string/dummy_user_address"
                         android:textColor="@color/white"
                         android:textSize="14sp"
@@ -116,47 +126,7 @@
                     android:layout_margin="15dp"
                     android:orientation="vertical">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/firstNameLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/first_name"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/profileUserName"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/dummy_name"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/firstNameLabel"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/firstNameLabel" />
-
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/firstNameLabel" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -181,7 +151,7 @@
                             style="@style/textRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dummy_email"
+                            android:text="@{loginModel.email}"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -224,7 +194,7 @@
                             style="@style/textRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dummyNumber"
+                            android:text="@{@string/countrycode(loginModel.phonenumber)}"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -247,6 +217,8 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
+                        android:visibility="gone"
+
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -312,7 +284,7 @@
                             style="@style/textRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dummy_user_address"
+                            android:text="@{loginModel.user_profile.address}"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -356,7 +328,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
                             android:gravity="end"
-                            android:text="@string/dummy_user_address"
+                            android:text="@{loginModel.user_profile.address}"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -379,6 +351,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
+                        android:visibility="gone"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -455,6 +428,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0.8dp"
                             android:layout_marginTop="10dp"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:background="@color/color_252342"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
@@ -463,15 +437,7 @@
                     </LinearLayout>
 
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/editProfileBtn"
-                        style="@style/buttonTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_25sdp"
-                        android:background="@drawable/gredient_bg"
-                        android:text="@string/edit"
-                        app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+
 
                 </LinearLayout>
 
@@ -481,7 +447,19 @@
 
         </androidx.core.widget.NestedScrollView>
 
-
-    </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editProfileBtn"
+            style="@style/buttonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/edit"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

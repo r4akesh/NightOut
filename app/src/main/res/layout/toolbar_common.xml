@@ -39,36 +39,39 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+
             android:fontFamily="@font/proximanova_reg"
             android:padding="@dimen/_10ssp"
             android:text="Club Menu"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@+id/toolbar_back"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
         <ImageView
             android:id="@+id/toolbar_3dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+
             android:layout_marginEnd="@dimen/_10ssp"
             android:padding="@dimen/_10ssp"
-            android:src="@drawable/setting_threedot"
+            android:src="@drawable/maptop_ic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
         <ImageView
             android:id="@+id/toolbar_bell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+
             android:background="@null"
             android:padding="@dimen/_10ssp"
             android:src="@drawable/bell_witoutspace"
             app:layout_constraintEnd_toStartOf="@+id/toolbar_3dot"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
         <TextView
             android:id="@+id/toolbarCreateGrop"

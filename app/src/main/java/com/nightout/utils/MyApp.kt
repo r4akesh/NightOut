@@ -21,9 +21,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nightout.handlers.EditProfileHandler
 import com.nightout.handlers.LoginHandler
 import com.nightout.handlers.OtpHandler
 import com.nightout.handlers.RegisterHandler
+import com.nightout.ui.activity.EditProfileActivity
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.ui.activity.RegisterActivity
@@ -60,6 +62,12 @@ class MyApp : Application() {
         private var ctx: Context? = null
 
         var SHARED_PREF_NAME = "Brng_Pref"
+
+        fun getEditProfile(loginActivity: EditProfileActivity): EditProfileHandler {
+            return EditProfileHandler(loginActivity)
+        }
+
+
 
         fun getLoginHandler(loginActivity: LoginActivity): LoginHandler {
             return LoginHandler(loginActivity)

@@ -127,6 +127,7 @@
     <string name="enter_first_name">enter first name</string>
     <string name="enter_last_name">enter last name</string>
     <string name="addressOne">Address 1</string>
+    <string name="enter_addrs1">Enter your address</string>
     <string name="addressTwo">Address 2</string>
     <string name="about_me">About me</string>
     <string name="mobile_number">Mobile Number</string>
@@ -160,6 +161,8 @@
     <string name="Lost_Item">Lost Item</string>
     <string name="Found">Found</string>
     <string name="please_enter_phno">Please enter mobile number</string>
+    <string name="please_enter_fName">Please enter first name</string>
+    <string name="please_enter_lName">Please enter last name</string>
     <string name="please_enter_valid_phno">Please enter valid phone number</string>
     <string name="please_enter_fname">Please enter first name</string>
     <string name="please_enter_lname">Please enter last name</string>
@@ -168,6 +171,8 @@
     <string name="please_enter_otp">Please enter OTP</string>
     <string name="please_enter_complete_otp">Please enter complete OTP</string>
     <string name="facilitynot_avail">Facilities not available</string>
+    <string name="countrycode">+44 %s</string>
+    <string name="entrotp_recivedmobno">Enter the OTP you received to</string>
 
 
 </resources>

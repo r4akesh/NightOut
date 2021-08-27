@@ -140,4 +140,9 @@
         <item name="cornerSizeBottomRight">20dp</item>
 
     </style>
+    <style name="CustomDialogTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
 </resources>

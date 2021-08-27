@@ -1,5 +1,6 @@
 package com.nightout.vendor.services
 
+import android.app.Activity
 import android.app.Application
 
 import androidx.lifecycle.LiveData
@@ -9,6 +10,7 @@ import com.nightout.model.DashboardModel
 
 import com.nightout.model.LoginModel
 import com.nightout.model.VenuDetailModel
+import com.nightout.model.VenuListModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 
-class WebServiceRepository(application: Application) {
+class WebServiceRepository(application: Activity) {
     private var apiInterface: APIInterface = APIClient.makeRetrofitService()
     private var apiInterfaceHeader: APIInterface = APIClient.makeRetrofitServiceHeader()
     private var networkHelper:NetworkHelper = NetworkHelper(application)
@@ -104,10 +106,15 @@ class WebServiceRepository(application: Application) {
                 if (request.isSuccessful) {
                     dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("ok jsonObj$jsonObj")
-                    dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
-                    )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("ok jsonObj$jsonObj")
+                        dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        dashboardRes.postValue(Resource.error(e.toString(), null))
+                    }
+
+                }
             }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
         }
         return dashboardRes
@@ -119,6 +126,25 @@ class WebServiceRepository(application: Application) {
             dashboardRes.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()) {
                 val request = apiInterfaceHeader.userVenueDetailAPI(map)
+                if (request.isSuccessful) {
+                    dashboardRes.postValue(Resource.success(request.body(), ""))
+                } else {
+                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                    println("ok jsonObj$jsonObj")
+                    dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
+                    )}
+            }else
+                dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+        }
+        return dashboardRes
+    }
+
+    fun userVenueList(map: HashMap<String, String>): LiveData<Resource<VenuListModel>> {
+        val dashboardRes = MutableLiveData<Resource<VenuListModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            dashboardRes.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.venuListAPI(map)
                 if (request.isSuccessful) {
                     dashboardRes.postValue(Resource.success(request.body(), ""))
                 } else {

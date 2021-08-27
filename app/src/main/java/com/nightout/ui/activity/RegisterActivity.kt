@@ -84,7 +84,8 @@ class RegisterActivity : BaseActivity() {
         setTouchNClick(binding.registerSaveBtn)
         setTouchNClick(binding.reigisterActivityBakBtn)
         binding.registerHandler = MyApp.getRegHandler(this)
-        binding.regviewmodel = ViewModelProviders.of(this).get(RegViewModel::class.java)
+      //  binding.regviewmodel = ViewModelProviders.of(this).get(RegViewModel::class.java)
+        binding.regviewmodel = RegViewModel(this)
     }
 
   /*  override fun onClick(v: View?) {

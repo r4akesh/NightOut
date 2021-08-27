@@ -86,6 +86,11 @@ dependencies {
     //corner img
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
-
-
+    //curveImage
+    implementation 'io.github.florent37:shapeofview:1.4.7'
+    //botmsheet
+   // implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    //implementation 'com.sothree.slidinguppanel:library:+'
+    //gifimg
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 }

@@ -4,32 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="editProfileHandler"
+            type="com.nightout.handlers.EditProfileHandler" />
+
+         <variable
+            name="loginModel"
+            type="com.nightout.model.LoginModel.Data" />
+
+        <variable
+            name="editPrfleViewModl"
+            type="com.nightout.vendor.viewmodel.EditProfileViewModel"/>
 
     </data>
 
     <LinearLayout
+        android:id="@+id/etRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@drawable/background_gray"
         android:orientation="vertical"
+        android:fitsSystemWindows="true"
         tools:context=".ui.activity.EditProfileActivity">
 
         <ImageView
             android:id="@+id/toolbar_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@null"
             android:paddingTop="@dimen/_10ssp"
             android:paddingBottom="@dimen/_10ssp"
             android:paddingStart="@dimen/_15ssp"
             android:paddingEnd="@dimen/_10ssp"
+            android:onClick="@{()->editProfileHandler.onFinishScreen()}"
             android:src="@drawable/back_ic_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.core.widget.NestedScrollView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true">
@@ -46,6 +60,7 @@
 
                     <RelativeLayout
                         android:id="@+id/userProfileRel"
+                        android:onClick="@{()->editProfileHandler.openCamera()}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -58,12 +73,11 @@
                             android:layout_height="match_parent"
 
                             android:src="@drawable/boy"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:civ_border_color="@color/text_yello"
                             app:civ_border_width="2dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -90,6 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dummy_name"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/userProfileRel"
                         app:layout_constraintStart_toStartOf="@id/userProfileRel"
                         app:layout_constraintEnd_toEndOf="@id/userProfileRel"
@@ -100,6 +115,7 @@
 
                     <TextView
                         android:id="@+id/userAddress"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dummy_user_address"
@@ -121,7 +137,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_margin="15dp">
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -153,13 +173,14 @@
                                     android:textColor="@color/text_hint" />
 
                                 <EditText
+                                    android:id="@+id/etFName"
                                     android:layout_width="match_parent"
                                     android:layout_height="32dp"
                                     android:layout_marginBottom="8dp"
                                     android:layout_marginStart="8dp"
                                     android:layout_marginEnd="8dp"
                                     style="@style/appEditText"
-                                    android:text="John"
+                                    android:text="@={editPrfleViewModl.fName}"
                                     android:textStyle="bold"
                                     android:hint="@string/enter_first_name"
                                     android:inputType="text" />
@@ -194,6 +215,7 @@
                                     android:textColor="@color/text_hint" />
 
                                 <EditText
+                                    android:id="@+id/etLName"
                                     android:layout_width="match_parent"
                                     android:layout_height="32dp"
                                     android:layout_marginBottom="8dp"
@@ -201,7 +223,7 @@
                                     android:layout_marginEnd="8dp"
                                     style="@style/appEditText"
                                     android:textStyle="bold"
-                                    android:text="Wick"
+                                    android:text="@{editPrfleViewModl.lName}"
                                     android:hint="@string/enter_last_name"
                                     android:inputType="text" />
 
@@ -220,9 +242,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         app:cardElevation="-1dp"
+                        android:visibility="gone"
                         app:cardCornerRadius="4dp">
 
                         <LinearLayout
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -260,6 +284,7 @@
                         android:layout_height="68dp"
                         android:layout_marginTop="15dp"
                         app:cardElevation="-1dp"
+                        android:visibility="gone"
                         app:cardCornerRadius="4dp">
 
                         <LinearLayout
@@ -325,6 +350,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="15dp"
+                        android:visibility="gone"
                         android:weightSum="2">
 
                         <androidx.cardview.widget.CardView
@@ -442,13 +468,13 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 style="@style/appTextAreaEditText"
-                                android:text="1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
+                                android:text="@={editPrfleViewModl.addrs1}"
                                 android:lines="2"
                                 android:maxLines="2"
                                 android:gravity="start"
                                 android:minLines="2"
                                 android:textStyle="bold"
-                                android:hint="@string/enter_first_name"
+                                android:hint="@string/enter_addrs1"
                                 android:inputType="textMultiLine" />
 
                         </LinearLayout>
@@ -485,13 +511,13 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 style="@style/appTextAreaEditText"
-                                android:text="1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
+                                android:text="@={editPrfleViewModl.addrs2}"
                                 android:lines="2"
                                 android:maxLines="2"
                                 android:gravity="start"
                                 android:minLines="2"
                                 android:textStyle="bold"
-                                android:hint="@string/enter_first_name"
+                                android:hint="@string/enter_addrs1"
                                 android:inputType="textMultiLine" />
 
                         </LinearLayout>
@@ -528,11 +554,11 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginEnd="8dp"
                                 style="@style/appTextAreaEditText"
-                                android:text="@string/dummyText2"
+                                android:text="@={editPrfleViewModl.aboutMe}"
                                 android:gravity="start"
                                 android:minHeight="@dimen/_80sdp"
                                 android:textStyle="bold"
-                                android:hint="@string/enter_first_name"
+                                android:hint="@string/about_me"
                                 android:inputType="textMultiLine" />
 
                         </LinearLayout>
@@ -549,6 +575,7 @@
                         android:layout_marginTop="@dimen/_25sdp"
                         android:background="@drawable/gredient_bg"
                         android:text="@string/Save"
+                        android:onClick="@{()->editProfileHandler.saveProfile(editPrfleViewModl)}"
                         app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
 
                 </LinearLayout>
@@ -559,7 +586,7 @@
 
 
 
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
 
 
 

@@ -5,11 +5,9 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.*
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -25,7 +23,7 @@ import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.ui.fragment.*
 import com.nightout.utils.DialogCustmYesNo
 import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Util
+import com.nightout.utils.Utills
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
 import kotlinx.android.synthetic.main.drawer_layout.*
@@ -59,7 +57,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         binding = DataBindingUtil.setContentView(this@HomeActivity, R.layout.home_activity)
         fragmentManager = supportFragmentManager
         //sideMenu
-        val widthRatio = Util.ratioOfScreen(this, 0.7f)
+        val widthRatio = Utills.ratioOfScreen(this, 0.7f)
         slidingRootNav = SlidingRootNavBuilder(this)
             .withDragDistance(widthRatio) //Horizontal translation of a view. Default == 180dp
             .withRootViewScale(1f) //Content view's scale will be interpolated between 1f and 0.7f. Default == 0.65f;
@@ -69,6 +67,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             .inject()
       //  val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
       //  sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
+        setHomeTab()
         showFragment(HomeFragment(this))
         inItView()
 
@@ -107,31 +106,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
                 showFragment(TransportFragment(this))
             }
         } else if (v == binding.bottomHomeRel) {
-            binding.bottmHomeYello.visibility = VISIBLE
-            binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
-
-            binding.bottomTransport.setDrawableColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.text_gray
-                )
-            )
-            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
-            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
-            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-            binding.bottomMyProfile.setDrawableColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.text_gray
-                )
-            )
-            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
-
+            setHomeTab()
 
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is HomeFragment) {
@@ -334,6 +309,19 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             sideMenuLogout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
            showAlertLogout()
         }
+    }
+
+    private fun setHomeTab() {
+        binding.bottmHomeYello.visibility = VISIBLE
+        binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
+        binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+        binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+        binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+        binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.bottomMyProfile.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+        binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
     }
 
     private fun showAlertLogout() {

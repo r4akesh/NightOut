@@ -75,6 +75,19 @@ class OTPActivity : BaseActivity() {
         setTouchNClick(binding.otpActivitySendAgain)
         setTouchNClick(binding.otpActvityChange)
         setTouchNClick(binding.otpActivityBakBtn)
+
+        var mobNo: String? = intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)
+        if (mobNo!!.isNotEmpty()) {
+            var mob1 = ""
+            var mob2 = ""
+            if (mobNo.length > 2) {
+                mob2 = mobNo.substring(mobNo.length - 2)
+                mob1 = mobNo.substring(1, 3)
+            }
+            binding.loginPhOtpText.setText(resources.getString(R.string.entrotp_recivedmobno) + " " + mob1 + "******" + mob2)
+        }
+
+
         var str1 = resources.getString(R.string.SendAgain)
         var settext = "<font color='#ffc800'><u>$str1 </u></font>"
         binding.otpActivitySendAgain.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
@@ -84,7 +97,7 @@ class OTPActivity : BaseActivity() {
         binding.otpActvityChange.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
 
         binding.otpHandler = MyApp.getOtpHandler(this,intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)!!)
-        binding.otpviewmodel = ViewModelProviders.of(this).get(OtpViewModel::class.java)
+        binding.otpviewmodel = OtpViewModel(this)
 
     }
 

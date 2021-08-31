@@ -15,7 +15,7 @@ import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.OtpViewModel
 
 
-open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
+open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: String) {
     private lateinit var regViewModel: OtpViewModel
     private val progressDialog = CustomProgressDialog()
 
@@ -31,6 +31,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String) {
             map["phonenumber"] = mobNo
             map["device_id"] = "dhfkjdfh"
             map["device_type"] = "1"
+            map["email"] = email
             otpCall(map, activity)
         }
     }

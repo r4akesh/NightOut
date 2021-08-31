@@ -1,6 +1,10 @@
 package com.nightout.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.nightout.R
@@ -29,5 +33,12 @@ class EditProfileActivity : BaseActivity() {
         binding.editPrfleViewModl = editProfileViewModel
         binding.editProfileHandler = MyApp.getEditProfile(this)
 
+    }
+
+    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        binding.editProfileHandler!!.onActivityResult(requestCode,resultCode,data)
     }
 }

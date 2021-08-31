@@ -77,8 +77,8 @@ class MyApp : Application() {
             return RegisterHandler(registerActivity)
         }
 
-        fun getOtpHandler(otpActivity: OTPActivity, mobNo:String): OtpHandler {
-            return OtpHandler(otpActivity,mobNo)
+        fun getOtpHandler(otpActivity: OTPActivity, mobNo:String,email:String): OtpHandler {
+            return OtpHandler(otpActivity,mobNo,email)
         }
 
        /* fun getHomeHandler(homeFragment: HomeFragment): HomeHandler {

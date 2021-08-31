@@ -11,7 +11,7 @@ import com.nightout.utils.Utills
 
 import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.WebServiceRepository
-
+import okhttp3.MultipartBody
 
 
 class EditProfileViewModel(activity: Activity) : BaseObservable() {
@@ -21,10 +21,11 @@ class EditProfileViewModel(activity: Activity) : BaseObservable() {
     var addrs1: String = ""
     var addrs2: String = ""
     var aboutMe: String = ""
+    var profilePic: MultipartBody.Part? = null
 
     private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
-    fun login(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
-        loginResponseModel = webServiceRepository.login(map)
+    fun updateProfile(requestBody: MultipartBody): LiveData<Resource<LoginModel>> {
+        loginResponseModel = webServiceRepository.updateProfile(requestBody)
         return loginResponseModel
     }
 

@@ -26,13 +26,9 @@ import android.util.Log
 import androidx.annotation.Nullable
 
 
-class VenuAdapterAdapter(
-    var context: Context,
-    var arrayList: ArrayList<VenuModel>,
-    var clickListener: ClickListener,
-) :
-    RecyclerView.Adapter<VenuAdapterAdapter.ViewHolder>(MyDiffUtilCallBack()) {
+class VenuAdapterAdapter(var context: Context, var arrayList :ArrayList<VenuModel>,var clickListener: ClickListener) : RecyclerView.Adapter<VenuAdapterAdapter.ViewHolder>() {
 
+   // private val arrayList = ArrayList<VenuModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: VenuItemBinding = DataBindingUtil.inflate(
@@ -87,12 +83,13 @@ class VenuAdapterAdapter(
         return arrayList
     }
 
-    fun setData(newData: ArrayList<VenuModel>) {
-        val diffResult = DiffUtil.calculateDiff(MyDiffUtilCallBack(newData, arrayList))
-        //arrayList.clear()
-       // arrayList.addAll(newData)
+   /* fun setData(newData: ArrayList<VenuModel>) {
+        //val diffResult = DiffUtil.calculateDiff(MyDiffUtilCallBack(newData, arrayList))
+        val diffResult = DiffUtil.calculateDiff(RatingDiffCallback(arrayList, newData))
+        arrayList.clear()
+       arrayList.addAll(newData)
         diffResult.dispatchUpdatesTo(this)
-    }
+    }*/
 
     class MyDiffUtilCallBack(newList: ArrayList<VenuModel>?, oldList: ArrayList<VenuModel>?) : DiffUtil.Callback() {
         var newList: ArrayList<VenuModel>? = newList
@@ -114,15 +111,15 @@ class VenuAdapterAdapter(
             var oldEmployee = oldList?.get(oldItemPosition)
             var newEmployee = newList?.get(newItemPosition)
 
-            return oldEmployee?.title.equals(newEmployee?.title)
+            return oldEmployee?.isSelected!!.equals(newEmployee?.isSelected)
         }
 
         @Nullable
         override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-            /*val newModel: VenuModel = newList!![newItemPosition]
+        /*    val newModel: VenuModel = newList!![newItemPosition]
             val oldModel: VenuModel = oldList!![oldItemPosition]
             val diff = Bundle()
-            if (newModel.price !== oldModel.price) {
+            if (newModel.isSelected != oldModel.isSelected) {
                 diff.putInt("price", newModel.price)
             }
             return if (diff.size() == 0) {
@@ -132,6 +129,29 @@ class VenuAdapterAdapter(
         }
 
 
+    }
+
+    class RatingDiffCallback(private val oldList: ArrayList<VenuModel>, private val newList: ArrayList<VenuModel>) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id === newList.get(newItemPosition).id
+        }
+
+        override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
+            val (_, value, name) = oldList[oldPosition]
+            val (_, value1, name1) = newList[newPosition]
+
+            return name == name1 && value == value1
+        }
+
+        @Nullable
+        override fun getChangePayload(oldPosition: Int, newPosition: Int): Any? {
+            return super.getChangePayload(oldPosition, newPosition)
+        }
     }
 }
 

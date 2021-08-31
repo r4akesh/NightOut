@@ -15,6 +15,7 @@ import com.nightout.model.VenuListModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import org.json.JSONObject
 
 
@@ -129,10 +130,14 @@ class WebServiceRepository(application: Activity) {
                 if (request.isSuccessful) {
                     dashboardRes.postValue(Resource.success(request.body(), ""))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("ok jsonObj$jsonObj")
-                    dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
-                    )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("ok jsonObj$jsonObj")
+                        dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        dashboardRes.postValue(Resource.error(e.toString(), null))
+                    }
+                }
             }else
                 dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
         }
@@ -156,6 +161,27 @@ class WebServiceRepository(application: Activity) {
                 dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
         }
         return dashboardRes
+    }
+
+    fun updateProfile(requestBody: MultipartBody): LiveData<Resource<LoginModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<LoginModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.updateProfileAPI(requestBody)
+                if (request.isSuccessful) {
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
     }
 }
 

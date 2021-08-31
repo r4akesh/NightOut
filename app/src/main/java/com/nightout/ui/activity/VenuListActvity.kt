@@ -21,6 +21,7 @@ import com.nightout.model.*
 import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.VenuListViewModel
 
@@ -34,14 +35,15 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     private var customProgressDialog = CustomProgressDialog()
     var storeType = ""
     var listStoreType = ArrayList<VenuModel>()
+    lateinit var venuSubAdapter: VenuSubAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@VenuListActvity, R.layout.venulisting_activity)
-        setListStoreType()
+        setListStoreTypeHr()
         initView()
         setToolBar()
-        venue_type_listAPICALL(storeType)
+
 
 
     }
@@ -52,42 +54,44 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         supportMapFragment.getMapAsync(this@VenuListActvity)
         supportMapFragment.view?.visibility = GONE
         storeType = intent.getStringExtra(AppConstant.INTENT_EXTRAS.StoreType)!!
+        setSelectedStore(storeType)
+    }
+
+    private fun setSelectedStore(strType:String) {
         //store_type => required (1=>Bar, 2=>Pub, 3=>Club, 4=>Food, 5=>Event)
-        when(storeType){
+        when(strType){
             "1"->{
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 1 == i
                 }
-              // venuAdapterAdapter.notifyDataSetChanged()
-               venuAdapterAdapter.setData(listStoreType)
+
+                venue_type_listAPICALL("1")
             }
             "2"->{
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 2 == i
                 }
-                // venuAdapterAdapter.notifyDataSetChanged()
-                venuAdapterAdapter.setData(listStoreType)
+
+                venue_type_listAPICALL("2")
             }
             "3"->{
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 0 == i
                 }
-                // venuAdapterAdapter.notifyDataSetChanged()
-                venuAdapterAdapter.setData(listStoreType)
+
+                venue_type_listAPICALL("3")
             }
             "4"->{
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 3 == i
                 }
-                // venuAdapterAdapter.notifyDataSetChanged()
-                venuAdapterAdapter.setData(listStoreType)
+                venue_type_listAPICALL("4")
             }
             "5"->{
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 4 == i
                 }
-                // venuAdapterAdapter.notifyDataSetChanged()
-                venuAdapterAdapter.setData(listStoreType)
+                venue_type_listAPICALL("5")
             }
         }
 
@@ -109,7 +113,9 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 Status.LOADING -> {
                 }
                 Status.ERROR -> {
+                    setListVenu(ArrayList())
                     customProgressDialog.dialog.hide()
+                    Utills.showSnackBarOnError(binding.constrentToolbar, it.message!!, this@VenuListActvity)
                 }
             }
         })
@@ -162,56 +168,35 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     }
 
 
-    lateinit var venuSubAdapter: VenuSubAdapter
-    private fun setTopListSubDummy() {
-/*        var list = ArrayList<VenuListModel>()
-        list.add(VenuListModel("Vanity Night Club", "", R.drawable.venusub_img1))
-        list.add(VenuListModel("Feel the Beat", "", R.drawable.venusub_img2))
-        list.add(VenuListModel("Vanity Night Club", "", R.drawable.venusub_img3))
-
-        venuSubAdapter =
-            VenuSubAdapter(this@VenuListActvity, list, object : VenuSubAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    startActivity(Intent(this@VenuListActvity, StoreDetail::class.java))
-                    overridePendingTransition(0, 0)
-                }
-
-            })
-
-        binding.venulistingRecyclersub.also {
-            it.layoutManager = LinearLayoutManager(
-                this@VenuListActvity,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            it.adapter = venuSubAdapter
-        }*/
-    }
 
 
-    private fun setListStoreType() {
+
+
+    private fun setListStoreTypeHr() {
           listStoreType = ArrayList<VenuModel>()
         listStoreType.add(VenuModel(3,"Club", false))
         listStoreType.add(VenuModel(1,"Bar", false))
         listStoreType.add(VenuModel(2,"Pub", false))
         listStoreType.add(VenuModel(4,"Food", false))
         listStoreType.add(VenuModel(5,"Event", false))
-        // venuAdapterAdapter = PromotionAdapter(list)
 
-        venuAdapterAdapter = VenuAdapterAdapter(this@VenuListActvity, listStoreType,
+
+        venuAdapterAdapter = VenuAdapterAdapter(this@VenuListActvity,listStoreType,
             object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     for (i in 0 until listStoreType.size) {
                         listStoreType[i].isSelected = pos == i
                     }
                     venuAdapterAdapter.notifyDataSetChanged()
+                    venue_type_listAPICALL(listStoreType[pos].id.toString())
+
                 }
 
             })
         binding.venulistingToprecycler.also {
-            it.layoutManager =
-                LinearLayoutManager(this@VenuListActvity, LinearLayoutManager.HORIZONTAL, false)
+            it.layoutManager = LinearLayoutManager(this@VenuListActvity, LinearLayoutManager.HORIZONTAL, false)
             it.adapter = venuAdapterAdapter
+          //  venuAdapterAdapter.setData(listStoreType)
         }
 
     }

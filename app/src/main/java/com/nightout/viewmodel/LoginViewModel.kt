@@ -17,6 +17,7 @@ import com.nightout.vendor.services.WebServiceRepository
 class LoginViewModel(activity: Activity) : BaseObservable() {
     private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
     var PhNo: String? = ""
+
    // var password: String? = ""
     private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
 

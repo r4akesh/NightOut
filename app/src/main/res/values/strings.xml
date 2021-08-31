@@ -173,6 +173,8 @@
     <string name="facilitynot_avail">Facilities not available</string>
     <string name="countrycode">+44 %s</string>
     <string name="entrotp_recivedmobno">Enter the OTP you received to</string>
-
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="close">Close</string>
 
 </resources>

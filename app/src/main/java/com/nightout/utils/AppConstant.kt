@@ -14,6 +14,7 @@ class AppConstant {
     }
 
     object INTENT_EXTRAS {
+        const val EMAILID = "EMAILID"
         const val MOBILENO = "MOBILENO"
         const val VENU_LIST_POS = "VENU_LIST_POS"
         const val VENU_POS = "VENU_POS"

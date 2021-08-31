@@ -96,7 +96,7 @@ class OTPActivity : BaseActivity() {
           settext = "<font color='#ffc800'><u>$str1 </u></font>"
         binding.otpActvityChange.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
 
-        binding.otpHandler = MyApp.getOtpHandler(this,intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)!!)
+        binding.otpHandler = MyApp.getOtpHandler(this,intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)!!,intent.getStringExtra(AppConstant.INTENT_EXTRAS.EMAILID)!!)
         binding.otpviewmodel = OtpViewModel(this)
 
     }

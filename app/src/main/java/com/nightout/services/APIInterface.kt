@@ -4,6 +4,7 @@ import com.nightout.model.DashboardModel
 import com.nightout.model.LoginModel
 import com.nightout.model.VenuDetailModel
 import com.nightout.model.VenuListModel
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,4 +33,7 @@ interface APIInterface {
 
     @POST("venue_type_list")
     suspend fun venuListAPI(@Body params: HashMap<String, String>): Response<VenuListModel>
+
+    @POST("profile_update")
+    suspend fun updateProfileAPI(@Body requestBody: MultipartBody): Response<LoginModel>
 }

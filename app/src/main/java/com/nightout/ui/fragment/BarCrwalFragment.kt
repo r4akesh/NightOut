@@ -63,10 +63,8 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
         listStoreType.add(VenuModel(5,"Event", false))
 
        // venuAdapterAdapter = PromotionAdapter(list)
-         venuAdapterAdapter = VenuAdapterAdapter(
-            requireContext(),
-             listStoreType,
-            object : VenuAdapterAdapter.ClickListener {
+       //  venuAdapterAdapter = VenuAdapterAdapter(requireContext(), listStoreType, object : VenuAdapterAdapter.ClickListener {
+         venuAdapterAdapter = VenuAdapterAdapter(requireContext(),listStoreType,  object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     for (i in 0 until listStoreType.size) {
                         listStoreType[i].isSelected = pos == i
@@ -77,11 +75,7 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
             })
 
         binding.fragmentBatRecyclerTop.also {
-            it.layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
+            it.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             it.adapter = venuAdapterAdapter
         }
     }

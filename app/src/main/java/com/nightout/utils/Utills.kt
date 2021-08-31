@@ -4,16 +4,26 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Typeface
+import android.media.MediaScannerConnection
 import android.util.DisplayMetrics
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.nightout.R
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.util.*
 
 class Utills {
 
@@ -89,9 +99,49 @@ class Utills {
         }
 
 
+        fun showSnackBarFromTop(view: View, message: String, context: Context) {
+            val snackBarView = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            snackBarView.changeFont()
+            val snackView = snackBarView.view
+            val params = snackView.layoutParams as FrameLayout.LayoutParams
+            params.gravity = Gravity.TOP
+            snackView.layoutParams = params
+            snackView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_20213A))
+            snackBarView.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+            snackBarView.show()
+        }
 
 
+        fun saveImage(mContext: Context, myBitmap: Bitmap): String {
+            val bytes = ByteArrayOutputStream()
+            myBitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
+            val wallpaperDirectory = mContext.getDir("images", Context.MODE_PRIVATE)
 
+            if (!wallpaperDirectory.exists()) {
+                wallpaperDirectory.mkdirs()
+            }
+            try {
+                val f = File(
+                    wallpaperDirectory, ((Calendar.getInstance()
+                        .timeInMillis).toString() + ".jpg")
+                )
+                f.createNewFile()
+                val fo = FileOutputStream(f)
+                fo.write(bytes.toByteArray())
+                MediaScannerConnection.scanFile(
+                    mContext,
+                    arrayOf(f.path),
+                    arrayOf("image/jpeg"), null
+                )
+                fo.close()
+                println("f_absolutePath $f.absolutePath")
+                return f.absolutePath
+            } catch (e1: IOException) {
+                e1.printStackTrace()
+                println("error: ${e1.message}")
+            }
+            return ""
+        }
 
     }
 }

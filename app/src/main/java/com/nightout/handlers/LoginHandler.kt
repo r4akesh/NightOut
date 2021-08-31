@@ -39,13 +39,15 @@ open class LoginHandler(val activity: LoginActivity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
-//                    it.data?.let {
-//
+//                    it.data?.let {user->
+//                    user.data.email
 //                    }
 
                     activity.startActivity(
                         Intent(activity, OTPActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.MOBILENO, loginViewModel.PhNo!!)
+                            .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.data?.email),
+
                     )
                 }
                 Status.LOADING -> {

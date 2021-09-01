@@ -38,11 +38,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
     private var onMenuOpenListener: OnMenuOpenListener? = null
     lateinit var homeViewModel: HomeViewModel
     lateinit var storyAdapter: StoryAdapter
-    lateinit var clubsAdapter: ClubsAdapter
-    lateinit var barsAdapter: BarsAdapter
-    lateinit var foodsAdapter: FoodsAdapter
-    lateinit var pubsAdapter: PubsAdapter
-    lateinit var dashList: Data
+
+    lateinit var dashList: DashboardModel.Data
     private val progressDialog = CustomProgressDialog()
 
     constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
@@ -96,29 +93,14 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                         //save imgPath
                         dashList = users.data
                         PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
-                        if (!(users.data.stories == null || users.data.stories.size <= 0)) {
+                        if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
                             setListStory(users.data.stories)
                         }
-                        if (users.data.clubs != null && users.data.clubs.size > 0) {
-                            binding.btmShhetInclue.bottomSheetClubs.visibility = VISIBLE
-                            setListClub(users.data.clubs)
+                        if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
+                           setListAllRecord(dashList.all_records)
+
                         }
-                        if (users.data.bars != null && users.data.bars.size > 0) {
-                            binding.btmShhetInclue.bottomSheetBars.visibility = VISIBLE
-                            setListBars(users.data.bars)
-                        }
-                        if (users.data.pubs != null && users.data.pubs.size > 0) {
-                            binding.btmShhetInclue.bottomSheetPubs.visibility = VISIBLE
-                            setListPubs(users.data.pubs)
-                        }
-                        if (users.data.foods != null && users.data.foods.size > 0) {
-                            binding.btmShhetInclue.bottomSheetFoods.visibility = VISIBLE
-                            setListFoods(users.data.foods)
-                        }
-                        if (users.data.events != null && users.data.events.size > 0) {
-                            binding.btmShhetInclue.bottomSheetEvents.visibility = VISIBLE
-                            setListEvents(users.data.events)
-                        }
+
                         //setListVenuListBootmShhetDuumy(users.data)
 
                         // renderList(users.data)
@@ -145,21 +127,38 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
 
     }
 
+    lateinit var allRecordAdapter: AllRecordAdapter
+    private fun setListAllRecord(allRecordsList: ArrayList<DashboardModel.AllRecord>) {
+        allRecordAdapter = AllRecordAdapter(requireActivity(),allRecordsList,object:AllRecordAdapter.ClickListener{
+            override fun onClickNext(pos: Int) {
+                startActivity(Intent(requireActivity(), VenuListActvity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType,allRecordsList[pos].type ))
+            }
+
+            override fun onClickSub(subpos: Int, pos: Int) {
+                startActivity(
+                    Intent(requireActivity(), StoreDetail::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" +allRecordsList[pos].sub_records[subpos].id )
+                )
+            }
+
+        })
+
+      binding.btmShhetInclue.bottomSheetRecyclerAll.also {
+          it.layoutManager=LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+          it.adapter = allRecordAdapter
+      }
+
+
+
+    }
+
 
     private fun setBottomSheet() {
         //for solve issue scrolling
-        androidx.core.view.ViewCompat.setNestedScrollingEnabled(
-            binding.btmShhetInclue.bottomSheetrecyclerstory,
-            false
-        );
-        androidx.core.view.ViewCompat.setNestedScrollingEnabled(
-            binding.btmShhetInclue.bottomSheetrecyclerClubs,
-            false
-        );
-        androidx.core.view.ViewCompat.setNestedScrollingEnabled(
-            binding.btmShhetInclue.bottomSheetrecyclerBars,
-            false
-        );
+        androidx.core.view.ViewCompat.setNestedScrollingEnabled(binding.btmShhetInclue.bottomSheetrecyclerstory, false)
+        androidx.core.view.ViewCompat.setNestedScrollingEnabled(binding.btmShhetInclue.bottomSheetRecyclerAll, false)
+
         bottomSheetBehavior = BottomSheetBehavior.from(binding.btmShhetInclue.bottomSheet)
         //   bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         // bottomSheetBehavior.peekHeight = 150
@@ -195,50 +194,18 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
         } else if (v == binding.headerHome.headerSearch) {
             startActivity(Intent(requireContext(), SearchLocationActivity::class.java))
             activity?.overridePendingTransition(0, 0)
-        } else if (v == binding.btmShhetInclue.bottomSheetClubs) {
+        }/* else if (v == binding.btmShhetInclue.bottomSheetClubs) {
             if (dashList != null) {
                 startActivity(Intent(requireActivity(), VenuListActvity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.StoreType, "3")
                 )
             }
-        }
-        else if (v == binding.btmShhetInclue.bottomSheetBars) {
-            if (dashList != null) {
-                startActivity(Intent(requireActivity(), VenuListActvity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType, "1")
-                )
-            }
-        }
-        else if (v == binding.btmShhetInclue.bottomSheetPubs) {
-            if (dashList != null) {
-                startActivity(Intent(requireActivity(), VenuListActvity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType, "2")
-                )
-            }
-        }
-        else if (v == binding.btmShhetInclue.bottomSheetFoods) {
-            if (dashList != null) {
-                startActivity(Intent(requireActivity(), VenuListActvity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType, "4")
-                )
-            }
-        }
-        else if (v == binding.btmShhetInclue.bottomSheetEvents) {
-            if (dashList != null) {
-                startActivity(Intent(requireActivity(), VenuListActvity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType, "5")
-                )
-            }
-        }
+        }*/
+
     }
 
     private fun initView() {
-        binding.btmShhetInclue.bottomSheetClubs.setOnClickListener(this)
-        binding.btmShhetInclue.bottomSheetBars.setOnClickListener(this)
-        binding.btmShhetInclue.bottomSheetPubs.setOnClickListener(this)
-        binding.btmShhetInclue.bottomSheetFoods.setOnClickListener(this)
-        binding.btmShhetInclue.bottomSheetEvents.setOnClickListener(this)
-        //homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
+
         homeViewModel = HomeViewModel(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
@@ -248,7 +215,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
         binding.headerHome.headerTitle.text = "Hi, " + PreferenceKeeper.instance.loginResponse?.name
     }
 
-    lateinit var venuTitleBotmSheetAdapter: VenuTitleBotmSheetAdapter
+
   /*  private fun setListVenuListBootmShhetDuumy(data: Data) {
         var vv = data.bars
         var listTile = ArrayList<VenuBotmSheetTitleModel>()
@@ -344,7 +311,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
         })
     }*/
 
-    private fun setListClub(clubsList: ArrayList<Club>) {
+   /* private fun setListClub(clubsList: ArrayList<Club>) {
         clubsAdapter =
             ClubsAdapter(requireActivity(), clubsList, object : ClubsAdapter.ClickListener {
                 override fun onClick(pos: Int) {
@@ -366,79 +333,18 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
             it.adapter = clubsAdapter
         }
     }
-
-    private fun setListBars(barsList: ArrayList<Bar>) {
-        barsAdapter = BarsAdapter(requireActivity(), barsList, object : BarsAdapter.ClickListener {
-            override fun onClick(pos: Int) {
-                startActivity(
-                    Intent(requireActivity(), StoreDetail::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + barsList[pos].id)
-                )
-            }
-
-        })
-
-        binding.btmShhetInclue.bottomSheetrecyclerBars.also {
-            it.layoutManager = LinearLayoutManager(
-                requireActivity(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            it.adapter = barsAdapter
-        }
-    }
-
-    private fun setListPubs(pubsList: ArrayList<Pub>) {
-        pubsAdapter = PubsAdapter(requireActivity(), pubsList, object : PubsAdapter.ClickListener {
-            override fun onClick(pos: Int) {
-                startActivity(
-                    Intent(requireActivity(), StoreDetail::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + pubsList[pos].id)
-                )
-            }
-
-        })
-
-        binding.btmShhetInclue.bottomSheetrecyclerPubs.also {
-            it.layoutManager = LinearLayoutManager(
-                requireActivity(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            it.adapter = pubsAdapter
-        }
-    }
+*/
 
 
-    private fun setListFoods(foodsList: ArrayList<Food>) {
-        foodsAdapter =
-            FoodsAdapter(requireActivity(), foodsList, object : FoodsAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    startActivity(
-                        Intent(requireActivity(), StoreDetail::class.java)
-                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + foodsList[pos].id)
-                    )
-                }
-
-            })
-
-        binding.btmShhetInclue.bottomSheetrecyclerFoods.also {
-            it.layoutManager = LinearLayoutManager(
-                requireActivity(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            it.adapter = foodsAdapter
-        }
-    }
 
 
-    private fun setListEvents(events: ArrayList<Any>) {
-
-    }
 
 
-    private fun setListStory(listStory: ArrayList<Story>) {
+
+
+
+
+    private fun setListStory(listStory: ArrayList<DashboardModel.Story>) {
 
         storyAdapter =
             StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {

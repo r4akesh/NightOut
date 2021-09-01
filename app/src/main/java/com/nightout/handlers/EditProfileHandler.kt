@@ -15,10 +15,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.github.drjacky.imagepicker.ImagePicker
 import com.nightout.callbacks.OnSelectOptionListener
+import com.nightout.model.LoginModel
 import com.nightout.ui.activity.EditProfileActivity
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
+import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.EditProfileViewModel
@@ -214,8 +216,13 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
-                 //   save res
-                    Log.d("ok", "SUCCESS: ")
+                    it.data?.let{
+                        var logModel: LoginModel.Data = it.data
+                        PreferenceKeeper.instance.loginResponse = logModel
+                        Log.d("ok", "SUCCESS: ")
+                        activity.finish()
+                    }
+
                 }
                 Status.LOADING->{
                     Log.d("ok", "LOADING: ")

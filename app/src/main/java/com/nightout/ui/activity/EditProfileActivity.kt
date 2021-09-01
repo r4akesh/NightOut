@@ -12,6 +12,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityEditProfileBinding
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
+import com.nightout.utils.Utills
 import com.nightout.vendor.viewmodel.EditProfileViewModel
 import com.nightout.vendor.viewmodel.LoginViewModel
 
@@ -29,6 +30,11 @@ class EditProfileActivity : BaseActivity() {
         editProfileViewModel = EditProfileViewModel(this)
         editProfileViewModel.fName = binding.loginModel?.first_name!!
         editProfileViewModel.lName = binding.loginModel?.last_name!!
+        editProfileViewModel.addrs1 = binding.loginModel?.userprofile!!.address1
+        editProfileViewModel.addrs2 = binding.loginModel?.userprofile!!.address2
+        editProfileViewModel.aboutMe = binding.loginModel?.userprofile!!.about_me
+       // img set
+
 
         binding.editPrfleViewModl = editProfileViewModel
         binding.editProfileHandler = MyApp.getEditProfile(this)

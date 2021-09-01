@@ -96,4 +96,6 @@ dependencies {
     //camera picker
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.github.Drjacky:ImagePicker:2.1.13'
+    //View pager dots indicator
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 }

@@ -33,11 +33,15 @@ data class LoginModel(
         val token: String,
         val updated_at: String,
         val userID: String,
-        val user_profile: UserProfile
+        val userprofile: userprofile
     )
 
-    data class UserProfile(
+    data class userprofile(
         val address: String,
+        val address1: String,
+        val address2: String,
+        val about_me: String,
+        val location: String,
         val created_at: String,
         val id: String,
         val latitude: String,

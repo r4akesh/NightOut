@@ -16,9 +16,12 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.makeramen.roundedimageview.RoundedImageView
 import com.nightout.R
+import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -143,5 +146,17 @@ class Utills {
             return ""
         }
 
+        fun setImage(context: Context?, imageView: CircleImageView?, url: String?) {
+            imageView?.let {
+                Glide.with(context!!).load(url).centerCrop()
+                    .placeholder(R.drawable.user_default_ic).into(it)
+            }
+        }
+        fun setImageNormal(context: Context?, imageView: ImageView?, url: String?) {
+            imageView?.let {
+                Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
+                    .placeholder(R.drawable.no_image).into(it)
+            }
+        }
     }
 }

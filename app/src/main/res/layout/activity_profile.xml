@@ -63,7 +63,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            android:src="@drawable/boy"
+                            android:src="@drawable/user_default_ic"
                             app:civ_border_color="@color/text_yello"
                             app:civ_border_width="2dp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -284,7 +284,7 @@
                             style="@style/textRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{loginModel.user_profile.address}"
+                            android:text="@{loginModel.userprofile.address1}"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -328,7 +328,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
                             android:gravity="end"
-                            android:text="@{loginModel.user_profile.address}"
+                            android:text="@{loginModel.userprofile.address2}"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -418,7 +418,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:lineSpacingExtra="5dp"
-                            android:text="@string/dummyText2"
+                            android:text="@{loginModel.userprofile.about_me}"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 

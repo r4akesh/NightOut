@@ -22,6 +22,7 @@ class EditProfileViewModel(activity: Activity) : BaseObservable() {
     var addrs2: String = ""
     var aboutMe: String = ""
     var profilePic: MultipartBody.Part? = null
+    var profilePicPath: String=""
 
     private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
     fun updateProfile(requestBody: MultipartBody): LiveData<Resource<LoginModel>> {

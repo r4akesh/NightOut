@@ -40,7 +40,8 @@ object APIClient {
 
 
     fun makeRetrofitServiceHeader(): APIInterface {
-        val token = PreferenceKeeper.instance.loginResponse?.token
+        //val token = PreferenceKeeper.instance.loginResponse?.token
+        val token = PreferenceKeeper.instance.bearerTokenSave
         Log.d("ok", "Bearer $token")
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY

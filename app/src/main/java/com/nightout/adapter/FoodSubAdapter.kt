@@ -14,12 +14,13 @@ import com.nightout.R
 import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.DrinkSubitemBinding
 import com.nightout.databinding.FoodSubitemBinding
+import com.nightout.model.DashboardModel
 import com.nightout.model.SubFoodModel
 
 
 class FoodSubAdapter(
     var context: Context,
-    var arrayList: ArrayList<SubFoodModel>,
+    var arrayList: ArrayList<DashboardModel.SubRecord>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FoodSubAdapter.ViewHolder>() {
@@ -36,10 +37,10 @@ class FoodSubAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.foodSubItemTitle.text = arrayList[position].title
+        viewHolder.binding.foodSubItemTitle.text = arrayList[position].store_name
         viewHolder.binding.foodSubItemPrice.text = arrayList[position].price
 
-        if (arrayList[position].isChekd) {
+        /*if (arrayList[position].isChekd) {
             viewHolder.binding.foodSubItemChk.setImageResource(R.drawable.chk_box)
             viewHolder.binding.foodSubItemTitle.setTextColor(context.resources.getColor(R.color.text_yello))
             viewHolder.binding.foodSubItemPrice.setTextColor(context.resources.getColor(R.color.text_yello))
@@ -47,7 +48,7 @@ class FoodSubAdapter(
             viewHolder.binding.foodSubItemChk.setImageResource(R.drawable.unchk_box)
             viewHolder.binding.foodSubItemTitle.setTextColor(context.resources.getColor(R.color.white))
             viewHolder.binding.foodSubItemPrice.setTextColor(context.resources.getColor(R.color.white))
-        }
+        }*/
         if(position == arrayList.size-1){
             viewHolder.binding.foodSubViewLine.visibility= GONE
         }else{

@@ -17,7 +17,7 @@
             android:fontFamily="@font/proximanova_reg"
             android:text="Club"
             android:padding="@dimen/_10ssp"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_13ssp"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

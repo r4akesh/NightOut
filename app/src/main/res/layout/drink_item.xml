@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_1ssp"
             android:layout_marginEnd="@dimen/_1ssp"
-            android:background="@color/boxclr_primary"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

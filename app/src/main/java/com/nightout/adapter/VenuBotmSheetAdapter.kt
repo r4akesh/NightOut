@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.*
 import com.nightout.model.*
+import com.nightout.utils.Utills
 
 
 class VenuBotmSheetAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuBotmSheetModel>,
+    var arrayList: ArrayList<DashboardModel.SubRecord>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<VenuBotmSheetAdapter.ViewHolder>() {
@@ -34,10 +35,18 @@ class VenuBotmSheetAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-      viewHolder.binding.venuBottmShhetItemTitle.text=arrayList[position].title
-         viewHolder.binding.venuBottmShhetItemSubTitle.text=arrayList[position].subTitle
+      viewHolder.binding.venuBottmShhetItemTitle.text=arrayList[position].store_name
+         viewHolder.binding.venuBottmShhetItemSubTitle.text=arrayList[position].store_address
+
+        Utills.setImageNormal(context,viewHolder.binding.venuBottmShhetItemImg,arrayList[position].store_logo)
 
 
+        viewHolder.binding.venuBottmShhetItemLeft.setOnClickListener{
+            viewHolder.binding.hsview.scrollTo(viewHolder.binding.hsview.getScrollX() as Int - 80, viewHolder.binding.hsview.getScrollY() as Int)
+        }
+        viewHolder.binding.venuBottmShhetItemRight.setOnClickListener{
+            viewHolder.binding.hsview.scrollTo(viewHolder.binding.hsview.getScrollX() as Int + 80, viewHolder.binding.hsview.getScrollY() as Int)
+        }
 
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)

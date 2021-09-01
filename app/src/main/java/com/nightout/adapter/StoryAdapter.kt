@@ -10,14 +10,14 @@ import com.bumptech.glide.Glide
 import com.nightout.R
 import com.nightout.databinding.StoryItemBinding
 import com.nightout.model.DashboardModel
-import com.nightout.model.Story
+
 
 import com.nightout.utils.PreferenceKeeper
 
 
 class StoryAdapter(
     var context: Context,
-    var arrayList: ArrayList<Story>,
+    var arrayList: ArrayList<DashboardModel.Story>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<StoryAdapter.ViewHolder>() {

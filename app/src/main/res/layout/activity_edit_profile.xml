@@ -223,7 +223,7 @@
                                     android:layout_marginEnd="8dp"
                                     style="@style/appEditText"
                                     android:textStyle="bold"
-                                    android:text="@{editPrfleViewModl.lName}"
+                                    android:text="@={editPrfleViewModl.lName}"
                                     android:hint="@string/enter_last_name"
                                     android:inputType="text" />
 

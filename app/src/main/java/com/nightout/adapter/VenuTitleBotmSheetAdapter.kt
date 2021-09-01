@@ -37,7 +37,7 @@ class VenuTitleBotmSheetAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.binding.venuTitleBotmShetTitle.text=arrayList[position].venuName
 
-        var venuBotmSheetAdapter =  VenuBotmSheetAdapter(context,arrayList[position].list,object : VenuBotmSheetAdapter.ClickListener{
+    /*    var venuBotmSheetAdapter =  VenuBotmSheetAdapter(context,arrayList[position].list,object : VenuBotmSheetAdapter.ClickListener{
             override fun onClick(pos: Int) {
                 clickListener.onWholeClickdd(pos,position)
             }
@@ -48,7 +48,7 @@ class VenuTitleBotmSheetAdapter(
             it.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             it.adapter= venuBotmSheetAdapter
         }
-
+*/
         viewHolder.binding.venuTitleBotmShetRightImage.setOnClickListener {
             clickListener.onClick(position)
 

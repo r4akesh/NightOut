@@ -5,11 +5,10 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-import com.nightout.adapter.FoodAdapter
+import com.nightout.adapter.AllRecordAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.FoodstoreActviityBinding
 import com.nightout.model.FoodStoreModel
-import com.nightout.model.StoreDetailDrinksModel
 import com.nightout.model.SubFoodModel
 import kotlinx.android.synthetic.main.foodstore_actviity.*
 import kotlinx.android.synthetic.main.storedetail_activity.*
@@ -24,7 +23,7 @@ class FoodStoreActvity : BaseActivity() {
         setDuumyList()
     }
 
-    lateinit var foodAdapter: FoodAdapter
+    lateinit var foodAdapter: AllRecordAdapter
     private fun setDuumyList() {
         var listFood = ArrayList<FoodStoreModel>()
         var listSub = ArrayList<SubFoodModel>()
@@ -48,7 +47,7 @@ class FoodStoreActvity : BaseActivity() {
         listSub.add(SubFoodModel("Pasta varieties", "", R.drawable.drink_img1, "Price : $50", false))
         listFood.add(FoodStoreModel("Chinese Food", false, listSub))
 
-        foodAdapter = FoodAdapter(this@FoodStoreActvity,listFood, object : FoodAdapter.ClickListener{
+       /* foodAdapter = AllRecordAdapter(this@FoodStoreActvity,listFood, object : AllRecordAdapter.ClickListener{
             override fun onClick(pos: Int) {
                 listFood[pos].isSelected = !listFood[pos].isSelected
                 foodAdapter.notifyDataSetChanged()
@@ -64,7 +63,7 @@ class FoodStoreActvity : BaseActivity() {
             it.layoutManager =
                 LinearLayoutManager(this@FoodStoreActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = foodAdapter
-        }
+        }*/
 
     }
 

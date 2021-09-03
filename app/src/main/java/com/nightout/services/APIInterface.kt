@@ -1,9 +1,6 @@
 package com.nightout.vendor.services
 
-import com.nightout.model.DashboardModel
-import com.nightout.model.LoginModel
-import com.nightout.model.VenuDetailModel
-import com.nightout.model.VenuListModel
+import com.nightout.model.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -36,4 +33,9 @@ interface APIInterface {
 
     @POST("profile_update")
     suspend fun updateProfileAPI(@Body requestBody: MultipartBody): Response<LoginModel>
+
+    @POST("add_favourite")
+    suspend fun addFavouriteAPI(@Body params : HashMap<String, Any>): Response<AddFavModel>
+
+
 }

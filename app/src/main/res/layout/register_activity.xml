@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:padding="@dimen/_10ssp"
+            android:onClick="@{()->registerHandler.onFinishScreen()}"
             android:src="@drawable/back_ic_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -20,6 +20,9 @@ class AppConstant {
         const val VENU_POS = "VENU_POS"
         const val VENU_ID = "VENU_ID"
         const val StoreType = "StoreType"
+        const val GALLERY_LIST = "GALLERY_LIST"
+        const val VIDEO_URL = "VIDEO_URL"
+        const val ISFROM_VENULISTACTIVITY = "ISFROM_VENULISTACTIVITY"
 
     }
 }

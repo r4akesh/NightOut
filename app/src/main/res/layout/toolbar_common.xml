@@ -42,7 +42,7 @@
 
             android:fontFamily="@font/proximanova_reg"
             android:padding="@dimen/_10ssp"
-            android:text="Club Menu"
+            android:text="Menu"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@+id/toolbar_back"

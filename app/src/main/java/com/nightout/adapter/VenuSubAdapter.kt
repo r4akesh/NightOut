@@ -39,7 +39,10 @@ class VenuSubAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.venusubitemTitle.text=arrayList[position].store_type
+        viewHolder.binding.venusubitemTitle.text=arrayList[position].store_name
+        viewHolder.binding.venusubitemSubTitle.text=arrayList[position].store_address
+        viewHolder.binding.venusubitemOpenclosetime.text="Close : "+arrayList[position].close_time
+        viewHolder.binding.venusubitemRating.text=arrayList[position].rating.avg_rating
 
         Glide.with(context)
             .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].store_logo)
@@ -48,10 +51,14 @@ class VenuSubAdapter(
 
 
 
-        if(position==0){
+        if(arrayList[position].favrouite == "1"){
             viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
         }else{
             viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
+        }
+
+        viewHolder.binding.venusubitemFav.setOnClickListener{
+            clickListener.onClickFav(position)
         }
 
         viewHolder.itemView.setOnClickListener {
@@ -74,6 +81,7 @@ class VenuSubAdapter(
 
     interface ClickListener {
         fun onClick(pos: Int)
+        fun onClickFav(pos: Int)
 
 
     }

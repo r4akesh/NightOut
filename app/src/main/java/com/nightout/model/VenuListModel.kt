@@ -9,7 +9,7 @@ data class VenuListModel(
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) {
+) :Serializable{
     data class Data(
         val age_limit: String,
         val alcohol_license_image: String,
@@ -22,7 +22,7 @@ data class VenuListModel(
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
-        val favrouite: String,
+        var favrouite: String,
         val food_certificate_image: String,
         val food_certificate_number: String,
         val food_registration_image: String,
@@ -56,17 +56,42 @@ data class VenuListModel(
         val ticker_qty: String,
         val updated_at: String,
         val user_id: String,
-        val venue_gallery: ArrayList<VenueGallery>
-    )
+        val venue_gallery: ArrayList<VenueGallery>,
+        val vendor_detail: VendorDetail,
+    ):Serializable
+
+
+    data class VendorDetail(
+        val created_at: String,
+        val deleted_at: String,
+        val device_id: String,
+        val device_type: String,
+        val email: String,
+        val email_verified_at: String,
+        val first_name: String,
+        val id: String,
+        val last_name: String,
+        val name: String,
+        val otp: String,
+        val otp_expire: String,
+        val password: String,
+        val phonenumber: String,
+        val profile: String,
+        val remember_token: String,
+        val slug: String,
+        val status: String,
+        val updated_at: String,
+        val userID: String
+    ):Serializable
 
     data class Rating(
         val avg_rating: String,
         val percent: String,
         val review_title: String,
         val total_rating: String
-    )
+    ):Serializable
 
-    data class VenueGallery(
+  /*  data class VenueGallery(
         val created_at: String,
         val id: String,
         val image: String,
@@ -75,5 +100,5 @@ data class VenuListModel(
         val type: String,
         val updated_at: String,
         val venue_id: String
-    )
+    ):Serializable*/
 }

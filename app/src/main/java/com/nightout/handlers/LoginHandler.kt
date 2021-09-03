@@ -46,9 +46,7 @@ open class LoginHandler(val activity: LoginActivity) {
                     activity.startActivity(
                         Intent(activity, OTPActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.MOBILENO, loginViewModel.PhNo!!)
-                            .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.data?.email),
-
-                    )
+                            .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.data?.email))
                 }
                 Status.LOADING -> {
                     Log.d("ok", "loginCall:LOADING ")

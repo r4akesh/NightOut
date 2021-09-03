@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.makeramen.roundedimageview.RoundedImageView
@@ -57,14 +58,25 @@ class Utills {
             return displayMetrics.widthPixels
         }
 
-        fun showSnackBarOnError(view: View, message: String, context: Context) {
-            val snackBar = Snackbar.make(
+         fun showSnackBarOnError(view: View, message: String, context: Context) {
+           /* val snackBar = Snackbar.make(
                 view, message, Snackbar.LENGTH_LONG
             )
             snackBar.changeFont()
             snackBar.setBackgroundTint(ContextCompat.getColor(context, R.color.view_line_gray2))
             snackBar.setTextColor(ContextCompat.getColor(context, R.color.white))
-            snackBar.show()
+            snackBar.show()*/
+
+             val snackBarView = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+             snackBarView.changeFont()
+             val snackView = snackBarView.view
+             val params = snackView.layoutParams as FrameLayout.LayoutParams
+             params.gravity = Gravity.TOP
+             params.topMargin = 100
+             snackView.layoutParams = params
+             snackView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_20213A))
+             snackBarView.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+             snackBarView.show()
         }
 
 
@@ -157,6 +169,39 @@ class Utills {
                 Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
                     .placeholder(R.drawable.no_image).into(it)
             }
+        }
+
+        fun loadImage(
+            view: RoundedImageView,
+            url: String,
+            userImage: Boolean,
+            postImage: Boolean,
+            dogImage: Boolean
+        ) {
+            val requestOptions = RequestOptions()
+            requestOptions.isMemoryCacheable
+            Glide.with(view)
+                .setDefaultRequestOptions(requestOptions)
+                .load(url)
+                .error(if (userImage) (R.drawable.no_image) else if (dogImage) (R.mipmap.ic_launcher) else (R.drawable.no_image))
+                .placeholder(R.drawable.no_image)
+                .centerCrop()
+                .thumbnail(Glide.with(view).load(url))
+                .into(view)
+
+//    Glide.with(view)
+//        .asBitmap()
+//        .load(url)
+//        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//        .into(object : CustomTarget<Bitmap?>() {
+//            override fun onResourceReady(resource: Bitmap, @Nullable transition: Transition<in Bitmap?>?) {
+//                view.setImageBitmap(resource)
+//                view.buildDrawingCache()
+//            }
+//
+//            override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
+//        })
+
         }
     }
 }

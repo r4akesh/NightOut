@@ -15,13 +15,13 @@ data class DashboardModel(
     data class Data(
         val all_records: ArrayList<AllRecord>,
         val stories: ArrayList<Story>
-    )
+    ):Serializable
 
     data class AllRecord(
         val sub_records: ArrayList<SubRecord>,
         val title: String,
         val type: String
-    )
+    ):Serializable
 
     data class Story(
         val created_at: String,
@@ -30,7 +30,7 @@ data class DashboardModel(
         val updated_at: String,
         val vendor_detail: VendorDetail,
         val vendor_id: String
-    )
+    ):Serializable
 
     data class SubRecord(
         val age_limit: String,
@@ -80,16 +80,16 @@ data class DashboardModel(
         val user_id: String,
         val venue_address: String,
         val venue_gallery: ArrayList<VenueGallery>
-    )
+    ):Serializable
 
     data class Rating(
         val avg_rating: String,
         val percent: String,
         val review_title: String,
         val total_rating: String
-    )
+    ):Serializable
 
-    data class VenueGallery(
+   /* data class VenueGallery(
         val created_at: String,
         val id: String,
         val image: String,
@@ -98,7 +98,7 @@ data class DashboardModel(
         val type: String,
         val updated_at: String,
         val venue_id: String
-    )
+    ):Serializable*/
 
     data class Storydetail(
         val created_at: String,
@@ -109,7 +109,7 @@ data class DashboardModel(
         val thumbnail: String,
         val type: String,
         val updated_at: String
-    )
+    ):Serializable
 
     data class VendorDetail(
         val created_at: String,
@@ -132,5 +132,5 @@ data class DashboardModel(
         val status: String,
         val updated_at: String,
         val userID: String
-    )
+    ):Serializable
 }

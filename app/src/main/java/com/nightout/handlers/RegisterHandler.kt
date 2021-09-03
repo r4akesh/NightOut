@@ -5,12 +5,10 @@ import android.content.Intent
 import android.util.Log
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
+import com.nightout.ui.activity.OTPActivity
 
 import com.nightout.ui.activity.RegisterActivity
-import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.MyApp
-import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.RegViewModel
 
@@ -37,17 +35,23 @@ open class RegisterHandler(val activity: RegisterActivity) {
 
 
     private fun regCall(map: HashMap<String, Any>, activity: RegisterActivity) {
-        progressDialog.dialog.show()
+        progressDialog.show(activity)
         regViewModel.register(map).observe(activity, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let {
-                        var regViewModel: LoginModel.Data = it.data
+                       /*  var regViewModel: LoginModel.Data = it.data
                         Log.d("TAG", "regCall: " + regViewModel)
                         PreferenceKeeper.instance.loginResponse = regViewModel
                         activity.startActivity(Intent(activity, LoginActivity::class.java))
-                        activity.finish()
+                        activity.finish()*/
+                        activity.startActivity(
+                            Intent(activity, OTPActivity::class.java)
+                                .putExtra(AppConstant.INTENT_EXTRAS.MOBILENO, regViewModel.PhNo!!)
+                                .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.email))
+                        
+
                     }
                     Utills.showSnackBarOnError(
                         activity.binding.registerRootLayout,
@@ -67,4 +71,7 @@ open class RegisterHandler(val activity: RegisterActivity) {
         })
     }
 
+    fun onFinishScreen(){
+        activity.finish()
+    }
 }

@@ -142,6 +142,7 @@
                     android:layout_marginStart="@dimen/_15ssp"
                     android:layout_marginTop="@dimen/_2ssp"
                     android:fontFamily="@font/proximanova_reg"
+                    android:visibility="invisible"
 
                     android:text="@string/didnot_get_pwd"
                     android:textColor="@color/white"
@@ -153,6 +154,7 @@
                     android:id="@+id/otpActivitySendAgain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:layout_marginStart="@dimen/_4ssp"
                     android:layout_marginTop="@dimen/_2ssp"
                     android:fontFamily="@font/proximanova_reg"

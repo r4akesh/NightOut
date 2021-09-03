@@ -279,7 +279,7 @@
                     android:layout_marginStart="@dimen/_10ssp"
                     android:layout_marginTop="@dimen/_15ssp"
                     android:fontFamily="@font/proximanova_reg"
-                    android:text="Snaks"
+                    android:text="Snacks"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp" />
 

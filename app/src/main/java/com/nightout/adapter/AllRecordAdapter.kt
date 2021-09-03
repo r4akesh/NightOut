@@ -3,6 +3,7 @@ package com.nightout.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,10 @@ class AllRecordAdapter(
     var clickListener: ClickListener,
 ) : RecyclerView.Adapter<AllRecordAdapter.ViewHolder>() {
 
+
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: VenuTitleBotmsheetItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -32,7 +37,7 @@ class AllRecordAdapter(
         androidx.core.view.ViewCompat.setNestedScrollingEnabled( viewHolder.binding.venuTitleBotmSeetSubRecyler, false)//for scroll issue botmSheet
         viewHolder.binding.venuTitleBotmShetTitle.text = arrayList[position].title
 
-        var venuBotmSheetAdapter = VenuBotmSheetAdapter(context, arrayList[position].sub_records, object : VenuBotmSheetAdapter.ClickListener {
+        var venuBotmSheetAdapter = VenuBotmSheetAdapter(context, arrayList[position].sub_records,position, object : VenuBotmSheetAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     clickListener.onClickSub(pos, position)
                 }

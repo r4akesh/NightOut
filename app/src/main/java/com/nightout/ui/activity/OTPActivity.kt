@@ -8,6 +8,7 @@ import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
@@ -65,6 +66,8 @@ class OTPActivity : BaseActivity() {
             }
 
             override fun onFinish() {
+                binding.otpDidnot.visibility=VISIBLE
+                binding.otpActivitySendAgain.visibility=VISIBLE
                 Log.d("seconds remaining: ", "DONE")
             }
         }.start()

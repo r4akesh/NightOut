@@ -136,12 +136,26 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
             }
 
             override fun onClickSub(subpos: Int, pos: Int) {
-                startActivity(
-                    Intent(requireActivity(), StoreDetail::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" +allRecordsList[pos].sub_records[subpos].id )
-                )
-            }
+                // var vv : ArrayList<DashboardModel.VenueGallery> = allRecordsList[pos].sub_records[subpos].venue_gallery
+                if (MyApp.isConnectingToInternet(requireContext())) {
+                    startActivity(
+                        Intent(requireActivity(), StoreDetail::class.java)
+                            .putExtra(
+                                AppConstant.INTENT_EXTRAS.VENU_ID,
+                                "" + allRecordsList[pos].sub_records[subpos].id
+                            )
+                            .putExtra(
+                                AppConstant.INTENT_EXTRAS.GALLERY_LIST,
+                                allRecordsList[pos].sub_records[subpos].venue_gallery
+                            )
+                    )
+                }
 
+           /* else{
+
+                Utills.showSnackBarOnError(binding.btmShhetInclue.bottomSheet,requireContext().resources.getString(R.string.No_Internet),requireActivity())
+            }*/
+            }
         })
 
       binding.btmShhetInclue.bottomSheetRecyclerAll.also {

@@ -21,6 +21,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.ui.fragment.*
+import com.nightout.utils.AppConstant
 import com.nightout.utils.DialogCustmYesNo
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
@@ -254,7 +255,10 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuVenues?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            startActivity(Intent(this@HomeActivity, VenuListActvity::class.java))
+
+
+            startActivity(Intent(this@HomeActivity, VenuListActvity::class.java)
+                .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"1"))//here 1 is default
             overridePendingTransition(0,0)
         }
         else if(v==sideMenuEmrgyHistry){

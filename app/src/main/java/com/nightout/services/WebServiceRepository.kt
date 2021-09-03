@@ -6,11 +6,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nightout.R
-import com.nightout.model.DashboardModel
-
-import com.nightout.model.LoginModel
-import com.nightout.model.VenuDetailModel
-import com.nightout.model.VenuListModel
+import com.nightout.model.*
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,10 +30,14 @@ class WebServiceRepository(application: Activity) {
                 if (request.isSuccessful) {
                     userLogin.postValue(Resource.success(request.body(),""))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("json error>>>>>>>>>>>$jsonObj")
-                    userLogin.postValue(Resource.error(jsonObj.getString("message"), null)
-                )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("json error>>>>>>>>>>>$jsonObj")
+                        userLogin.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        userLogin.postValue(Resource.error(e.toString(), null))
+                    }
+                }
             }else userLogin.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
         }
         return userLogin
@@ -52,10 +52,15 @@ class WebServiceRepository(application: Activity) {
                 if (request.isSuccessful) {
                     userReg.postValue(Resource.success(request.body(),""))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("json error>>>>>>>>>>>$jsonObj")
-                    userReg.postValue(Resource.error(jsonObj.getString("message"), null)
-                    )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("json error>>>>>>>>>>>$jsonObj")
+                        userReg.postValue(Resource.error(jsonObj.getString("message"), null)
+                        )
+                    } catch (e: Exception) {
+                        userReg.postValue(Resource.error(e.toString(), null))
+                    }
+                }
             }else userReg.postValue(Resource.error("No internet connection", null))
         }
         return userReg
@@ -70,10 +75,15 @@ class WebServiceRepository(application: Activity) {
                 if (request.isSuccessful) {
                     userOtp.postValue(Resource.success(request.body(),""))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("json error>>>>>>>>>>>$jsonObj")
-                    userOtp.postValue(Resource.error(jsonObj.getString("message"), null)
-                    )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("json error>>>>>>>>>>>$jsonObj")
+                        userOtp.postValue(Resource.error(jsonObj.getString("message"), null)
+                        )
+                    } catch (e: Exception) {
+                        userOtp.postValue(Resource.error(e.toString(), null))
+                    }
+                }
             }else userOtp.postValue(Resource.error("No internet connection", null))
         }
         return userOtp
@@ -88,10 +98,15 @@ class WebServiceRepository(application: Activity) {
                 if (request.isSuccessful) {
                     userOtp.postValue(Resource.success(request.body(),""))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("json error>>>>>>>>>>>$jsonObj")
-                    userOtp.postValue(Resource.error(jsonObj.getString("message"), null)
-                    )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("json error>>>>>>>>>>>$jsonObj")
+                        userOtp.postValue(Resource.error(jsonObj.getString("message"), null)
+                        )
+                    } catch (e: Exception) {
+                        userOtp.postValue(Resource.error(e.toString(), null))
+                    }
+                }
             }else userOtp.postValue(Resource.error("No internet connection", null))
         }
         return userOtp
@@ -144,6 +159,29 @@ class WebServiceRepository(application: Activity) {
         return dashboardRes
     }
 
+    fun userAddFav(map: HashMap<String, Any>): LiveData<Resource<AddFavModel>> {
+        val dashboardRes = MutableLiveData<Resource<AddFavModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            dashboardRes.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.addFavouriteAPI(map)
+                if (request.isSuccessful) {
+                    dashboardRes.postValue(Resource.success(request.body(), ""))
+                } else {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("ok jsonObj$jsonObj")
+                        dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        dashboardRes.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else
+                dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+        }
+        return dashboardRes
+    }
+
     fun userVenueList(map: HashMap<String, String>): LiveData<Resource<VenuListModel>> {
         val dashboardRes = MutableLiveData<Resource<VenuListModel>>()
         CoroutineScope(Dispatchers.IO).launch {
@@ -153,10 +191,15 @@ class WebServiceRepository(application: Activity) {
                 if (request.isSuccessful) {
                     dashboardRes.postValue(Resource.success(request.body(), ""))
                 } else {
-                    val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                    println("ok jsonObj$jsonObj")
-                    dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
-                    )}
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("ok jsonObj$jsonObj")
+                        dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null)
+                        )
+                    } catch (e: Exception) {
+                        dashboardRes.postValue(Resource.error(e.toString(), null))
+                    }
+                }
             }else
                 dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
         }

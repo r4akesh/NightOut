@@ -176,5 +176,6 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="close">Close</string>
+    <string name="typeFile">1</string>
 
 </resources>

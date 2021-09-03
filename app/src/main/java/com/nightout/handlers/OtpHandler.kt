@@ -72,7 +72,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
 
 
       fun sendAgain(regViewModel: OtpViewModel){
-          progressDialog.dialog.show()
+          progressDialog.show(activity)
           val map = HashMap<String, Any>()
           var mobNo = mobNo
           mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()

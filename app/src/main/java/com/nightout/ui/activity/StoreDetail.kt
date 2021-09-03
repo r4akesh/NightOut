@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -21,18 +22,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.nightout.R
-import com.nightout.adapter.DrinksAdapter
-import com.nightout.adapter.DrinksSubAdapter
-import com.nightout.adapter.FacilityAdapter
-import com.nightout.adapter.StorDetailFoodHorizontalAdapter
+import com.nightout.adapter.*
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.StoredetailActivityBinding
 import com.nightout.model.*
-import com.nightout.utils.AppConstant
-import com.nightout.utils.Commons
-import com.nightout.utils.MyApp
-import com.nightout.utils.PreferenceKeeper
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.DoFavViewModel
 import com.nightout.viewmodel.VenuDetailViewModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
 
@@ -40,44 +36,43 @@ import kotlinx.android.synthetic.main.discount_desc.view.*
 class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
     lateinit var userVenueDetailViewModel: VenuDetailViewModel
+    lateinit var doFavViewModel : DoFavViewModel
     lateinit var mMap: GoogleMap
+    var imageViewPagerAdapter: ImageViewPagerAdapter? = null
+    private val progressDialog = CustomProgressDialog()
+    var facilityList = ArrayList<VenuDetailModel.Facility>()
+    var venuID=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
         initView()
-        var venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)
+        setTopImgSlider()
+          venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
         if (!venuID.isNullOrBlank()) {
-            user_venue_detailAPICALL(venuID)
+            user_venue_detailAPICALL()
         }
         setListHorizntalFood()
         setListDrinksDummy()//first time set
     }
 
-    private fun user_venue_detailAPICALL(venuID: String?) {
-        //progressBar.visibility = View.VISIBLE
-        var map = HashMap<String, Any>()
-        map["id"] = venuID!!
-
-        userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetail, {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    //progressBar.visibility = View.GONE
-                    it.data?.let { detailData ->
-                        setData(detailData.data)
-                    }
-                }
-                Status.LOADING -> {
-
-                }
-                Status.ERROR -> {
-                    // progressBar.visibility = View.GONE
-                }
+    private fun setTopImgSlider() {
+        if(intent!=null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)){
+            try {
+                    var venueGalleryList = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<VenueGallery>
+                    imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail, venueGalleryList)
+                    binding.viewPager.adapter = imageViewPagerAdapter
+                    binding.dotsIndicator.setViewPager(binding.viewPager)
+            } catch (e: Exception) {
             }
-        })
+        }
+
     }
 
-    var facilityList = ArrayList<VenuDetailModel.Facility>()
-    private fun setData(dt: VenuDetailModel.Data) {
+
+
+
+var favStatus= "0"
+    private fun setData() {
         binding.storeDeatilTitle.text = dt.store_name
         binding.storeDeatilRating.text = dt.rating.avg_rating
         binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
@@ -86,15 +81,17 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         binding.storeDeatilEmail.text = dt.store_email
         binding.storeDeatilAddrs.text = dt.store_address
         if(dt.favrouite == "1"){
+            favStatus="0"
             binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
         }else{
+            favStatus="1"
             binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
         }
         //topImg
         Glide.with(this@StoreDetail)
             .load(PreferenceKeeper.instance.imgPathSave+dt.store_logo)
             .error(R.drawable.no_image)
-            .into(binding.storeDeatilTopImag)
+            .into(binding.storeDeatilLogo)
 
         //faciltyList
         facilityList = dt.facilities
@@ -644,6 +641,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         supportMapFragment.getMapAsync(this@StoreDetail)
 
         userVenueDetailViewModel = VenuDetailViewModel(this)
+        doFavViewModel = DoFavViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)
@@ -653,6 +651,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(binding.storeDeatilPreBookingBtn)
         setTouchNClick(binding.storeDeatilSharLoc)
         setTouchNClick(binding.storeDeatilDirection)
+        setTouchNClick(binding.storeDeatilFav)
         val str1 = resources.getString(R.string.Direction)
         var settext = "<u>$str1 </u>"
         binding.storeDeatilDirection.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
@@ -662,7 +661,10 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     override fun onClick(v: View?) {
         super.onClick(v)
 
-        if (v == binding.storeDeatilPreBookingBtn) {
+        if(v==binding.storeDeatilFav){
+            add_favouriteAPICALL()
+        }
+        else if (v == binding.storeDeatilPreBookingBtn) {
             startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
 
         } else if (v == binding.storeDeatilPlaceOrder) {
@@ -772,6 +774,66 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=26.906473,26.862470&daddr=75.772804,75.762410"))
             startActivity(intent)
         }
+    }
+      lateinit  var dt : VenuDetailModel.Data
+    private fun user_venue_detailAPICALL() {
+        progressDialog.show(this@StoreDetail, "")
+        var map = HashMap<String, Any>()
+        map["id"] = venuID!!
+
+        userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetail, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        dt=detailData.data
+                        setData()
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                }
+            }
+        })
+    }
+
+    private fun add_favouriteAPICALL() {
+        progressDialog.show(this@StoreDetail, "")
+        var map = HashMap<String, Any>()
+        map["venue_id"] = venuID
+        map["vendor_id"] =dt.vendor_detail.id
+        map["status"] = favStatus
+
+
+        doFavViewModel.doFavItem(map).observe(this@StoreDetail, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                            Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
+                            if( detailData.data.status == "1"){
+                                favStatus="0"
+                                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
+                            }else{
+                                favStatus="1"
+                                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+                            }
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                }
+            }
+        })
     }
 
     private fun showPopUpFacilities() {

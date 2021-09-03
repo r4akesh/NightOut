@@ -89,7 +89,7 @@ dependencies {
     //curveImage
     implementation 'io.github.florent37:shapeofview:1.4.7'
     //botmsheet
-   // implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    // implementation 'com.sothree.slidinguppanel:library:3.4.0'
     //implementation 'com.sothree.slidinguppanel:library:+'
     //gifimg
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
@@ -98,4 +98,34 @@ dependencies {
     implementation 'com.github.Drjacky:ImagePicker:2.1.13'
     //View pager dots indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+    //exopllayer
+//    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
+//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
+//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
+
+    // dependancy for exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:r2.4.0'
+
+// for core support in exoplayer.
+
+    implementation 'com.google.android.exoplayer:exoplayer-core:r2.4.0'
+
+// for adding dash support in our exoplayer.
+    implementation 'com.google.android.exoplayer:exoplayer-dash:r2.4.0'
+
+// for adding hls support in exoplayer.
+
+    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.4.0'
+
+// for smooth streaming of video in our exoplayer.
+
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.4.0'
+
+// for generating default ui of exoplayer
+
+    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.4.0'
+    //btm round img
+//    implementation 'com.github.florent37:arclayout:1.0.3'
+//    implementation 'com.github.rezaiyan:arclayout:1.0.1'
+    implementation 'io.github.florent37:shapeofview:1.4.7'
 }

@@ -57,27 +57,22 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
 
         if (NetworkHelper(requireActivity()).isNetworkConnected()) {
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
-
+            if(activity!=null && isAdded)
             dashboardAPICALL()
-
-
         } else {
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             binding.btmShhetInclue.bottomSheet.visibility = INVISIBLE
             bottomSheetBehavior = BottomSheetBehavior.from(binding.btmShhetInclue.bottomSheet)
             bottomSheetBehavior.setPeekHeight(0)//for hide
-            MyApp.popErrorMsg(
-                "",
-                requireActivity().resources.getString(R.string.No_Internet),
-                requireActivity()
-            )
+            MyApp.popErrorMsg("", requireActivity().resources.getString(R.string.No_Internet), requireActivity())
         }
+        Log.d("TAG", "onCreateView: ")
         return binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+        Log.d("TAG", "onAttach: ")
     }
 
 
@@ -94,10 +89,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                         dashList = users.data
                         PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
                         if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
+                            if(activity!=null)
                             setListStory(users.data.stories)
                         }
                         if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
-                           setListAllRecord(dashList.all_records)
+                            if(activity!=null)
+                            setListAllRecord(dashList.all_records)
 
                         }
 
@@ -360,8 +357,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
 
     private fun setListStory(listStory: ArrayList<DashboardModel.Story>) {
 
-        storyAdapter =
-            StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {
+        storyAdapter = StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {
                 override fun onClick(pos: Int) {
 
                 }

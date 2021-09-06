@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:background="@drawable/background_gray"
+    android:layout_height="match_parent">
+
+
+
+
+    <fragment
+        android:id="@+id/barcrawleSaveMapView"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_65sdp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrentToolbar"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/savedBarCrawlMapToolBar"
+            layout="@layout/toolbar_common" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/crntloac_ic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/barcrawlBtmConstrent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/barcrawlBtmConstrent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gredient_btmshet_bg"
+        android:paddingBottom="@dimen/_10ssp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <View
+            android:id="@+id/barCrwalView"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_2ssp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_7ssp"
+            android:background="@drawable/box_btn_bg_white2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/consterntPath"
+            android:layout_marginTop="@dimen/_7ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barCrwalView"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgSource"
+                android:layout_width="wrap_content"
+                android:background="@drawable/box_pin"
+                android:src="@drawable/pin_source_ic"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/img_line"
+                android:layout_width="wrap_content"
+
+                android:src="@drawable/ver_line_ic"
+                android:padding="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="@+id/imgSource"
+                app:layout_constraintStart_toStartOf="@+id/imgSource"
+                app:layout_constraintTop_toBottomOf="@+id/imgSource"
+
+                android:layout_height="wrap_content"/>
+
+
+
+            <ImageView
+                android:id="@+id/imgDest"
+                android:layout_width="wrap_content"
+                android:background="@drawable/box_pin"
+                android:src="@drawable/pin_dest_ic"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_line"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:id="@+id/textSource"
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/imgSource"
+                app:layout_constraintBottom_toBottomOf="@+id/imgSource"
+                app:layout_constraintTop_toTopOf="@+id/imgSource"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_12ssp"
+                android:text="Point A to Point B (Drive 3 KM)"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/img_line"
+                app:layout_constraintBottom_toBottomOf="@+id/img_line"
+                app:layout_constraintTop_toTopOf="@+id/img_line"
+                android:background="@color/view_line_clr"
+                android:layout_height="1dp"/>
+
+
+            <TextView
+                android:id="@+id/textDest"
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@+id/imgDest"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDest"
+                app:layout_constraintTop_toTopOf="@+id/imgDest"
+                android:fontFamily="@font/proximanova_reg"
+                android:textSize="@dimen/_12ssp"
+                android:text="Point B to Point D (Walk 20 KM)"
+                android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/barcrawlMapSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:background="@drawable/gredient_bg"
+            android:fontFamily="@font/proximanova_reg"
+            android:gravity="center"
+            android:padding="@dimen/_10ssp"
+            android:text="@string/Save"
+            android:textColor="@color/black_pure"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/consterntPath" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

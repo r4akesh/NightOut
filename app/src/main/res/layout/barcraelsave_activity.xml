@@ -2,45 +2,44 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <include
-            android:id="@+id/headerBarCrawl"
-            layout="@layout/barcrl_header_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <fragment
-            android:id="@+id/barcrawleMap"
+            android:id="@+id/barcrawleSaveMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
+            android:layout_marginTop="@dimen/_65sdp"
             android:layout_marginBottom="@dimen/_80sdp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            app:layout_constraintTop_toBottomOf="@+id/headerBarCrawl" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/crntloac_ic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/barcrawlBtmConstrent"
+            android:layout_height="wrap_content"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragmentBatRecyclerTop"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrentToolbar"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerBarCrawl" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/saveBarCrawlToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/barcrawlBtmConstrent"
@@ -116,26 +115,24 @@
 
                 />
 
-            <TextView
-                android:id="@+id/barcrawlSharBarCrawal"
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/barcrawlSaveBtn"
+                style="@style/buttonTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_10ssp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/gredient_bg"
-                android:fontFamily="@font/proximanova_reg"
-                android:gravity="center"
-                android:padding="@dimen/_10ssp"
-                android:text="Share bar crawl"
-                android:textColor="@color/black_pure"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
+                android:text="@string/Save"
                 app:layout_constraintTop_toBottomOf="@+id/barcrawlMan" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

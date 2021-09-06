@@ -1,6 +1,7 @@
 package com.nightout.handlers
 
 import android.content.Intent
+import android.os.SystemClock
 import android.util.Log
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
@@ -13,10 +14,11 @@ import com.nightout.vendor.viewmodel.LoginViewModel
 open class LoginHandler(val activity: LoginActivity) {
     private lateinit var loginViewModel: LoginViewModel
     private val progressDialog = CustomProgressDialog()
-
+    private var lastClickTime = 0;
     fun onClickLogin(loginViewModel: LoginViewModel) {
         this.loginViewModel = loginViewModel
         MyApp.hideSoftKeyboard(activity)
+
         if (loginViewModel.isValidation(activity)) {
             val map = HashMap<String, Any>()
             var mobNo = loginViewModel.PhNo!!
@@ -24,6 +26,10 @@ open class LoginHandler(val activity: LoginActivity) {
             map["phonenumber"] = mobNo
             map["device_id"] = "dhfkjdfh"
             map["device_type"] = "1"
+            if (SystemClock.elapsedRealtime() - lastClickTime < 1000){//prevent double tap
+                return
+            }
+            lastClickTime = SystemClock.elapsedRealtime().toInt()
             loginCall(map, activity)
         }
     }

@@ -177,5 +177,8 @@
     <string name="gallery">Gallery</string>
     <string name="close">Close</string>
     <string name="typeFile">1</string>
+    <string name="Saved">Saved</string>
+    <string name="Shared">Shared</string>
+    <string name="dummychk">Lorem ipsum dolor sit amet</string>
 
 </resources>

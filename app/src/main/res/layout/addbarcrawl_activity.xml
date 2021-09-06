@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/botmsheet_listcolor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrentToolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/addBarCrawlToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_15sdp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constrentToolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/background_gray"
+                android:layout_height="match_parent">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:fillViewport="true"
+                    app:layout_constraintBottom_toTopOf="@+id/createBtn"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <TextView
+                            android:id="@+id/textCreateBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Create Bar Crawl"
+                            android:textColor="@color/white_second"
+                            android:textSize="@dimen/_16ssp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textFillField"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Fill the fileld to creat a bra crawl"
+                            android:textColor="@color/white_second"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintTop_toBottomOf="@+id/textCreateBar" />
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constrentFirst"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/box_botomsheet"
+                            android:padding="@dimen/_10sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/textFillField">
+
+                            <TextView
+                                android:id="@+id/textNameofbarcrawl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Name of bar crawl "
+                                android:textColor="@color/white_second"
+                                android:textSize="@dimen/_11ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="Enter Name"
+                                android:textColor="@color/white"
+                                android:paddingTop="@dimen/_5ssp"
+                                android:paddingBottom="@dimen/_5ssp"
+                                android:textColorHint="@color/text_gray"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintTop_toBottomOf="@+id/textNameofbarcrawl" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constrentSecond"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/box_botomsheet"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_22sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_22sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/constrentFirst">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableEnd="@drawable/arrow_down_white"
+                                android:text="Select Bar Crawl"
+                                android:textColor="@color/white_thred"
+                                android:textSize="@dimen/_13ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constrentThird"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:background="@drawable/box_botomsheet"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingTop="@dimen/_22sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_22sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/constrentSecond">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableEnd="@drawable/arrow_down_white"
+                                android:text="Select Favourites"
+                                android:textColor="@color/white_thred"
+                                android:textSize="@dimen/_13ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="@dimen/_15sdp"
+                           android:paddingEnd="@dimen/_15sdp"
+                           android:paddingStart="@dimen/_15sdp"
+
+                            android:background="@color/color_darkbg"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toBottomOf="@+id/constrentThird">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:drawableStart="@drawable/chk_box"
+                                android:paddingTop="@dimen/_2sdp"
+                                android:paddingBottom="@dimen/_2sdp"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:text="@string/dummychk"
+                                android:textColor="@color/white_second"
+                                android:textSize="@dimen/_12ssp" />
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/_7sdp"
+                                android:background="@color/view_line_clr" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_7sdp"
+                                android:drawableStart="@drawable/chk_box"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:text="@string/dummychk"
+                                android:paddingTop="@dimen/_2sdp"
+                                android:paddingBottom="@dimen/_2sdp"
+                                android:textColor="@color/white_second"
+                                android:textSize="@dimen/_12ssp" />
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/_7sdp"
+                                android:background="@color/view_line_clr" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_7sdp"
+                                android:drawableStart="@drawable/chk_box"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:text="@string/dummychk"
+                                android:paddingTop="@dimen/_2sdp"
+                                android:paddingBottom="@dimen/_2sdp"
+                                android:textColor="@color/white_second"
+                                android:textSize="@dimen/_12ssp" />
+
+
+
+
+
+
+
+
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.core.widget.NestedScrollView>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/createBtn"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/gredient_bg"
+                    android:text="@string/Create"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

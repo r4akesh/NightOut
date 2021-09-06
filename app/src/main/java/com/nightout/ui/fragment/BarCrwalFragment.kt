@@ -7,25 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.nightout.R
-import com.nightout.adapter.PromotionAdapter
 import com.nightout.adapter.VenuAdapterAdapter
-import com.nightout.databinding.FragmentBarcrawlBinding
+import com.nightout.databinding.FragmentBarcrawlnewBinding
 import com.nightout.interfaces.OnMenuOpenListener
-import com.nightout.model.VenuModel
-import com.nightout.ui.activity.ListParticipteActvity
+import com.nightout.ui.activity.AddBarCrawlActvity
+import com.nightout.ui.activity.BarCrawlSaveActivity
+import com.nightout.ui.activity.BarCrawlSavedListActivity
+import com.nightout.ui.activity.BarCrawlShredListActivity
 
-class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback {
+class BarCrwalFragment() : Fragment() , View.OnClickListener {
 
-    lateinit var binding : FragmentBarcrawlBinding
-    lateinit var venuAdapterAdapter: VenuAdapterAdapter
+    lateinit var binding : FragmentBarcrawlnewBinding
+
     private var onMenuOpenListener: OnMenuOpenListener? = null
 
     constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
@@ -34,27 +28,37 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_barcrawl, container, false)
-
+        //binding = DataBindingUtil.inflate(inflater, R.layout.fragment_barcrawl, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_barcrawlnew, container, false)
         initView()
-        setlistTop()
+       // setlistTop()
 
         return binding.root
     }
 
     override fun onClick(v: View?) {
-        if(v==binding.headerBarCrawl.headerSideMenu){
-            onMenuOpenListener?.onOpenMenu()
+        /* if(v==binding.menuOpenBtnBar){
+             onMenuOpenListener?.onOpenMenu()
+         }
+
+         else if(v==binding.barcrawlSharBarCrawal){
+             startActivity(Intent(requireActivity(), ListParticipteActvity::class.java))
+         }*/
+
+        if(v==binding.createBtn){
+            startActivity( Intent (requireActivity(),AddBarCrawlActvity::class.java))
+        }
+        else if(v==binding.savedBtn){
+            startActivity( Intent (requireActivity(), BarCrawlSavedListActivity::class.java))
         }
 
-        else if(v==binding.barcrawlSharBarCrawal){
-            startActivity(Intent(requireActivity(), ListParticipteActvity::class.java))
+        else if(v==binding.sharedBtn){
+            startActivity( Intent (requireActivity(), BarCrawlShredListActivity::class.java))
         }
-
     }
 
 
-    private fun setlistTop() {
+    /*private fun setlistTop() {
         var listStoreType = ArrayList<VenuModel>()
         listStoreType.add(VenuModel(3,"Club", false))
         listStoreType.add(VenuModel(1,"Bar", false))
@@ -62,8 +66,7 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
         listStoreType.add(VenuModel(4,"Food", false))
         listStoreType.add(VenuModel(5,"Event", false))
 
-       // venuAdapterAdapter = PromotionAdapter(list)
-       //  venuAdapterAdapter = VenuAdapterAdapter(requireContext(), listStoreType, object : VenuAdapterAdapter.ClickListener {
+
          venuAdapterAdapter = VenuAdapterAdapter(requireContext(),listStoreType,  object : VenuAdapterAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     for (i in 0 until listStoreType.size) {
@@ -78,21 +81,18 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener, OnMapReadyCallback
             it.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             it.adapter = venuAdapterAdapter
         }
-    }
+    }*/
 
     private fun initView() {
-        val supportMapFragment = (childFragmentManager.findFragmentById(R.id.barcrawleMap) as SupportMapFragment?)!!
-        supportMapFragment.getMapAsync(this)
-        binding.headerBarCrawl.headerSideMenu.setOnClickListener(this)
-        binding.barcrawlSharBarCrawal.setOnClickListener(this)
+        binding.menuOpenBtnBar.setOnClickListener { onMenuOpenListener?.onOpenMenu() }
+        binding.savedBtn.setOnClickListener(this)
+        binding.createBtn.setOnClickListener(this)
+        binding.sharedBtn.setOnClickListener(this)
     }
 
 
 
 
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        val success = googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
-        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(55.3781, 3.4360)))
-    }
+
 }

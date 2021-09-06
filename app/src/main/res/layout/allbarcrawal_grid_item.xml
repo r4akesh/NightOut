@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5ssp"
+        android:layout_marginEnd="@dimen/_5ssp"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:background="@drawable/box_botomsheet"
+         >
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/venuesItemCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="@dimen/_2sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/venuesItemImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_1sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/allbar1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/viewyelliLine"
+                    app:layout_constraintTop_toBottomOf="@+id/venuesItemImage"
+                    android:layout_width="match_parent"
+                    android:background="@color/text_yello"
+                    android:layout_height="1dp"/>
+
+
+                <TextView
+                    android:id="@+id/venuesItemTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="Text"
+                    android:layout_marginTop="@dimen/_5ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/viewyelliLine"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/venuesItemSubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="1 Fairclough St, Liverpool1 1F..."
+                    android:textColor="@color/white_second"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/venuesItemTitle" />
+
+                <TextView
+                    android:id="@+id/venuesItemDistence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="Text"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:textColor="@color/white_second"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/venuesItemSubTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

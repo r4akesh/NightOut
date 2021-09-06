@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+        <ImageView
+            android:id="@+id/menuOpenBtnBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_19sdp"
+            android:background="@null"
+            android:padding="@dimen/_10ssp"
+            android:src="@drawable/ic_side_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/barcrawl_frame"
+            app:layout_constraintTop_toBottomOf="@+id/menuOpenBtnBar" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/savedBtn"
+            style="@style/buttonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Saved"
+
+            app:layout_constraintBottom_toTopOf="@+id/createBtn"
+            app:layout_constraintEnd_toStartOf="@+id/sharedBtn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sharedBtn"
+            style="@style/buttonTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Shared"
+            app:layout_constraintBottom_toTopOf="@+id/createBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/savedBtn" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createBtn"
+            style="@style/buttonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/gredient_bg"
+            android:text="@string/Create"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

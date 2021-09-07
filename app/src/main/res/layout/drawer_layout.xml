@@ -32,13 +32,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/sidemenu_profile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_35sdp"
-                    android:src="@drawable/sidemenu_profile"
+                    app:civ_border_width="@dimen/_1sdp"
+                    app:civ_border_color="@color/text_yello"
+                    android:src="@drawable/user_default_ic"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

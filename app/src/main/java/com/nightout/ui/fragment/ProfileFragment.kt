@@ -41,7 +41,7 @@ class ProfileFragment() : Fragment() {
         binding.loginModel=loginDta
         var pthh =PreferenceKeeper.instance.imgPathSave+binding.loginModel?.profile
         Log.d(TAG, "onResume: "+pthh)
-        Utills.setImage(requireActivity(), binding.userProfile, PreferenceKeeper.instance.imgPathSave+binding.loginModel?.profile)
+        Utills.setImage(requireActivity(), binding.userProfile, binding.loginModel?.profile)
         init()
         Log.d(TAG, "onResume: ")
     }

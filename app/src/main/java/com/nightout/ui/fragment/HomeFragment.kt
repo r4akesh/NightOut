@@ -84,25 +84,25 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                     progressDialog.dialog.dismiss()
                     binding.btmShhetInclue.bottomSheetNSrlView.visibility = VISIBLE
                     it.data?.let { users ->
-                        setBottomSheet()
-                        //save imgPath
-                        dashList = users.data
-                        PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
-                        if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
-                            if(activity!=null)
-                            setListStory(users.data.stories)
+                        try {
+                            setBottomSheet()
+                            //save imgPath
+                            dashList = users.data
+                            PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
+                            if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
+                                if(activity!=null)
+                                setListStory(users.data.stories)
+                            }
+                            if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
+                                if(activity!=null)
+                                setListAllRecord(dashList.all_records)
+
+                            }
+                        } catch (e: Exception) {
                         }
-                        if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
-                            if(activity!=null)
-                            setListAllRecord(dashList.all_records)
 
-                        }
-
-                        //setListVenuListBootmShhetDuumy(users.data)
-
-                        // renderList(users.data)
                     }
-                    Log.d("ok", "loginCall:SUCCESS " + it)
+
                 }
                 Status.LOADING -> {
                     //progressBar.visibility = View.VISIBLE
@@ -111,11 +111,14 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     // progressBar.visibility = View.GONE
-                    Utills.showSnackBarOnError(
-                        binding.fragmentHomeRootLayout,
-                        it.message!!,
-                        requireActivity()
-                    )
+                    try {
+                        Utills.showSnackBarOnError(
+                            binding.fragmentHomeRootLayout,
+                            it.message!!,
+                            requireActivity()
+                        )
+                    } catch (e: Exception) {
+                    }
                     Log.d("ok", "loginCall:ERROR ")
                 }
             }

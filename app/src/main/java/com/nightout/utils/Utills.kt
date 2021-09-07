@@ -160,7 +160,7 @@ class Utills {
 
         fun setImage(context: Context?, imageView: CircleImageView?, url: String?) {
             imageView?.let {
-                Glide.with(context!!).load(url).centerCrop()
+                Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
                     .placeholder(R.drawable.user_default_ic).into(it)
             }
         }

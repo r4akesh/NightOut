@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
@@ -26,6 +27,8 @@ class LostitemActivity :BaseActivity() {
         setToolBar()
     }
 
+
+
     private fun setToolBar() {
         binding.lostItemToolBar.toolbarTitle.text = "Lost Items"
         binding.lostItemToolBar.toolbarBack.setOnClickListener {
@@ -33,6 +36,11 @@ class LostitemActivity :BaseActivity() {
         }
         binding.lostItemToolBar.toolbar3dot.visibility= View.GONE
         binding.lostItemToolBar.toolbarBell.visibility= View.GONE
+        binding.lostItemToolBar.toolbarCreateGrop.visibility = VISIBLE
+        binding.lostItemToolBar.toolbarCreateGrop.setText("ADD")
+        binding.lostItemToolBar.toolbarCreateGrop.setOnClickListener {
+            startActivity(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java))
+        }
     }
 
     private fun setDummyList() {

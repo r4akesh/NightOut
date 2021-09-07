@@ -34,8 +34,7 @@ class EditProfileActivity : BaseActivity() {
         editProfileViewModel.addrs2 = binding.loginModel?.userprofile!!.address2
         editProfileViewModel.aboutMe = binding.loginModel?.userprofile!!.about_me
        // img set
-
-
+        Utills.setImageNormal(this@EditProfileActivity,binding.userProfile,binding.loginModel?.profile)
         binding.editPrfleViewModl = editProfileViewModel
         binding.editProfileHandler = MyApp.getEditProfile(this)
 

@@ -31,6 +31,8 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/barshred_activity.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/barssaved_activity.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/chat_header_layout.xml" value="0.3446153846153846" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/chatpersonal_actvity.xml" value="0.33796296296296297" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/chossesvenues_actvity.xml" value="0.33796296296296297" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/creategrup_activity.xml" value="0.2890625" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/demo.xml" value="0.3293381969775925" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/demoactvituy.xml" value="0.3203125" />
@@ -46,14 +48,19 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/fragment_home.xml" value="0.29739583333333336" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/fragment_transport_layout.xml" value="0.3446153846153846" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/group_item.xml" value="0.2890625" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/home_activity.xml" value="0.315625" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/ic_gallery_icon.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/image_picker_bottom_sheet.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/image_view_item.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/layout_persistent_bottom_sheet.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/listparticipate_actvity.xml" value="0.33240740740740743" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/login_activity.xml" value="0.18115942028985507" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/lostitem_actvity.xml" value="0.321025641025641" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/lostitemdetails_activity.xml" value="0.3260416666666667" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/lostitemedit_actvity.xml" value="0.321025641025641" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/orderdetail_avctivity.xml" value="0.25677083333333334" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/otp_actvity.xml" value="0.32592592592592595" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/prebooking_activity.xml" value="0.33796296296296297" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/progress_dialog_view.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/register_activity.xml" value="0.1702127659574468" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/saved_item.xml" value="0.35" />
@@ -62,6 +69,7 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/storedetail_activity.xml" value="0.33" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/story_item.xml" value="0.2875" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/toolbar_common.xml" value="0.3112820512820513" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/toolbar_common_back.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/tracktrace_actvity.xml" value="0.3194871794871795" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/venu_botmsheet_item.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/venu_botmsheet_item2.xml" value="0.3536458333333333" />

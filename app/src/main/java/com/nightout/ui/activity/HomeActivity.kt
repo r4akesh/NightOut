@@ -27,6 +27,7 @@ import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.home_activity.view.*
 
@@ -46,17 +47,29 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sideMenuEmrgyHistry: TextView? = null
     var sideMenuEmrgyContact: TextView? = null
     var sideMenuLogout: TextView? = null
-    var sideMenuProfile: ImageView? = null
     var sideMenuTrackTrace: TextView? = null
     var sideMenuEvent: TextView? = null
     var sideMenuFood: TextView? = null
     var sideMenuLostItem: TextView? = null
+    var sidemenu_username: TextView? = null
+    var sidemenu_email: TextView? = null
+    var sideMenuFAQ: TextView? = null
+    var sidemenu_profile: CircleImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@HomeActivity, R.layout.home_activity)
         fragmentManager = supportFragmentManager
+        setSideMenu()
+        setHomeTab()
+        showFragment(HomeFragment(this))
+        inItView()
+
+
+    }
+
+    private fun setSideMenu() {
         //sideMenu
         val widthRatio = Utills.ratioOfScreen(this, 0.7f)
         slidingRootNav = SlidingRootNavBuilder(this)
@@ -66,11 +79,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             .withRootViewYTranslation(0) //
             .withMenuLayout(R.layout.drawer_layout) // Content view's translationY will be interpolated between 0 and 4. Default ==
             .inject()
-      //  val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
-      //  sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
-        setHomeTab()
-        showFragment(HomeFragment(this))
-        inItView()
+        //  val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
+        //  sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()
 
 
     }
@@ -364,30 +374,6 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
 
     private fun inItView() {
-       // binding.handler
-
-
-        setTouchNClick(binding.bottomChat)
-        setTouchNClick(binding.bottomBarCrawl)
-        setTouchNClick(binding.bottomHomeRel)
-        setTouchNClick(binding.bottomMyProfile)
-        setTouchNClick(binding.bottomTransport)
-        setTouchNClick(R.id.sideMenuTermCond)
-        setTouchNClick(R.id.sideMenuAbout)
-        setTouchNClick(R.id.sideMenuHome)
-        setTouchNClick(R.id.sideMenuTrackTrace)
-        setTouchNClick(R.id.sideMenuFAQ)
-        setTouchNClick(R.id.sideMenuContactUs)
-        setTouchNClick(R.id.sideMenuSetting)
-        setTouchNClick(R.id.sideMenuVenues)
-        setTouchNClick(R.id.sideMenuEmrgyHistry)
-        setTouchNClick(R.id.sideMenuEmrgyContact)
-        setTouchNClick(R.id.sideMenuFood)
-        setTouchNClick(R.id.sideMenuLostItem)
-        setTouchNClick(R.id.sideMenuEvent)
-        setTouchNClick(R.id.sideMenuLogout)
-
-
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
         sideMenuTermCond = findViewById(R.id.sideMenuTermCond)
         sideMenuFaq = findViewById(R.id.sideMenuFAQ)
@@ -402,9 +388,34 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuEmrgyHistry = findViewById(R.id.sideMenuEmrgyHistry)
         sideMenuEmrgyContact = findViewById(R.id.sideMenuEmrgyContact)
         sideMenuLogout = findViewById(R.id.sideMenuLogout)
+        sidemenu_username = findViewById(R.id.sidemenu_username)
+        sidemenu_email = findViewById(R.id.sidemenu_email)
+        sideMenuFAQ = findViewById(R.id.sideMenuFAQ)
+        sidemenu_profile = findViewById(R.id.sidemenu_profile)
 
+        setTouchNClick(binding.bottomChat)
+        setTouchNClick(binding.bottomBarCrawl)
+        setTouchNClick(binding.bottomHomeRel)
+        setTouchNClick(binding.bottomMyProfile)
+        setTouchNClick(binding.bottomTransport)
+        setTouchNClick(sideMenuTermCond)
+        setTouchNClick(sideMenuAbout)
+        setTouchNClick(sideMenuHome)
+        setTouchNClick(sideMenuTrackTrace)
+        setTouchNClick(sideMenuFAQ)
+        setTouchNClick(sideMenuContactUs)
+        setTouchNClick(sideMenuSetting)
+        setTouchNClick(sideMenuVenues)
+        setTouchNClick(sideMenuEmrgyHistry)
+        setTouchNClick(sideMenuEmrgyContact)
+        setTouchNClick(sideMenuFood)
+        setTouchNClick(sideMenuLostItem)
+        setTouchNClick(sideMenuEvent)
+        setTouchNClick(sideMenuLogout)
 
-
+        sidemenu_email?.setText(PreferenceKeeper.instance.loginResponse?.email)
+        sidemenu_username?.setText(PreferenceKeeper.instance.loginResponse?.first_name+" "+PreferenceKeeper.instance.loginResponse?.last_name)
+        Utills.setImage(this@HomeActivity,sidemenu_profile,PreferenceKeeper.instance.loginResponse?.profile)
     }
 
     private fun showFragment(fragment: Fragment) {

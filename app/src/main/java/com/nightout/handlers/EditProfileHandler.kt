@@ -33,28 +33,28 @@ import java.io.File
 
 
 open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptionListener {
-    private var editProfileViewModel: EditProfileViewModel
+    private lateinit var editProfileViewModel: EditProfileViewModel
     private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
     private var imageUrl: Uri? = null
     private var filePath: File? = null
     private lateinit var reqFile: RequestBody
-    var body: MultipartBody.Part? = null
+     var body: MultipartBody.Part? = null
     private val progressDialog = CustomProgressDialog()
 
 
-    init {
-        editProfileViewModel = EditProfileViewModel(activity)
-    }
+//    init {
+//        editProfileViewModel = EditProfileViewModel(activity)
+//    }
 
     fun onFinishScreen() {
         activity.finish()
     }
-
+/*
     fun openCamera() {
         if (!Utills.checkingPermissionIsEnabledOrNot(activity)) {
             //  Utills.requestMultiplePermission(activity,requestPermissionCode)
         }
-    }
+    }*/
 
     fun onSelectImage() {
         selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this)
@@ -65,7 +65,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     }
 
     fun saveProfile(editProfileViewModel: EditProfileViewModel) {
-        this.editProfileViewModel = editProfileViewModel
+         this.editProfileViewModel = editProfileViewModel
         MyApp.hideSoftKeyboard(activity)
         if (editProfileViewModel.isValidate(activity)) {
             val builder = MultipartBody.Builder()
@@ -76,8 +76,10 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             builder.addFormDataPart("address2", editProfileViewModel.addrs2)
             builder.addFormDataPart("about_me", editProfileViewModel.aboutMe)
             builder.addFormDataPart("location", "")
-            if (editProfileViewModel.profilePic != null) {
-                builder.addPart(editProfileViewModel.profilePic!!)
+           // if (editProfileViewModel.profilePic != null) {
+            if (body!= null) {
+              //  builder.addPart(editProfileViewModel.profilePic!!)
+                builder.addPart(body!!)
             } else {
                 builder.addFormDataPart("profile", "")
             }
@@ -147,6 +149,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             .start(activity)
     }
 
+
     @RequiresApi(Build.VERSION_CODES.M)
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -166,20 +169,21 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                val bitmap: Bitmap?
+                val  bitmap: Bitmap?
                 activity.binding.userProfile.setImageBitmap(null)
                 imageUrl = result.originalUri
                 val resultUri = result.uri
                 try {
                     if (Build.VERSION.SDK_INT < 28) {
-                        bitmap =
-                            MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
+                        bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
                     } else {
                         val source = ImageDecoder.createSource(activity.contentResolver, resultUri)
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                     activity.binding.userProfile.setImageBitmap(bitmap)
-                    editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
+                    setBody(bitmap!!, "profile")
+                  //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
+                    Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Utills.showSnackBarFromTop(activity.binding.etFName, "catch-> $e", activity)

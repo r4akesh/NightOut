@@ -2,6 +2,7 @@ package com.nightout.vendor.viewmodel
 
 import android.app.Activity
 import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import com.nightout.R
 import com.nightout.model.LoginModel
@@ -16,13 +17,25 @@ import okhttp3.MultipartBody
 
 class EditProfileViewModel(activity: Activity) : BaseObservable() {
     private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
+
+    @get:Bindable
     var fName: String = ""
+
+    @get:Bindable
     var lName: String = ""
+
+    @get:Bindable
     var addrs1: String = ""
+
+    @get:Bindable
     var addrs2: String = ""
+
+    @get:Bindable
     var aboutMe: String = ""
+
+    @get:Bindable
     var profilePic: MultipartBody.Part? = null
-    var profilePicPath: String=""
+    var profilePicPath: String = ""
 
     private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
     fun updateProfile(requestBody: MultipartBody): LiveData<Resource<LoginModel>> {
@@ -31,16 +44,24 @@ class EditProfileViewModel(activity: Activity) : BaseObservable() {
     }
 
     fun isValidate(activity: EditProfileActivity): Boolean {
-            when{
-                activity.binding.etFName.toString() == "" ->{
-                    Utills.showSnackBarOnError(activity.binding.etRootLayout, activity.resources.getString(R.string.please_enter_fName), activity)
-                    return false
-                }
-                activity.binding.etLName.text.toString() == "" ->{
-                    Utills.showSnackBarOnError(activity.binding.etRootLayout, activity.resources.getString(R.string.please_enter_lName), activity)
-                    return false
-                }
+        when {
+            activity.binding.etFName.toString() == "" -> {
+                Utills.showSnackBarOnError(
+                    activity.binding.etRootLayout,
+                    activity.resources.getString(R.string.please_enter_fName),
+                    activity
+                )
+                return false
             }
+            activity.binding.etLName.text.toString() == "" -> {
+                Utills.showSnackBarOnError(
+                    activity.binding.etRootLayout,
+                    activity.resources.getString(R.string.please_enter_lName),
+                    activity
+                )
+                return false
+            }
+        }
         return true
     }
 

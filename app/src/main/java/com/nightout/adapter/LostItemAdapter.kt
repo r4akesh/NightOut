@@ -12,12 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.LostItemBinding
+import com.nightout.model.GetLostItemListModel
 import com.nightout.model.LostItemModel
+import com.nightout.utils.Utills
 
 
 class LostItemAdapter(
     var context: Context,
-    var arrayList: ArrayList<LostItemModel>,
+    var arrayList: ArrayList<GetLostItemListModel.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<LostItemAdapter.ViewHolder>() {
@@ -36,11 +38,17 @@ class LostItemAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.lostItemTitle.text=arrayList[position].title
-        viewHolder.binding.lostItemSubTitle.text=arrayList[position].subTitle
+        viewHolder.binding.lostItemTitle.text=arrayList[position].product_name
+        viewHolder.binding.lostItemSubTitle.text=Utills.dateZonetoDateFormat2(arrayList[position].created_at)
 
-        viewHolder.binding.lostItemProfile.setImageResource(arrayList[position].imgProfile)
-
+        Utills.setImageNormal(context, viewHolder.binding.lostItemProfile,arrayList[position].image)
+        if(arrayList[position].status.equals("0")){
+            viewHolder.binding.lostItemStatus.setTextColor(context.resources.getColor(R.color.red_clr))
+            viewHolder.binding.lostItemStatus.text ="Status : Not Found"
+        }else{
+            viewHolder.binding.lostItemStatus.setTextColor(context.resources.getColor(R.color.green_clr_light))
+            viewHolder.binding.lostItemStatus.text ="Status : Found"
+        }
         viewHolder.itemView.setOnClickListener {
             Log.d("TAG", "onBindViewHolder: ")
             clickListener.onClick(position)

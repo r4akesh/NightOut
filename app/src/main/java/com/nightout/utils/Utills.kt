@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Utills {
@@ -156,6 +157,17 @@ class Utills {
                 println("error: ${e1.message}")
             }
             return ""
+        }
+
+        fun dateZonetoDateFormat2(date: String) : String{
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+            val date: Date = dateFormat.parse(date) //You will get date object relative to server/client timezone wherever it is parsed
+            // dateFormat.parse("2017-04-26T20:55:00.000Z") //You will get date object relative to server/client timezone wherever it is parsed
+            //2021-04-20T08:27:38.000000Z
+            val formatter  = SimpleDateFormat("dd MMM, yyyy") //If you need time just put specific format for time like 'HH:mm:ss'
+
+            val dateStr: String = formatter.format(date)
+            return dateStr
         }
 
         fun setImage(context: Context?, imageView: CircleImageView?, url: String?) {

@@ -33,6 +33,7 @@ data class DashboardModel(
     ):Serializable
 
     data class SubRecord(
+        var isChked: Boolean,
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,

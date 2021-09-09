@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:id="@+id/lostItemdeailRoot"
         android:background="@drawable/background_gray">
 
 
@@ -70,8 +71,10 @@
 
                     <ImageView
                         android:id="@+id/lostItemImg"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:layout_marginBottom="@dimen/_2ssp"
                         android:layout_width="match_parent"
-                        android:src="@drawable/no_image"
+                         android:background="@null"
                         android:layout_height="match_parent"/>
 
 
@@ -101,6 +104,7 @@
 
 
                     <EditText
+                        android:id="@+id/lostItemName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -140,6 +144,7 @@
 
 
                     <EditText
+                        android:id="@+id/lostUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -179,11 +184,13 @@
 
 
                     <EditText
+                        android:id="@+id/lostEmailID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:fontFamily="@font/proximanova_reg"
                         android:hint="@string/Enter_mail"
+                        android:inputType="textEmailAddress"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:singleLine="true"
@@ -243,6 +250,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
+                        android:id="@+id/lostPhNO"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5ssp"
@@ -288,6 +296,7 @@
 
 
                     <EditText
+                        android:id="@+id/lostProductDetail"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_80sdp"
                         android:background="@null"
@@ -313,6 +322,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_25sdp"
+
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/gredient_bg"
             android:text="@string/Choose_Venues"

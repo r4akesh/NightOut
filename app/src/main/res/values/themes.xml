@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:windowBackground">@android:color/white</item>
         <!-- Status bar color. -->
-       <!-- <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <!-- <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -45,7 +45,7 @@
         <item name="android:padding">@dimen/_6sdp</item>
         <item name="android:textStyle">bold</item>
         <item name="textAllCaps">false</item>
-
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="backgroundTint">@null</item>
     </style>
 
@@ -60,11 +60,13 @@
     <style name="textNormal">
         <item name="fontFamily">@font/proximanova_light</item>
     </style>
+
     <style name="view_line">
         <item name="android:background">@color/view_line_clr</item>
 
         <item name="android:layout_width">match_parent</item>
     </style>
+
     <style name="MyDialogThemeBlack" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/white</item>
     </style>
@@ -113,6 +115,7 @@
         <item name="android:textColor">@color/text_blk</item>
         <item name="fontFamily">@font/proximanova_reg</item>
     </style>
+
     <style name="Theme.MyApp.Dialog.Alert" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <!-- Text Color for Buttons -->
         <item name="colorPrimary">@color/white</item>
@@ -122,9 +125,9 @@
         <!-- Text Color for title and message -->
         <item name="colorOnSurface">@color/white_thred</item>
         <!-- Style for positive button -->
-      <!--  <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>-->
+        <!--  <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>-->
         <!-- Style for negative button -->
-       <!-- <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>-->
+        <!-- <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>-->
     </style>
 
 
@@ -140,9 +143,12 @@
         <item name="cornerSizeBottomRight">20dp</item>
 
     </style>
+
     <style name="CustomDialogTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-
+    <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
+        <item name="cornerSize">3dp</item>
+    </style>
 </resources>

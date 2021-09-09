@@ -12,12 +12,15 @@
         android:padding="@dimen/_8sdp">
 
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/lostItemProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10ssp"
-            android:src="@drawable/lostimg1"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_5ssp"
+            app:strokeColor="@color/text_yello"
+            app:strokeWidth="@dimen/_1sdp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            android:src="@drawable/no_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +32,7 @@
             android:fontFamily="@font/proximanova_reg"
             android:text="Watch"
             android:textColor="@color/white_thred"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@+id/lostItemProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,15 +41,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_2ssp"
+            android:layout_marginTop="@dimen/_3ssp"
             android:fontFamily="@font/proximanova_reg"
             android:text="30 July, 2021"
             android:textColor="@color/white_second"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_13ssp"
 
 
             app:layout_constraintStart_toEndOf="@+id/lostItemProfile"
             app:layout_constraintTop_toBottomOf="@+id/lostItemTitle" />
+
+        <TextView
+            android:id="@+id/lostItemStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_3ssp"
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Status"
+            android:textColor="@color/red_clr"
+            android:textSize="@dimen/_10ssp"
+
+            app:layout_constraintStart_toEndOf="@+id/lostItemProfile"
+            app:layout_constraintTop_toBottomOf="@+id/lostItemSubTitle" />
 
         <ImageView
             android:id="@+id/lostItem3Dot"

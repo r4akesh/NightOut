@@ -25,6 +25,7 @@ import com.nightout.handlers.EditProfileHandler
 import com.nightout.handlers.LoginHandler
 import com.nightout.handlers.OtpHandler
 import com.nightout.handlers.RegisterHandler
+import com.nightout.model.VenuListModel
 import com.nightout.ui.activity.EditProfileActivity
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
@@ -37,6 +38,7 @@ import java.io.*
 
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MyApp : Application() {
@@ -55,7 +57,6 @@ class MyApp : Application() {
 
 
     companion object {
-
         private var spotsDialog: SpotsDialog? = null
         private lateinit var application: MyApp
         private lateinit var dialog: Dialog
@@ -368,11 +369,11 @@ return b;
         }
 
 
-        /*    @SuppressLint("SdCardPath")
-        fun writeCart(hMap: AddCartResponse) {
+     /*        @SuppressLint("SdCardPath")
+        fun writeVenuesList(hMap: ArrayList<VenuListModel.Data>) {
             val path: String
             try {
-                path = "/data/data/" + ctx!!.packageName + "/AddCartResponse.ser"
+                path = "/data/data/" + ctx!!.packageName + "/VenuList.ser"
                 val f = File(path)
                 if (f.exists()) {
                     f.delete()
@@ -393,19 +394,18 @@ return b;
 
 
         @SuppressLint("SdCardPath")
-        fun readSubCat(): AddCartResponse {
+        fun readVenuList():  ArrayList<VenuListModel.Data> {
             val path: String
             path =
-                "/data/data/" + ctx!!.getPackageName() + "/AddCartResponse.ser"
+                "/data/data/" + ctx!!.getPackageName() + "/VenuList.ser"
             val f = File(path)
-            var hMap: AddCartResponse =
-                AddCartResponse()
+            var hMap:  ArrayList<VenuListModel.Data> =  ArrayList<VenuListModel.Data>()
             if (f.exists()) {
                 try {
                     System.gc()
                     val fileIn = FileInputStream(path)
                     val innn = ObjectInputStream(fileIn)
-                    hMap = innn.readObject() as AddCartResponse
+                    hMap = innn.readObject() as  ArrayList<VenuListModel.Data>
                     innn.close()
                     fileIn.close()
                 } catch (e: StreamCorruptedException) {

@@ -18,12 +18,12 @@ class AllBarCrawalActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@AllBarCrawalActivity,R.layout.allbar_actvity)
         setToolBar()
-        setDummyList()
+        setDummyList() //now plz call API
     }
 
     private fun setDummyList() {
 
-        var list = ArrayList<VenuesModel>()
+       /* var list = ArrayList<VenuesModel>()
         list.add(VenuesModel("Vanity Night Club","2.3 miles away",R.drawable.venues1,false))
         list.add(VenuesModel("Vanity Night Club","2.3 miles away",R.drawable.venues2,false))
         list.add(VenuesModel("Vanity Night Club","2.3 miles away",R.drawable.venues3,true))
@@ -47,7 +47,7 @@ class AllBarCrawalActivity : BaseActivity() {
             it.layoutManager = LinearLayoutManager (this@AllBarCrawalActivity,
                 LinearLayoutManager.VERTICAL,false)
             it.adapter = venuesAdapter
-        }
+        }*/
     }
 
     private fun setToolBar() {

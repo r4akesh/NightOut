@@ -238,11 +238,11 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
 
     private fun setListStoreTypeHr() {
         listStoreType = ArrayList()
-        listStoreType.add(VenuModel(1, "Bars", false))
-        listStoreType.add(VenuModel(2, "Pubs", false))
-        listStoreType.add(VenuModel(3, "Clubs", false))
-        listStoreType.add(VenuModel(4, "Food", false))
-        listStoreType.add(VenuModel(5, "Event", false))
+        listStoreType.add(VenuModel(1, "Bars", false, isApiCall = false))
+        listStoreType.add(VenuModel(2, "Pubs", false, isApiCall = false))
+        listStoreType.add(VenuModel(3, "Clubs", false, isApiCall = false))
+        listStoreType.add(VenuModel(4, "Food", false, isApiCall = false))
+        listStoreType.add(VenuModel(5, "Event", false, isApiCall = false))
 
 
         venuAdapterAdapter = VenuAdapterAdapter(this@VenuListActvity, listStoreType,

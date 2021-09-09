@@ -2,20 +2,36 @@ package com.nightout.model
 
 import java.io.Serializable
 
-data class VenuListModel(
+data class GetLostItemListModel(
     val `data`: ArrayList<Data>,
     val image_path: String,
     val message: String,
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) :Serializable{
+):Serializable {
+
     data class Data(
-        var isChked: Boolean,
+        val created_at: String,
+        val customer_name: String,
+        val email: String,
+        val id: String,
+        val image: String,
+        val phonenumber: String,
+        val product_detail: String,
+        val product_name: String,
+        val slug: String,
+        val status: String,
+        val updated_at: String,
+        val user_id: String,
+        val venue_id: String,
+        val venues: ArrayList<Venue>
+    ):Serializable
+
+    data class Venue(
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,
-        val barcrawl: String,
         val by_default: String,
         val close_time: String,
         val created_at: String,
@@ -23,7 +39,6 @@ data class VenuListModel(
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
-        var favrouite: String,
         val food_certificate_image: String,
         val food_certificate_number: String,
         val food_registration_image: String,
@@ -38,7 +53,6 @@ data class VenuListModel(
         val price: String,
         val price_couple: String,
         val price_hour: String,
-        val rating: Rating,
         val reject_reason: String,
         val sale_price: String,
         val slug: String,
@@ -54,52 +68,9 @@ data class VenuListModel(
         val store_type: String,
         val tax_reference_image: String,
         val tax_reference_number: String,
-        val ticker_qty: String,
+        val ticket_qty: String,
         val updated_at: String,
         val user_id: String,
-        val venue_gallery: ArrayList<VenueGallery>,
-        val vendor_detail: VendorDetail,
+        val venue_address: String
     ):Serializable
-
-
-    data class VendorDetail(
-        val created_at: String,
-        val deleted_at: String,
-        val device_id: String,
-        val device_type: String,
-        val email: String,
-        val email_verified_at: String,
-        val first_name: String,
-        val id: String,
-        val last_name: String,
-        val name: String,
-        val otp: String,
-        val otp_expire: String,
-        val password: String,
-        val phonenumber: String,
-        val profile: String,
-        val remember_token: String,
-        val slug: String,
-        val status: String,
-        val updated_at: String,
-        val userID: String
-    ):Serializable
-
-    data class Rating(
-        val avg_rating: String,
-        val percent: String,
-        val review_title: String,
-        val total_rating: String
-    ):Serializable
-
-  /*  data class VenueGallery(
-        val created_at: String,
-        val id: String,
-        val image: String,
-        val status: String,
-        val thumbnail: String,
-        val type: String,
-        val updated_at: String,
-        val venue_id: String
-    ):Serializable*/
 }

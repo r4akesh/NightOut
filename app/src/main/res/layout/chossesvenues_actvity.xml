@@ -27,6 +27,8 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chooseVenuesRecyle"
             android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nightout.R
 import com.nightout.model.*
+import com.nightout.model.BaseModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -136,6 +137,8 @@ class WebServiceRepository(application: Activity) {
         return dashboardRes
     }
 
+
+
     fun userVenueDetail(map: HashMap<String, Any>): LiveData<Resource<VenuDetailModel>> {
         val dashboardRes = MutableLiveData<Resource<VenuDetailModel>>()
         CoroutineScope(Dispatchers.IO).launch {
@@ -225,6 +228,51 @@ class WebServiceRepository(application: Activity) {
             }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
         }
         return updateProfileResponse
+    }
+
+    fun submitLostItem(requestBody: MultipartBody): LiveData<Resource<BaseModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<BaseModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.addlostitemAPI(requestBody)
+                if (request.isSuccessful && request.code()==200) {
+                   var vv = request.code()
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
+    }
+
+    fun getLostItemList(): LiveData<Resource<GetLostItemListModel>> {
+        val dashboardRes = MutableLiveData<Resource<GetLostItemListModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            dashboardRes.postValue(Resource.loading(null))
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.userlostitemsAPI()
+                if (request.isSuccessful) {
+                    dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
+                } else {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        println("ok jsonObj$jsonObj")
+                        dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        dashboardRes.postValue(Resource.error(e.toString(), null))
+                    }
+
+                }
+            }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+        }
+        return dashboardRes
     }
 }
 

@@ -14,12 +14,15 @@ import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.VenuesItemBinding
 import com.nightout.model.ChatModel
+import com.nightout.model.DashboardModel
+import com.nightout.model.VenuListModel
 import com.nightout.model.VenuesModel
+import com.nightout.utils.Utills
 
 
 class VenuesAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuesModel>,
+    var arrayList: ArrayList<DashboardModel.SubRecord>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<VenuesAdapter.ViewHolder>() {
@@ -38,11 +41,13 @@ class VenuesAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.venuesItemTitle.text=arrayList[position].title
-        viewHolder.binding.venuesItemDistence.text=arrayList[position].subTitle
+        viewHolder.binding.venuesItemTitle.text=arrayList[position].store_name
+        viewHolder.binding.venuesItemSubTitle.text=arrayList[position].store_address
+        viewHolder.binding.venuesItemDistence.text=arrayList[position].store_address
 
-        viewHolder.binding.venuesItemImage.setImageResource(arrayList[position].imgProfile)
-        if(arrayList[position].isChk){
+        Utills.setImageNormal(context,  viewHolder.binding.venuesItemImage,arrayList[position].store_logo)
+
+        if(arrayList[position].isChked){
             viewHolder.binding.venuesItemChk.setImageResource(R.drawable.chk_box)
         }else{
             viewHolder.binding.venuesItemChk.setImageResource(R.drawable.unchk_box)

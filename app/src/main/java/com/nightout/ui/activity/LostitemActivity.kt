@@ -15,17 +15,60 @@ import com.nightout.R
 import com.nightout.adapter.LostItemAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.LostitemActvityBinding
+import com.nightout.model.GetLostItemListModel
 import com.nightout.model.LostItemModel
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.Utills
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.GetLostListViewModel
 
 
 class LostitemActivity :BaseActivity() {
     lateinit var binding :LostitemActvityBinding
+    lateinit var getLostListViewModel : GetLostListViewModel
+    private var customProgressDialog = CustomProgressDialog()
+    var  lostList: ArrayList<GetLostItemListModel.Data> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@LostitemActivity, R.layout.lostitem_actvity)
-        setDummyList()
+        initView()
+        user_lost_itemsAPICAll()
         setToolBar()
     }
+
+    private fun initView() {
+        getLostListViewModel = GetLostListViewModel(this@LostitemActivity)
+    }
+
+    private fun user_lost_itemsAPICAll() {
+        customProgressDialog.show(this@LostitemActivity, "")
+        getLostListViewModel.getLostItemList().observe(this@LostitemActivity,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    it.data?.let {myData->
+                        lostList.addAll(myData.data)
+                        lostList.reverse()
+                        setItemList()
+                        Log.d("TAG", "user_lost_itemsAPICAll: "+myData.data)
+                    }
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(
+                        binding.lostConstrentToolbar,
+                        it.message!!,
+                        this@LostitemActivity
+                    )
+                }
+            }
+        })
+    }
+
 
 
 
@@ -43,14 +86,10 @@ class LostitemActivity :BaseActivity() {
         }
     }
 
-    private fun setDummyList() {
-        var list = ArrayList<LostItemModel>()
-        list.add(LostItemModel("Watch", "30 July,2021", R.drawable.lostimg1))
-        list.add(LostItemModel("Wallet", "30 July,2021", R.drawable.lostimg2))
-
+    private fun setItemList() {
         var lostItemAdapter = LostItemAdapter(
             this@LostitemActivity,
-            list,
+            lostList,
             object : LostItemAdapter.ClickListener {
                 override fun onClickSetting(pos: Int, lostItem3Dot: ImageView) {
                     Log.d("TAG", "onClickSetting: ")
@@ -82,6 +121,7 @@ class LostitemActivity :BaseActivity() {
         popup.setOnMenuItemClickListener { item ->
            // item.title
                 if(item.title.equals("Edit")){
+
                    // startActivity(Intent(this@LostitemActivity,LostItemEditActvity::class.java))
                     startActivity(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java))
                 }

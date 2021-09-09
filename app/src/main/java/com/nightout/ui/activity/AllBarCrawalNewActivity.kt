@@ -54,11 +54,11 @@ class AllBarCrawalNewActivity : BaseActivity() {
 
     private fun setListTop() {
      var listStoreType = ArrayList<VenuModel>()
-     listStoreType.add(VenuModel(3,"Club", false))
-     listStoreType.add(VenuModel(1,"Bar", false))
-     listStoreType.add(VenuModel(2,"Pub", false))
-     listStoreType.add(VenuModel(4,"Food", false))
-     listStoreType.add(VenuModel(5,"Event", false))
+     listStoreType.add(VenuModel(3,"Club", false,false))
+     listStoreType.add(VenuModel(1,"Bar", false,false))
+     listStoreType.add(VenuModel(2,"Pub", false,false))
+     listStoreType.add(VenuModel(4,"Food", false,false))
+     listStoreType.add(VenuModel(5,"Event", false,false))
 
 
       venuAdapterAdapter = VenuAdapterAdapter(this@AllBarCrawalNewActivity,listStoreType,  object : VenuAdapterAdapter.ClickListener {

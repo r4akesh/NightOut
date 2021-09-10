@@ -170,6 +170,10 @@ class Utills {
             return dateStr
         }
 
+        fun getMobNoSimpleFormat(phnoStr:String) : String{
+            return phnoStr.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
+
+        }
         fun setImage(context: Context?, imageView: CircleImageView?, url: String?) {
             imageView?.let {
                 Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()

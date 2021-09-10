@@ -9,6 +9,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.telephony.PhoneNumberUtils
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -21,11 +24,10 @@ import com.nightout.base.BaseActivity
 import com.nightout.callbacks.OnSelectOptionListener
 
 import com.nightout.databinding.LostitemdetailsActivityBinding
+import com.nightout.model.GetLostItemListModel
 import com.nightout.model.LostItemDetailCstmModel
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
-import com.nightout.utils.DataManager
-import com.nightout.utils.MyApp
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -41,13 +43,27 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     private lateinit var reqFile: RequestBody
     var body: MultipartBody.Part? = null
     val requestCodeChooseVenuseActivity = 10001
+    var itemID="0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this@LostItemDetailsActvity,
-            R.layout.lostitemdetails_activity
-        )
+        binding = DataBindingUtil.setContentView(this@LostItemDetailsActvity, R.layout.lostitemdetails_activity)
+        if(intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_EDITITEM,false)){
+            var lostModel = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO) as GetLostItemListModel.Data
+            itemID=lostModel.id
+            binding.lostItemName.setText(lostModel.product_name)
+            binding.lostUserName.setText(lostModel.customer_name)
+            binding.lostEmailID.setText(lostModel.email)
+            binding.lostPhNO.setText(PhoneNumberUtils.formatNumber(lostModel.phonenumber,"US"))
+            binding.lostProductDetail.setText(lostModel.product_detail)
+            Utills.setImageNormal(this@LostItemDetailsActvity,binding.lostItemImg,lostModel.image)
+        }else{
+            itemID="0"//means newItem
+            binding.lostUserName.setText(PreferenceKeeper.instance.loginResponse?.name)
+            binding.lostEmailID.setText(PreferenceKeeper.instance.loginResponse?.email)
+            binding.lostPhNO.setText(PhoneNumberUtils.formatNumber(PreferenceKeeper.instance.loginResponse?.phonenumber, "US"))
+
+        }
         setToolBar()
         initView()
     }
@@ -55,25 +71,70 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.lostActvityChooseVenues) {
-            try {
-                var mdl = LostItemDetailCstmModel(
-                    binding.lostItemName.text.toString(),
-                    binding.lostUserName.text.toString(),
-                    binding.lostEmailID.text.toString(),
-                    binding.lostPhNO.text.toString(),
-                    binding.lostProductDetail.text.toString(),
-                    resultUri.toString()
-                )
-                DataManager.instance.lostItemDetailCstmModel = mdl
-                startActivityForResult(Intent(this@LostItemDetailsActvity, ChooseVenuseActivity::class.java),requestCodeChooseVenuseActivity)
-            } catch (e: Exception) {
-                MyApp.popErrorMsg("", "Please add image of item", this@LostItemDetailsActvity)
+            if(isValidetedData()) {
+                try {
+                    var mdl = LostItemDetailCstmModel(
+                        itemID,
+                        binding.lostItemName.text.toString(),
+                        binding.lostUserName.text.toString(),
+                        binding.lostEmailID.text.toString(),
+                        binding.lostPhNO.text.toString(),
+                        binding.lostProductDetail.text.toString(),
+                        resultUri.toString()
+                    )
+                    DataManager.instance.lostItemDetailCstmModel = mdl
+                    startActivityForResult(
+                        Intent(
+                            this@LostItemDetailsActvity,
+                            ChooseVenuseActivity::class.java
+                        ), requestCodeChooseVenuseActivity
+                    )
+                } catch (e: Exception) {
+                    var mdl = LostItemDetailCstmModel(
+                        itemID,
+                        binding.lostItemName.text.toString(),
+                        binding.lostUserName.text.toString(),
+                        binding.lostEmailID.text.toString(),
+                        binding.lostPhNO.text.toString(),
+                        binding.lostProductDetail.text.toString(),
+                        ""
+                    )
+                    DataManager.instance.lostItemDetailCstmModel = mdl
+                    startActivityForResult(
+                        Intent(
+                            this@LostItemDetailsActvity,
+                            ChooseVenuseActivity::class.java
+                        ), requestCodeChooseVenuseActivity
+                    )
+                    //MyApp.popErrorMsg("", "Please add image of item", this@LostItemDetailsActvity)
+                }
             }
-
 
         } else if (v == binding.lostActvityImageConstrent) {
             onSelectImage()
         }
+    }
+
+    private fun isValidetedData(): Boolean {
+        if(binding.lostItemName.text.isNullOrBlank()){
+            MyApp.popErrorMsg("","Please enter Item Name",THIS!!)
+            return false
+        }
+        else if(binding.lostUserName.text.isNullOrBlank()){
+            MyApp.popErrorMsg("","Please enter your Name",THIS!!)
+            return false
+        } else if(binding.lostEmailID.text.isNullOrBlank()){
+            MyApp.popErrorMsg("","Please enter your Email",THIS!!)
+            return false
+        }else if(binding.lostPhNO.text.isNullOrBlank()){
+            MyApp.popErrorMsg("","Please enter your Mobile Number",THIS!!)
+            return false
+        }else if(binding.lostProductDetail.text.isNullOrBlank()){
+            MyApp.popErrorMsg("","Please enter your product detail",THIS!!)
+            return false
+        }
+        return true
+
     }
 
     fun onSelectImage() {
@@ -87,6 +148,65 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     private fun initView() {
         setTouchNClick(binding.lostActvityChooseVenues)
         setTouchNClick(binding.lostActvityImageConstrent)
+
+        //setPhoneFormat
+        binding.lostPhNO.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val text: String = binding.lostPhNO.getText().toString()
+                val textLength: Int = binding.lostPhNO.getText().toString().length
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" ")) return
+                if (textLength == 1) {
+                    if (!text.contains("(")) {
+                        binding.lostPhNO.setText(
+                            StringBuilder(text).insert(text.length - 1, "(").toString()
+                        )
+                        binding.lostPhNO.setSelection(binding.lostPhNO.getText().length)
+                    }
+                } else if (textLength == 5) {
+                    if (!text.contains(")")) {
+                        binding.lostPhNO.setText(
+                            StringBuilder(text).insert(text.length - 1, ")").toString()
+                        )
+                        binding.lostPhNO.setSelection(binding.lostPhNO.getText().length)
+                    }
+                } else if (textLength == 6) {
+                    binding.lostPhNO.setText(
+                        StringBuilder(text).insert(text.length - 1, " ").toString()
+                    )
+                    binding.lostPhNO.setSelection(binding.lostPhNO.getText().length)
+                } else if (textLength == 10) {
+                    if (!text.contains("-")) {
+                        binding.lostPhNO.setText(
+                            StringBuilder(text).insert(text.length - 1, "-").toString()
+                        )
+                        binding.lostPhNO.setSelection(binding.lostPhNO.getText().length)
+                    }
+
+
+                } else if (textLength == 15) {
+                    if (text.contains("-")) {
+                        binding.lostPhNO.setText(
+                            StringBuilder(text).insert(text.length - 1, "-").toString()
+                        )
+                        binding.lostPhNO.setSelection(binding.lostPhNO.getText().length)
+                    }
+                } else if (textLength == 18) {
+                    if (text.contains("-")) {
+                        binding.lostPhNO.setText(StringBuilder(text).insert(text.length - 1, "-").toString())
+                        binding.lostPhNO.setSelection(binding.lostPhNO.getText().length)
+                    }
+                }
+
+            }
+        })
     }
 
     private fun setToolBar() {
@@ -216,6 +336,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
             }
         }
         else if(requestCode == requestCodeChooseVenuseActivity && resultCode==Activity.RESULT_OK){
+            setResult(Activity.RESULT_OK)
             finish()
             overridePendingTransition(0,0)
         }

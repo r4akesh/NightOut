@@ -24,6 +24,6 @@ class DataManager {
 
             }
     }
-    var lostItemDetailCstmModel = LostItemDetailCstmModel("","","","","","")
+    var lostItemDetailCstmModel = LostItemDetailCstmModel("","","","","","","")
 
 }

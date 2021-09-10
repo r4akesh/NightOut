@@ -50,7 +50,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lostActvityImageConstrent"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
+                    android:layout_height="@dimen/_150sdp"
                     android:layout_margin="@dimen/_10ssp"
                     android:background="@drawable/dotted_border"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +71,7 @@
 
                     <ImageView
                         android:id="@+id/lostItemImg"
-                        android:layout_marginTop="@dimen/_2ssp"
-                        android:layout_marginBottom="@dimen/_2ssp"
+                        android:layout_margin="@dimen/_2ssp"
                         android:layout_width="match_parent"
                          android:background="@null"
                         android:layout_height="match_parent"/>
@@ -255,7 +254,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5ssp"
                         android:background="@null"
-
+                        android:maxLength="14"
                         android:fontFamily="@font/proximanova_reg"
                         android:hint="(000) 00 00 000"
                         android:inputType="number"

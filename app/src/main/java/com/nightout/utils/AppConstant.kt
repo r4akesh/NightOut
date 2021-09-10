@@ -23,6 +23,8 @@ class AppConstant {
         const val GALLERY_LIST = "GALLERY_LIST"
         const val VIDEO_URL = "VIDEO_URL"
         const val ISFROM_VENULISTACTIVITY = "ISFROM_VENULISTACTIVITY"
+        const val LOSTITEM_POJO = "LOSTITEM_ID"
+        const val ISFROM_EDITITEM = "ISFROM_EDITITEM"
 
     }
 }

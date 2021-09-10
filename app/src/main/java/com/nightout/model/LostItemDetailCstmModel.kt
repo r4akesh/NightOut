@@ -4,6 +4,8 @@ import android.net.Uri
 
 
 data class LostItemDetailCstmModel(
+
+    var itemID:String,
     var itemName:String,
     var fullName:String,
     var emailID:String,

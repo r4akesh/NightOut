@@ -37,9 +37,15 @@ interface APIInterface {
     @POST("add_favourite")
     suspend fun addFavouriteAPI(@Body params : HashMap<String, Any>): Response<AddFavModel>
 
-    @POST("add_lost_item")
+    @POST("add_update_lost_item")
     suspend fun addlostitemAPI(@Body requestBody: MultipartBody): Response<BaseModel>
 
     @POST("user_lost_items")
     suspend fun userlostitemsAPI(): Response<GetLostItemListModel>
+
+    @POST("delete_lost_item")
+    suspend fun delItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
+
+    @POST("found_lost_item")
+    suspend fun foundItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 }

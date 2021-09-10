@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/border_crawal_location_box.xml" value="0.3223958333333333" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/border_prebookoing.xml" value="0.3605128205128205" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/border_primaryclr.xml" value="0.30520833333333336" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/border_primaryclr_orderdetail.xml" value="0.3223958333333333" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/border_yello.xml" value="0.3605128205128205" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_blk_bg.xml" value="0.33645833333333336" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_botomsheet.xml" value="0.3328125" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_btm_rnd.xml" value="0.33645833333333336" />

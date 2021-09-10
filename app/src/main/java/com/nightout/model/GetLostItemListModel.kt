@@ -21,7 +21,7 @@ data class GetLostItemListModel(
         val product_detail: String,
         val product_name: String,
         val slug: String,
-        val status: String,
+        var status: String,
         val updated_at: String,
         val user_id: String,
         val venue_id: String,

@@ -274,6 +274,50 @@ class WebServiceRepository(application: Activity) {
         }
         return dashboardRes
     }
+
+    fun delLostItem(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<BaseModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.delItemsAPI(map)
+                if (request.isSuccessful && request.code()==200) {
+                    var vv = request.code()
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
+    }
+
+    fun foundLostItem(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<BaseModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.foundItemsAPI(map)
+                if (request.isSuccessful && request.code()==200) {
+                    var vv = request.code()
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
+    }
 }
 
 

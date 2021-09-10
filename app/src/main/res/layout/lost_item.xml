@@ -26,11 +26,12 @@
 
         <TextView
             android:id="@+id/lostItemTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_reg"
             android:text="Watch"
+            app:layout_constraintEnd_toStartOf="@+id/lostItem3Dot"
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@+id/lostItemProfile"

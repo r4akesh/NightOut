@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.nightout.R
 import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.VenuTitleBotmsheetItemBinding
@@ -35,8 +36,17 @@ class AllRecordVenuseAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        androidx.core.view.ViewCompat.setNestedScrollingEnabled( viewHolder.binding.venuTitleBotmSeetSubRecyler, false)//for scroll issue botmSheet
-        viewHolder.binding.venuTitleBotmShetTitle.text = arrayList[position].title
+        if(position==0) {
+            viewHolder.binding.venuTitleBotmShetTitle.visibility= View.GONE
+            viewHolder.binding.venuTitleBotmShetTitle.text = arrayList[position].title
+        }
+        else {
+            viewHolder.binding.venuTitleBotmShetTitle.visibility= View.VISIBLE
+            viewHolder.binding.venuTitleBotmShetTitle.text = arrayList[position].title
+        }
+
+
+
 
         var venuBotmSheetAdapter = VenuesAdapter(context, arrayList[position].sub_records, object : VenuesAdapter.ClickListener {
                 override fun onClick(pos: Int) {
@@ -44,6 +54,7 @@ class AllRecordVenuseAdapter(
                 }
 
             })
+        (viewHolder.binding?.venuTitleBotmSeetSubRecyler.getItemAnimator() as SimpleItemAnimator).supportsChangeAnimations = false//stop animation
         viewHolder.binding.venuTitleBotmSeetSubRecyler.also {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             it.adapter = venuBotmSheetAdapter

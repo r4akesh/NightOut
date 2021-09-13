@@ -55,6 +55,124 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         setListDrinksDummy()//first time set
     }
 
+    override fun onClick(v: View?) {
+        super.onClick(v)
+
+        if(v==binding.storeDeatilFav){
+            add_favouriteAPICALL()
+        }
+        else if (v == binding.storeDeatilPreBookingBtn) {
+            startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
+
+        } else if (v == binding.storeDeatilPlaceOrder) {
+            startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
+
+        } else if (v == binding.storeDeatilFacilityBtn) {
+            if (facilityList != null && facilityList.size > 0)
+                showPopUpFacilities() else {
+                MyApp.popErrorMsg(
+                    "",
+                    resources.getString(R.string.facilitynot_avail),
+                    this@StoreDetail
+                )
+            }
+        } else if (v == binding.storeDeatilBakBtn) {
+            finish()
+
+        } else if (v == binding.storeDeatilMenu) {
+            binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
+            binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))
+            binding.storeDeatilDiscount.setBackgroundResource(0)
+            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
+            binding.storeDeatilMore.setBackgroundResource(0)
+            binding.storeDeatilMore.setTextColor(resources.getColor(R.color.white_second))
+
+
+            binding.storeDeatilMenuDesc.visibility = VISIBLE
+            binding.storeDeatilDisDesc.visibility = GONE
+            binding.storeDeatilMoreDesc.visibility = GONE
+
+
+        } else if (v == binding.storeDeatilDiscount) {
+            binding.storeDeatilMenu.setBackgroundResource(0)
+            binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
+            binding.storeDeatilDiscount.setBackgroundResource(R.drawable.box_yelo)
+            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.black))
+            binding.storeDeatilMore.setBackgroundResource(0)
+            binding.storeDeatilMore.setTextColor(resources.getColor(R.color.white_second))
+
+            val str1 = resources.getString(R.string.discount10)
+            var str2 = resources.getString(R.string.firsLine)
+            var settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.firstLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
+
+            str2 = resources.getString(R.string.secondLine)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.secondLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
+
+
+            str2 = resources.getString(R.string.thridLine)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.thrdLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
+
+            str2 = resources.getString(R.string.firsLine)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.fourthLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
+
+            str2 = resources.getString(R.string.secondLine)
+            settext =
+                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
+            binding.storeDeatilDisDesc.fifthLine.setText(
+                Html.fromHtml(settext),
+                TextView.BufferType.SPANNABLE
+            )
+
+            binding.storeDeatilMenuDesc.visibility = GONE
+            binding.storeDeatilDisDesc.visibility = VISIBLE
+            binding.storeDeatilMoreDesc.visibility = GONE
+        } else if (v == binding.storeDeatilMore) {
+            binding.storeDeatilMenu.setBackgroundResource(0)
+            binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
+            binding.storeDeatilDiscount.setBackgroundResource(0)
+            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
+            binding.storeDeatilMore.setBackgroundResource(R.drawable.box_yelo)
+            binding.storeDeatilMore.setTextColor(resources.getColor(R.color.black))
+
+            binding.storeDeatilMoreDesc.visibility = VISIBLE
+            binding.storeDeatilDisDesc.visibility = GONE
+            binding.storeDeatilMenuDesc.visibility = GONE
+        } else if (v == binding.storeDeatilSharLoc) {
+            val latitude: Double = 26.906473
+            val longitude: Double = 75.772804
+            val uri = "http://maps.google.com/maps?saddr=$latitude,$longitude"
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            val ShareSub = "Here is my location"
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, ShareSub)
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, uri)
+            startActivity(Intent.createChooser(sharingIntent, "Share via"))
+        } else if (v == binding.storeDeatilDirection) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=26.906473,26.862470&daddr=75.772804,75.762410"))
+            startActivity(intent)
+        }
+    }
+
     private fun setTopImgSlider() {
         if(intent!=null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)){
             try {
@@ -658,123 +776,7 @@ var favStatus= "0"
 
     }
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
 
-        if(v==binding.storeDeatilFav){
-            add_favouriteAPICALL()
-        }
-        else if (v == binding.storeDeatilPreBookingBtn) {
-            startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
-
-        } else if (v == binding.storeDeatilPlaceOrder) {
-            startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
-
-        } else if (v == binding.storeDeatilFacilityBtn) {
-            if (facilityList != null && facilityList.size > 0)
-                showPopUpFacilities() else {
-                MyApp.popErrorMsg(
-                    "",
-                    resources.getString(R.string.facilitynot_avail),
-                    this@StoreDetail
-                )
-            }
-        } else if (v == binding.storeDeatilBakBtn) {
-            finish()
-
-        } else if (v == binding.storeDeatilMenu) {
-            binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
-            binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))
-            binding.storeDeatilDiscount.setBackgroundResource(0)
-            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
-            binding.storeDeatilMore.setBackgroundResource(0)
-            binding.storeDeatilMore.setTextColor(resources.getColor(R.color.white_second))
-
-
-            binding.storeDeatilMenuDesc.visibility = VISIBLE
-            binding.storeDeatilDisDesc.visibility = GONE
-            binding.storeDeatilMoreDesc.visibility = GONE
-
-
-        } else if (v == binding.storeDeatilDiscount) {
-            binding.storeDeatilMenu.setBackgroundResource(0)
-            binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
-            binding.storeDeatilDiscount.setBackgroundResource(R.drawable.box_yelo)
-            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.black))
-            binding.storeDeatilMore.setBackgroundResource(0)
-            binding.storeDeatilMore.setTextColor(resources.getColor(R.color.white_second))
-
-            val str1 = resources.getString(R.string.discount10)
-            var str2 = resources.getString(R.string.firsLine)
-            var settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.firstLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
-
-            str2 = resources.getString(R.string.secondLine)
-            settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.secondLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
-
-
-            str2 = resources.getString(R.string.thridLine)
-            settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.thrdLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
-
-            str2 = resources.getString(R.string.firsLine)
-            settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.fourthLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
-
-            str2 = resources.getString(R.string.secondLine)
-            settext =
-                "<font color='#087d19'>$str1 </font> <font color='#D4D4D4'> <b>$str2</b></font>"
-            binding.storeDeatilDisDesc.fifthLine.setText(
-                Html.fromHtml(settext),
-                TextView.BufferType.SPANNABLE
-            )
-
-            binding.storeDeatilMenuDesc.visibility = GONE
-            binding.storeDeatilDisDesc.visibility = VISIBLE
-            binding.storeDeatilMoreDesc.visibility = GONE
-        } else if (v == binding.storeDeatilMore) {
-            binding.storeDeatilMenu.setBackgroundResource(0)
-            binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
-            binding.storeDeatilDiscount.setBackgroundResource(0)
-            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
-            binding.storeDeatilMore.setBackgroundResource(R.drawable.box_yelo)
-            binding.storeDeatilMore.setTextColor(resources.getColor(R.color.black))
-
-            binding.storeDeatilMoreDesc.visibility = VISIBLE
-            binding.storeDeatilDisDesc.visibility = GONE
-            binding.storeDeatilMenuDesc.visibility = GONE
-        } else if (v == binding.storeDeatilSharLoc) {
-            val latitude: Double = 26.906473
-            val longitude: Double = 75.772804
-            val uri = "http://maps.google.com/maps?saddr=$latitude,$longitude"
-            val sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            val ShareSub = "Here is my location"
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, ShareSub)
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, uri)
-            startActivity(Intent.createChooser(sharingIntent, "Share via"))
-        } else if (v == binding.storeDeatilDirection) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=26.906473,26.862470&daddr=75.772804,75.762410"))
-            startActivity(intent)
-        }
-    }
       lateinit  var dt : VenuDetailModel.Data
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@StoreDetail, "")

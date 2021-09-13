@@ -5,20 +5,17 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lostItemdeailRoot"
-        android:background="@drawable/background_gray">
+        android:layout_width="match_parent"
 
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrent_toolbar"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,29 +26,28 @@
                 layout="@layout/toolbar_common_back" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fillViewport="true"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
             android:paddingBottom="@dimen/_5ssp"
-            app:layout_constraintBottom_toTopOf="@+id/lostActvityChooseVenues"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lostActvityImageConstrent"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_150sdp"
-                    android:layout_margin="@dimen/_10ssp"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
                     android:background="@drawable/dotted_border"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -71,10 +67,10 @@
 
                     <ImageView
                         android:id="@+id/lostItemImg"
-                        android:layout_margin="@dimen/_2ssp"
                         android:layout_width="match_parent"
-                         android:background="@null"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_2ssp"
+                        android:background="@null" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -254,10 +250,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5ssp"
                         android:background="@null"
-                        android:maxLength="14"
                         android:fontFamily="@font/proximanova_reg"
                         android:hint="(000) 00 00 000"
                         android:inputType="number"
+                        android:maxLength="14"
                         android:paddingTop="@dimen/_5ssp"
                         android:paddingEnd="@dimen/_5ssp"
                         android:paddingBottom="@dimen/_5ssp"
@@ -300,8 +296,8 @@
                         android:layout_height="@dimen/_80sdp"
                         android:background="@null"
                         android:fontFamily="@font/proximanova_reg"
-                        android:hint="@string/Write_here"
                         android:gravity="top"
+                        android:hint="@string/Write_here"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:singleLine="true"
@@ -310,23 +306,26 @@
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintTop_toBottomOf="@+id/textDetail" />
 
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/lostActvityChooseVenues"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10ssp"
+                    android:background="@drawable/gredient_bg"
+                    android:text="@string/Choose_Venues"
+                    app:layout_constraintTop_toBottomOf="@+id/lostActvityDetailConstrent" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/lostActvityChooseVenues"
-            style="@style/buttonTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_25sdp"
-
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:background="@drawable/gredient_bg"
-            android:text="@string/Choose_Venues"
-            android:layout_marginBottom="@dimen/_10ssp"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

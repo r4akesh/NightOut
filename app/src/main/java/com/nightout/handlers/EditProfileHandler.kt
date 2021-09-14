@@ -183,7 +183,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                     activity.binding.userProfile.setImageBitmap(bitmap)
                     setBody(bitmap!!, "profile")
                   //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
-                    Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
+                  //  Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Utills.showSnackBarFromTop(activity.binding.etFName, "catch-> $e", activity)

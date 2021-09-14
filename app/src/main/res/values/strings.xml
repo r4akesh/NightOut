@@ -180,5 +180,6 @@
     <string name="Saved">Saved</string>
     <string name="Shared">Shared</string>
     <string name="dummychk">Lorem ipsum dolor sit amet</string>
+    <string name="NoteDetail">You can Record the Audio and Video for 15 Minutes in Emergency Case.</string>
 
 </resources>

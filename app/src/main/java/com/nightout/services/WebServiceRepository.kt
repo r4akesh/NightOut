@@ -116,23 +116,26 @@ class WebServiceRepository(application: Activity) {
 
     fun dashBoard(): LiveData<Resource<DashboardModel>> {
         val dashboardRes = MutableLiveData<Resource<DashboardModel>>()
-        CoroutineScope(Dispatchers.IO).launch {
-            dashboardRes.postValue(Resource.loading(null))
-            if (networkHelper.isNetworkConnected()) {
-                val request = apiInterfaceHeader.dashboardAPI()
-                if (request.isSuccessful) {
-                    dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
-                } else {
-                    try {
-                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                        println("ok jsonObj$jsonObj")
-                        dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
-                    } catch (e: Exception) {
-                        dashboardRes.postValue(Resource.error(e.toString(), null))
-                    }
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                dashboardRes.postValue(Resource.loading(null))
+                if (networkHelper.isNetworkConnected()) {
+                    val request = apiInterfaceHeader.dashboardAPI()
+                    if (request.isSuccessful) {
+                        dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
+                    } else {
+                        try {
+                            val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                            println("ok jsonObj$jsonObj")
+                            dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                        } catch (e: Exception) {
+                            dashboardRes.postValue(Resource.error(e.toString(), null))
+                        }
 
-                }
-            }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+                    }
+                }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+            }
+        } catch (e: Exception) {
         }
         return dashboardRes
     }

@@ -18,8 +18,12 @@ class HomeViewModel (activity: Activity) : BaseObservable() {
 
 
     fun dashBoard(): LiveData<Resource<DashboardModel>> {
-        dashboardModel = webServiceRepository.dashBoard()
-        return dashboardModel
+        try {
+            dashboardModel = webServiceRepository.dashBoard()
+            return dashboardModel
+        } catch (e: Exception) {
+            return dashboardModel
+        }
     }
 
 

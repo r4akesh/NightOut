@@ -78,51 +78,54 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
 
     private fun dashboardAPICALL() {
         progressDialog.show(requireActivity(), "")
-        homeViewModel.dashBoard().observe(requireActivity(), {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    progressDialog.dialog.dismiss()
-                    binding.btmShhetInclue.bottomSheetNSrlView.visibility = VISIBLE
-                    it.data?.let { users ->
-                        try {
-                            setBottomSheet()
-                            //save imgPath
-                            dashList = users.data
-                            PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
-                            if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
-                                if(activity!=null)
-                                setListStory(users.data.stories)
-                            }
-                            if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
-                                if(activity!=null)
-                                setListAllRecord(dashList.all_records)
+        try {
+            homeViewModel.dashBoard().observe(requireActivity(), {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        progressDialog.dialog.dismiss()
+                        binding.btmShhetInclue.bottomSheetNSrlView.visibility = VISIBLE
+                        it.data?.let { users ->
+                            try {
+                                setBottomSheet()
+                                //save imgPath
+                                dashList = users.data
+                                PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
+                                if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
+                                    if(activity!=null)
+                                    setListStory(users.data.stories)
+                                }
+                                if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
+                                    if(activity!=null)
+                                    setListAllRecord(dashList.all_records)
 
+                                }
+                            } catch (e: Exception) {
                             }
-                        } catch (e: Exception) {
+
                         }
 
                     }
-
-                }
-                Status.LOADING -> {
-                    //progressBar.visibility = View.VISIBLE
-                    Log.d("ok", "loginCall:LOADING ")
-                }
-                Status.ERROR -> {
-                    progressDialog.dialog.dismiss()
-                    // progressBar.visibility = View.GONE
-                    try {
-                        Utills.showSnackBarOnError(
-                            binding.fragmentHomeRootLayout,
-                            it.message!!,
-                            requireActivity()
-                        )
-                    } catch (e: Exception) {
+                    Status.LOADING -> {
+                        //progressBar.visibility = View.VISIBLE
+                        Log.d("ok", "loginCall:LOADING ")
                     }
-                    Log.d("ok", "loginCall:ERROR ")
+                    Status.ERROR -> {
+                        progressDialog.dialog.dismiss()
+                        // progressBar.visibility = View.GONE
+                        try {
+                            Utills.showSnackBarOnError(
+                                binding.fragmentHomeRootLayout,
+                                it.message!!,
+                                requireActivity()
+                            )
+                        } catch (e: Exception) {
+                        }
+                        Log.d("ok", "loginCall:ERROR ")
+                    }
                 }
-            }
-        })
+            })
+        } catch (e: Exception) {
+        }
 
 
     }

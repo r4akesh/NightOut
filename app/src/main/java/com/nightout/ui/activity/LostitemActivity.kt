@@ -76,6 +76,7 @@ var isEdit= true //for mainten tost msg
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {myData->
+                        lostList = ArrayList()
                         lostList.addAll(myData.data)
                         lostList.reverse()
                         setItemList()

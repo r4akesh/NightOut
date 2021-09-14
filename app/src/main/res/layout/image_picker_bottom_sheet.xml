@@ -2,18 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gredient_btmshet_bg"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-   <!-- <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_resource"
-        android:textSize="14sp"
-        android:layout_gravity="start"
-        android:layout_margin="15dp"
-        style="@style/textBold"
-        android:textColor="@color/color_111B34"/>-->
+
 
 
 
@@ -46,7 +40,7 @@
                 style="@style/textRegular"
                 android:layout_gravity="center"
                 android:padding="5dp"
-                android:textColor="@color/color_283E70"/>
+                android:textColor="@color/white_second"/>
 
         </LinearLayout>
 
@@ -71,7 +65,7 @@
                 style="@style/textRegular"
                 android:layout_gravity="center"
                 android:padding="5dp"
-                android:textColor="@color/color_283E70"/>
+                android:textColor="@color/white_second"/>
 
         </LinearLayout>
 
@@ -85,6 +79,7 @@
         android:layout_height="wrap_content"
         android:stateListAnimator="@null"
         android:text="@string/close"
+        android:textSize="@dimen/_12ssp"
         android:layout_margin="@dimen/_15sdp"
         android:textColor="@color/white"
         android:fontFamily="@font/proximanova_reg"
@@ -92,4 +87,5 @@
         android:background="@drawable/gredient_bg"
         />
 
-</LinearLayout>
+   </LinearLayout>
+

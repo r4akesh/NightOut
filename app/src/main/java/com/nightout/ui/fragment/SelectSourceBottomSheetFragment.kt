@@ -28,6 +28,10 @@ class SelectSourceBottomSheetFragment(private val onSelectOptionListener: OnSele
         return v
     }
 
+    override fun getTheme(): Int {
+        return R.style.CustomBottomSheetDialog
+    }
+
     private fun initView(view: View) {
         cameraImageView = view.findViewById(R.id.cameraImage)
         galleryImageView = view.findViewById(R.id.galleryImage)

@@ -203,6 +203,11 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(
+                        binding.constrentToolbar,
+                        it.message!!,
+                        this@VenuListActvity
+                    )
                 }
             }
         })

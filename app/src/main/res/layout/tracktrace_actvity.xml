@@ -14,9 +14,9 @@
             android:id="@+id/constrent_toolbar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-           app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -66,9 +66,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,60 +88,85 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <TextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tractraceaSetEndLoc"
+                style="@style/buttonTextStyle"
                 android:layout_width="0dp"
+                android:fontFamily="@font/proximanova_reg"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10ssp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_7ssp"
                 android:background="@drawable/gredient_bg"
-                android:fontFamily="@font/proximanova_reg"
-                android:gravity="center"
-                android:padding="@dimen/_10ssp"
                 android:text="Set End Location"
-                android:textColor="@color/black_pure"
                 android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tractraceaLostitem"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tractraceaView" />
 
-            <TextView
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tractraceaLostitem"
+                style="@style/buttonTextStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_10ssp"
-                android:background="@drawable/gredient_bg"
                 android:fontFamily="@font/proximanova_reg"
-                android:gravity="center"
-                android:padding="@dimen/_10ssp"
-                android:text="Lost Item"
-                android:textColor="@color/black_pure"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_7ssp"
+                android:background="@drawable/gredient_bg"
                 android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
+                android:text="Lost Item"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tractraceaSetEndLoc"
                 app:layout_constraintTop_toBottomOf="@+id/tractraceaView" />
 
-            <TextView
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tractraceaPanic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10ssp"
                 android:layout_marginTop="@dimen/_10ssp"
                 android:layout_marginEnd="@dimen/_10ssp"
-                android:background="@drawable/box_red_bg"
                 android:fontFamily="@font/proximanova_reg"
                 android:gravity="center"
-                android:padding="@dimen/_10ssp"
+                android:backgroundTint="@color/red_clr"
+                android:padding="@dimen/_11ssp"
                 android:text="Panic"
                 android:textColor="@color/black_pure"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/tractraceaSetEndLoc" />
 
+            <TextView
+                android:id="@+id/tractraceaNoteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:text="Note:- "
+                android:textColor="@color/white_second"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tractraceaPanic" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:text="@string/NoteDetail"
+                android:textColor="@color/white_second"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tractraceaNoteText"
+                app:layout_constraintTop_toBottomOf="@+id/tractraceaPanic"
+                app:layout_constraintTop_toTopOf="@+id/tractraceaNoteText" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

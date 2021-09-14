@@ -39,6 +39,8 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 
 
 class MyApp : Application() {
@@ -52,7 +54,9 @@ class MyApp : Application() {
         application = this
         ctx = applicationContext
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
+        val builder = VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+        builder.detectFileUriExposure()
     }
 
 

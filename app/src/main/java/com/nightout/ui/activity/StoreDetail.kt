@@ -850,8 +850,7 @@ var favStatus= "0"
         val dialog_close: ImageView = adDialog.findViewById(R.id.dialog_close)
         setTouchNClick(dialog_close)
         //  var list = setListFacility()
-        var facilityAdapter =
-            FacilityAdapter(this@StoreDetail, facilityList, object : FacilityAdapter.ClickListener {
+        var facilityAdapter = FacilityAdapter(this@StoreDetail, facilityList, object : FacilityAdapter.ClickListener {
                 override fun onClick(pos: Int) {
 
                 }
@@ -861,7 +860,9 @@ var favStatus= "0"
         listRecyclerview.also {
             it.layoutManager =
                 LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+            it.setHasFixedSize(true)
             it.adapter = facilityAdapter
+
         }
 
         dialog_close.setOnClickListener {

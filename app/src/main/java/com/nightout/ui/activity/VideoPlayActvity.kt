@@ -2,6 +2,7 @@ package com.nightout.ui.activity
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -29,6 +30,27 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView
 import com.nightout.utils.AppConstant
+import java.io.File
+import android.webkit.WebChromeClient
+
+import android.webkit.WebSettings
+
+import android.webkit.WebViewClient
+import com.google.android.exoplayer2.DefaultLoadControl
+
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+
+
+
+
+
+
+
+
+
 
 
 class VideoPlayActvity : BaseActivity() {
@@ -45,7 +67,33 @@ class VideoPlayActvity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@VideoPlayActvity,R.layout.videoplay_actvity)
         videoURL= intent.getStringExtra(AppConstant.INTENT_EXTRAS.VIDEO_URL)!!
-        initializePlayer()
+
+        //val myFile = File(Environment.getExternalStorageDirectory().toString() + "/DCIM/Camera/" )
+       // playVideoWebView()
+      initializePlayer()
+
+    }
+
+
+
+    private fun playVideoWebView() {
+        try {
+           // var uri = Uri.fromFile( File(videoURL))
+            val uri: Uri = Uri.parse(videoURL)
+            binding.webview.setWebViewClient(WebViewClient())
+            binding.webview.getSettings().setJavaScriptEnabled(true)
+            binding.webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true)
+            binding.webview.getSettings().setPluginState(WebSettings.PluginState.ON)
+            binding.webview.getSettings().setMediaPlaybackRequiresUserGesture(false)
+            binding.webview.getSettings().setAllowContentAccess(true);
+            binding.webview.getSettings().setAllowFileAccess(true);
+           // binding.webview.getSettings().setBuiltInZoomControls(true);
+            // webview.getSettings().setDisplayZoomControls(false);
+            binding.webview.setWebChromeClient(WebChromeClient())
+            binding.webview.loadUrl(uri.toString())
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initializePlayer() {
@@ -55,15 +103,15 @@ class VideoPlayActvity : BaseActivity() {
                 DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandwidthMeter))
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
 
-            val videouri: Uri = Uri.parse(videoURL)
+           val videouri: Uri = Uri.parse(videoURL) //for url
+          //  val videouri: Uri = Uri.fromFile( File(videoURL))
 
             val dataSourceFactory = DefaultHttpDataSourceFactory("exoplayer_video")
 
             val extractorsFactory: ExtractorsFactory = DefaultExtractorsFactory()
 
 
-            val mediaSource: MediaSource =
-                ExtractorMediaSource(videouri, dataSourceFactory, extractorsFactory, null, null)
+            val mediaSource: MediaSource = ExtractorMediaSource(videouri, dataSourceFactory, extractorsFactory, null, null)
 
 
             binding.videoview.setPlayer(exoPlayer)
@@ -71,15 +119,16 @@ class VideoPlayActvity : BaseActivity() {
 
             exoPlayer!!.prepare(mediaSource)
 
-            // we are setting our exoplayer
-            // when it is ready.
 
-            // we are setting our exoplayer
-            // when it is ready.
             exoPlayer!!.playWhenReady = true
+
+
         } catch (e: Exception) {
             Log.e("TAG", "Error : " + e.toString());
         }
 
     }
+
+
+
 }

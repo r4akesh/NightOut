@@ -3,6 +3,8 @@ package com.nightout.ui.activity
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
@@ -38,6 +40,7 @@ class LostItemFoundActvity : BaseActivity() {
           lostModel = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO) as GetLostItemListModel.Data
         binding.lostEditItemNameValue.setText(lostModel.product_name)
         binding.lostEditColorValue.setText(lostModel.product_detail)
+        if(lostModel.status.equals("1")) binding.lostEditFound.visibility=GONE
         var stringBuilder = StringBuilder()
         for (i in 0 until lostModel.venues.size){
             stringBuilder.append(lostModel.venues[i].store_name+", ")

@@ -2,6 +2,7 @@ package com.nightout.vendor.services
 
 import com.nightout.model.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -46,6 +47,18 @@ interface APIInterface {
     @POST("delete_lost_item")
     suspend fun delItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 
+    @POST("add_emergency_contact")
+    suspend fun saveEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
+
     @POST("found_lost_item")
     suspend fun foundItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
+
+    @POST("contact_list")
+    suspend fun contactListFilter(@Body params: RequestBody): Response<ContactFillterModel>
+
+    @GET("emergency_contact_list")
+    suspend fun getEmergencyAPI(): Response<GetEmergencyModel>
+
+    @POST("delete_emergency_contact")
+    suspend fun delEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 }

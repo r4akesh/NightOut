@@ -25,6 +25,8 @@ class AppConstant {
         const val ISFROM_VENULISTACTIVITY = "ISFROM_VENULISTACTIVITY"
         const val LOSTITEM_POJO = "LOSTITEM_ID"
         const val ISFROM_EDITITEM = "ISFROM_EDITITEM"
+        const val CONTACT_LIST = "CONTACT_LIST"
+        const val EMERNGCY_COUNT = "EMERNGCY_COUNT"
 
     }
 }

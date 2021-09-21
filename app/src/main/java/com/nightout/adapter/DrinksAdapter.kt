@@ -36,10 +36,6 @@ class DrinksAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.binding.drinkItemTitel.text=arrayList[position].title
-
-
-
-
         if(arrayList[position].isSelected){
             viewHolder.binding.drinkItemImageArrow.setImageResource(R.drawable.arrow_down_white)
             viewHolder.binding.drinkItemRecycleSub.visibility=VISIBLE

@@ -53,6 +53,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         }
         setListHorizntalFood()
         setListDrinksDummy()//first time set
+       // add_Remove_bar_crawlAPICAll()
     }
 
     override fun onClick(v: View?) {

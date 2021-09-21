@@ -12,7 +12,10 @@ import com.nightout.model.BaseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 
 
@@ -321,6 +324,100 @@ class WebServiceRepository(application: Activity) {
         }
         return updateProfileResponse
     }
+
+    fun getContactFilter(jsonObject: JSONObject): LiveData<Resource<ContactFillterModel>> {
+        val dashboardRes = MutableLiveData<Resource<ContactFillterModel>>()
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                dashboardRes.postValue(Resource.loading(null))
+                if (networkHelper.isNetworkConnected()) {
+                  val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
+                    val request = apiInterfaceHeader.contactListFilter(body)
+                    if (request.isSuccessful) {
+                        dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
+                    } else {
+                        try {
+                            val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                            println("ok jsonObj$jsonObj")
+                            dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                        } catch (e: Exception) {
+                            dashboardRes.postValue(Resource.error(e.toString(), null))
+                        }
+                    }
+                }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+            }
+        } catch (e: Exception) {
+        }
+        return dashboardRes
+    }
+
+
+    fun saveEmergency(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<BaseModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.saveEmergencyAPI(map)
+                if (request.isSuccessful) {
+                    var vv = request.code()
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
+    }
+
+    fun getEmergency( ): LiveData<Resource<GetEmergencyModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<GetEmergencyModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.getEmergencyAPI()
+                if (request.isSuccessful) { request.code()
+                    var vv = request.code()
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
+    }
+
+    fun delEmergency(map:HashMap<String,String> ): LiveData<Resource<BaseModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<BaseModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.delEmergencyAPI(map)
+                if (request.isSuccessful) { request.code()
+                    var vv = request.code()
+                    updateProfileResponse.postValue(Resource.success(request.body(),""))
+                } else
+                {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(Resource.error(jsonObj.getString("message"), null))
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(e.toString(), null))
+                    }
+                }
+            }else updateProfileResponse.postValue(Resource.error("No internet connection", null))
+        }
+        return updateProfileResponse
+    }
+
 }
 
 

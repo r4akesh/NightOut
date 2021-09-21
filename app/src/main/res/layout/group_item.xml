@@ -7,15 +7,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp">
 
-        android:paddingTop="@dimen/_7sdp">
-
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/grupItemProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_45sdp"
+            android:padding="@dimen/_3sdp"
+            android:layout_height="@dimen/_45sdp"
             android:layout_marginStart="@dimen/_10ssp"
-            android:src="@drawable/chat_ic_1"
+            app:strokeColor="@color/text_yello"
+            app:strokeWidth="@dimen/_2sdp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+            android:src="@drawable/user_default_ic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
-            android:fontFamily="@font/proximanova_bold"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/proximanova_reg"
             android:textSize="@dimen/_12ssp"
             android:text="Title"
             android:textColor="@color/white_thred"
@@ -42,6 +46,7 @@
             android:fontFamily="@font/proximanova_reg"
             android:text="SubTitle"
             android:textSize="@dimen/_11ssp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:textColor="@color/white_second"
             app:layout_constraintTop_toBottomOf="@+id/grupItemTitle"
             app:layout_constraintEnd_toStartOf="@+id/grupItemChk"
@@ -53,7 +58,10 @@
             android:id="@+id/grupItemChk"
             android:layout_width="wrap_content"
             android:src="@drawable/unchk_box"
-            android:padding="@dimen/_10ssp"
+            android:paddingTop="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_15ssp"
+            android:paddingStart="@dimen/_10ssp"
             app:layout_constraintBottom_toBottomOf="@+id/grupItemProfile"
             app:layout_constraintTop_toTopOf="@+id/grupItemProfile"
             app:layout_constraintEnd_toEndOf="parent"

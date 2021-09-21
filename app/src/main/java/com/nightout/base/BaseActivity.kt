@@ -28,7 +28,7 @@ open class BaseActivity:AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
 
         THIS = this
-        exceptionHandler = ExceptionHandler(this)
+       // exceptionHandler = ExceptionHandler(this)
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler)
 
 

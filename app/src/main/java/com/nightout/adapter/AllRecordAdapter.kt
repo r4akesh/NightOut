@@ -42,7 +42,11 @@ class AllRecordAdapter(
                     clickListener.onClickSub(pos, position)
                 }
 
-            })
+            override fun onClickFav(pos: Int) {
+                 clickListener.onClickFav(pos,position)
+            }
+
+        })
         viewHolder.binding.venuTitleBotmSeetSubRecyler.also {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             it.adapter = venuBotmSheetAdapter
@@ -69,6 +73,7 @@ class AllRecordAdapter(
     interface ClickListener {
         fun onClickNext(pos: Int)
         fun onClickSub(pos: Int, subPos: Int)
+        fun onClickFav(subPos: Int, mainPos: Int)
 
 
     }

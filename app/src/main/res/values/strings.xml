@@ -53,6 +53,7 @@
     <string name="Contact_Us">Contact Us</string>
     <string name="Settings">Settings</string>
     <string name="Emergency_Contact">Emergency Contact</string>
+    <string name="Contact_List">Contact List</string>
     <string name="Emergency_History">Emergency History</string>
     <string name="Panic_Situation">Panic Situation</string>
     <string name="Logout">Logout</string>

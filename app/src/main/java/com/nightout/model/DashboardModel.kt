@@ -45,7 +45,7 @@ data class DashboardModel(
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
-        val favrouite: String,
+        var favrouite: String,
         val food_certificate_image: String,
         val food_certificate_number: String,
         val food_registration_image: String,

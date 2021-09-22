@@ -12,7 +12,7 @@ import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.RowEmergencyContactBinding
 import com.nightout.databinding.RowEmergencyItemBinding
 import com.nightout.model.GetEmergencyModel
-
+import com.nightout.utils.Utills
 
 
 class EmergencyContactAdapter(private val mContext: Context,var arrayList:ArrayList<GetEmergencyModel.Data>, var clickListener: ClickListenerr) :
@@ -28,7 +28,7 @@ class EmergencyContactAdapter(private val mContext: Context,var arrayList:ArrayL
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.contactName.setText(arrayList[position].user_detail.name)
-        holder.binding.contactNumber.setText(arrayList[position].user_detail.phonenumber)
+        holder.binding.contactNumber.setText(Utills.phoneNoUKFormat(arrayList[position].user_detail.phonenumber))
         holder.binding.emergyDel.setOnClickListener {
           clickListener.onClick(position)
         }

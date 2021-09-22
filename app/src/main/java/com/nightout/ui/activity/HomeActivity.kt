@@ -103,22 +103,14 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             binding.bottmHomeYello.visibility = GONE
             binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
 
-            binding.bottomMyProfile.setDrawableColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.text_gray
-                )
-            )
+            binding.bottomMyProfile.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
             binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is TransportFragment) {
                 showFragment(TransportFragment(this))
             }
         } else if (v == binding.bottomHomeRel) {
             setHomeTab()
-
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is HomeFragment) {
                 showFragment(HomeFragment(this))
@@ -226,99 +218,98 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             }
         }
         if (v == sideMenuTrackTrace) {
-            slidingRootNav!!.closeMenu()
+          //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuTrackTrace?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
-            overridePendingTransition(0,0)
+           // overridePendingTransition(0,0)
         }
         else if(v==sideMenuEvent){
-            slidingRootNav!!.closeMenu()
+           // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEvent?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EventDetail::class.java))
-            overridePendingTransition(0,0)
+           // overridePendingTransition(0,0)
         }
         else if(v==sideMenuLostItem){
-            slidingRootNav!!.closeMenu()
+          //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuLostItem?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, LostitemActivity::class.java))
-            overridePendingTransition(0,0)
+          //  overridePendingTransition(0,0)
         }
         else if(v==sideMenuFood){
-            slidingRootNav!!.closeMenu()
+          //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFood?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FoodStoreActvity::class.java))
-            overridePendingTransition(0,0)
+         //   overridePendingTransition(0,0)
         }
 
         else if(v==sideMenuEmrgyContact){
-            slidingRootNav!!.closeMenu()
+            //slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEmrgyContact?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EmergencyContactActivity::class.java))
-            overridePendingTransition(0,0)
+          //  overridePendingTransition(0,0)
         }
         else if(v==sideMenuVenues){
-            slidingRootNav!!.closeMenu()
+            //slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuVenues?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-
-
             startActivity(Intent(this@HomeActivity, VenuListActvity::class.java)
                 .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"1"))//here 1 is default
-            overridePendingTransition(0,0)
+           // overridePendingTransition(0,0)
         }
         else if(v==sideMenuEmrgyHistry){
-            slidingRootNav!!.closeMenu()
+           // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEmrgyHistry?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EmergencyContactListActivity::class.java))
-            overridePendingTransition(0,0)
+         //   overridePendingTransition(0,0)
         }
-
+ 
         else if(v==sideMenuHome){
-            slidingRootNav!!.closeMenu()
+           slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuHome?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-
+            showFragment(HomeFragment(this))
+            setHomeTab()
         }
 
         else if (v == sideMenuAbout) {
-            slidingRootNav!!.closeMenu()
+           // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuAbout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, AboutActivity::class.java))
-            overridePendingTransition(0,0)
+           // overridePendingTransition(0,0)
         } else if (v == sideMenuTermCond) {
-            slidingRootNav!!.closeMenu()
+          //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuTermCond?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
             overridePendingTransition(0,0)
         } else if (v == sideMenuFaq) {
-            slidingRootNav!!.closeMenu()
+           // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFaq?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FAQActivity::class.java))
-            overridePendingTransition(0,0)
+          //  overridePendingTransition(0,0)
         } else if (v == sideMenuContactUs) {
-            slidingRootNav!!.closeMenu()
+          //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuContactUs?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, ContactUsActivity::class.java))
             overridePendingTransition(0,0)
         } else if (v == sideMenuSetting) {
-            slidingRootNav!!.closeMenu()
+           // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuSetting?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, SettingActivity::class.java))
-            overridePendingTransition(0,0)
+          //  overridePendingTransition(0,0)
         }
         else if (v == sideMenuLogout) {
-            slidingRootNav!!.closeMenu()
+          //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuLogout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
            showAlertLogout()

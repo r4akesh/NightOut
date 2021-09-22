@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -32,13 +33,11 @@ class ContactListActvity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@ContactListActvity, R.layout.contactlist_actvity)
         initView()
         setToolBar()
-
-
         contact_listAPICAll()
     }
 
     private fun setToolBar() {
-        binding.emerngcyToolBar.toolbarTitle.text = resources.getString(R.string.Emergency_Contact)
+        binding.emerngcyToolBar.toolbarTitle.text = resources.getString(R.string.Contact_List)
         binding.emerngcyToolBar.toolbarBack.setOnClickListener { finish() }
         binding.emerngcyToolBar.toolbar3dot.visibility = View.GONE
         binding.emerngcyToolBar.toolbarBell.visibility = View.GONE
@@ -79,8 +78,7 @@ class ContactListActvity : BaseActivity() {
 
     private fun contact_listAPICAll() {
         progressDialog.show(this@ContactListActvity, "")
-        var listContcatAll =
-            intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST) as ArrayList<ContactNoModel>
+        var listContcatAll = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST) as ArrayList<ContactNoModel>
         val jsnObjMain = JSONObject()
         val jarr = JSONArray()
         for (i in 0 until listContcatAll.size) {
@@ -94,10 +92,13 @@ class ContactListActvity : BaseActivity() {
             contactFillterViewModel.getContactFilter(jsnObjMain).observe(this@ContactListActvity, {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        progressDialog.dialog.dismiss()
-                        listFilter.addAll(it.data?.data!!)
-                        if (!listFilter.isNullOrEmpty()) {
-                            setListContact()
+                        try {
+                            progressDialog.dialog.dismiss()
+                            listFilter.addAll(it.data?.data!!)
+                            if (!listFilter.isNullOrEmpty()) {
+                                setListContact()
+                            }
+                        } catch (e: Exception) {
                         }
                     }
                     Status.LOADING -> {
@@ -132,7 +133,8 @@ class ContactListActvity : BaseActivity() {
                 when (it.status) {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
-                        MyApp.popErrorMsg("hii", "" + it.message, THIS!!)
+                        setResult(Activity.RESULT_OK)
+                        finish()
                     }
                     Status.LOADING -> {
                     }

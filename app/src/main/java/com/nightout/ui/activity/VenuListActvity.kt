@@ -166,7 +166,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     private fun add_favouriteAPICALL(pos:Int) {
         progressDialog.show(this@VenuListActvity, "")
 
-        var fav = if(venuDataList[pos].favrouite.equals("1"))
+        var fav = if(venuDataList[pos].favrouite == "1")
             "0" //for opp value
         else
             "1"
@@ -203,11 +203,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.constrentToolbar,
-                        it.message!!,
-                        this@VenuListActvity
-                    )
+                    Utills.showSnackBarOnError(binding.constrentToolbar, it.message!!, this@VenuListActvity)
                 }
             }
         })
@@ -220,7 +216,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
 
         binding.venulistingToolBar.toolbarBack.setOnClickListener {
             finish()
-            overridePendingTransition(0, 0)
+          //  overridePendingTransition(0, 0)
         }
 
         binding.venulistingToolBar.toolbar3dot.setOnClickListener {

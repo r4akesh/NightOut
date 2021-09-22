@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
+import android.telephony.PhoneNumberUtils
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
@@ -185,6 +186,9 @@ class Utills {
                 Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
                     .placeholder(R.drawable.no_image).into(it)
             }
+        }
+        fun phoneNoUKFormat(phno:String):String{
+          return  PhoneNumberUtils.formatNumber(phno,"US")
         }
 
         fun loadImage(

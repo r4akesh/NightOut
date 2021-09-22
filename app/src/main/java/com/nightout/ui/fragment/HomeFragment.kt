@@ -28,6 +28,7 @@ import com.nightout.ui.activity.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.NetworkHelper
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.DoFavViewModel
 import com.nightout.viewmodel.HomeViewModel
 
 
@@ -41,7 +42,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
 
     lateinit var dashList: DashboardModel.Data
     private val progressDialog = CustomProgressDialog()
-
+    lateinit var doFavViewModel : DoFavViewModel
     constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
         this.onMenuOpenListener = onMenuOpenListener
     }
@@ -95,8 +96,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                                     setListStory(users.data.stories)
                                 }
                                 if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
-                                    if(activity!=null)
-                                    setListAllRecord(dashList.all_records)
+                                    if(activity!=null) {
+                                        allRecordsList.addAll(dashList.all_records)
+                                        setListAllRecord()
+                                    }
 
                                 }
                             } catch (e: Exception) {
@@ -131,7 +134,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
     }
 
     lateinit var allRecordAdapter: AllRecordAdapter
-    private fun setListAllRecord(allRecordsList: ArrayList<DashboardModel.AllRecord>) {
+   var allRecordsList = ArrayList<DashboardModel.AllRecord>()
+    private fun setListAllRecord() {
         allRecordAdapter = AllRecordAdapter(requireActivity(),allRecordsList,object:AllRecordAdapter.ClickListener{
             override fun onClickNext(pos: Int) {
                 startActivity(Intent(requireActivity(), VenuListActvity::class.java)
@@ -141,17 +145,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
             override fun onClickSub(subpos: Int, pos: Int) {
                 // var vv : ArrayList<DashboardModel.VenueGallery> = allRecordsList[pos].sub_records[subpos].venue_gallery
                 if (MyApp.isConnectingToInternet(requireContext())) {
-                    startActivity(
-                        Intent(requireActivity(), StoreDetail::class.java)
-                            .putExtra(
-                                AppConstant.INTENT_EXTRAS.VENU_ID,
-                                "" + allRecordsList[pos].sub_records[subpos].id
-                            )
-                            .putExtra(
-                                AppConstant.INTENT_EXTRAS.GALLERY_LIST,
-                                allRecordsList[pos].sub_records[subpos].venue_gallery
-                            )
-                    )
+                    startActivity(Intent(requireActivity(), StoreDetail::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id)
+                            .putExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST, allRecordsList[pos].sub_records[subpos].venue_gallery))
                 }
 
            /* else{
@@ -159,15 +155,62 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                 Utills.showSnackBarOnError(binding.btmShhetInclue.bottomSheet,requireContext().resources.getString(R.string.No_Internet),requireActivity())
             }*/
             }
+
+            override fun onClickFav(subPos: Int, mainPos: Int) {
+                add_favouriteAPICALL(subPos,mainPos)
+            }
         })
 
       binding.btmShhetInclue.bottomSheetRecyclerAll.also {
           it.layoutManager=LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
           it.adapter = allRecordAdapter
       }
+    }
+
+    private fun add_favouriteAPICALL(pos:Int,mainPos:Int) {
+        progressDialog.show(requireActivity(), "")
+
+        var fav = if(allRecordsList[mainPos].sub_records[pos].favrouite.equals("1"))
+            "0" //for opp value
+        else
+            "1"
+        var map = HashMap<String, Any>()
+        map["venue_id"] = allRecordsList[mainPos].sub_records[pos].id
+        map["vendor_id"] =allRecordsList[mainPos].sub_records[pos].user_id
+        map["status"] = fav
 
 
+        doFavViewModel.doFavItem(map).observe(requireActivity(), {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                            Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
+                            if( detailData.data.status == "1"){
+                                allRecordsList[mainPos].sub_records[pos].favrouite = "1"
+                                allRecordAdapter.notifyItemChanged(pos)
+//                                favStatus="0"
+//                                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
+                            }else{
+                                allRecordsList[mainPos].sub_records[pos].favrouite = "0"
+                                allRecordAdapter.notifyItemChanged(pos)
+//                                favStatus="1"
+//                                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+                            }
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                Status.LOADING -> {
 
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(binding.fragmentHomeRootLayout, it.message!!, requireActivity())
+                }
+            }
+        })
     }
 
 
@@ -222,7 +265,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
     }
 
     private fun initView() {
-
+        doFavViewModel = DoFavViewModel(requireActivity())
         homeViewModel = HomeViewModel(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)

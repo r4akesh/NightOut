@@ -1,6 +1,7 @@
 package com.nightout.ui.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -31,6 +32,8 @@ class EmergencyContactActivity : BaseActivity() {
     var contactsInfoList = ArrayList<ContactNoModel>()
     lateinit var binding: ActivityEmergencyContactBinding
     val REQUEST_READ_CONTACTS = 80
+    val REQCODE_ContactListActvity = 115
+
     private val progressDialog = CustomProgressDialog()
     lateinit var getEmngyPhNoViewModel: GetEmngyPhNoViewModel
     lateinit var delEmngyPhNoViewModel: DelEmngyPhNoViewModel
@@ -42,29 +45,31 @@ class EmergencyContactActivity : BaseActivity() {
         setToolBar()
         initView()
         /// setUpList()
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             contactsInfoList = getAllContacts()
             Log.d("TAG", "onCreate: " + contactsInfoList)
             Log.d("TAG", "Size: " + contactsInfoList.size)
         } else {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.READ_CONTACTS),
-                REQUEST_READ_CONTACTS
-            )
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
         emergency_contact_listAPICALL()
     }
 
+
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.addContactBtn) {
-            startActivity(
-                Intent(this@EmergencyContactActivity, ContactListActvity::class.java)
+            startActivityForResult(Intent(this@EmergencyContactActivity, ContactListActvity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
                     .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
-            )
+            ,REQCODE_ContactListActvity)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode ==REQCODE_ContactListActvity && resultCode== Activity.RESULT_OK ){
+            emergency_contact_listAPICALL()//for again get update list
         }
     }
 
@@ -77,6 +82,7 @@ class EmergencyContactActivity : BaseActivity() {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
                         try {
+                            listEmergency = ArrayList()
                             listEmergency.addAll(it.data?.data!!)
                             setListEmerngcy()
                             setTextAddBtn()
@@ -108,10 +114,7 @@ class EmergencyContactActivity : BaseActivity() {
 
     lateinit var emergencyContactAdapter: EmergencyContactAdapter
     private fun setListEmerngcy() {
-        emergencyContactAdapter = EmergencyContactAdapter(
-            this,
-            listEmergency,
-            object : EmergencyContactAdapter.ClickListenerr {
+        emergencyContactAdapter = EmergencyContactAdapter(this, listEmergency, object : EmergencyContactAdapter.ClickListenerr {
                 override fun onClick(pos: Int) {
                     delAPICAll(listEmergency[pos].id, pos)
                 }

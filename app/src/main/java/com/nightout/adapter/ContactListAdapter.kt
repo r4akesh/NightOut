@@ -18,6 +18,7 @@ import com.nightout.model.ChatModel
 import com.nightout.model.ContactFillterModel
 import com.nightout.model.ContactNoModel
 import com.nightout.model.GroupListModel
+import com.nightout.utils.Utills
 
 
 class ContactListAdapter(var context: Context, var arrayList: ArrayList<ContactFillterModel.Data>, var clickListener: ClickListener, ) : RecyclerView.Adapter<ContactListAdapter.ViewHolder>() {
@@ -38,7 +39,7 @@ class ContactListAdapter(var context: Context, var arrayList: ArrayList<ContactF
 
         try {
             viewHolder.binding.grupItemTitle.text=arrayList[position].name
-            viewHolder.binding.grupItemSubTitle.text=arrayList[position].phonenumber
+            viewHolder.binding.grupItemSubTitle.text=Utills.phoneNoUKFormat(arrayList[position].phonenumber)
 
             viewHolder.binding.grupItemProfile.setImageResource(R.drawable.user_default_ic)
 

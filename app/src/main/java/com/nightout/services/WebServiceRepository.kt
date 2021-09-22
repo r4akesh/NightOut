@@ -2,6 +2,7 @@ package com.nightout.vendor.services
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -334,7 +335,13 @@ class WebServiceRepository(application: Activity) {
                   val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
                     val request = apiInterfaceHeader.contactListFilter(body)
                     if (request.isSuccessful) {
-                        dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
+                        if(request.code()==200) {
+                            dashboardRes.postValue(Resource.success(request.body(), request.body()!!.image_path))
+                        }
+                        else if(request.code()==205){
+                            dashboardRes.postValue(Resource.success(request.body(), ""))
+                            Log.d("ok", "getContactFilter: ")
+                        }
                     } else {
                         try {
                             val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())

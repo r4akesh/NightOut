@@ -54,7 +54,8 @@
             tools:visibility="visible"
             android:background="@drawable/gredient_bg"
             android:text="@string/add_contact"
-            app:layout_constraintTop_toBottomOf="@+id/emergencyList"/>
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

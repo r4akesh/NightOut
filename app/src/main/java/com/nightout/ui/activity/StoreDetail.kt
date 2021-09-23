@@ -10,10 +10,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -29,40 +30,47 @@ import com.nightout.model.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.DoFavViewModel
+import com.nightout.viewmodel.SendQueryViewModel
 import com.nightout.viewmodel.VenuDetailViewModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
+import android.text.Editable
+
+import android.text.TextWatcher
+
+
+
 
 
 class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
     lateinit var userVenueDetailViewModel: VenuDetailViewModel
-    lateinit var doFavViewModel : DoFavViewModel
+    lateinit var doFavViewModel: DoFavViewModel
+    lateinit var sendQueryViewModel: SendQueryViewModel
     lateinit var mMap: GoogleMap
     var imageViewPagerAdapter: ImageViewPagerAdapter? = null
     private val progressDialog = CustomProgressDialog()
     var facilityList = ArrayList<VenuDetailModel.Facility>()
-    var venuID=""
+    var venuID = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
         initView()
         setTopImgSlider()
-          venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
+        venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
         if (!venuID.isNullOrBlank()) {
             user_venue_detailAPICALL()
         }
         setListHorizntalFood()
         setListDrinksDummy()//first time set
-       // add_Remove_bar_crawlAPICAll()
+        // add_Remove_bar_crawlAPICAll()
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
 
-        if(v==binding.storeDeatilFav){
+        if (v == binding.storeDeatilFav) {
             add_favouriteAPICALL()
-        }
-        else if (v == binding.storeDeatilPreBookingBtn) {
+        } else if (v == binding.storeDeatilPreBookingBtn) {
             startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
 
         } else if (v == binding.storeDeatilPlaceOrder) {
@@ -169,18 +177,22 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, uri)
             startActivity(Intent.createChooser(sharingIntent, "Share via"))
         } else if (v == binding.storeDeatilDirection) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=26.906473,26.862470&daddr=75.772804,75.762410"))
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?saddr=26.906473,26.862470&daddr=75.772804,75.762410")
+            )
             startActivity(intent)
         }
     }
 
     private fun setTopImgSlider() {
-        if(intent!=null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)){
+        if (intent != null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)) {
             try {
-                    var venueGalleryList = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<VenueGallery>
-                    imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail, venueGalleryList)
-                    binding.viewPager.adapter = imageViewPagerAdapter
-                    binding.dotsIndicator.setViewPager(binding.viewPager)
+                var venueGalleryList =
+                    intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<VenueGallery>
+                imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail, venueGalleryList)
+                binding.viewPager.adapter = imageViewPagerAdapter
+                binding.dotsIndicator.setViewPager(binding.viewPager)
             } catch (e: Exception) {
             }
         }
@@ -188,27 +200,26 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     }
 
 
-
-
-var favStatus= "0"
+    var favStatus = "0"
     private fun setData() {
         binding.storeDeatilTitle.text = dt.store_name
         binding.storeDeatilRating.text = dt.rating.avg_rating
         binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
-        binding.storeDeatilSubTitle.text = "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
+        binding.storeDeatilSubTitle.text =
+            "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
         binding.storeDeatilPhno.text = dt.store_number
         binding.storeDeatilEmail.text = dt.store_email
         binding.storeDeatilAddrs.text = dt.store_address
-        if(dt.favrouite == "1"){
-            favStatus="0"
+        if (dt.favrouite == "1") {
+            favStatus = "0"
             binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
-        }else{
-            favStatus="1"
+        } else {
+            favStatus = "1"
             binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
         }
         //topImg
         Glide.with(this@StoreDetail)
-            .load(PreferenceKeeper.instance.imgPathSave+dt.store_logo)
+            .load(PreferenceKeeper.instance.imgPathSave + dt.store_logo)
             .error(R.drawable.no_image)
             .into(binding.storeDeatilLogo)
 
@@ -760,6 +771,7 @@ var favStatus= "0"
         supportMapFragment.getMapAsync(this@StoreDetail)
 
         userVenueDetailViewModel = VenuDetailViewModel(this)
+        sendQueryViewModel = SendQueryViewModel(this)
         doFavViewModel = DoFavViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilDiscount)
@@ -778,7 +790,7 @@ var favStatus= "0"
     }
 
 
-      lateinit  var dt : VenuDetailModel.Data
+    lateinit var dt: VenuDetailModel.Data
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@StoreDetail, "")
         var map = HashMap<String, Any>()
@@ -789,7 +801,7 @@ var favStatus= "0"
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
-                        dt=detailData.data
+                        dt = detailData.data
                         setData()
                     }
                 }
@@ -807,7 +819,7 @@ var favStatus= "0"
         progressDialog.show(this@StoreDetail, "")
         var map = HashMap<String, Any>()
         map["venue_id"] = venuID
-        map["vendor_id"] =dt.vendor_detail.id
+        map["vendor_id"] = dt.vendor_detail.id
         map["status"] = favStatus
 
 
@@ -817,12 +829,12 @@ var favStatus= "0"
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
-                            Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
-                            if( detailData.data.status == "1"){
-                                favStatus="0"
+                            Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
+                            if (detailData.data.status == "1") {
+                                favStatus = "0"
                                 binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
-                            }else{
-                                favStatus="1"
+                            } else {
+                                favStatus = "1"
                                 binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
                             }
                         } catch (e: Exception) {
@@ -840,7 +852,6 @@ var favStatus= "0"
     }
 
     private fun showPopUpFacilities() {
-
         val adDialog = Dialog(this@StoreDetail, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
@@ -849,14 +860,21 @@ var favStatus= "0"
 
         val listRecyclerview: RecyclerView = adDialog.findViewById(R.id.dialog_recycler)
         val dialog_close: ImageView = adDialog.findViewById(R.id.dialog_close)
+        val dialog_QueryBtn: Button = adDialog.findViewById(R.id.dialog_QueryBtn)
         setTouchNClick(dialog_close)
         //  var list = setListFacility()
-        var facilityAdapter = FacilityAdapter(this@StoreDetail, facilityList, object : FacilityAdapter.ClickListener {
+        var facilityAdapter =
+            FacilityAdapter(this@StoreDetail, facilityList, object : FacilityAdapter.ClickListener {
                 override fun onClick(pos: Int) {
 
                 }
 
             })
+        dialog_QueryBtn.setOnClickListener {
+            adDialog.dismiss()
+            showQueryPopup()
+
+        }
 
         listRecyclerview.also {
             it.layoutManager =
@@ -873,20 +891,89 @@ var favStatus= "0"
 
     }
 
-    private fun setListFacility(): ArrayList<FacilityModel> {
-        var listFacility = ArrayList<FacilityModel>()
-        listFacility.add(FacilityModel("Smoking", true))
-        listFacility.add(FacilityModel("Cloakroom", true))
-        listFacility.add(FacilityModel("Dance", false))
-        listFacility.add(FacilityModel("Sky Sports", true))
-        listFacility.add(FacilityModel("BT Sport", false))
-        listFacility.add(FacilityModel("Beer Garden", true))
-        listFacility.add(FacilityModel("Rooftop Terrace", true))
-        listFacility.add(FacilityModel("Snooker", false))
-        listFacility.add(FacilityModel("Table Tennis", true))
+    private fun showQueryPopup() {
+        val adDialog = Dialog(this@StoreDetail, R.style.MyDialogThemeBlack)
+        adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        adDialog.setContentView(R.layout.query_dialog)
+        adDialog.setCancelable(false)
 
-        return listFacility;
+
+        val dialog_close: ImageView = adDialog.findViewById(R.id.dialog_close)
+        val dialog_QueryBtn: Button = adDialog.findViewById(R.id.dialog_QueryBtn)
+        val dialog_editMsg: EditText = adDialog.findViewById(R.id.dialog_editMsg)
+        val textCount: TextView = adDialog.findViewById(R.id.textCount)
+        setTouchNClick(dialog_close)
+
+        dialog_editMsg.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                textCount.setText(""+s.toString().length+"/100")
+            }
+        })
+
+        dialog_QueryBtn.setOnClickListener {
+            if (dialog_editMsg.text.toString().isNullOrBlank()) {
+                MyApp.popErrorMsg("", "Please type your query", THIS!!)
+            } else {
+                adDialog.dismiss()
+                userFacilityAPICALL()
+            }
+        }
+
+
+        dialog_close.setOnClickListener {
+            adDialog.dismiss()
+        }
+        adDialog.show()
+
     }
+
+    private fun userFacilityAPICALL() {
+        progressDialog.show(this@StoreDetail, "")
+        // type (0=>Enquiry, 1=>Complaints)
+        var map = HashMap<String, Any>()
+        map["type"] = "0"
+        map["email"] = PreferenceKeeper.instance.loginResponse!!.email
+        map["name"] = PreferenceKeeper.instance.loginResponse!!.name
+        map["phonenumber"] = PreferenceKeeper.instance.loginResponse!!.phonenumber
+        map["query"] = "my query"
+
+        sendQueryViewModel.sendQuery(map).observe(this@StoreDetail, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                            Utills.showSnackBarOnError(
+                                binding.rootLayoutStorDetail,
+                                detailData.message!!,
+                                this@StoreDetail
+                            )
+                        } catch (e: Exception) {
+                            Utills.showSnackBarOnError(
+                                binding.rootLayoutStorDetail,
+                                e.toString(),
+                                this@StoreDetail
+                            )
+                        }
+                    }
+                }
+                Status.LOADING -> {
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(
+                        binding.rootLayoutStorDetail,
+                        it.message!!,
+                        this@StoreDetail
+                    )
+                }
+            }
+        })
+    }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

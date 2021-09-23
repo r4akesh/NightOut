@@ -27,6 +27,7 @@ class AppConstant {
         const val ISFROM_EDITITEM = "ISFROM_EDITITEM"
         const val CONTACT_LIST = "CONTACT_LIST"
         const val EMERNGCY_COUNT = "EMERNGCY_COUNT"
+        const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
 
     }
 }

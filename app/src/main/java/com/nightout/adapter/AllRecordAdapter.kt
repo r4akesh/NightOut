@@ -21,10 +21,6 @@ class AllRecordAdapter(
     var clickListener: ClickListener,
 ) : RecyclerView.Adapter<AllRecordAdapter.ViewHolder>() {
 
-
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: VenuTitleBotmsheetItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),

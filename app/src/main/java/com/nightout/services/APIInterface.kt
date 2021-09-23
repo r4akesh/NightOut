@@ -61,4 +61,12 @@ interface APIInterface {
 
     @POST("delete_emergency_contact")
     suspend fun delEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
+
+    @POST("send_query")
+    suspend fun sendQueryAPI(@Body params: HashMap<String, Any>): Response<BaseModel>
+
+    @POST("user_pages")
+    suspend fun userPagesAPI(): Response<AboutModelResponse>
+
+
 }

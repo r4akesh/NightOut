@@ -424,7 +424,63 @@ class WebServiceRepository(application: Activity) {
         }
         return updateProfileResponse
     }
+    fun sendQuery(map: HashMap<String, Any>): LiveData<Resource<BaseModel>> {
+        val dashboardRes = MutableLiveData<Resource<BaseModel>>()
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                dashboardRes.postValue(Resource.loading(null))
+                if (networkHelper.isNetworkConnected()) {
+                   // val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
+                    val request = apiInterfaceHeader.sendQueryAPI(map)
+                    if (request.isSuccessful) {
+                        if(request.code()==200) {
+                            dashboardRes.postValue(Resource.success(request.body(), ""))
+                        }
 
+                    } else {
+                        try {
+                            val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                            println("ok jsonObj$jsonObj")
+                            dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                        } catch (e: Exception) {
+                            dashboardRes.postValue(Resource.error(e.toString(), null))
+                        }
+                    }
+                }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+            }
+        } catch (e: Exception) {
+        }
+        return dashboardRes
+    }
+
+    fun aboutCMS(): LiveData<Resource<AboutModelResponse>> {
+        val dashboardRes = MutableLiveData<Resource<AboutModelResponse>>()
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                dashboardRes.postValue(Resource.loading(null))
+                if (networkHelper.isNetworkConnected()) {
+                    // val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
+                    val request = apiInterfaceHeader.userPagesAPI()
+                    if (request.isSuccessful) {
+                        if(request.code()==200) {
+                            dashboardRes.postValue(Resource.success(request.body(), ""))
+                        }
+
+                    } else {
+                        try {
+                            val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                            println("ok jsonObj$jsonObj")
+                            dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
+                        } catch (e: Exception) {
+                            dashboardRes.postValue(Resource.error(e.toString(), null))
+                        }
+                    }
+                }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
+            }
+        } catch (e: Exception) {
+        }
+        return dashboardRes
+    }
 }
 
 

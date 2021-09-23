@@ -184,5 +184,7 @@
     <string name="NoteDetail">You can Record the Audio and Video for 15 Minutes in Emergency Case.</string>
     <string name="DONE">DONE</string>
     <string name="Add">ADD</string>
+    <string name="yourQuery">Your Query</string>
+    <string name="noteFacilityQuery">Note : You can ask question related to facilities only</string>
 
 </resources>

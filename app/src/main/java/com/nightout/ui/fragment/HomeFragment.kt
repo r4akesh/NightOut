@@ -189,14 +189,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener {
                             Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
                             if( detailData.data.status == "1"){
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "1"
-                                allRecordAdapter.notifyItemChanged(pos)
-//                                favStatus="0"
-//                                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
+                              // allRecordAdapter.notifyItemChanged(pos)
+                               allRecordAdapter.notifyDataSetChanged()
                             }else{
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "0"
-                                allRecordAdapter.notifyItemChanged(pos)
-//                                favStatus="1"
-//                                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+                              //  allRecordAdapter.notifyItemChanged(pos)
+                               allRecordAdapter.notifyDataSetChanged()
                             }
                         } catch (e: Exception) {
                         }

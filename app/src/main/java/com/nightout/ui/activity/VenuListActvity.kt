@@ -186,13 +186,9 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                             if( detailData.data.status == "1"){
                                 venuDataList[pos].favrouite = "1"
                                 venuSubAdapter.notifyItemChanged(pos)
-//                                favStatus="0"
-//                                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
                             }else{
                                 venuDataList[pos].favrouite = "0"
                                 venuSubAdapter.notifyItemChanged(pos)
-//                                favStatus="1"
-//                                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
                             }
                         } catch (e: Exception) {
                         }

@@ -6,363 +6,352 @@
 
     </data>
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10ssp"
+        android:id="@+id/rootLayoutContactUs"
         android:background="@drawable/background_gray"
+
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/termCondToolBar"
+            layout="@layout/toolbar_common" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:layout_below="@+id/termCondToolBar"
+           >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10ssp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:orientation="vertical">
 
-                <include
-                    android:id="@+id/termCondToolBar"
-                    layout="@layout/toolbar_common" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp">
 
-                <androidx.core.widget.NestedScrollView
+
+                    <ImageView
+                        android:id="@+id/itemCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/ic_call_night_user_icon"
+                        app:cardCornerRadius="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.16000003" />
+
+
+                    <TextView
+                        android:id="@+id/tollFreeLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="@string/toll_free"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/itemCard"
+                        app:layout_constraintStart_toEndOf="@+id/itemCard"
+                        app:layout_constraintTop_toTopOf="@+id/itemCard"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/callNumber"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:textColor="@color/white_second"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="@+id/tollFreeLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/tollFreeLabel" />
+
+
+                    <View
+                        android:id="@+id/bottomDividerLine"
+                        android:layout_width="0dp"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/view_line_clr"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tollFreeLabel" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="5dp">
+
+
+                    <ImageView
+                        android:id="@+id/emailIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_icon_mail"
+                        app:cardCornerRadius="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.16000003" />
+
+
+                    <TextView
+                        android:id="@+id/emailLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="@string/email"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/emailIcon"
+                        app:layout_constraintStart_toEndOf="@+id/emailIcon"
+                        app:layout_constraintTop_toTopOf="@+id/emailIcon"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:textColor="@color/white_second"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="@+id/emailLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
+
+
+                    <View
+                        android:id="@+id/emailBottomDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/view_line_clr"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/emailLabel" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/loginBtn"
-                    android:layout_below="@+id/termCondToolBar"
-                    android:fillViewport="true">
+                    android:layout_marginTop="5dp">
 
-                    <LinearLayout
+
+                    <ImageView
+                        android:id="@+id/locationIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_location_icon"
+                        app:cardCornerRadius="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.16000003" />
+
+
+                    <TextView
+                        android:id="@+id/addressLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="@string/address"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/locationIcon"
+                        app:layout_constraintStart_toEndOf="@+id/locationIcon"
+                        app:layout_constraintTop_toTopOf="@+id/locationIcon"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/contactAddress"
+                        style="@style/textRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:lineSpacingExtra="5dp"
+                        android:minLines="2"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:textColor="@color/white_second"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/addressLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/addressLabel" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@drawable/rounded_dark_blue">
+
+                    <Spinner
+                        android:id="@+id/spinQuery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingBottom="@dimen/_5ssp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:padding="@dimen/_10sdp"
+                        android:src="@drawable/arrow_down_white" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_dark_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="72dp">
+                    <TextView
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/full_name"
+                        android:textColor="@color/text_hint" />
+
+                    <EditText
+                        android:id="@+id/contactUsName"
+                        style="@style/appDarkEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/enter_full_name"
+                        android:inputType="text"
+
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_dark_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/phone_no"
+                        android:textColor="@color/text_hint" />
+
+                    <EditText
+                        android:id="@+id/contactUsPhNo"
+                        style="@style/appDarkEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:hint="@string/enter_phone_number"
+                        android:inputType="text"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_dark_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/contactUsDetail"
+                        style="@style/appDarkEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_margin="8dp"
+                        android:gravity="top|left"
+                        android:hint="@string/type_your_query"
+                        android:inputType="textMultiLine"
 
 
-                            <ImageView
-                                android:id="@+id/itemCard"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                        android:singleLine="false"
+                        android:textColor="@color/white"
 
-                                android:src="@drawable/ic_call_night_user_icon"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.16000003" />
+                        />
 
-
-                            <TextView
-                                android:id="@+id/tollFreeLabel"
-                                style="@style/textNormal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="@string/toll_free"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="@+id/itemCard"
-                                app:layout_constraintStart_toEndOf="@+id/itemCard"
-                                app:layout_constraintTop_toTopOf="@+id/itemCard"
-                                app:layout_constraintVertical_bias="0.0" />
-
-                            <TextView
-                                android:id="@+id/callNumber"
-                                style="@style/textRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:text="@string/dummyNumber"
-                                android:textColor="@color/white_second"
-                                android:textSize="13sp"
-                                app:layout_constraintStart_toStartOf="@+id/tollFreeLabel"
-                                app:layout_constraintTop_toBottomOf="@+id/tollFreeLabel" />
-
-
-                            <View
-                                android:id="@+id/bottomDividerLine"
-                                android:layout_width="0dp"
-                                android:layout_height="0.8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginEnd="15dp"
-                                android:background="@color/view_line_clr"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@+id/tollFreeLabel" />
-
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="72dp"
-                            android:layout_marginTop="5dp">
-
-
-                            <ImageView
-                                android:id="@+id/emailIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_icon_mail"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.16000003" />
-
-
-                            <TextView
-                                android:id="@+id/emailLabel"
-                                style="@style/textNormal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="@string/email"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="@+id/emailIcon"
-                                app:layout_constraintStart_toEndOf="@+id/emailIcon"
-                                app:layout_constraintTop_toTopOf="@+id/emailIcon"
-                                app:layout_constraintVertical_bias="0.0" />
-
-                            <TextView
-                                android:id="@+id/email"
-                                style="@style/textRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:text="@string/dummy_email"
-                                android:textColor="@color/white_second"
-                                android:textSize="13sp"
-                                app:layout_constraintStart_toStartOf="@+id/emailLabel"
-                                app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
-
-
-                            <View
-                                android:id="@+id/emailBottomDivider"
-                                android:layout_width="0dp"
-                                android:layout_height="0.8dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginEnd="15dp"
-                                android:background="@color/view_line_clr"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@+id/emailLabel" />
-
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp">
-
-
-                            <ImageView
-                                android:id="@+id/locationIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_location_icon"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.16000003" />
-
-
-                            <TextView
-                                android:id="@+id/addressLabel"
-                                style="@style/textNormal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="@string/address"
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="@+id/locationIcon"
-                                app:layout_constraintStart_toEndOf="@+id/locationIcon"
-                                app:layout_constraintTop_toTopOf="@+id/locationIcon"
-                                app:layout_constraintVertical_bias="0.0" />
-
-                            <TextView
-                                android:id="@+id/contactAddress"
-                                style="@style/textRegular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="15dp"
-                                android:layout_marginBottom="10dp"
-                                android:lineSpacingExtra="5dp"
-                                android:minLines="2"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:text="@string/dummy_address"
-                                android:textColor="@color/white_second"
-                                android:textSize="13sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="@+id/addressLabel"
-                                app:layout_constraintTop_toBottomOf="@+id/addressLabel" />
-
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                        <RelativeLayout
-                            android:background="@drawable/rounded_dark_blue"
-                            android:layout_width="match_parent"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_height="wrap_content">
-
-                            <Spinner
-                                android:id="@+id/spinQuery"
-                                android:layout_width="match_parent"
-                                android:background="@null"
-                                android:layout_centerVertical="true"
-                                android:layout_height="wrap_content"/>
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:background="@null"
-                                android:layout_centerVertical="true"
-                                android:padding="@dimen/_10sdp"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/arrow_down_white"
-                                android:layout_height="wrap_content"/>
-
-                        </RelativeLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="68dp"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/rounded_dark_blue"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-
-
-                            <TextView
-                                style="@style/textRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/full_name"
-                                android:textColor="@color/text_hint" />
-
-                            <EditText
-                                style="@style/appDarkEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:hint="@string/enter_full_name"
-                                android:inputType="text"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="Jhon Wick" />
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/rounded_dark_blue"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/textRegular"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/phone_no"
-                                android:textColor="@color/text_hint" />
-
-                            <EditText
-                                style="@style/appDarkEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:hint="@string/enter_phone_number"
-                                android:inputType="text"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:text="Jhon Wick" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/rounded_dark_blue"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-
-                            <EditText
-                                style="@style/appDarkEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="8dp"
-                                android:gravity="start"
-                                android:hint="@string/type_your_query"
-                                android:inputType="textMultiLine"
-                                android:lineSpacingExtra="5dp"
-                                android:maxHeight="@dimen/_150sdp"
-                                android:minLines="5"
-                                android:paddingTop="8dp"
-                                android:paddingBottom="8dp"
-                                android:text="@string/duumyText" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                </androidx.core.widget.NestedScrollView>
-
+                </LinearLayout>
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/loginBtn"
+                    android:id="@+id/contactUsSubmitBtn"
                     style="@style/buttonTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@drawable/gredient_bg"
-                    android:text="@string/submit"
+
                     android:layout_margin="@dimen/_10ssp"
-                    android:layout_alignParentBottom="true"
-                 />
-
-            </RelativeLayout>
+                    android:background="@drawable/gredient_bg"
+                    android:text="@string/submit" />
 
 
+            </LinearLayout>
+
+        </ScrollView>
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </layout>

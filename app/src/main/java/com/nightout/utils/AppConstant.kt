@@ -10,6 +10,10 @@ class AppConstant {
         const val BearerTOKEN = "BearerTOKEN"
         const val IMAGE_PATH = "IMAGE_PATH"
 
+        const val NO_INTERNET = 502
+        const val INTERNAL_ERROR = 500
+        const val PARSING_ERROR = 504
+
 
     }
 

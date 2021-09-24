@@ -12,7 +12,59 @@
         android:layout_height="match_parent"
         android:background="@color/foodstroe_bg">
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="@dimen/_220sdp">
+
+
+
+            <io.github.florent37.shapeofview.shapes.ArcView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:elevation="4dp"
+                android:id="@+id/arcLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:shape_arc_height="30dp"
+                app:shape_arc_position="bottom"
+                >
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primary_clr"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </io.github.florent37.shapeofview.shapes.ArcView>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:dotsColor="@color/text_yello"
+            app:dotsSize="@dimen/_7sdp"
+            app:dotsStrokeWidth="0.5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_150sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator>
+     <!--   <ImageView
             android:id="@+id/eventDetailTopImag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +73,7 @@
             android:src="@drawable/intersect_event"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
 
         <ImageView
@@ -104,7 +156,7 @@
 
                         android:drawablePadding="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_bold"
-                        android:text="$200"
+                        android:text="$00"
                         android:textColor="@color/text_yello"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -385,7 +437,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,8 @@ package com.nightout.vendor.services
 import com.nightout.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -30,7 +32,7 @@ interface APIInterface {
     suspend fun userVenueDetailAPI(@Body params: HashMap<String, Any>): Response<VenuDetailModel>
 
     @POST("venue_type_list")
-    suspend fun venuListAPI(@Body params: HashMap<String, String>): Response<VenuListModel>
+    fun venuListAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("profile_update")
     suspend fun updateProfileAPI(@Body requestBody: MultipartBody): Response<LoginModel>
@@ -63,7 +65,7 @@ interface APIInterface {
     suspend fun delEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 
     @POST("send_query")
-    suspend fun sendQueryAPI(@Body params: HashMap<String, Any>): Response<BaseModel>
+     fun sendQueryAPI(@Body params: HashMap<String, Any>): Call<ResponseBody>
 
     @POST("user_pages")
     suspend fun userPagesAPI(): Response<AboutModelResponse>

@@ -34,11 +34,13 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var supportMapFragment: SupportMapFragment
     lateinit var venuListModel: VenuListViewModel
     private var customProgressDialog = CustomProgressDialog()
-    var storeType = ""
+   // var storeType = ""
     var listStoreType = ArrayList<VenuModel>()
     lateinit var venuSubAdapter: VenuSubAdapter
     private val progressDialog = CustomProgressDialog()
     lateinit var doFavViewModel : DoFavViewModel
+    var selectedStrType="1"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +58,12 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         supportMapFragment = (supportFragmentManager.findFragmentById(R.id.venulistingMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@VenuListActvity)
         supportMapFragment.view?.visibility = GONE
-        storeType = intent.getStringExtra(AppConstant.INTENT_EXTRAS.StoreType)!!
-        setSelectedStore(storeType)
+        selectedStrType = intent.getStringExtra(AppConstant.INTENT_EXTRAS.StoreType)!!
+        setSelectedStore(selectedStrType)
     }
 
     private fun setSelectedStore(strType: String) {
-        if(!storeType.equals("1")){
+        if(!selectedStrType.equals("1")){
             binding.venulistingToprecycler.smoothScrollToPosition(venuAdapterAdapter.itemCount)
         }
         //store_type => required (1=>Bar, 2=>Pub, 3=>Club, 4=>Food, 5=>Event)
@@ -71,48 +73,50 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     listStoreType[i].isSelected = 0 == i
                 }
 
-                venue_type_listAPICALL("1")
+                venue_type_listAPICALL()
             }
             "2" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 1 == i
                 }
 
-                venue_type_listAPICALL("2")
+                venue_type_listAPICALL()
             }
             "3" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 2 == i
                 }
 
-                venue_type_listAPICALL("3")
+                venue_type_listAPICALL()
             }
             "4" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 3 == i
                 }
-                venue_type_listAPICALL("4")
+                venue_type_listAPICALL()
             }
             "5" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 4 == i
                 }
-                venue_type_listAPICALL("5")
+                venue_type_listAPICALL()
             }
         }
 
     }
 
    lateinit var venuDataList: ArrayList<VenuListModel.Data>
-    private fun venue_type_listAPICALL(storeType: String) {
+    private fun venue_type_listAPICALL() {
         var map = HashMap<String, String>()
-        map["store_type"] = storeType
+        map["store_type"] = selectedStrType
 
         customProgressDialog.show(this@VenuListActvity)
         venuListModel.venulistData(map).observe(this@VenuListActvity, {
             when (it.status) {
                 Status.SUCCESS -> {
                     customProgressDialog.dialog.hide()
+                    venuDataList = ArrayList<VenuListModel.Data>()
+                    setListVenu()
                     it.data?.let {
                         venuDataList=it.data
                         setListVenu()
@@ -135,16 +139,36 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun setListVenu() {
-        venuSubAdapter =
-            VenuSubAdapter(this@VenuListActvity, venuDataList, object : VenuSubAdapter.ClickListener {
+        venuSubAdapter = VenuSubAdapter(this@VenuListActvity, venuDataList, object : VenuSubAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     var vv=venuDataList[pos].venue_gallery
-                    startActivity(
-                        Intent(this@VenuListActvity, StoreDetail::class.java)
-                            .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY,true)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" +venuDataList[pos].id )
-                        .putExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST,venuDataList[pos].venue_gallery )
-                    )
+                    if(selectedStrType.equals("5")){
+                        startActivity(
+                            Intent(this@VenuListActvity, EventDetail::class.java)
+                                .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                                .putExtra(
+                                    AppConstant.INTENT_EXTRAS.VENU_ID,
+                                    "" + venuDataList[pos].id
+                                )
+                                .putExtra(
+                                    AppConstant.INTENT_EXTRAS.GALLERY_LIST,
+                                    venuDataList[pos].venue_gallery
+                                )
+                        )
+                    }else {
+                        startActivity(
+                            Intent(this@VenuListActvity, StoreDetail::class.java)
+                                .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                                .putExtra(
+                                    AppConstant.INTENT_EXTRAS.VENU_ID,
+                                    "" + venuDataList[pos].id
+                                )
+                                .putExtra(
+                                    AppConstant.INTENT_EXTRAS.GALLERY_LIST,
+                                    venuDataList[pos].venue_gallery
+                                )
+                        )
+                    }
                 }
 
                 override fun onClickFav(pos: Int) {
@@ -249,7 +273,8 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                         listStoreType[i].isSelected = pos == i
                     }
                     venuAdapterAdapter.notifyDataSetChanged()
-                    venue_type_listAPICALL(listStoreType[pos].id.toString())
+                    selectedStrType=listStoreType[pos].id.toString()
+                    venue_type_listAPICALL()
 
                 }
 

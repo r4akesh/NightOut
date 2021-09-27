@@ -31,17 +31,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_4sdp"
-            app:layout_constraintEnd_toEndOf="parent"
             android:fillViewport="true"
-
             app:layout_constraintBottom_toTopOf="@+id/bookticketPay"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_20sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/bookTicketTopConstrent"
@@ -138,7 +138,7 @@
 
                     <TextView
                         android:id="@+id/bookTicketURBN"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -146,6 +146,7 @@
                         android:text="URBN"
                         android:textColor="@color/white_thred"
                         android:textSize="@dimen/_16ssp"
+                        app:layout_constraintEnd_toStartOf="@+id/bookTicketDate"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/bookTicketViewEvemt" />
 
@@ -156,26 +157,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:drawableStart="@drawable/calendra_ic44"
                         android:drawablePadding="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_bold"
                         android:text="25 June 2021"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:textColor="@color/white_thred"
-                        android:textSize="@dimen/_16ssp"
-                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketURBN"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/bookTicketURBN" />
-
-
-                    <TextView
-                        android:id="@+id/bookTicketDays"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:fontFamily="@font/proximanova_bold"
-                        android:text="Saturdays"
                         android:textColor="@color/white_thred"
                         android:textSize="@dimen/_16ssp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -190,14 +176,13 @@
 
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:fontFamily="@font/proximanova_reg"
                         android:text="Start at : 08:30 pm To 02:00 am"
                         android:textColor="@color/white_second"
                         android:textSize="@dimen/_12ssp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        app:layout_constraintBottom_toBottomOf="@+id/bookTicketDays"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/bookTicketDays" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/bookTicketDate" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -401,10 +386,10 @@
             android:background="@drawable/gredient_bg"
             android:drawableEnd="@drawable/arrow_union"
             android:gravity="start"
-            android:textStyle="bold"
             android:paddingStart="@dimen/_10ssp"
             android:paddingEnd="@dimen/_10ssp"
             android:text="Pay $600"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

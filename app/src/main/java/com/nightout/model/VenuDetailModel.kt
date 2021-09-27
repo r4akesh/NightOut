@@ -9,7 +9,7 @@ data class VenuDetailModel(
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) {
+) :Serializable{
 
     data class Data(
         val age_limit: String,
@@ -60,7 +60,7 @@ data class VenuDetailModel(
         val favrouite: String,
         val venue_gallery: ArrayList<VenueGallery>
 
-    )
+    ):Serializable
 
     data class VendorDetail(
         val created_at: String,
@@ -96,7 +96,7 @@ data class VenuDetailModel(
         val status: String,
         val title: String,
         val updated_at: String
-    )
+    ):Serializable
 
     data class VenueGallery(
         val created_at: String,
@@ -107,5 +107,5 @@ data class VenuDetailModel(
         val type: String,
         val updated_at: String,
         val venue_id: String
-    )
+    ):Serializable
 }

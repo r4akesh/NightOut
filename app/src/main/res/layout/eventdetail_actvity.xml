@@ -90,6 +90,7 @@
 
 
         <ImageView
+            android:id="@+id/eventDeatilFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
@@ -112,7 +113,7 @@
             app:cardCornerRadius="@dimen/_5ssp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/eventDetailPlaceOrder"
+            app:layout_constraintBottom_toTopOf="@+id/eventDetailBuyTkt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -205,12 +206,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/eventDetailDis" />
 
                     <TextView
+                        android:id="@+id/eventDetailDistence"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_7sdp"
                         android:layout_marginEnd="@dimen/_10ssp"
-                        android:text="2.3 miles"
+                        android:text="0 miles"
                         android:textColor="@color/white_second"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -330,14 +332,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/eventDetailCocktail" />
 
+                    <fragment
+                        android:id="@+id/eventDeatillocMap"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_110sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/eventDetailMap"
+                        app:layout_constraintEnd_toEndOf="@+id/eventDetailMap"
+                        app:layout_constraintStart_toStartOf="@+id/eventDetailMap"
+                        app:layout_constraintTop_toTopOf="@+id/eventDetailMap" />
 
                     <ImageView
                         android:id="@+id/eventDetailMap"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8ssp"
-                        android:layout_marginTop="@dimen/_4ssp"
-                        android:layout_marginEnd="@dimen/_8ssp"
+                        android:layout_height="@dimen/_110sdp"
+
+
+                        android:layout_marginTop="@dimen/_8ssp"
+
                         android:background="@null"
                         android:scaleType="fitXY"
                         android:src="@drawable/map_duumy_img"
@@ -347,6 +359,7 @@
 
 
                     <ImageView
+                        android:id="@+id/eventDetailShareLoc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/_10ssp"
@@ -412,10 +425,17 @@
                         android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/eventDetaiNearBy">
 
-                        <include
-                            android:id="@+id/eventDetaiMenuDesc"
-                            layout="@layout/menu_desc"
-                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:id="@+id/eventDetailDescription"
+                            android:layout_width="match_parent"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:layout_height="wrap_content"/>
 
 
                     </LinearLayout>
@@ -426,7 +446,7 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/eventDetailPlaceOrder"
+            android:id="@+id/eventDetailBuyTkt"
             style="@style/buttonTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

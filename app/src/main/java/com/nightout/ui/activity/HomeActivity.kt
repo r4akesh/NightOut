@@ -55,7 +55,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sidemenu_email: TextView? = null
     var sideMenuFAQ: TextView? = null
     var sidemenu_profile: CircleImageView? = null
-
+    lateinit var homeFragment : HomeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -163,21 +163,12 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
                 )
             )
             binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
-
             binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
             binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-            binding.bottomMyProfile.setDrawableColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.text_gray
-                )
-            )
+            binding.bottomMyProfile.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
             binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
-
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is BarCrwalFragment) {
-
                 showFragment(BarCrwalFragment(this))
             }
         } else if (v == binding.bottomMyProfile) {
@@ -213,7 +204,6 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
             if (currentFragment !is ProfileFragment) {
-
                 showFragment(ProfileFragment(this))
             }
         }
@@ -418,6 +408,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             slidingRootNav!!.closeMenu()
         val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
         transaction.replace(R.id.mainContainer, fragment).commit()
+        homeFragment = HomeFragment()
     }
 
 
@@ -450,5 +441,10 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         } else {
             slidingRootNav!!.openMenu()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        homeFragment.onActivityResultMy(requestCode, resultCode, data)
     }
 }

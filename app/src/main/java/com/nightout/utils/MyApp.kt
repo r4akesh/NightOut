@@ -41,6 +41,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.util.Log
+import java.text.DecimalFormat
 
 
 class MyApp : Application() {
@@ -372,7 +374,30 @@ return b;
             return null
         }
 
+          fun fetchDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+            val theta = lon1 - lon2
+            var dist = (Math.sin(deg2rad(lat1))
+                    * Math.sin(deg2rad(lat2))
+                    + (Math.cos(deg2rad(lat1))
+                    * Math.cos(deg2rad(lat2))
+                    * Math.cos(deg2rad(theta))))
+            dist = Math.acos(dist)
+              Log.d("ok", "distance1: "+dist)
+            dist = rad2deg(dist)
+              Log.d("ok", "distance2: "+dist)
+            dist = dist * 60 * 1.1515
+              Log.d("ok", "distance3: "+dist)
+              return Commons.strToDouble(DecimalFormat("##.##").format(dist))
 
+        }
+
+        private fun deg2rad(deg: Double): Double {
+            return deg * Math.PI / 180.0
+        }
+
+        private fun rad2deg(rad: Double): Double {
+            return rad * 180.0 / Math.PI
+        }
      /*        @SuppressLint("SdCardPath")
         fun writeVenuesList(hMap: ArrayList<VenuListModel.Data>) {
             val path: String
@@ -431,6 +456,7 @@ return b;
         }*/
 
     }
+
 
 
 }

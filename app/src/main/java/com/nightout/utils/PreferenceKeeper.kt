@@ -48,8 +48,23 @@ class PreferenceKeeper private constructor(context: Context?) {
             prefs!!.edit().putString(AppConstant.PrefsName.IMAGE_PATH, cnt).apply()
         }
 
+    var currentLat: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.LATITUDE_CURRENT, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.LATITUDE_CURRENT, cnt).apply()
+        }
 
+    var currentLong: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.LONGITUDE_CURRENT, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.LONGITUDE_CURRENT, cnt).apply()
+        }
 
+    var currentAddrs: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.ADDRESS_CURRENT, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.ADDRESS_CURRENT, cnt).apply()
+        }
     companion object {
         private var keeper: PreferenceKeeper? = null
         private var context: Context? = null

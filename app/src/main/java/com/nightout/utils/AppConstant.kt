@@ -9,6 +9,9 @@ class AppConstant {
         const val IS_LOGIN = "IS_LOGIN"
         const val BearerTOKEN = "BearerTOKEN"
         const val IMAGE_PATH = "IMAGE_PATH"
+        const val LATITUDE_CURRENT = "LATITUDE_CURRENT"
+        const val LONGITUDE_CURRENT = "LONGITUDE_CURRENT"
+        const val ADDRESS_CURRENT = "ADDRESS_CURRENT"
 
         const val NO_INTERNET = 502
         const val INTERNAL_ERROR = 500
@@ -32,6 +35,7 @@ class AppConstant {
         const val CONTACT_LIST = "CONTACT_LIST"
         const val EMERNGCY_COUNT = "EMERNGCY_COUNT"
         const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
+        const val EVENTDETAIL_POJO = "EVENTDETAIL_POJO"
 
     }
 }

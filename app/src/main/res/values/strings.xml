@@ -191,5 +191,10 @@
     <string name="detail_plz">Please enter your query</string>
     <string name="Select">Select</string>
     <string name="query_spin_plz">Please select your query type</string>
+    <string name="Description">Description</string>
+    <string name="required_for_this_app">Required for this app</string>
+    <string name="enable_now">Enable Now</string>
+    <string name="location_permission_not_granted">Location Permission not granted</string>
+    <string name="enable_gps">Enable GPS</string>
 
 </resources>

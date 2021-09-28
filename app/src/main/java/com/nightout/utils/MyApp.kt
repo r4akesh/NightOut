@@ -10,6 +10,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.net.ConnectivityManager
 import android.util.DisplayMetrics
 
@@ -42,6 +43,7 @@ import kotlin.collections.ArrayList
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import java.lang.NumberFormatException
 import java.text.DecimalFormat
 
 
@@ -374,7 +376,7 @@ return b;
             return null
         }
 
-          fun fetchDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+       /*   fun fetchDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
             val theta = lon1 - lon2
             var dist = (Math.sin(deg2rad(lat1))
                     * Math.sin(deg2rad(lat2))
@@ -389,6 +391,28 @@ return b;
               Log.d("ok", "distance3: "+dist)
               return Commons.strToDouble(DecimalFormat("##.##").format(dist))
 
+        }*/
+
+        fun getDestance(Lat_source: Double, Long_Source: Double, Lat_destination: String, Long_destination: String): Double {
+            try {
+                var distance: Double
+                val latB = Lat_destination.toDouble()
+                val lngB = Long_destination.toDouble()
+                val locationA = Location("point A")
+                locationA.setLatitude(Lat_source)
+                locationA.setLongitude(Long_Source)
+                val locationB  = Location("point B")
+                locationB.setLatitude(latB)
+                locationB.setLongitude(lngB)
+                distance = locationA.distanceTo(locationB).toDouble()
+                println("distance you got is?????$distance")
+                distance /= 1000
+                return Commons.strToDouble(DecimalFormat("##.##").format(distance))
+            } catch (e: NumberFormatException) {
+                Log.d("catch MyApplication", "" + e)
+                e.printStackTrace()
+            }
+            return 0.0
         }
 
         private fun deg2rad(deg: Double): Double {

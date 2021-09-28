@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="loginModel"
             type="com.nightout.model.LoginModel.Data" />
-
 
 
     </data>
@@ -31,13 +31,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
-            app:layout_constraintTop_toBottomOf="@+id/menuOpenBtn"
-            app:layout_constraintBottom_toTopOf="@+id/editProfileBtn"
             android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/editProfileBtn"
 
-            android:fillViewport="true">
+            app:layout_constraintTop_toBottomOf="@+id/menuOpenBtn">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,11 +52,11 @@
 
                     <RelativeLayout
                         android:id="@+id/userProfileRel"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_width="@dimen/_100sdp"
-                        android:layout_height="@dimen/_100sdp">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/userProfile"
@@ -73,10 +73,10 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                                android:visibility="gone"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:src="@drawable/select_pic_camera"
+                            android:visibility="gone"
 
 
                             />
@@ -84,15 +84,13 @@
                     </RelativeLayout>
 
 
-
-
                     <TextView
                         android:id="@+id/userName"
                         style="@style/textRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
                         android:hint="name"
+                        android:padding="5dp"
                         android:text="@{loginModel.name}"
                         android:textColor="@color/text_yello"
                         android:textSize="22sp"
@@ -107,11 +105,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:padding="5dp"
-                        android:visibility="gone"
                         android:text="@string/dummy_user_address"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@id/userProfileRel"
                         app:layout_constraintStart_toStartOf="@id/userProfileRel"
@@ -127,316 +125,200 @@
                     android:orientation="vertical">
 
 
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/emailIdLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/email_id"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/userEmailId"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{loginModel.email}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/emailIdLabel"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/emailIdLabel" />
-
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/emailIdLabel" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/mobileNumberLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/mobile_number"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/userMobileNumber"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/countrycode(loginModel.phonenumber)}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/mobileNumberLabel"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/mobileNumberLabel" />
-
-
-                        <View
-
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/mobileNumberLabel" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:visibility="gone"
-
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/passwordLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/password"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/userPassword"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="john123"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/passwordLabel"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/passwordLabel" />
-
-
-                        <View
-
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/addressOneLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/addressOne"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/addressOne"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{loginModel.userprofile.address1}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/addressOneLabel"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/addressOneLabel" />
-
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/addressOneLabel" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/addressTwoLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/addressTwo"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/addressTwo" />
-
-
-                        <TextView
-                            android:id="@+id/addressTwo"
-                            style="@style/textRegular"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:gravity="end"
-                            android:text="@{loginModel.userprofile.address2}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/addressTwoLabel"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/addressTwo" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:visibility="gone"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/locationLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/location"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/userLocation"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/country"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/locationLabel"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/locationLabel" />
-
-
-                        <View
-                            android:id="@+id/nameDivider"
-                            android:layout_width="0dp"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/locationLabel" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/emailIdLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/aboutMeLabel"
-                            style="@style/textNormal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/about_me"
-                            android:textColor="@color/text_hint"
-                            android:textSize="16sp" />
+                        android:layout_marginTop="20dp"
+                        android:text="@string/email_id"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                        <TextView
-                            android:id="@+id/aboutMe"
-                            style="@style/textRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:lineSpacingExtra="5dp"
-                            android:text="@{loginModel.userprofile.about_me}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/userEmailId"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{loginModel.email}"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/emailIdLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/emailIdLabel" />
 
 
-                        <View
-
-                            android:layout_width="match_parent"
-                            android:layout_height="0.8dp"
-                            android:layout_marginTop="10dp"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:background="@color/color_252342"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-
-                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/color_252342"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/emailIdLabel" />
 
 
+                    <TextView
+                        android:id="@+id/mobileNumberLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/mobile_number"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/userMobileNumber"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/countrycode(loginModel.phonenumber)}"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/mobileNumberLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/mobileNumberLabel" />
+
+
+                    <View
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/color_252342"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/mobileNumberLabel" />
+
+
+
+
+
+                    <TextView
+                        android:id="@+id/addressOneLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/addressOne"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/addressOne"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{loginModel.userprofile.address1}"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:maxLines="2"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/addressOneLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/addressOneLabel" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/color_252342"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/addressOneLabel" />
+
+
+                    <TextView
+                        android:id="@+id/addressTwoLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/addressTwo"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/addressTwo" />
+
+
+                    <TextView
+                        android:id="@+id/addressTwo"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{loginModel.userprofile.address2}"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:maxLines="2"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/addressOneLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/addressOneLabel" />
+
+
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/color_252342"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/addressTwo" />
+
+
+
+
+
+                    <TextView
+                        android:id="@+id/aboutMeLabel"
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/about_me"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/aboutMe"
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="@{loginModel.userprofile.about_me}"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+
+                    <View
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/color_252342"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
 
                 </LinearLayout>
@@ -452,14 +334,14 @@
             style="@style/buttonTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/gredient_bg"
             android:text="@string/edit"
-            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -143,18 +143,10 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 override fun onClick(pos: Int) {
                     var vv=venuDataList[pos].venue_gallery
                     if(selectedStrType.equals("5")){
-                        startActivity(
-                            Intent(this@VenuListActvity, EventDetail::class.java)
+                        startActivity(Intent(this@VenuListActvity, EventDetail::class.java)
                                 .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
-                                .putExtra(
-                                    AppConstant.INTENT_EXTRAS.VENU_ID,
-                                    "" + venuDataList[pos].id
-                                )
-                                .putExtra(
-                                    AppConstant.INTENT_EXTRAS.GALLERY_LIST,
-                                    venuDataList[pos].venue_gallery
-                                )
-                        )
+                                .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
+                                .putExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST, venuDataList[pos].venue_gallery))
                     }else {
                         startActivity(
                             Intent(this@VenuListActvity, StoreDetail::class.java)

@@ -831,7 +831,6 @@ class WebServiceRepository(application: Activity) {
                             openCloseResponseModel.postValue(Resource.success(response.code(), response.message(), null, ""))
                         }
                     }
-
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                         if (t is IOException) {
                             openCloseResponseModel.postValue(Resource.error(AppConstant.PrefsName.INTERNAL_ERROR, "Network Failure,Please try again", null))
@@ -839,7 +838,6 @@ class WebServiceRepository(application: Activity) {
                             openCloseResponseModel.postValue(Resource.error(AppConstant.PrefsName.PARSING_ERROR, "Something went wrong. Please contact with admin.", null))
                         }
                     }
-
                 })
             } else {
                 openCloseResponseModel.postValue(Resource.error(AppConstant.PrefsName.NO_INTERNET, "No internet connection", null))
@@ -854,47 +852,56 @@ class WebServiceRepository(application: Activity) {
             CoroutineScope(Dispatchers.IO).launch {
                 dashboardRes.postValue(Resource.loading(null))
                 if (networkHelper.isNetworkConnected()) {
-                    // val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
                     val request = apiInterfaceHeader.userPagesAPI()
                     if (request.isSuccessful) {
-
                         dashboardRes.postValue(
-                            Resource.success(
-                                request.code(),
-                                request.body()!!.message,
-                                request.body(),
-                                ""
-                            )
-                        )
-
-
+                            Resource.success(request.code(), request.body()!!.message, request.body(), ""))
                     } else {
                         try {
                             val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
                             println("ok jsonObj$jsonObj")
-                            dashboardRes.postValue(
-                                Resource.error(
-                                    request.code(),
-                                    jsonObj.getString("message"),
-                                    null
-                                )
-                            )
+                            dashboardRes.postValue(Resource.error(request.code(), jsonObj.getString("message"), null))
                         } catch (e: Exception) {
                             dashboardRes.postValue(Resource.error(0, e.toString(), null))
                         }
                     }
                 } else dashboardRes.postValue(
-                    Resource.error(
-                        AppConstant.PrefsName.NO_INTERNET,
-                        "No internet connection",
-                        null
-                    )
-                )
+                    Resource.error(AppConstant.PrefsName.NO_INTERNET, "No internet connection", null))
             }
         } catch (e: Exception) {
         }
         return dashboardRes
     }
+    fun eventBook(map: HashMap<String, String>): LiveData<Resource<BookEventMdlResponse>> {
+        val openCloseResponseModel = MutableLiveData<Resource<BookEventMdlResponse>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.bookEventTicketAPI(map)
+                request.enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        val data = response.body()?.string()
+                        if (data != null) {
+                            val dataResponse = fromJson<BookEventMdlResponse>(data)
+                            openCloseResponseModel.postValue(Resource.success(response.code(), response!!.message(), dataResponse, ""))
+                        } else {
+                            openCloseResponseModel.postValue(Resource.success(response.code(), response.message(), null, ""))
+                        }
+                    }
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        if (t is IOException) {
+                            openCloseResponseModel.postValue(Resource.error(AppConstant.PrefsName.INTERNAL_ERROR, "Network Failure,Please try again", null))
+                        } else {
+                            openCloseResponseModel.postValue(Resource.error(AppConstant.PrefsName.PARSING_ERROR, "Something went wrong. Please contact with admin.", null))
+                        }
+                    }
+                })
+            } else {
+                openCloseResponseModel.postValue(Resource.error(AppConstant.PrefsName.NO_INTERNET, "No internet connection", null))
+            }
+        }
+        return openCloseResponseModel
+    }
+
 }
 
 

@@ -43,7 +43,11 @@ class CongrtulationActvity : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
         if(v==binding.congrtulationActvityFeedback){
-            startActivity(Intent(this@CongrtulationActvity,RatingActvity::class.java))
+           // startActivity(Intent(this@CongrtulationActvity,RatingActvity::class.java))
+            val i = Intent(this, HomeActivity::class.java)
+// set the new task and clear flags
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
         }
     }
 }

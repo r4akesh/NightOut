@@ -26,6 +26,7 @@ import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.DoFavViewModel
 import com.nightout.viewmodel.VenuDetailViewModel
+import java.text.DecimalFormat
 
 class EventDetail : BaseActivity(), OnMapReadyCallback {
 
@@ -141,9 +142,10 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             }
             var crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
             var crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
-            var eventLat = Commons.strToDouble(dt.store_lattitude)
-            var eventLong = Commons.strToDouble(dt.store_longitude)
-            binding.eventDetailDistence.text =""+MyApp.fetchDistance(crntLat,crntLong,eventLat,eventLong) + " miles"
+            var eventLat = (dt.store_lattitude)
+            var eventLong = (dt.store_longitude)
+            var vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
+            binding.eventDetailDistence.text =""+ DecimalFormat("##.##").format(vv)+" miles"
 
             //  binding.storeDeatilAddrs.text = dt.store_address
             if (dt.favrouite == "1") {

@@ -42,17 +42,21 @@
             app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar" />
 
 
-
-
-        <ImageView
+        <RatingBar
             android:id="@+id/ratingActvityStar"
+            style="@style/MyRatingBarTwo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:src="@drawable/ratinmgimg"
+            android:layout_marginEnd="8dp"
+            android:isIndicator="false"
+            android:rating="5"
+            android:stepSize="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingActvityProfile" />
+
 
         <TextView
             android:id="@+id/ratingActvityExcellent"
@@ -71,9 +75,9 @@
             android:id="@+id/ratingActvityConsterntRecyle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-          android:padding="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/gredient_btmshet_bg"
+            android:padding="@dimen/_5sdp"
             app:layout_constraintBottom_toTopOf="@+id/ratingActvityBtmConstrent"
             app:layout_constraintTop_toBottomOf="@+id/ratingActvityExcellent">
 
@@ -81,10 +85,10 @@
                 android:id="@+id/ratingActvityTot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/proximanova_reg"
                 android:text="Comment(20)"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_12sdp"
                 android:textColor="@color/white_thred"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -128,8 +132,8 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_8ssp"
                 android:paddingTop="@dimen/_5ssp"
-                android:paddingBottom="@dimen/_5ssp"
                 android:paddingEnd="@dimen/_5ssp"
+                android:paddingBottom="@dimen/_5ssp"
                 android:src="@drawable/send_chat"
 
                 app:layout_constraintBottom_toBottomOf="parent"

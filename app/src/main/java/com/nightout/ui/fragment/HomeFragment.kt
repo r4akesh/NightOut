@@ -47,6 +47,16 @@ import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import android.app.Activity
+import androidx.recyclerview.widget.RecyclerView
+
+import androidx.annotation.NonNull
+
+
+
+
+
+
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, ActivtyToFrag {
@@ -145,6 +155,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                 ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             Log.d("ok", "addrs: "+addrs)
              binding.headerHome.headerAddrs.setText(addrs)
+            PreferenceKeeper.instance.currentAddrs = addrs
             PreferenceKeeper.instance.currentLat = latitude.toString()
             PreferenceKeeper.instance.currentLong= longitude.toString()
         } catch (e: IOException) {
@@ -248,7 +259,23 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                 add_favouriteAPICALL(subPos,mainPos)
             }
         })
+        binding.btmShhetInclue.bottomSheetRecyclerAll.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(
+                recyclerView: RecyclerView,
+                newState: Int
+            ) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
 
+            override fun onScrolled(
+                recyclerView: RecyclerView,
+                dx: Int,
+                dy: Int
+            ) {
+                //save dx
+            }
+        })
       binding.btmShhetInclue.bottomSheetRecyclerAll.also {
           it.layoutManager=LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
           it.adapter = allRecordAdapter
@@ -275,15 +302,18 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                     it.data?.let { detailData ->
                         try {
                             Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
-                            if( detailData.data.status == "1"){
+                           /* if( detailData.data.status == "1"){
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "1"
-                              // allRecordAdapter.notifyItemChanged(pos)
-                               allRecordAdapter.notifyDataSetChanged()
+                                allRecordAdapter.notifyItemChanged(pos)
+                              // allRecordAdapter.notifyDataSetChanged()
                             }else{
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "0"
-                              //  allRecordAdapter.notifyItemChanged(pos)
-                               allRecordAdapter.notifyDataSetChanged()
-                            }
+
+                                    allRecordAdapter.notifyItemChanged(pos)
+                               // state = mLayoutManager.onSaveInstanceState();
+                            //   allRecordAdapter.notifyDataSetChanged()
+                            }*/
+
                         } catch (e: Exception) {
                         }
                     }

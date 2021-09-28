@@ -70,5 +70,6 @@ interface APIInterface {
     @POST("user_pages")
     suspend fun userPagesAPI(): Response<AboutModelResponse>
 
-
+    @POST("book_event_ticket")
+    fun bookEventTicketAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 }

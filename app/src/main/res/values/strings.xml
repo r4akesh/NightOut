@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NightOut</string>
+    <string name="google_place_picker_key">AIzaSyBTaViY1yy682xv08Pnp33jE1fgOCAIxq4</string>
     <string name="txt_progress">Please Wait…</string>
     <string name="No_Internet">No Internet Connection !!</string>
     <string name="Login">Login</string>
@@ -84,7 +85,7 @@
     <string name="Order_Summery">Order Summary</string>
     <string name="give_feedback">Give Feedback</string>
     <string name="Congratulation">Congratulation</string>
-    <string name="Your_Confirmed">Your Order is Confirmed</string>
+    <string name="Your_Confirmed">Your Event is Booked</string>
     <string name="Give_Feedback">Give Feedback</string>
     <string name="Review_Rating"><![CDATA[Review & Rating]]></string>
     <string name="Excellent">Excellent!</string>
@@ -196,5 +197,7 @@
     <string name="enable_now">Enable Now</string>
     <string name="location_permission_not_granted">Location Permission not granted</string>
     <string name="enable_gps">Enable GPS</string>
+    <string name="Tap_addrs1">Tap to add address</string>
+
 
 </resources>

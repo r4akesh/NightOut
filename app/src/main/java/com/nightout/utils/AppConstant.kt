@@ -36,6 +36,10 @@ class AppConstant {
         const val EMERNGCY_COUNT = "EMERNGCY_COUNT"
         const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
         const val EVENTDETAIL_POJO = "EVENTDETAIL_POJO"
+        const val TOTAL_AMT = "TOTAL_AMT"
+        const val ORDER_ID = "ORDER_ID"
+        const val TRANSACTION_ID = "TRANSACTION_ID"
+        const val ADAPTER_POS = "ADAPTER_POS"
 
     }
 }

@@ -5,15 +5,23 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.github.drjacky.imagepicker.ImagePicker
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.nightout.R
 import com.nightout.callbacks.OnSelectOptionListener
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.EditProfileActivity
@@ -30,6 +38,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.io.IOException
+import java.util.*
 
 
 open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptionListener {
@@ -38,9 +48,9 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     private var imageUrl: Uri? = null
     private var filePath: File? = null
     private lateinit var reqFile: RequestBody
-     var body: MultipartBody.Part? = null
+    var body: MultipartBody.Part? = null
     private val progressDialog = CustomProgressDialog()
-
+    var LAUNCH_GOOGLE_ADDRESS = 1005
 
 //    init {
 //        editProfileViewModel = EditProfileViewModel(activity)
@@ -49,12 +59,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     fun onFinishScreen() {
         activity.finish()
     }
-/*
-    fun openCamera() {
-        if (!Utills.checkingPermissionIsEnabledOrNot(activity)) {
-            //  Utills.requestMultiplePermission(activity,requestPermissionCode)
-        }
-    }*/
+
 
     fun onSelectImage() {
         selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this)
@@ -65,7 +70,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     }
 
     fun saveProfile(editProfileViewModel: EditProfileViewModel) {
-         this.editProfileViewModel = editProfileViewModel
+        this.editProfileViewModel = editProfileViewModel
         MyApp.hideSoftKeyboard(activity)
         if (editProfileViewModel.isValidate(activity)) {
             val builder = MultipartBody.Builder()
@@ -75,10 +80,10 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             builder.addFormDataPart("address1", editProfileViewModel.addrs1)
             builder.addFormDataPart("address2", editProfileViewModel.addrs2)
             builder.addFormDataPart("about_me", editProfileViewModel.aboutMe)
-            builder.addFormDataPart("location", "")
-           // if (editProfileViewModel.profilePic != null) {
-            if (body!= null) {
-              //  builder.addPart(editProfileViewModel.profilePic!!)
+            builder.addFormDataPart("city", city)
+            // if (editProfileViewModel.profilePic != null) {
+            if (body != null) {
+                //  builder.addPart(editProfileViewModel.profilePic!!)
                 builder.addPart(body!!)
             } else {
                 builder.addFormDataPart("profile", "")
@@ -86,6 +91,15 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
 
             saveProfileAPICall(builder.build())
         }
+    }
+
+    fun openLoactionActvity(editProfileViewModel: EditProfileViewModel) {
+        Places.initialize(activity, activity.resources.getString(R.string.google_place_picker_key))
+        val fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList)
+            .build(activity)
+        activity.startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
+
     }
 
 
@@ -169,37 +183,60 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                val  bitmap: Bitmap?
+                val bitmap: Bitmap?
                 activity.binding.userProfile.setImageBitmap(null)
                 imageUrl = result.originalUri
                 val resultUri = result.uri
                 try {
                     if (Build.VERSION.SDK_INT < 28) {
-                        bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
+                        bitmap =
+                            MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
                     } else {
                         val source = ImageDecoder.createSource(activity.contentResolver, resultUri)
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                     activity.binding.userProfile.setImageBitmap(bitmap)
                     setBody(bitmap!!, "profile")
-                  //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
-                  //  Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
+                    //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
+                    //  Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Utills.showSnackBarFromTop(activity.binding.etFName, "catch-> $e", activity)
                 }
             }
         }
+        if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
+            val place = Autocomplete.getPlaceFromIntent(data!!)
+            //  latitudeGlobal = "" + place.latLng!!.latitude
+            //  longitudeGlobal = "" + place.latLng!!.longitude
+            activity.binding.editProfileLocation.text = place.address
+            activity.binding.editProfileLocation2.setText(place.address)
+            getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
+        }
 
+    }
+
+    var geocoder: Geocoder? = null
+    var city = ""
+    var addresses: List<Address>? = null
+    private fun getAddrsFrmLatlang(latitude: Double, longitude: Double) {
+        geocoder = Geocoder(activity, Locale.getDefault())
+        try {
+          //  latitudeGlobal = "" + latitude
+          //  longitudeGlobal = "" + longitude
+            addresses = geocoder!!.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+          //  val addrs = addresses?.get(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+              city = addresses?.get(0)?.getLocality()!!
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     private fun setBody(bitmap: Bitmap, flag: String): MultipartBody.Part {
         val filePath = Utills.saveImage(activity, bitmap)
         this.filePath = File(filePath)
-        reqFile = RequestBody.create(
-            "multipart/form-data".toMediaTypeOrNull(),
-            this.filePath!!
-        )
+        reqFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), this.filePath!!)
 
 //        if (flag == "store_logo") {
 //            activity.binding.iconName.text = this.filePath!!.name
@@ -220,7 +257,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
-                    it.data?.let{
+                    it.data?.let {
                         var logModel: LoginModel.Data = it.data
                         PreferenceKeeper.instance.loginResponse = logModel
                         Log.d("ok", "SUCCESS: ")
@@ -228,10 +265,10 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                     }
 
                 }
-                Status.LOADING->{
+                Status.LOADING -> {
                     Log.d("ok", "LOADING: ")
                 }
-                Status.ERROR->{
+                Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     Log.d("ok", "ERROR: ")
                     Utills.showSnackBarOnError(activity.binding.etFName, it.message!!, activity)

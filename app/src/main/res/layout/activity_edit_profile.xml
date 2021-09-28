@@ -461,7 +461,8 @@
                                 style="@style/textRegular"
                                 android:textColor="@color/text_hint" />
 
-                            <EditText
+                            <TextView
+                                android:id="@+id/editProfileLocation"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
@@ -474,7 +475,8 @@
                                 android:gravity="start"
                                 android:minLines="2"
                                 android:textStyle="bold"
-                                android:hint="@string/enter_addrs1"
+                                android:onClick="@{()->editProfileHandler.openLoactionActvity(editPrfleViewModl)}"
+                                android:hint="@string/Tap_addrs1"
                                 android:inputType="textMultiLine" />
 
                         </LinearLayout>
@@ -505,6 +507,7 @@
                                 android:textColor="@color/text_hint" />
 
                             <EditText
+                                android:id="@+id/editProfileLocation2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"

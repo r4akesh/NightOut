@@ -12,6 +12,8 @@ import com.nightout.R
 import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.VenuTitleBotmsheetItemBinding
 import com.nightout.model.DashboardModel
+import com.nightout.utils.AppConstant
+import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 
 
@@ -29,16 +31,28 @@ class AllRecordAdapter(
         return ViewHolder(binding)
     }
 
+
+
+    lateinit var venuBotmSheetAdapter :VenuBotmSheetAdapter
     override fun onBindViewHolder(viewHolder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         androidx.core.view.ViewCompat.setNestedScrollingEnabled( viewHolder.binding.venuTitleBotmSeetSubRecyler, false)//for scroll issue botmSheet
         viewHolder.binding.venuTitleBotmShetTitle.text = arrayList[position].title
 
-        var venuBotmSheetAdapter = VenuBotmSheetAdapter(context, arrayList[position].sub_records,position, object : VenuBotmSheetAdapter.ClickListener {
+        MyApp.setSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS,position)
+          venuBotmSheetAdapter = VenuBotmSheetAdapter(context, arrayList[position].sub_records, object : VenuBotmSheetAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     clickListener.onClickSub(pos, position)
                 }
 
             override fun onClickFav(pos: Int) {
+                if(arrayList[position].sub_records[pos].favrouite.equals("1")){
+                    arrayList[position].sub_records[pos].favrouite = "0"
+                }else{
+                    arrayList[position].sub_records[pos].favrouite = "1"
+                }
+                MyApp.setSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS,position)
+                notifyItemChanged(position)
+               venuBotmSheetAdapter.notifyItemChanged(pos)
                  clickListener.onClickFav(pos,position)
             }
 

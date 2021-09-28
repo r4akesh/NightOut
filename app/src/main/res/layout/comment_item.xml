@@ -33,14 +33,29 @@
             app:layout_constraintStart_toEndOf="@+id/commentItemProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <RatingBar
+            android:id="@+id/commentItemRaingImg"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_15sdp"
+
+            android:layout_marginStart="@dimen/_5sdp"
+
+            android:rating="5"
+            android:stepSize="1"
+            android:isIndicator="true"
+            style="@style/MyRatingBarSmall"
+
+            app:layout_constraintStart_toEndOf="@+id/commentItemProfile"
+            app:layout_constraintTop_toBottomOf="@+id/commentItemTitle"/>
+
+       <!-- <ImageView
             android:id="@+id/commentItemRaingImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ratimg_img"
             android:layout_marginStart="@dimen/_5sdp"
             app:layout_constraintStart_toEndOf="@+id/commentItemProfile"
-            app:layout_constraintTop_toBottomOf="@+id/commentItemTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/commentItemTitle" />-->
 
 
         <View

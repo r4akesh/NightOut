@@ -11,13 +11,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.model.DashboardModel
+import com.nightout.utils.AppConstant
+import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 
-
+// var mainPos: Int,
 class VenuBotmSheetAdapter(
     var context: Context,
     var arrayList: ArrayList<DashboardModel.SubRecord>,
-    var mainPos: Int,
+
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -53,10 +55,13 @@ class VenuBotmSheetAdapter(
             )
 
             if(arrayList[position].favrouite == "1"){
-                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected)
+                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
+
             }else{
-                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected)
+                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
+
             }
+
             venuBottmShhetItem_left.setOnClickListener {
                 hsview.scrollTo(
                     hsview.getScrollX() as Int - 80,
@@ -136,6 +141,8 @@ class VenuBotmSheetAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+
+        var mainPos = MyApp.getSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS)
         if (mainPos % 2 == 0)
             (viewHolder as View1ViewHolder).bind(position)
         else
@@ -149,8 +156,8 @@ class VenuBotmSheetAdapter(
 
 
     override fun getItemViewType(position: Int): Int {
-        // return super.getItemViewType(position)
-        if (mainPos % 2 == 0) {
+        var mainPos = MyApp.getSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS)
+       if (mainPos % 2 == 0) {
             return VIEW_TYPE_ONE
         } else {
             return VIEW_TYPE_TWO

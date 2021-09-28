@@ -12,6 +12,11 @@ import com.nightout.adapter.CommentAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.RatingActvityBinding
 import com.nightout.model.CommentModel
+import android.widget.Toast
+
+import android.widget.RatingBar
+import android.widget.RatingBar.OnRatingBarChangeListener
+
 
 class RatingActvity : BaseActivity() {
     lateinit var binding : RatingActvityBinding
@@ -19,10 +24,31 @@ class RatingActvity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@RatingActvity,R.layout.rating_actvity)
-
-
         setToolBar()
         setDummyList()
+        binding.ratingActvityStar.rating = 0.0F
+
+        binding.ratingActvityStar.onRatingBarChangeListener =
+            OnRatingBarChangeListener { ratingBar, v, b ->
+                if(ratingBar.rating.toInt() ==1){
+                    binding.ratingActvityExcellent.text = "Terrible"
+                }
+                else if(ratingBar.rating.toInt() ==2){
+                    binding.ratingActvityExcellent.text = "Bad"
+                }
+                else if(ratingBar.rating.toInt() ==3){
+                    binding.ratingActvityExcellent.text = "Okay"
+                }
+                else if(ratingBar.rating.toInt() ==4){
+                    binding.ratingActvityExcellent.text = "Good"
+                }
+                else if(ratingBar.rating.toInt() ==5){
+                    binding.ratingActvityExcellent.text = "Great"
+                }
+            }
+
+
+
     }
 
     lateinit var  commentAdapter : CommentAdapter

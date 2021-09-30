@@ -218,7 +218,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
            // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEvent?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            startActivity(Intent(this@HomeActivity, EventDetail::class.java))
+                    startActivity(Intent(this@HomeActivity, VenuListActvity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"5"))//
            // overridePendingTransition(0,0)
         }
         else if(v==sideMenuLostItem){

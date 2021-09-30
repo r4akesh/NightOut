@@ -71,7 +71,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     private val progressDialog = CustomProgressDialog()
     lateinit var doFavViewModel : DoFavViewModel
     var allRecordsList = ArrayList<DashboardModel.AllRecord>()
-
+    val REQCODE_VENULISTACTIVITY = 1009
 
     private var mMap: GoogleMap? = null
     companion object {
@@ -244,9 +244,18 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             override fun onClickSub(subpos: Int, pos: Int) {
                 // var vv : ArrayList<DashboardModel.VenueGallery> = allRecordsList[pos].sub_records[subpos].venue_gallery
                 if (MyApp.isConnectingToInternet(requireContext())) {
-                    startActivity(Intent(requireActivity(), StoreDetail::class.java)
-                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id)
-                            .putExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST, allRecordsList[pos].sub_records[subpos].venue_gallery))
+                    if(allRecordsList[pos].type=="5"){
+                        startActivity(Intent(requireActivity(), EventDetail::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id))
+
+
+                    }else{
+                        startActivity(Intent(requireActivity(), StoreDetail::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id))
+                    }
+
+
                 }
 
            /* else{

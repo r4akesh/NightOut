@@ -24,8 +24,8 @@ import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.DelEmngyPhNoViewModel
-import com.nightout.viewmodel.GetEmngyPhNoViewModel
 
 
 class EmergencyContactActivity : BaseActivity() {
@@ -35,7 +35,7 @@ class EmergencyContactActivity : BaseActivity() {
     val REQCODE_ContactListActvity = 115
 
     private val progressDialog = CustomProgressDialog()
-    lateinit var getEmngyPhNoViewModel: GetEmngyPhNoViewModel
+    lateinit var getEmngyPhNoViewModel: CommonViewModel
     lateinit var delEmngyPhNoViewModel: DelEmngyPhNoViewModel
     var listEmergency = ArrayList<GetEmergencyModel.Data>()
 
@@ -70,6 +70,7 @@ class EmergencyContactActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode ==REQCODE_ContactListActvity && resultCode== Activity.RESULT_OK ){
             emergency_contact_listAPICALL()//for again get update list
+            Utills.showSnackBarOnError(binding.emRootLayout, "Contact added successfully", this@EmergencyContactActivity)
         }
     }
 
@@ -95,14 +96,11 @@ class EmergencyContactActivity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.emRootLayout,
-                                it.message!!,
-                                this@EmergencyContactActivity
-                            )
+                            Utills.showSnackBarOnError(binding.emRootLayout, it.message!!, this@EmergencyContactActivity)
+                            setTextAddBtn()
                         } catch (e: Exception) {
                         }
-                        Log.d("ok", "loginCall:ERROR ")
+
                     }
                 }
             })
@@ -181,7 +179,7 @@ class EmergencyContactActivity : BaseActivity() {
 
     private fun initView() {
         binding.addContactBtn.setOnClickListener(this)
-        getEmngyPhNoViewModel = GetEmngyPhNoViewModel(this@EmergencyContactActivity)
+        getEmngyPhNoViewModel = CommonViewModel(this@EmergencyContactActivity)
         delEmngyPhNoViewModel = DelEmngyPhNoViewModel(this@EmergencyContactActivity)
     }
 

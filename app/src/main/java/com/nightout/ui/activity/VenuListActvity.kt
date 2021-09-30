@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -40,7 +41,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     private val progressDialog = CustomProgressDialog()
     lateinit var doFavViewModel : DoFavViewModel
     var selectedStrType="1"
-
+    val REQCODE_STOREDETAILACTIVITY = 1002
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,7 +116,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
             when (it.status) {
                 Status.SUCCESS -> {
                     customProgressDialog.dialog.hide()
-                    venuDataList = ArrayList<VenuListModel.Data>()
+                    venuDataList = ArrayList()
                     setListVenu()
                     it.data?.let {
                         venuDataList=it.data
@@ -125,7 +126,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 Status.LOADING -> {
                 }
                 Status.ERROR -> {
-                    venuDataList = ArrayList<VenuListModel.Data>()
+                    venuDataList = ArrayList()
                     setListVenu()
                     customProgressDialog.dialog.hide()
                     Utills.showSnackBarOnError(
@@ -138,28 +139,25 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         })
     }
 
+    var posSaveForUpdate=0
     private fun setListVenu() {
         venuSubAdapter = VenuSubAdapter(this@VenuListActvity, venuDataList, object : VenuSubAdapter.ClickListener {
                 override fun onClick(pos: Int) {
+                    posSaveForUpdate = pos
                     var vv=venuDataList[pos].venue_gallery
-                    if(selectedStrType.equals("5")){
-                        startActivity(Intent(this@VenuListActvity, EventDetail::class.java)
+                    if(selectedStrType == "5"){
+                        startActivityForResult(Intent(this@VenuListActvity, EventDetail::class.java)
                                 .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                                 .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
-                                .putExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST, venuDataList[pos].venue_gallery))
+                                .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)
+                            ,REQCODE_STOREDETAILACTIVITY)
                     }else {
-                        startActivity(
+                        startActivityForResult(
                             Intent(this@VenuListActvity, StoreDetail::class.java)
                                 .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
-                                .putExtra(
-                                    AppConstant.INTENT_EXTRAS.VENU_ID,
-                                    "" + venuDataList[pos].id
-                                )
-                                .putExtra(
-                                    AppConstant.INTENT_EXTRAS.GALLERY_LIST,
-                                    venuDataList[pos].venue_gallery
-                                )
-                        )
+                                .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
+                                .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)
+                            ,REQCODE_STOREDETAILACTIVITY)
                     }
                 }
 
@@ -176,6 +174,14 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 false
             )
             it.adapter = venuSubAdapter
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode==Activity.RESULT_OK){
+            venuDataList[posSaveForUpdate].favrouite = data?.getStringExtra("result")!!
+            venuSubAdapter.notifyItemChanged(posSaveForUpdate)
         }
     }
 

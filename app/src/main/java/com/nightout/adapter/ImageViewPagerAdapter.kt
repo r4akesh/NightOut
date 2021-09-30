@@ -11,6 +11,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.nightout.R
 import com.nightout.databinding.ImageViewItemBinding
 import com.nightout.model.DashboardModel
+import com.nightout.model.VenuDetailModel
 import com.nightout.model.VenueGallery
 import com.nightout.ui.activity.VideoPlayActvity
 import com.nightout.utils.AppConstant
@@ -19,9 +20,9 @@ import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 
 
-class ImageViewPagerAdapter(private val context: Context, imageArray: ArrayList<VenueGallery>) :
+class ImageViewPagerAdapter(private val context: Context, imageArray: ArrayList<VenuDetailModel.VenueGallery>) :
     PagerAdapter() {
-    private var imageArray: ArrayList<VenueGallery> = imageArray
+    private var imageArray: ArrayList<VenuDetailModel.VenueGallery> = imageArray
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding: ImageViewItemBinding = DataBindingUtil.inflate(

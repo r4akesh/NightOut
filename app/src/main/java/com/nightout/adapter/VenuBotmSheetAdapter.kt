@@ -48,31 +48,19 @@ class VenuBotmSheetAdapter(
             venuBottmShhetItem_subTitle.text = arrayList[position].store_address
             venuBottmShhetItemClostTime.text = "Close : "+arrayList[position].close_time
             venusubitem_rating.text = arrayList[position].rating.avg_rating
-            Utills.setImageNormal(
-                context,
-                venuBottmShhetItem_img,
-                arrayList[position].store_logo
-            )
+            Utills.setImageNormal(context, venuBottmShhetItem_img, arrayList[position].store_logo)
 
             if(arrayList[position].favrouite == "1"){
                 venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
-
             }else{
                 venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
-
             }
 
             venuBottmShhetItem_left.setOnClickListener {
-                hsview.scrollTo(
-                    hsview.getScrollX() as Int - 80,
-                    hsview.getScrollY() as Int
-                )
+                hsview.scrollTo(hsview.getScrollX() as Int - 80, hsview.getScrollY() as Int)
             }
             venuBottmShhetItem_right.setOnClickListener {
-                hsview.scrollTo(
-                    hsview.getScrollX() as Int + 80,
-                    hsview.getScrollY() as Int
-                )
+                hsview.scrollTo(hsview.getScrollX() as Int + 80, hsview.getScrollY() as Int)
             }
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)

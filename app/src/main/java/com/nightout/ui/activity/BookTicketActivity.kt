@@ -40,7 +40,7 @@ class BookTicketActivity : BaseActivity()  {
             try {
                 peopleCount++
                 binding.preBookingPeopleValue.text = "$peopleCount"
-                totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.price)
+                totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
                 binding.bookticketPay.text = "Pay $ $totAmt"
             } catch (e: Exception) {
             }
@@ -50,7 +50,7 @@ class BookTicketActivity : BaseActivity()  {
                 try {
                     peopleCount--
                     binding.preBookingPeopleValue.text = "$peopleCount"
-                    totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.price)
+                    totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
                     binding.bookticketPay.text = "Pay $ $totAmt"
                 } catch (e: Exception) {
                 }
@@ -65,7 +65,7 @@ class BookTicketActivity : BaseActivity()  {
         map["vendor_id"] =pojoEvntDetl.user_id
         map["venue_id"] =pojoEvntDetl.id
         map["qty"] =""+peopleCount
-        map["amount"] = pojoEvntDetl.price
+        map["amount"] = pojoEvntDetl.sale_price
         map["payment_mode"] ="0"
 
         bookEventViewModel.bookEvent(map).observe(this@BookTicketActivity, {
@@ -77,8 +77,8 @@ class BookTicketActivity : BaseActivity()  {
                         startActivity(Intent (this@BookTicketActivity,TicketConfirmActvity::class.java)
                  .putExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO,pojoEvntDetl)
                  .putExtra(AppConstant.INTENT_EXTRAS.TOTAL_AMT,totAmt.toString())
-                 .putExtra(AppConstant.INTENT_EXTRAS.ORDER_ID,res.data.order_id)
-                 .putExtra(AppConstant.INTENT_EXTRAS.TRANSACTION_ID,res.data.transaction_id))
+                 .putExtra(AppConstant.INTENT_EXTRAS.TICKET_NO,res.data.ticket_number)
+                 .putExtra(AppConstant.INTENT_EXTRAS.TICKET_URL,res.data.ticket_download))
 
                     }
                 }
@@ -97,16 +97,17 @@ class BookTicketActivity : BaseActivity()  {
                 .error(R.drawable.no_image)
                 .into(binding.bookTicketImageMain)
 
-            binding.bookTicketPrice.text = "Price : $${pojoEvntDetl.price}"
+            binding.bookTicketPrice.text = "Price : $${pojoEvntDetl.sale_price}"
             binding.bookTicketURBN.text = pojoEvntDetl.store_name
             binding.bookTicketDate.text = pojoEvntDetl.event_date
-            binding.bookTicketTime.text = "Start at :  ${pojoEvntDetl.open_time} To ${pojoEvntDetl.close_time}"
+            binding.bookTicketTime.text = "Start at :  ${pojoEvntDetl.event_start_time} To ${pojoEvntDetl.event_end_time}"
             binding.bookTicketSAddrs.text = PreferenceKeeper.instance.currentAddrs
             binding.bookTicketDAddrs.text = pojoEvntDetl.store_address
-            binding.bookticketPay.text = "Pay $ ${pojoEvntDetl.price}"
+            binding.bookticketPay.text = "Pay $ ${pojoEvntDetl.sale_price}"
             val latitude: Double = Commons.strToDouble(pojoEvntDetl.store_lattitude)
             val longitude: Double = Commons.strToDouble(pojoEvntDetl.store_longitude)
            binding.bookTicketKM.text =  "${MyApp.getDestance(latitude,longitude,PreferenceKeeper.instance.currentLat!!,PreferenceKeeper.instance.currentLong!!)} Km away"
+            totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
         } catch (e: Exception) {
         }
 

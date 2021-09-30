@@ -27,7 +27,7 @@ class AppConstant {
         const val VENU_POS = "VENU_POS"
         const val VENU_ID = "VENU_ID"
         const val StoreType = "StoreType"
-        const val GALLERY_LIST = "GALLERY_LIST"
+      //   const val GALLERY_LIST = "GALLERY_LIST"
         const val VIDEO_URL = "VIDEO_URL"
         const val ISFROM_VENULISTACTIVITY = "ISFROM_VENULISTACTIVITY"
         const val LOSTITEM_POJO = "LOSTITEM_ID"
@@ -37,9 +37,11 @@ class AppConstant {
         const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
         const val EVENTDETAIL_POJO = "EVENTDETAIL_POJO"
         const val TOTAL_AMT = "TOTAL_AMT"
-        const val ORDER_ID = "ORDER_ID"
+        const val TICKET_NO = "TICKET_NO"
         const val TRANSACTION_ID = "TRANSACTION_ID"
         const val ADAPTER_POS = "ADAPTER_POS"
+        const val TICKET_URL = "TICKET_URL"
+        const val FAVROUITE_VALUE = "favrouite"
 
     }
 }

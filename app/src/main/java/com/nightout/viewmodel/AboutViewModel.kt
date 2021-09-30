@@ -21,7 +21,7 @@ class AboutViewModel (activity: Activity) : BaseObservable() {
 
 
     fun aboutCms(): LiveData<Resource<AboutModelResponse>> {
-        dashboardModel = webServiceRepository.aboutCMS()
+     //   dashboardModel = webServiceRepository.aboutCMS()
         return dashboardModel
     }
 

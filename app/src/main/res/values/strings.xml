@@ -198,6 +198,10 @@
     <string name="location_permission_not_granted">Location Permission not granted</string>
     <string name="enable_gps">Enable GPS</string>
     <string name="Tap_addrs1">Tap to add address</string>
+    <string name="Something_went_wrong">Something went wrong. Please contact with admin.</string>
+    <string name="Network_Failure">Network Failure,Please try again.</string>
+    <string name="Internal_server_error">Internal server error.</string>
+    <string name="Parsing_Problem">Parsing Error.</string>
 
 
 </resources>

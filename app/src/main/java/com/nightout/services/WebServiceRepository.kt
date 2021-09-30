@@ -5,8 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.nightout.R
 import com.nightout.model.*
 import com.nightout.utils.AppConstant
+import com.nightout.utils.AppConstant.PrefsName.INTERNAL_ERROR
+import com.nightout.utils.AppConstant.PrefsName.NO_INTERNET
+import com.nightout.utils.AppConstant.PrefsName.PARSING_ERROR
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -329,48 +333,7 @@ class WebServiceRepository(application: Activity) {
         return dashboardRes
     }
 
-  /*  fun userVenueList2(map: HashMap<String, String>): LiveData<Resource<VenuListModel>> {
-        val dashboardRes = MutableLiveData<Resource<VenuListModel>>()
-        CoroutineScope(Dispatchers.IO).launch {
-            dashboardRes.postValue(Resource.loading(null))
-            if (networkHelper.isNetworkConnected()) {
-                val request = apiInterfaceHeader.venuListAPI(map)
-                if (request.isSuccessful) {
-                    dashboardRes.postValue(
-                        Resource.success(
-                            request.code(),
-                            request.body()!!.message,
-                            request.body(),
-                            ""
-                        )
-                    )
-                } else {
-                    try {
-                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                        println("ok jsonObj$jsonObj")
-                        dashboardRes.postValue(
-                            Resource.error(
-                                request.code(),
-                                jsonObj.getString("message"),
-                                null
-                            )
-                        )
 
-                    } catch (e: Exception) {
-                        dashboardRes.postValue(Resource.error(0, e.toString(), null))
-                    }
-                }
-            } else
-                dashboardRes.postValue(
-                    Resource.error(
-                        AppConstant.PrefsName.NO_INTERNET,
-                        "No internet connection",
-                        null
-                    )
-                )
-        }
-        return dashboardRes
-    }*/
 
     fun userVenueList(map: HashMap<String, String>): LiveData<Resource<VenuListModel>> {
         val openCloseResponseModel = MutableLiveData<Resource<VenuListModel>>()
@@ -604,69 +567,7 @@ class WebServiceRepository(application: Activity) {
         return updateProfileResponse
     }
 
-    fun getContactFilter(jsonObject: JSONObject): LiveData<Resource<ContactFillterModel>> {
-        val dashboardRes = MutableLiveData<Resource<ContactFillterModel>>()
-        try {
-            CoroutineScope(Dispatchers.IO).launch {
-                dashboardRes.postValue(Resource.loading(null))
-                if (networkHelper.isNetworkConnected()) {
-                    val body = RequestBody.create(
-                        "application/json; charset=utf-8".toMediaTypeOrNull(),
-                        jsonObject.toString()
-                    )
-                    val request = apiInterfaceHeader.contactListFilter(body)
-                    if (request.isSuccessful) {
-                        if (request.code() == 200) {
-                            dashboardRes.postValue(
-                                Resource.success(
-                                    request.code(),
-                                    request.body()!!.message,
-                                    request.body(),
-                                    ""
-                                )
-                            )
-                        } else {
-                            try {
-                                val jsonObj =
-                                    JSONObject(request.errorBody()!!.charStream().readText())
-                                dashboardRes.postValue(
-                                    Resource.error(
-                                        request.code(),
-                                        jsonObj.getString("message"),
-                                        null
-                                    )
-                                )
-                            } catch (e: Exception) {
-                                dashboardRes.postValue(Resource.error(0, e.toString(), null))
-                            }
-                        }
-                    } else {
-                        try {
-                            val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                            println("ok jsonObj$jsonObj")
-                            dashboardRes.postValue(
-                                Resource.error(
-                                    request.code(),
-                                    jsonObj.getString("message"),
-                                    null
-                                )
-                            )
-                        } catch (e: Exception) {
-                            dashboardRes.postValue(Resource.error(0, e.toString(), null))
-                        }
-                    }
-                } else dashboardRes.postValue(
-                    Resource.error(
-                        AppConstant.PrefsName.NO_INTERNET,
-                        "No internet connection",
-                        null
-                    )
-                )
-            }
-        } catch (e: Exception) {
-        }
-        return dashboardRes
-    }
+
 
 
     fun saveEmergency(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
@@ -709,46 +610,7 @@ class WebServiceRepository(application: Activity) {
         return updateProfileResponse
     }
 
-    fun getEmergency(): LiveData<Resource<GetEmergencyModel>> {
-        val updateProfileResponse = MutableLiveData<Resource<GetEmergencyModel>>()
-        CoroutineScope(Dispatchers.IO).launch {
-            if (networkHelper.isNetworkConnected()) {
-                val request = apiInterfaceHeader.getEmergencyAPI()
-                if (request.isSuccessful) {
-                    request.code()
-                    var vv = request.code()
-                    updateProfileResponse.postValue(
-                        Resource.success(
-                            request.code(),
-                            request.body()!!.message,
-                            request.body(),
-                            ""
-                        )
-                    )
-                } else {
-                    try {
-                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                        updateProfileResponse.postValue(
-                            Resource.error(
-                                request.code(),
-                                jsonObj.getString("message"),
-                                null
-                            )
-                        )
-                    } catch (e: Exception) {
-                        updateProfileResponse.postValue(Resource.error(0, e.toString(), null))
-                    }
-                }
-            } else updateProfileResponse.postValue(
-                Resource.error(
-                    AppConstant.PrefsName.NO_INTERNET,
-                    "No internet connection",
-                    null
-                )
-            )
-        }
-        return updateProfileResponse
-    }
+
 
     fun delEmergency(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
         val updateProfileResponse = MutableLiveData<Resource<BaseModel>>()
@@ -789,32 +651,7 @@ class WebServiceRepository(application: Activity) {
         }
         return updateProfileResponse
     }
-    /*  fun sendQueryOld(map: HashMap<String, Any>): LiveData<Resource<BaseModel>> {
-          val dashboardRes = MutableLiveData<Resource<BaseModel>>()
-          try {
-              CoroutineScope(Dispatchers.IO).launch {
-                  dashboardRes.postValue(Resource.loading(null))
-                  if (networkHelper.isNetworkConnected()) {
-                     // val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
-                      val request = apiInterfaceHeader.sendQueryAPI(map)
-                      if (request.isSuccessful) {
-                              dashboardRes.postValue(Resource.success(request.code(),request.body()!!.message,request.body(),""))
 
-                      } else {
-                          try {
-                              val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                              println("ok jsonObj$jsonObj")
-                              dashboardRes.postValue(Resource.error(jsonObj.getString("message"), null))
-                          } catch (e: Exception) {
-                              dashboardRes.postValue(Resource.error(e.toString(), null))
-                          }
-                      }
-                  }else dashboardRes.postValue(Resource.error(application.resources.getString(R.string.No_Internet), null))
-              }
-          } catch (e: Exception) {
-          }
-          return dashboardRes
-      }*/
 
     fun sendQuery(map: HashMap<String, Any>): LiveData<Resource<BaseModel>> {
         val openCloseResponseModel = MutableLiveData<Resource<BaseModel>>()
@@ -846,32 +683,7 @@ class WebServiceRepository(application: Activity) {
         return openCloseResponseModel
     }
 
-    fun aboutCMS(): LiveData<Resource<AboutModelResponse>> {
-        val dashboardRes = MutableLiveData<Resource<AboutModelResponse>>()
-        try {
-            CoroutineScope(Dispatchers.IO).launch {
-                dashboardRes.postValue(Resource.loading(null))
-                if (networkHelper.isNetworkConnected()) {
-                    val request = apiInterfaceHeader.userPagesAPI()
-                    if (request.isSuccessful) {
-                        dashboardRes.postValue(
-                            Resource.success(request.code(), request.body()!!.message, request.body(), ""))
-                    } else {
-                        try {
-                            val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
-                            println("ok jsonObj$jsonObj")
-                            dashboardRes.postValue(Resource.error(request.code(), jsonObj.getString("message"), null))
-                        } catch (e: Exception) {
-                            dashboardRes.postValue(Resource.error(0, e.toString(), null))
-                        }
-                    }
-                } else dashboardRes.postValue(
-                    Resource.error(AppConstant.PrefsName.NO_INTERNET, "No internet connection", null))
-            }
-        } catch (e: Exception) {
-        }
-        return dashboardRes
-    }
+
     fun eventBook(map: HashMap<String, String>): LiveData<Resource<BookEventMdlResponse>> {
         val openCloseResponseModel = MutableLiveData<Resource<BookEventMdlResponse>>()
         CoroutineScope(Dispatchers.IO).launch {
@@ -902,6 +714,234 @@ class WebServiceRepository(application: Activity) {
         return openCloseResponseModel
     }
 
+
+    fun getContactFilter(jsonObject: JSONObject): LiveData<ApiSampleResource<ContactFillterModel>> {
+        val venueListResponseModel = MutableLiveData<ApiSampleResource<ContactFillterModel>>()
+        if (networkHelper.isNetworkConnected()) {
+            val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.contactListFilter(body)
+            responseBody.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<ContactFillterModel>(data)
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(PARSING_ERROR, application.resources.getString(R.string.Parsing_Problem), null))
+                            }
+                        }
+                        204->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(response.code(), "You have no contact", null))
+                        }
+                        401->{
+                            val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), jsonObj.getString("message"), null))
+                        }
+                        500->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(response.code(), application.resources.getString(R.string.Internal_server_error), null))
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    if (t is IOException) {
+                        venueListResponseModel.postValue(ApiSampleResource.error(INTERNAL_ERROR, application.resources.getString(R.string.Network_Failure), null))
+                    } else {
+                        venueListResponseModel.postValue(ApiSampleResource.error(PARSING_ERROR, application.resources.getString(R.string.Something_went_wrong), null))
+                    }
+                }
+
+            })
+        } else venueListResponseModel.postValue(
+            ApiSampleResource.error(NO_INTERNET, application.resources.getString(R.string.No_Internet), null)
+        )
+        return venueListResponseModel
+    }
+
+    fun aboutCMS(): LiveData<ApiSampleResource<AboutModelResponse>> {
+        val venueListResponseModel =
+            MutableLiveData<ApiSampleResource<AboutModelResponse>>()
+        if (networkHelper.isNetworkConnected()) {
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.userPagesAPI()
+            responseBody.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<AboutModelResponse>(data)
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    "Parsing Problem",
+                                    null))
+                            }
+                        }
+                        401->{
+                            val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                            venueListResponseModel.postValue(ApiSampleResource.error(
+                                response.code(),
+                                jsonObj.getString("message"),
+                                null))
+                        }
+                        500->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(
+                                response.code(),
+                                "Internal server error",
+                                null))
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    if (t is IOException) {
+                        venueListResponseModel.postValue(
+                            ApiSampleResource.error(
+                                INTERNAL_ERROR,
+                                "Network Failure,Please try again",
+                                null
+                            )
+                        )
+                    } else {
+                        venueListResponseModel.postValue(
+                            ApiSampleResource.error(
+                                PARSING_ERROR,
+                                "Something went wrong. Please contact with admin.",
+                                null
+                            )
+                        )
+                    }
+                }
+
+            })
+        } else venueListResponseModel.postValue(
+            ApiSampleResource.error(
+                NO_INTERNET,
+                "No internet connection",
+                null
+            )
+        )
+        return venueListResponseModel
+    }
+
+    fun getEmergency(): LiveData<ApiSampleResource<GetEmergencyModel>> {
+        val venueListResponseModel =
+            MutableLiveData<ApiSampleResource<GetEmergencyModel>>()
+        if (networkHelper.isNetworkConnected()) {
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.getEmergencyAPI()
+            responseBody.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<GetEmergencyModel>(data)
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    "Parsing Problem",
+                                    null))
+                            }
+                        }
+                        204->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(response.code(), "No Data Found!!", null))
+                        }
+                        401->{
+                            val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                            venueListResponseModel.postValue(ApiSampleResource.error(
+                                response.code(),
+                                jsonObj.getString("message"),
+                                null))
+                        }
+                        500->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(
+                                response.code(),
+                                "Internal server error",
+                                null))
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    if (t is IOException) {
+                        venueListResponseModel.postValue(
+                            ApiSampleResource.error(
+                                INTERNAL_ERROR,
+                                "Network Failure,Please try again",
+                                null
+                            )
+                        )
+                    } else {
+                        venueListResponseModel.postValue(
+                            ApiSampleResource.error(
+                                PARSING_ERROR,
+                                "Something went wrong. Please contact with admin.",
+                                null
+                            )
+                        )
+                    }
+                }
+
+            })
+        } else venueListResponseModel.postValue(
+            ApiSampleResource.error(
+                NO_INTERNET,
+                "No internet connection",
+                null
+            )
+        )
+        return venueListResponseModel
+    }
+
+   /* fun getEmergency(): LiveData<Resource<GetEmergencyModel>> {
+        val updateProfileResponse = MutableLiveData<Resource<GetEmergencyModel>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            if (networkHelper.isNetworkConnected()) {
+                val request = apiInterfaceHeader.getEmergencyAPI()
+                if (request.isSuccessful) {
+                    request.code()
+                    var vv = request.code()
+                    updateProfileResponse.postValue(
+                        Resource.success(
+                            request.code(),
+                            request.body()!!.message,
+                            request.body(),
+                            ""
+                        )
+                    )
+                } else {
+                    try {
+                        val jsonObj = JSONObject(request.errorBody()!!.charStream().readText())
+                        updateProfileResponse.postValue(
+                            Resource.error(
+                                request.code(),
+                                jsonObj.getString("message"),
+                                null
+                            )
+                        )
+                    } catch (e: Exception) {
+                        updateProfileResponse.postValue(Resource.error(0, e.toString(), null))
+                    }
+                }
+            } else updateProfileResponse.postValue(
+                Resource.error(
+                    NO_INTERNET,
+                    "No internet connection",
+                    null
+                )
+            )
+        }
+        return updateProfileResponse
+    }*/
 }
 
 

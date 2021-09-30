@@ -21,7 +21,7 @@ class ContactFillterViewModel (activity: Activity) : BaseObservable() {
 
     fun getContactFilter(jsonObject: JSONObject): LiveData<Resource<ContactFillterModel>> {
         try {
-            dashboardModel = webServiceRepository.getContactFilter(jsonObject)
+         //   dashboardModel = webServiceRepository.getContactFilter(jsonObject)
             return dashboardModel
         } catch (e: Exception) {
             return dashboardModel

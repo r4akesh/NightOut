@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
@@ -55,7 +56,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
         initView()
-        setTopImgSlider()
+
         venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
         if (!venuID.isNullOrBlank()) {
             user_venue_detailAPICALL()
@@ -86,6 +87,13 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                 )
             }
         } else if (v == binding.storeDeatilBakBtn) {
+            var myIntent = Intent()
+            if(favStatus.equals("0"))
+                myIntent.putExtra("result","1")
+            else
+                myIntent.putExtra("result","0")
+
+            setResult(Activity.RESULT_OK,myIntent)
             finish()
 
         } else if (v == binding.storeDeatilMenu) {
@@ -185,11 +193,10 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setTopImgSlider() {
+  /*  private fun setTopImgSlider() {
         if (intent != null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)) {
             try {
-                var venueGalleryList =
-                    intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<VenueGallery>
+                var venueGalleryList = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<DashboardModel.VenueGallery>
                 imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail, venueGalleryList)
                 binding.viewPager.adapter = imageViewPagerAdapter
                 binding.dotsIndicator.setViewPager(binding.viewPager)
@@ -197,35 +204,47 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             }
         }
 
-    }
+    }*/
 
 
     var favStatus = "0"
+    var fav=""
     private fun setData() {
-        binding.storeDeatilTitle.text = dt.store_name
-        binding.storeDeatilRating.text = dt.rating.avg_rating
-        binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
-        binding.storeDeatilSubTitle.text =
-            "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
-        binding.storeDeatilPhno.text = dt.store_number
-        binding.storeDeatilEmail.text = dt.store_email
-        binding.storeDeatilAddrs.text = dt.store_address
-        if (dt.favrouite == "1") {
-            favStatus = "0"
-            binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
-        } else {
-            favStatus = "1"
-            binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
-        }
-        //topImg
-        Glide.with(this@StoreDetail)
-            .load(PreferenceKeeper.instance.imgPathSave + dt.store_logo)
-            .error(R.drawable.no_image)
-            .into(binding.storeDeatilLogo)
+        try {//setSlider
+            imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail,  dt.venue_gallery)
+            binding.viewPager.adapter = imageViewPagerAdapter
+            binding.dotsIndicator.setViewPager(binding.viewPager)
 
-        //faciltyList
-        facilityList = dt.facilities
-        showMapLoc(dt.store_lattitude, dt.store_longitude)
+            binding.storeDeatilTitle.text = dt.store_name
+            binding.storeDeatilRating.text = dt.rating.avg_rating
+            binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
+            binding.storeDeatilSubTitle.text =
+                "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
+            binding.storeDeatilPhno.text = dt.store_number
+            binding.storeDeatilEmail.text = dt.store_email
+            binding.storeDeatilAddrs.text = dt.store_address
+
+              fav = intent.getStringExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE)!!
+           // if (dt.favrouite == "1") {
+            if (fav == "1") {
+                favStatus = "0"
+                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
+            } else {
+                favStatus = "1"
+                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+            }
+            //topImg
+            Glide.with(this@StoreDetail)
+                .load(PreferenceKeeper.instance.imgPathSave + dt.store_logo)
+                .error(R.drawable.no_image)
+                .into(binding.storeDeatilLogo)
+
+            //faciltyList
+            facilityList = dt.facilities
+            showMapLoc(dt.store_lattitude, dt.store_longitude)
+        } catch (e: Exception) {
+            MyApp.popErrorMsg("StoreDeatil",""+e.toString(),THIS!!)
+        }
 
     }
 
@@ -846,6 +865,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetail)
                 }
             }
         })
@@ -976,8 +996,15 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
     override fun onBackPressed() {
+
+        var myIntent = Intent()
+        if(favStatus.equals("0"))
+        myIntent.putExtra("result","1")
+        else
+            myIntent.putExtra("result","0")
+
+        setResult(Activity.RESULT_OK,myIntent)
         super.onBackPressed()
-        overridePendingTransition(0, 0)
     }
 
 

@@ -9,6 +9,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface APIInterface {
@@ -55,11 +56,9 @@ interface APIInterface {
     @POST("found_lost_item")
     suspend fun foundItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 
-    @POST("contact_list")
-    suspend fun contactListFilter(@Body params: RequestBody): Response<ContactFillterModel>
 
-    @GET("emergency_contact_list")
-    suspend fun getEmergencyAPI(): Response<GetEmergencyModel>
+
+
 
     @POST("delete_emergency_contact")
     suspend fun delEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
@@ -67,9 +66,18 @@ interface APIInterface {
     @POST("send_query")
      fun sendQueryAPI(@Body params: HashMap<String, Any>): Call<ResponseBody>
 
-    @POST("user_pages")
-    suspend fun userPagesAPI(): Response<AboutModelResponse>
+//    @POST("user_pages")
+//    suspend fun userPagesAPI(): Response<AboutModelResponse>
 
     @POST("book_event_ticket")
     fun bookEventTicketAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("user_pages")
+    fun userPagesAPI(): Call<ResponseBody>
+
+    @POST("contact_list")
+    fun contactListFilter(@Body params: RequestBody): Call<ResponseBody>
+
+    @GET("emergency_contact_list")
+      fun getEmergencyAPI(): Call<ResponseBody>
 }

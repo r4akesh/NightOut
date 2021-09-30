@@ -14,23 +14,25 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.AboutViewModel
+import com.nightout.viewmodel.CommonViewModel
 
 class AboutActivity : BaseActivity() {
     lateinit var  binding : AboutActviityBinding
     private var customProgressDialog = CustomProgressDialog()
-    lateinit var aboutViewModel : AboutViewModel
+   // lateinit var aboutViewModel : AboutViewModel
+   private lateinit var commonViewModel: CommonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this@AboutActivity,R.layout.about_actviity)
-        aboutViewModel = AboutViewModel(this@AboutActivity)
+        commonViewModel = CommonViewModel(this@AboutActivity)
         setToolBar()
         cmsAPICAll()
     }
 
     private fun cmsAPICAll() {
         customProgressDialog.show(this@AboutActivity, "")
-        aboutViewModel.aboutCms().observe(this@AboutActivity,{
+        commonViewModel.aboutCms().observe(this@AboutActivity,{
             when(it.status){
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()

@@ -9,7 +9,7 @@
 
         <variable
             name="dVenuGalyViewModel"
-            type="com.nightout.model.VenueGallery" />
+            type="com.nightout.model.VenuDetailModel.VenueGallery" />
 
         <variable
             name="position"

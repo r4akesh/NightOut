@@ -1,9 +1,11 @@
 package com.nightout.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.text.Html
 import android.util.Log
 import android.view.View
@@ -43,7 +45,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@EventDetail,R.layout.eventdetail_actvity)
         inItView()
-        setTopImgSlider()
+
         venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
         if (!venuID.isNullOrBlank()) {
             Log.d("venuID", "onCreate: "+venuID)
@@ -60,7 +62,15 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
                 .putExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO,dt))
         }
         else if(v==binding.eventDetailBakBtn){
+            var myIntent = Intent()
+            if(favStatus.equals("0"))
+                myIntent.putExtra("result","1")
+            else
+                myIntent.putExtra("result","0")
+
+            setResult(Activity.RESULT_OK,myIntent)
             finish()
+
         }
         else if(v==binding.eventDeatilFav){
             add_favouriteAPICALL()
@@ -80,6 +90,9 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             }
         }
 
+        else if(v==binding.eventDetailAddCalndra){
+            addEvent()
+        }
 
         else if(v==binding.eventDetaiDirection){
             try {
@@ -95,6 +108,9 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             }
         }
     }
+
+
+
 
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@EventDetail, "")
@@ -119,19 +135,41 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             }
         })
     }
+    fun addEvent() {
 
+
+        var intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+          //  .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, 1632990051544)
+          //  .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, 1633026600000)
+            .putExtra(CalendarContract.Events.TITLE, dt.store_name)
+           // .putExtra(CalendarContract.Events.DESCRIPTION, dt.store_description)
+            .putExtra(CalendarContract.Events.EVENT_LOCATION, dt.store_address)
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+          //  .putExtra(Intent.EXTRA_EMAIL, "abc@example.com,codeplayon@example.com");
+
+        startActivity(intent)
+        Log.d("TAG", "addEvent: ")
+    }
     var favStatus = "0"
     private fun setData() {
         try {
+            //setSlider
+
+            imageViewPagerAdapter = ImageViewPagerAdapter(this@EventDetail, dt.venue_gallery)
+            binding.viewPager.adapter = imageViewPagerAdapter
+            binding.dotsIndicator.setViewPager(binding.viewPager)
+
+
             binding.eventDetailTitle.text = dt.store_name
             //   binding.storeDeatilRating.text = dt.rating.avg_rating
-            binding.eventDetailOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
+            binding.eventDetailOpenTime.text = "Open at : " + dt.event_start_time + " To " + dt.event_end_time
             //   binding.storeDeatilSubTitle.text = "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
             binding.eventDetailPhno.text = dt.store_number
             binding.eventDetailEmail.text = dt.store_email
             binding.eventDetailDate.text = dt.event_date
-            binding.eventDetailRating.text = "$"+dt.price
-            binding.eventDetailAge.text = dt.age_limit+"+"
+            binding.eventDetailRating.text = "$"+dt.sale_price
+            binding.eventDetailAge.text = dt.age_limit+""
             binding.eventDetailMusic.text = dt.party_theme
             binding.eventDetailCocktail.text = dt.dress_code
             binding.eventDetaiAddrs.text = "Address :  ${dt.store_address}"
@@ -182,7 +220,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setTopImgSlider() {
+  /*  private fun setTopImgSlider() {
         if (intent != null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)) {
             try {
                 var venueGalleryList = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<VenueGallery>
@@ -193,8 +231,9 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             }
         }
 
-    }
+    }*/
     private fun inItView() {
+        setTouchNClick(binding.eventDetailAddCalndra)
         setTouchNClick(binding.eventDetailBuyTkt)
         setTouchNClick(binding.eventDetailBakBtn)
         setTouchNClick(binding.eventDetaiDirection)
@@ -245,5 +284,17 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap!!
         val success = googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
+    }
+
+    override fun onBackPressed() {
+        var myIntent = Intent()
+        if(favStatus.equals("0"))
+            myIntent.putExtra("result","1")
+        else
+            myIntent.putExtra("result","0")
+
+        setResult(Activity.RESULT_OK,myIntent)
+        finish()
+        super.onBackPressed()
     }
 }

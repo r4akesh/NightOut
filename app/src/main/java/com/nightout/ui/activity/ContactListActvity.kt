@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
@@ -14,6 +15,7 @@ import com.nightout.model.ContactFillterModel
 import com.nightout.model.ContactNoModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.ContactFillterViewModel
 import com.nightout.viewmodel.SaveEmngyPhNoViewModel
 import org.json.JSONArray
@@ -24,7 +26,7 @@ class ContactListActvity : BaseActivity() {
     lateinit var binding: ContactlistActvityBinding
     var savelistContcat = StringBuilder()
     private val progressDialog = CustomProgressDialog()
-    lateinit var contactFillterViewModel: ContactFillterViewModel
+    lateinit var contactFillterViewModel: CommonViewModel
     lateinit var saveEmngyPhNoViewModel: SaveEmngyPhNoViewModel
       var listFilter= ArrayList<ContactFillterModel.Data>()
     var chkSelectedCnt = 0
@@ -70,7 +72,7 @@ class ContactListActvity : BaseActivity() {
     }
 
     private fun initView() {
-        contactFillterViewModel = ContactFillterViewModel(this@ContactListActvity)
+        contactFillterViewModel = CommonViewModel(this@ContactListActvity)
         saveEmngyPhNoViewModel = SaveEmngyPhNoViewModel(this@ContactListActvity)
         binding.addContactDoneBtn.setOnClickListener(this)
 
@@ -106,11 +108,8 @@ class ContactListActvity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.constrentEmToolbar,
-                                it.message!!,
-                                this@ContactListActvity
-                            )
+                            Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
+                            binding.addContactDoneBtn.visibility=GONE
                         } catch (e: Exception) {
                         }
                         Log.d("ok", "loginCall:ERROR ")

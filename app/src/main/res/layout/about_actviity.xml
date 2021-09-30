@@ -61,7 +61,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/proximanova_reg"
-            android:text="NightOut Community guidelines"
+            android:text=""
             android:layout_height="wrap_content"/>
 
 

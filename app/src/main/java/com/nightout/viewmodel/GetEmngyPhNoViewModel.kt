@@ -19,10 +19,10 @@ class GetEmngyPhNoViewModel (activity: Activity) : BaseObservable() {
     lateinit var dashboardModel: LiveData<Resource<GetEmergencyModel>>
 
 
-    fun getEmngcy(): LiveData<Resource<GetEmergencyModel>> {
+   /* fun getEmngcy(): LiveData<Resource<GetEmergencyModel>> {
         dashboardModel = webServiceRepository.getEmergency()
         return dashboardModel
-    }
+    }*/
 
 
 

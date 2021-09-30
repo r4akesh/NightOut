@@ -55,7 +55,24 @@ class DialogCustmYesNo : BaseActivity() {
         alert.show()
 
     }
+    fun createDialogOK(mContext: Context, title: String,errrMsg: String, dialogclick: Dialogclick) {
+        this.mContext = mContext
+        this.dialogclick = dialogclick
+        this.title = title
+        this.errrMsg = errrMsg
 
+        val builder = MaterialAlertDialogBuilder(mContext, R.style.Theme_MyApp_Dialog_Alert)
+        builder.setTitle(title).setMessage(errrMsg)
+            .setPositiveButton("OK") { dialog, which ->
+                dialog.dismiss()
+                dialogclick.onYES()
+            }
+
+
+        val alert = builder.create()
+        alert.show()
+
+    }
 
     private fun init() {
 

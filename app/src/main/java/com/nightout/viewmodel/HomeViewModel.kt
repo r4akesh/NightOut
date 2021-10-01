@@ -17,14 +17,14 @@ class HomeViewModel (activity: Activity) : BaseObservable() {
     lateinit var dashboardModel: LiveData<Resource<DashboardModel>>
 
 
-    fun dashBoard(): LiveData<Resource<DashboardModel>> {
+   /* fun dashBoard(): LiveData<Resource<DashboardModel>> {
         try {
             dashboardModel = webServiceRepository.dashBoard()
             return dashboardModel
         } catch (e: Exception) {
             return dashboardModel
         }
-    }
+    }*/
 
 
 

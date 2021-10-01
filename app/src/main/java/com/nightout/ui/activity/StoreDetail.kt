@@ -32,20 +32,17 @@ import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.DoFavViewModel
 import com.nightout.viewmodel.SendQueryViewModel
-import com.nightout.viewmodel.VenuDetailViewModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
 import android.text.Editable
 
 import android.text.TextWatcher
-
-
-
+import com.nightout.viewmodel.CommonViewModel
 
 
 class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
-    lateinit var userVenueDetailViewModel: VenuDetailViewModel
-    lateinit var doFavViewModel: DoFavViewModel
+    lateinit var userVenueDetailViewModel: CommonViewModel
+    lateinit var doFavViewModel: CommonViewModel
     lateinit var sendQueryViewModel: SendQueryViewModel
     lateinit var mMap: GoogleMap
     var imageViewPagerAdapter: ImageViewPagerAdapter? = null
@@ -224,9 +221,9 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilEmail.text = dt.store_email
             binding.storeDeatilAddrs.text = dt.store_address
 
-              fav = intent.getStringExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE)!!
-           // if (dt.favrouite == "1") {
-            if (fav == "1") {
+             // fav = intent.getStringExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE)!!
+           if (dt.favrouite == "1") {
+           // if (fav == "1") {
                 favStatus = "0"
                 binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
             } else {
@@ -243,7 +240,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             facilityList = dt.facilities
             showMapLoc(dt.store_lattitude, dt.store_longitude)
         } catch (e: Exception) {
-            MyApp.popErrorMsg("StoreDeatil",""+e.toString(),THIS!!)
+            MyApp.popErrorMsg("StoreDetail",""+e.toString(),THIS!!)
         }
 
     }
@@ -789,9 +786,9 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             (supportFragmentManager.findFragmentById(R.id.storeDeatillocMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@StoreDetail)
 
-        userVenueDetailViewModel = VenuDetailViewModel(this)
+        userVenueDetailViewModel = CommonViewModel(this)
         sendQueryViewModel = SendQueryViewModel(this)
-        doFavViewModel = DoFavViewModel(this)
+        doFavViewModel = CommonViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)
@@ -812,7 +809,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var dt: VenuDetailModel.Data
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@StoreDetail, "")
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["id"] = venuID!!
 
         userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetail, {
@@ -836,7 +833,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
     private fun add_favouriteAPICALL() {
         progressDialog.show(this@StoreDetail, "")
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
         map["status"] = favStatus

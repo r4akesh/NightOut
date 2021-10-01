@@ -21,13 +21,14 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.DialogCustmYesNo
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.DelItemViewModel
 import com.nightout.viewmodel.GetLostListViewModel
 
 
 class LostitemActivity :BaseActivity() {
     lateinit var binding :LostitemActvityBinding
-    lateinit var getLostListViewModel : GetLostListViewModel
+    lateinit var getLostListViewModel : CommonViewModel
     lateinit var delItemViewModel: DelItemViewModel
     private var customProgressDialog = CustomProgressDialog()
     var  lostList: ArrayList<GetLostItemListModel.Data> = ArrayList()
@@ -44,7 +45,7 @@ var isEdit= true //for mainten tost msg
     }
 
     private fun initView() {
-        getLostListViewModel = GetLostListViewModel(this@LostitemActivity)
+        getLostListViewModel = CommonViewModel(this@LostitemActivity)
         delItemViewModel = DelItemViewModel(this@LostitemActivity)
     }
     private fun delete_lost_itemAPICall(pos:Int) {

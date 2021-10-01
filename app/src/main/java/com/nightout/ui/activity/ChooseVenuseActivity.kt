@@ -24,6 +24,7 @@ import com.nightout.databinding.ChossesvenuesActvityBinding
 import com.nightout.model.DashboardModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.HomeViewModel
 import com.nightout.viewmodel.LostItemSubmitViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -34,7 +35,7 @@ import java.io.File
 class ChooseVenuseActivity : BaseActivity() {
     lateinit var binding: ChossesvenuesActvityBinding
     private var customProgressDialog = CustomProgressDialog()
-    lateinit var homeViewModel: HomeViewModel
+    lateinit var homeViewModel: CommonViewModel
     lateinit var dashList: DashboardModel.Data
     var strID: StringBuilder = StringBuilder()
 
@@ -164,7 +165,7 @@ class ChooseVenuseActivity : BaseActivity() {
 
     private fun initView() {
         lostItemSubmitViewModel = LostItemSubmitViewModel(this@ChooseVenuseActivity)
-        homeViewModel = HomeViewModel(this@ChooseVenuseActivity)
+        homeViewModel = CommonViewModel(this@ChooseVenuseActivity)
         binding.chooseVenuesSend.setOnClickListener(this)
 
     }

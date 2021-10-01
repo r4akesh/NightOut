@@ -9,6 +9,7 @@ import com.nightout.model.LoginModel
 import com.nightout.ui.activity.RegisterActivity
 import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
+import com.nightout.vendor.services.ApiSampleResource
 
 
 import com.nightout.vendor.services.Resource
@@ -23,7 +24,7 @@ class RegViewModel(activity: Activity) : BaseObservable() {
     var lName: String? = ""
     var emailId: String? = ""
 
-    private lateinit var regResponseModel: LiveData<Resource<LoginModel>>
+    private lateinit var regResponseModel: LiveData<ApiSampleResource<LoginModel>>
 
     fun isValidation(activity: RegisterActivity): Boolean {
         val isFormValidated: Boolean
@@ -64,7 +65,7 @@ class RegViewModel(activity: Activity) : BaseObservable() {
     }
 
 
-    fun register(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+    fun register(map: HashMap<String, String>): LiveData<ApiSampleResource<LoginModel>> {
         regResponseModel = webServiceRepository.register(map)
         return regResponseModel
     }

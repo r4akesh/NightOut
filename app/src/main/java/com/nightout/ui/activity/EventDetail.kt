@@ -23,11 +23,10 @@ import com.nightout.adapter.ImageViewPagerAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.EventdetailActvityBinding
 import com.nightout.model.VenuDetailModel
-import com.nightout.model.VenueGallery
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.DoFavViewModel
-import com.nightout.viewmodel.VenuDetailViewModel
 import java.text.DecimalFormat
 
 class EventDetail : BaseActivity(), OnMapReadyCallback {
@@ -37,9 +36,9 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
     var venuID = ""
     private val progressDialog = CustomProgressDialog()
     lateinit var dt: VenuDetailModel.Data
-    lateinit var userVenueDetailViewModel: VenuDetailViewModel
+    lateinit var userVenueDetailViewModel: CommonViewModel
     lateinit var mMap: GoogleMap
-    lateinit var doFavViewModel: DoFavViewModel
+    lateinit var doFavViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,7 +113,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
 
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@EventDetail, "")
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["id"] = venuID!!
 
         userVenueDetailViewModel.userVenueDetail(map).observe(this@EventDetail, {
@@ -201,6 +200,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
 
             showMapLoc(dt.store_lattitude, dt.store_longitude)
         } catch (e: Exception) {
+            MyApp.popErrorMsg("EventDetail",""+e.toString(),THIS!!)
         }
     }
 
@@ -239,15 +239,15 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(binding.eventDetaiDirection)
         setTouchNClick(binding.eventDetailShareLoc)
         setTouchNClick(binding.eventDeatilFav)
-        userVenueDetailViewModel = VenuDetailViewModel(this@EventDetail)
-        doFavViewModel = DoFavViewModel(this@EventDetail)
+        userVenueDetailViewModel = CommonViewModel(this@EventDetail)
+        doFavViewModel = CommonViewModel(this@EventDetail)
         val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.eventDeatillocMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@EventDetail)
     }
 
     private fun add_favouriteAPICALL() {
         progressDialog.show(this@EventDetail, "")
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
         map["status"] = favStatus

@@ -202,6 +202,7 @@
     <string name="Network_Failure">Network Failure,Please try again.</string>
     <string name="Internal_server_error">Internal server error.</string>
     <string name="Parsing_Problem">Parsing Error.</string>
+    <string name="No_data_found">No Data Found</string>
 
 
 </resources>

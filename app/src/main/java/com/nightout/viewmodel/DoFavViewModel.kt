@@ -19,10 +19,10 @@ class DoFavViewModel (activity: Activity) : BaseObservable() {
     lateinit var userVenueDetailModel: LiveData<Resource<AddFavModel>>
 
 
-    fun doFavItem(map: HashMap<String, Any>): LiveData<Resource<AddFavModel>> {
+    /*fun doFavItem(map: HashMap<String, Any>): LiveData<Resource<AddFavModel>> {
         userVenueDetailModel = webServiceRepository.userAddFav(map)
         return userVenueDetailModel
-    }
+    }*/
 
 
 

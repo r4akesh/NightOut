@@ -51,12 +51,7 @@ import android.app.Activity
 import androidx.recyclerview.widget.RecyclerView
 
 import androidx.annotation.NonNull
-
-
-
-
-
-
+import com.nightout.viewmodel.CommonViewModel
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, ActivtyToFrag {
@@ -64,12 +59,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     lateinit var binding: FragmentHomeBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private var onMenuOpenListener: OnMenuOpenListener? = null
-    lateinit var homeViewModel: HomeViewModel
+    lateinit var homeViewModel: CommonViewModel
     lateinit var storyAdapter: StoryAdapter
     lateinit var allRecordAdapter: AllRecordAdapter
     lateinit var dashList: DashboardModel.Data
     private val progressDialog = CustomProgressDialog()
-    lateinit var doFavViewModel : DoFavViewModel
+    lateinit var doFavViewModel : CommonViewModel
     var allRecordsList = ArrayList<DashboardModel.AllRecord>()
     val REQCODE_VENULISTACTIVITY = 1009
 
@@ -191,7 +186,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                                 setBottomSheet()
                                 //save imgPath
                                 dashList = users.data
-                                PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
+                             //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
+                                PreferenceKeeper.instance.imgPathSave = "https://nightout.ezxdemo.com/storage/"
                                 if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
                                     if(activity!=null)
                                     setListStory(users.data.stories)
@@ -298,7 +294,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             "0" //for opp value
         else
             "1"
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["venue_id"] = allRecordsList[mainPos].sub_records[pos].id
         map["vendor_id"] =allRecordsList[mainPos].sub_records[pos].user_id
         map["status"] = fav
@@ -368,8 +364,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     }
 
     private fun initView() {
-        doFavViewModel = DoFavViewModel(requireActivity())
-        homeViewModel = HomeViewModel(requireActivity())
+        doFavViewModel = CommonViewModel(requireActivity())
+        homeViewModel = CommonViewModel(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
         binding.headerHome.headerSideMenu.setOnClickListener(this)

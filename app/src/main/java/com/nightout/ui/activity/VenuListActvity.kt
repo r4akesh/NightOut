@@ -25,6 +25,7 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.VenuListViewModel
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.DoFavViewModel
 
 
@@ -39,7 +40,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     var listStoreType = ArrayList<VenuModel>()
     lateinit var venuSubAdapter: VenuSubAdapter
     private val progressDialog = CustomProgressDialog()
-    lateinit var doFavViewModel : DoFavViewModel
+    lateinit var doFavViewModel : CommonViewModel
     var selectedStrType="1"
     val REQCODE_STOREDETAILACTIVITY = 1002
 
@@ -54,7 +55,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun initView() {
-        doFavViewModel = DoFavViewModel(this@VenuListActvity)
+        doFavViewModel = CommonViewModel(this@VenuListActvity)
         venuListModel = VenuListViewModel(this@VenuListActvity)
         supportMapFragment = (supportFragmentManager.findFragmentById(R.id.venulistingMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@VenuListActvity)
@@ -192,7 +193,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
             "0" //for opp value
         else
             "1"
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["venue_id"] = venuDataList[pos].id
         map["vendor_id"] =venuDataList[pos].vendor_detail.id
         map["status"] = fav

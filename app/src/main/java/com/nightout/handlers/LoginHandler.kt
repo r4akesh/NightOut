@@ -20,10 +20,10 @@ open class LoginHandler(val activity: LoginActivity) {
         MyApp.hideSoftKeyboard(activity)
 
         if (loginViewModel.isValidation(activity)) {
-            val map = HashMap<String, Any>()
+            val map = HashMap<String, String>()
             var mobNo = loginViewModel.PhNo!!
             mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
-            map["phonenumber"] = mobNo
+           map["phonenumber"] = mobNo
             map["device_id"] = "dhfkjdfh"
             map["device_type"] = "1"
             if (SystemClock.elapsedRealtime() - lastClickTime < 1000){//prevent double tap
@@ -39,9 +39,9 @@ open class LoginHandler(val activity: LoginActivity) {
         activity.startActivity(Intent(activity, RegisterActivity::class.java))
     }
 
-    private fun loginCall(map: HashMap<String, Any>, activity: LoginActivity) {
+    private fun loginCall(map: HashMap<String, String>, activity: LoginActivity) {
         progressDialog.show(activity)
-        loginViewModel.login(map).observe(activity, {
+        loginViewModel.doLogin(map).observe(activity, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()

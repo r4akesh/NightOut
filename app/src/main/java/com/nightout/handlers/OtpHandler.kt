@@ -24,7 +24,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
         MyApp.hideSoftKeyboard(activity)
         if (regViewModel.isValidation(activity)) {
             Log.d("TAG", "isValide done: ")
-            val map = HashMap<String, Any>()
+            val map = HashMap<String, String>()
             var mobNo = mobNo
             mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
             map["otp"] = regViewModel.otp!!
@@ -37,7 +37,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
     }
 
 
-    private fun otpCall(map: HashMap<String, Any>, activity: OTPActivity) {
+    private fun otpCall(map: HashMap<String, String>, activity: OTPActivity) {
         progressDialog.show(activity)
         regViewModel.otp(map).observe(activity, {
             when (it.status) {
@@ -73,7 +73,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
 
       fun sendAgain(regViewModel: OtpViewModel){
           progressDialog.show(activity)
-          val map = HashMap<String, Any>()
+          val map = HashMap<String, String>()
           var mobNo = mobNo
           mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
           map["phonenumber"] = mobNo

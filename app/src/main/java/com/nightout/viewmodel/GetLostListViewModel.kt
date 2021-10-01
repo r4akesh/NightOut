@@ -18,10 +18,10 @@ class GetLostListViewModel (activity: Activity) : BaseObservable() {
     lateinit var dashboardModel: LiveData<Resource<GetLostItemListModel>>
 
 
-    fun getLostItemList(): LiveData<Resource<GetLostItemListModel>> {
-        dashboardModel = webServiceRepository.getLostItemList()
-        return dashboardModel
-    }
+//    fun getLostItemList(): LiveData<Resource<GetLostItemListModel>> {
+//  //      dashboardModel = webServiceRepository.getLostItemList()
+//       return dashboardModel
+//    }
 
 
 

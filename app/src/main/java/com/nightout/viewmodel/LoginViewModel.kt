@@ -7,6 +7,7 @@ import com.nightout.R
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.utils.Utills
+import com.nightout.vendor.services.ApiSampleResource
 
 
 import com.nightout.vendor.services.Resource
@@ -19,7 +20,7 @@ class LoginViewModel(activity: Activity) : BaseObservable() {
     var PhNo: String? = ""
 
    // var password: String? = ""
-    private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
+    private lateinit var loginResponseModel: LiveData<ApiSampleResource<LoginModel>>
 
     fun isValidation(activity: LoginActivity): Boolean {
         val isFormValidated: Boolean
@@ -50,8 +51,8 @@ class LoginViewModel(activity: Activity) : BaseObservable() {
     }
 
 
-    fun login(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
-        loginResponseModel = webServiceRepository.login(map)
+    fun doLogin(map: HashMap<String, String>): LiveData<ApiSampleResource<LoginModel>> {
+        loginResponseModel = webServiceRepository.doLogin(map)
         return loginResponseModel
     }
 

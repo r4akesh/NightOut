@@ -20,7 +20,7 @@ open class RegisterHandler(val activity: RegisterActivity) {
         this.regViewModel = regViewModel
         MyApp.hideSoftKeyboard(activity)
         if (regViewModel.isValidation(activity)) {
-            val map = HashMap<String, Any>()
+            val map = HashMap<String, String>()
             var mobNo = regViewModel.PhNo!!
             mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
             map["first_name"] = regViewModel.fName!!
@@ -34,7 +34,7 @@ open class RegisterHandler(val activity: RegisterActivity) {
     }
 
 
-    private fun regCall(map: HashMap<String, Any>, activity: RegisterActivity) {
+    private fun regCall(map: HashMap<String, String>, activity: RegisterActivity) {
         progressDialog.show(activity)
         regViewModel.register(map).observe(activity, {
             when (it.status) {

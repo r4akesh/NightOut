@@ -8,6 +8,7 @@ import com.nightout.model.LoginModel
 import com.nightout.ui.activity.OTPActivity
 
 import com.nightout.utils.Utills
+import com.nightout.vendor.services.ApiSampleResource
 
 
 import com.nightout.vendor.services.Resource
@@ -21,7 +22,7 @@ class OtpViewModel(activity: Activity) : BaseObservable() {
     //var phno: String? = ""
 
 
-    private lateinit var regResponseModel: LiveData<Resource<LoginModel>>
+    private lateinit var regResponseModel: LiveData<ApiSampleResource<LoginModel>>
 
     fun isValidation(activity: OTPActivity): Boolean {
         val isFormValidated: Boolean
@@ -42,12 +43,12 @@ class OtpViewModel(activity: Activity) : BaseObservable() {
     }
 
 
-    fun otp(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+    fun otp(map: HashMap<String, String>): LiveData<ApiSampleResource<LoginModel>> {
         regResponseModel = webServiceRepository.otp(map)
         return regResponseModel
     }
 
-    fun otpResend(map: HashMap<String, Any>): LiveData<Resource<LoginModel>> {
+    fun otpResend(map: HashMap<String, String>): LiveData<ApiSampleResource<LoginModel>> {
         regResponseModel = webServiceRepository.otpResend(map)
         return regResponseModel
     }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
@@ -14,14 +13,14 @@ import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
-import com.nightout.vendor.viewmodel.ItemFoundViewModel
+import com.nightout.viewmodel.CommonViewModel
 import java.lang.StringBuilder
 
 
 class LostItemFoundActvity : BaseActivity() {
 
     lateinit var  binding : LostitemeditActvityBinding
-    lateinit var itemFoundViewModel: ItemFoundViewModel
+    lateinit var itemFoundViewModel: CommonViewModel
     lateinit var lostModel : GetLostItemListModel.Data
     private var customProgressDialog = CustomProgressDialog()
 
@@ -36,7 +35,7 @@ class LostItemFoundActvity : BaseActivity() {
 
     private fun initView() {
         setTouchNClick(binding.lostEditFound)
-        itemFoundViewModel = ItemFoundViewModel(this@LostItemFoundActvity)
+        itemFoundViewModel = CommonViewModel(this@LostItemFoundActvity)
           lostModel = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO) as GetLostItemListModel.Data
         binding.lostEditItemNameValue.setText(lostModel.product_name)
         binding.lostEditColorValue.setText(lostModel.product_detail)

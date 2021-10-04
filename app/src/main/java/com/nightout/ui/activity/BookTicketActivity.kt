@@ -14,6 +14,7 @@ import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.BookEventViewModel
+import com.nightout.viewmodel.CommonViewModel
 
 class BookTicketActivity : BaseActivity()  {
     lateinit var binding : BookticketActviityBinding
@@ -21,7 +22,7 @@ class BookTicketActivity : BaseActivity()  {
     var peopleCount = 1
     var totAmt = 0.0
     private val progressDialog = CustomProgressDialog()
-    lateinit var bookEventViewModel: BookEventViewModel
+    lateinit var bookEventViewModel: CommonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BookTicketActivity,R.layout.bookticket_actviity)
@@ -114,7 +115,7 @@ class BookTicketActivity : BaseActivity()  {
     }
 
     private fun inItView() {
-        bookEventViewModel = BookEventViewModel(this@BookTicketActivity)
+        bookEventViewModel = CommonViewModel(this@BookTicketActivity)
         setTouchNClick(binding.bookticketPay)
         setTouchNClick(binding.preBookingPlus)
         setTouchNClick(binding.preBookingMinus)

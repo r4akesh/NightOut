@@ -7,6 +7,7 @@ import com.nightout.model.*
 import com.nightout.vendor.services.ApiSampleResource
 import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.WebServiceRepository
+import okhttp3.MultipartBody
 import org.json.JSONObject
 
 class CommonViewModel (activity: Activity) : BaseObservable() {
@@ -18,6 +19,15 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var dsahModel: LiveData<ApiSampleResource<DashboardModel>>
     lateinit var venuDetailModel: LiveData<ApiSampleResource<VenuDetailModel>>
     lateinit var addFavModel: LiveData<ApiSampleResource<AddFavModel>>
+    lateinit var venuListModel: LiveData<ApiSampleResource<VenuListModel>>
+    lateinit var submitLostItemModel: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var delItemModel: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var foundBaseModel: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var saveEmrgencyModel: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var delEmngcyModel: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var sendQueryModel: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var bookEventMdl: LiveData<ApiSampleResource<BookEventMdlResponse>>
+    lateinit var favListModelRes: LiveData<ApiSampleResource<FavListModelRes>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -52,6 +62,52 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun doFavItem(map: HashMap<String, String>): LiveData<ApiSampleResource<AddFavModel>> {
         addFavModel = webServiceRepository.userAddFav(map)
         return addFavModel
+    }
+
+    fun venulistData(storeType : HashMap<String,String>): LiveData<ApiSampleResource<VenuListModel>> {
+        venuListModel = webServiceRepository.userVenueList(storeType)
+        return venuListModel
+    }
+
+    fun submitLostItem(requestBody: MultipartBody): LiveData<ApiSampleResource<BaseModel>> {
+        submitLostItemModel = webServiceRepository.submitLostItem(requestBody)
+        return submitLostItemModel
+    }
+
+    fun delItem(map: HashMap<String, String>): LiveData<ApiSampleResource<BaseModel>> {
+        delItemModel = webServiceRepository.delLostItem(map)
+        return delItemModel
+    }
+
+
+    fun foundLostItem(storeType : HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {
+        foundBaseModel = webServiceRepository.foundLostItem(storeType)
+        return foundBaseModel
+    }
+
+    fun saveEmngcy(map: HashMap<String, String>): LiveData<ApiSampleResource<BaseModel>> {
+        saveEmrgencyModel = webServiceRepository.saveEmergency(map)
+        return saveEmrgencyModel
+    }
+
+    fun delEmngcy(map:HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {
+        delEmngcyModel = webServiceRepository.delEmergency(map)
+        return delEmngcyModel
+    }
+
+    fun sendQuery(map : HashMap<String, String>): LiveData<ApiSampleResource<BaseModel>> {
+        sendQueryModel = webServiceRepository.sendQuery(map)
+            return sendQueryModel
+    }
+
+
+    fun bookEvent(storeType : HashMap<String,String>): LiveData<ApiSampleResource<BookEventMdlResponse>> {
+        bookEventMdl = webServiceRepository.eventBook(storeType)
+        return bookEventMdl
+    }
+    fun favList(): LiveData<ApiSampleResource<FavListModelRes>> {
+        favListModelRes = webServiceRepository.favList()
+        return favListModelRes
     }
 
 }

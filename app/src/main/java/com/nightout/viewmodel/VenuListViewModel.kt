@@ -23,10 +23,10 @@ class VenuListViewModel(activity: Activity) : BaseObservable() {
 
 
 
-    fun venulistData(storeType : HashMap<String,String>): LiveData<Resource<VenuListModel>> {
+    /*fun venulistData(storeType : HashMap<String,String>): LiveData<Resource<VenuListModel>> {
         venuListModel = webServiceRepository.userVenueList(storeType)
         return venuListModel
-    }
+    }*/
 
 
 }

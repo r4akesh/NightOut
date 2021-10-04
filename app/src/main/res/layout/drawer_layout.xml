@@ -179,6 +179,38 @@
                         android:textSize="@dimen/_14ssp" />
 
                     <TextView
+                        android:id="@+id/sideMenuFav"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_favic"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Favourite"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/sideMenuInvite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2ssp"
+                        android:drawableStart="@drawable/sidemenu_invited"
+                        android:drawablePadding="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15ssp"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp"
+                        android:text="@string/Invited_BarCrawl"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2ssp"

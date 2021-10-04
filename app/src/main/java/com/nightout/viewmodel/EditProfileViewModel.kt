@@ -8,6 +8,7 @@ import com.nightout.R
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.EditProfileActivity
 import com.nightout.utils.Utills
+import com.nightout.vendor.services.ApiSampleResource
 
 
 import com.nightout.vendor.services.Resource
@@ -37,8 +38,9 @@ class EditProfileViewModel(activity: Activity) : BaseObservable() {
     var profilePic: MultipartBody.Part? = null
     var profilePicPath: String = ""
 
-    private lateinit var loginResponseModel: LiveData<Resource<LoginModel>>
-    fun updateProfile(requestBody: MultipartBody): LiveData<Resource<LoginModel>> {
+    private lateinit var loginResponseModel: LiveData<ApiSampleResource<LoginModel>>
+
+    fun updateProfile(requestBody: MultipartBody): LiveData<ApiSampleResource<LoginModel>> {
         loginResponseModel = webServiceRepository.updateProfile(requestBody)
         return loginResponseModel
     }

@@ -22,10 +22,10 @@ import com.nightout.model.ContactNoModel
 import com.nightout.model.GetEmergencyModel
 import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.DialogCustmYesNo
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.DelEmngyPhNoViewModel
 
 
 class EmergencyContactActivity : BaseActivity() {
@@ -36,7 +36,7 @@ class EmergencyContactActivity : BaseActivity() {
 
     private val progressDialog = CustomProgressDialog()
     lateinit var getEmngyPhNoViewModel: CommonViewModel
-    lateinit var delEmngyPhNoViewModel: DelEmngyPhNoViewModel
+    lateinit var delEmngyPhNoViewModel: CommonViewModel
     var listEmergency = ArrayList<GetEmergencyModel.Data>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +83,7 @@ class EmergencyContactActivity : BaseActivity() {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
                         try {
+                            binding.emergencyListNoDataConstrent.visibility= GONE
                             listEmergency = ArrayList()
                             listEmergency.addAll(it.data?.data!!)
                             setListEmerngcy()
@@ -95,11 +96,9 @@ class EmergencyContactActivity : BaseActivity() {
                     }
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
-                        try {
-                            Utills.showSnackBarOnError(binding.emRootLayout, it.message!!, this@EmergencyContactActivity)
+                      //  Utills.showSnackBarOnError(binding.emRootLayout, it.message!!, this@EmergencyContactActivity)
                             setTextAddBtn()
-                        } catch (e: Exception) {
-                        }
+                         binding.emergencyListNoDataConstrent.visibility= VISIBLE
 
                     }
                 }
@@ -114,7 +113,8 @@ class EmergencyContactActivity : BaseActivity() {
     private fun setListEmerngcy() {
         emergencyContactAdapter = EmergencyContactAdapter(this, listEmergency, object : EmergencyContactAdapter.ClickListenerr {
                 override fun onClick(pos: Int) {
-                    delAPICAll(listEmergency[pos].id, pos)
+                    confirmPopUp(listEmergency[pos].id, pos)
+
                 }
 
             })
@@ -127,6 +127,20 @@ class EmergencyContactActivity : BaseActivity() {
             )
             it.adapter = emergencyContactAdapter
         }
+    }
+
+    private fun confirmPopUp(uid: String, pos: Int) {
+        DialogCustmYesNo.getInstance().createDialog(this@EmergencyContactActivity, resources.getString(R.string.app_name),resources.getString(R.string.are_sure_del),object:DialogCustmYesNo.Dialogclick{
+            override fun onYES() {
+                delAPICAll(uid, pos)
+            }
+
+            override fun onNO() {
+
+            }
+
+        })
+
     }
 
     private fun delAPICAll(uId: String, listPos: Int) {
@@ -180,7 +194,7 @@ class EmergencyContactActivity : BaseActivity() {
     private fun initView() {
         binding.addContactBtn.setOnClickListener(this)
         getEmngyPhNoViewModel = CommonViewModel(this@EmergencyContactActivity)
-        delEmngyPhNoViewModel = DelEmngyPhNoViewModel(this@EmergencyContactActivity)
+        delEmngyPhNoViewModel = CommonViewModel(this@EmergencyContactActivity)
     }
 
 

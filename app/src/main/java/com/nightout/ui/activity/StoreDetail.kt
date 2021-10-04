@@ -30,7 +30,6 @@ import com.nightout.databinding.StoredetailActivityBinding
 import com.nightout.model.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
-import com.nightout.viewmodel.DoFavViewModel
 import com.nightout.viewmodel.SendQueryViewModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
 import android.text.Editable
@@ -43,7 +42,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
     lateinit var userVenueDetailViewModel: CommonViewModel
     lateinit var doFavViewModel: CommonViewModel
-    lateinit var sendQueryViewModel: SendQueryViewModel
+    lateinit var sendQueryViewModel: CommonViewModel
     lateinit var mMap: GoogleMap
     var imageViewPagerAdapter: ImageViewPagerAdapter? = null
     private val progressDialog = CustomProgressDialog()
@@ -274,7 +273,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         var listFood = ArrayList<StorDetailFoodModel>()
         listFood.add(StorDetailFoodModel("Drinks", true))
         listFood.add(StorDetailFoodModel("Food", false))
-        listFood.add(StorDetailFoodModel("Snaks", false))
+        listFood.add(StorDetailFoodModel("Snacks", false))
         listFood.add(StorDetailFoodModel("Packages", false))
 
         storDetailFoodHorizontalAdapter = StorDetailFoodHorizontalAdapter(
@@ -787,7 +786,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         supportMapFragment.getMapAsync(this@StoreDetail)
 
         userVenueDetailViewModel = CommonViewModel(this)
-        sendQueryViewModel = SendQueryViewModel(this)
+        sendQueryViewModel = CommonViewModel(this)
         doFavViewModel = CommonViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilDiscount)
@@ -950,7 +949,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     private fun userFacilityAPICALL() {
         progressDialog.show(this@StoreDetail, "")
         // type (0=>Enquiry, 1=>Complaints)
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["type"] = "0"
         map["email"] = PreferenceKeeper.instance.loginResponse!!.email
         map["name"] = PreferenceKeeper.instance.loginResponse!!.name

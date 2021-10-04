@@ -24,10 +24,7 @@ class BookEventViewModel(activity: Activity) : BaseObservable() {
 
 
 
-    fun bookEvent(storeType : HashMap<String,String>): LiveData<Resource<BookEventMdlResponse>> {
-        venuListModel = webServiceRepository.eventBook(storeType)
-        return venuListModel
-    }
+
 
 
 }

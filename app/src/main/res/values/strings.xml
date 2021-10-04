@@ -48,14 +48,14 @@
     <string name="TrackNTrace"><![CDATA[Track & Trace]]></string>
     <string name="Reffer_friend">Refer a friend</string>
     <string name="CMS_Pages">CMS Pages</string>
-    <string name="About">About</string>
+    <string name="About">About Us</string>
     <string name="FAQ">FAQ</string>
     <string name="Trems_Condition">Terms and Condition</string>
     <string name="Contact_Us">Contact Us</string>
     <string name="Settings">Settings</string>
     <string name="Emergency_Contact">Emergency Contact</string>
     <string name="Contact_List">Contact List</string>
-    <string name="Emergency_History">Emergency History</string>
+    <string name="Emergency_History">Panic Situation</string>
     <string name="Panic_Situation">Panic Situation</string>
     <string name="Logout">Logout</string>
     <string name="Savetobarcrawl">Save to Bar Crawl</string>
@@ -203,6 +203,10 @@
     <string name="Internal_server_error">Internal server error.</string>
     <string name="Parsing_Problem">Parsing Error.</string>
     <string name="No_data_found">No Data Found</string>
+    <string name="No_contactList_avail">No Item Available</string>
+    <string name="are_sure_del">Are you sure you want to delete?</string>
+    <string name="Favourite">Favourite</string>
+    <string name="Invited_BarCrawl">Invited Bar Crawl</string>
 
 
 </resources>

@@ -27,7 +27,7 @@ class ContactListActvity : BaseActivity() {
     var savelistContcat = StringBuilder()
     private val progressDialog = CustomProgressDialog()
     lateinit var contactFillterViewModel: CommonViewModel
-    lateinit var saveEmngyPhNoViewModel: SaveEmngyPhNoViewModel
+    lateinit var saveEmngyPhNoViewModel: CommonViewModel
       var listFilter= ArrayList<ContactFillterModel.Data>()
     var chkSelectedCnt = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +73,7 @@ class ContactListActvity : BaseActivity() {
 
     private fun initView() {
         contactFillterViewModel = CommonViewModel(this@ContactListActvity)
-        saveEmngyPhNoViewModel = SaveEmngyPhNoViewModel(this@ContactListActvity)
+        saveEmngyPhNoViewModel = CommonViewModel(this@ContactListActvity)
         binding.addContactDoneBtn.setOnClickListener(this)
 
     }

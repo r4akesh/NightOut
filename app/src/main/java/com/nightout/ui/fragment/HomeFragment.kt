@@ -1,11 +1,9 @@
 package com.nightout.ui.fragment
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -19,11 +17,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -41,16 +37,12 @@ import com.nightout.ui.activity.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.NetworkHelper
 import com.nightout.vendor.services.Status
-import com.nightout.viewmodel.DoFavViewModel
-import com.nightout.viewmodel.HomeViewModel
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import android.app.Activity
 import androidx.recyclerview.widget.RecyclerView
 
-import androidx.annotation.NonNull
 import com.nightout.viewmodel.CommonViewModel
 
 

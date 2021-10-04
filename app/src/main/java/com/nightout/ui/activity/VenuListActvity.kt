@@ -24,9 +24,7 @@ import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
-import com.nightout.vendor.viewmodel.VenuListViewModel
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.DoFavViewModel
 
 
 class VenuListActvity : BaseActivity(), OnMapReadyCallback {
@@ -34,7 +32,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var venuAdapterAdapter: VenuAdapterAdapter
     var isListShow = true
     lateinit var supportMapFragment: SupportMapFragment
-    lateinit var venuListModel: VenuListViewModel
+    lateinit var venuListModel: CommonViewModel
     private var customProgressDialog = CustomProgressDialog()
    // var storeType = ""
     var listStoreType = ArrayList<VenuModel>()
@@ -56,7 +54,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
 
     private fun initView() {
         doFavViewModel = CommonViewModel(this@VenuListActvity)
-        venuListModel = VenuListViewModel(this@VenuListActvity)
+        venuListModel = CommonViewModel(this@VenuListActvity)
         supportMapFragment = (supportFragmentManager.findFragmentById(R.id.venulistingMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@VenuListActvity)
         supportMapFragment.view?.visibility = GONE

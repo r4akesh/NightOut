@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
@@ -29,7 +30,7 @@ import com.nightout.viewmodel.GetLostListViewModel
 class LostitemActivity :BaseActivity() {
     lateinit var binding :LostitemActvityBinding
     lateinit var getLostListViewModel : CommonViewModel
-    lateinit var delItemViewModel: DelItemViewModel
+    lateinit var delItemViewModel: CommonViewModel
     private var customProgressDialog = CustomProgressDialog()
     var  lostList: ArrayList<GetLostItemListModel.Data> = ArrayList()
     lateinit  var lostItemAdapter:LostItemAdapter
@@ -46,7 +47,7 @@ var isEdit= true //for mainten tost msg
 
     private fun initView() {
         getLostListViewModel = CommonViewModel(this@LostitemActivity)
-        delItemViewModel = DelItemViewModel(this@LostitemActivity)
+        delItemViewModel = CommonViewModel(this@LostitemActivity)
     }
     private fun delete_lost_itemAPICall(pos:Int) {
         customProgressDialog.show(this@LostitemActivity, "")
@@ -77,6 +78,7 @@ var isEdit= true //for mainten tost msg
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {myData->
+                        binding.lostItemNoDataConstrent.visibility= GONE
                         lostList = ArrayList()
                         lostList.addAll(myData.data)
                         lostList.reverse()
@@ -89,11 +91,8 @@ var isEdit= true //for mainten tost msg
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.lostConstrentToolbar,
-                        it.message!!,
-                        this@LostitemActivity
-                    )
+                    // Utills.showSnackBarOnError(binding.lostConstrentToolbar, it.message!!, this@LostitemActivity)
+                    binding.lostItemNoDataConstrent.visibility= VISIBLE
                 }
             }
         })
@@ -146,7 +145,9 @@ var isEdit= true //for mainten tost msg
     var REQUESTCODE_LostItemDetailsActvity=100
     private fun openPopMenu(lostItem3Dot: ImageView, pos:Int) {
         val popup = PopupMenu(this@LostitemActivity, lostItem3Dot)
-        popup.menu.add("Edit")
+        if(!lostList[pos].status.equals("1")) {
+            popup.menu.add("Edit")
+        }
         popup.menu.add("Delete")
         popup.setGravity(Gravity.END)
         popup.setOnMenuItemClickListener { item ->

@@ -18,39 +18,27 @@ interface APIInterface {
 
 
 
-    @POST("venue_type_list")
-    fun venuListAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
-
-    @POST("profile_update")
-    suspend fun updateProfileAPI(@Body requestBody: MultipartBody): Response<LoginModel>
 
 
 
-    @POST("add_update_lost_item")
-    suspend fun addlostitemAPI(@Body requestBody: MultipartBody): Response<BaseModel>
 
 
-    @POST("delete_lost_item")
-    suspend fun delItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
-
-    @POST("add_emergency_contact")
-    suspend fun saveEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
-
-    @POST("found_lost_item")
-    suspend fun foundItemsAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 
 
-    @POST("delete_emergency_contact")
-    suspend fun delEmergencyAPI(@Body params: HashMap<String, String>): Response<BaseModel>
 
-    @POST("send_query")
-    fun sendQueryAPI(@Body params: HashMap<String, Any>): Call<ResponseBody>
+
+
+
+
+
+
+
+
 
 //    @POST("user_pages")
 //    suspend fun userPagesAPI(): Response<AboutModelResponse>
 
-    @POST("book_event_ticket")
-    fun bookEventTicketAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
 
     @POST("user_pages")
     fun userPagesAPI(): Call<ResponseBody>
@@ -86,4 +74,35 @@ interface APIInterface {
 
     @POST("add_favourite")
       fun addFavouriteAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
+
+    @POST("venue_type_list")
+    fun venuListAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("profile_update")
+      fun updateProfileAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
+
+    @POST("add_update_lost_item")
+      fun addlostitemAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
+
+    @POST("delete_lost_item")
+      fun delItemsAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("found_lost_item")
+      fun foundItemsAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("add_emergency_contact")
+      fun saveEmergencyAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("delete_emergency_contact")
+      fun delEmergencyAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+
+    @POST("send_query")
+    fun sendQueryAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("book_event_ticket")
+    fun bookEventTicketAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @GET("favourite_list")
+    fun favouriteListAPi( ): Call<ResponseBody>
 }

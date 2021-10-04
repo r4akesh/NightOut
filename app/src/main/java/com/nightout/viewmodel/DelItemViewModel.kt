@@ -18,10 +18,10 @@ class DelItemViewModel (activity: Activity) : BaseObservable() {
     lateinit var dashboardModel: LiveData<Resource<BaseModel>>
 
 
-    fun delItem(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
+   /*fun delItem(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
         dashboardModel = webServiceRepository.delLostItem(map)
         return dashboardModel
-    }
+    } */
 
 
 

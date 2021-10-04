@@ -50,6 +50,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sideMenuTrackTrace: TextView? = null
     var sideMenuEvent: TextView? = null
     var sideMenuFood: TextView? = null
+    var sideMenuInvite: TextView? = null
+    var sideMenuFav: TextView? = null
     var sideMenuLostItem: TextView? = null
     var sidemenu_username: TextView? = null
     var sidemenu_email: TextView? = null
@@ -236,6 +238,20 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             startActivity(Intent(this@HomeActivity, FoodStoreActvity::class.java))
          //   overridePendingTransition(0,0)
         }
+        else if(v==sideMenuInvite){
+          //  slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuInvite?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity,  SideMenuShredListActivity::class.java))
+         //   overridePendingTransition(0,0)
+        }
+        else if(v==sideMenuFav){
+          //  slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuFav?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, FavListActivity::class.java))
+         //   overridePendingTransition(0,0)
+        }
 
         else if(v==sideMenuEmrgyContact){
             //slidingRootNav!!.closeMenu()
@@ -353,6 +369,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuFaq?.setBackgroundResource(0)
         sideMenuContactUs?.setBackgroundResource(0)
         sideMenuFood?.setBackgroundResource(0)
+        sideMenuInvite?.setBackgroundResource(0)
+        sideMenuFav?.setBackgroundResource(0)
         sideMenuEvent?.setBackgroundResource(0)
         sideMenuSetting?.setBackgroundResource(0)
         sideMenuLogout?.setBackgroundResource(0)
@@ -369,6 +387,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuHome = findViewById(R.id.sideMenuHome)
         sideMenuEvent = findViewById(R.id.sideMenuEvent)
         sideMenuFood = findViewById(R.id.sideMenuFood)
+        sideMenuInvite = findViewById(R.id.sideMenuInvite)
+        sideMenuFav = findViewById(R.id.sideMenuFav)
         sideMenuLostItem = findViewById(R.id.sideMenuLostItem)
         sideMenuVenues = findViewById(R.id.sideMenuVenues)
         sideMenuEmrgyHistry = findViewById(R.id.sideMenuEmrgyHistry)
@@ -395,6 +415,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         setTouchNClick(sideMenuEmrgyHistry)
         setTouchNClick(sideMenuEmrgyContact)
         setTouchNClick(sideMenuFood)
+        setTouchNClick(sideMenuInvite)
+        setTouchNClick(sideMenuFav)
         setTouchNClick(sideMenuLostItem)
         setTouchNClick(sideMenuEvent)
         setTouchNClick(sideMenuLogout)

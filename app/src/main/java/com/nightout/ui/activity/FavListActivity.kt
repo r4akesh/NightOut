@@ -1,0 +1,131 @@
+package com.nightout.ui.activity
+
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.text.Html
+import android.util.Log
+import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.nightout.R
+import com.nightout.adapter.FavVenuAdapter
+import com.nightout.base.BaseActivity
+import com.nightout.databinding.FavlistActivityBinding
+import com.nightout.model.FavListModelRes
+import com.nightout.utils.AppConstant
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.Utills
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
+
+class FavListActivity : BaseActivity() {
+    lateinit var binding : FavlistActivityBinding
+    private var customProgressDialog = CustomProgressDialog()
+    private lateinit var commonViewModel: CommonViewModel
+    lateinit var favVenuAdapter: FavVenuAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this@FavListActivity,R.layout.favlist_activity)
+        setToolBar()
+        inItView()
+        favouriteListAPICall()
+    }
+
+    private fun inItView() {
+        commonViewModel = CommonViewModel(this@FavListActivity)
+    }
+   lateinit var dataList : ArrayList<FavListModelRes.Data>
+    private fun favouriteListAPICall() {
+        customProgressDialog.show(this@FavListActivity, "")
+        commonViewModel.favList().observe(this@FavListActivity,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    it.data?.let {myData->
+                          dataList = ArrayList()
+                        dataList.addAll(myData.data)
+                        setList(myData.data)
+                        //  binding.aboutActvityText.setText(myData.data[0].content)
+                        Log.d("TAG", "user_lost_itemsAPICAll: "+myData.data)
+                    }
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(
+                        binding.rootFavList,
+                        it.message!!,
+                        this@FavListActivity
+                    )
+                }
+            }
+        })
+    }
+
+
+
+    private fun setToolBar() {
+        binding.favListToolBar.toolbarTitle.text = resources.getString(R.string.Favourite)
+        binding.favListToolBar.toolbarBack.setOnClickListener {
+            finish()
+        }
+        binding.favListToolBar.toolbar3dot.visibility= View.GONE
+        binding.favListToolBar.toolbarBell.visibility= View.GONE
+    }
+
+    val REQCODE_STOREDETAILACTIVITY = 1002
+    var posSave=0 //for list update
+    private fun setList(dataList: ArrayList<FavListModelRes.Data>) {
+
+        favVenuAdapter = FavVenuAdapter(this@FavListActivity,dataList,object:FavVenuAdapter.ClickListener{
+            override fun onClick(pos: Int) {
+                posSave = pos
+                if(dataList[pos].venue_detail.store_type == "5"){
+                    startActivityForResult(
+                        Intent(this@FavListActivity, EventDetail::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
+                        .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE,  "1")
+                        ,REQCODE_STOREDETAILACTIVITY)
+                }else {
+                    startActivityForResult(
+                        Intent(this@FavListActivity, StoreDetail::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
+                            .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, "1")
+                        ,REQCODE_STOREDETAILACTIVITY)
+                }
+            }
+
+            override fun onClickFav(pos: Int) {
+
+            }
+
+        })
+
+        binding.favListRecycle.also{
+            it.layoutManager = LinearLayoutManager(this@FavListActivity,LinearLayoutManager.VERTICAL,false)
+            it.adapter = favVenuAdapter
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode== Activity.RESULT_OK){
+           var favValue = data?.getStringExtra("result")!!
+            if(favValue == "0") {
+                val listSize = dataList.size
+                dataList.removeAt(posSave)
+                favVenuAdapter.notifyItemRemoved(posSave)
+                //favVenuAdapter.notifyItemRangeChanged(posSave, listSize)
+                fdfsghdfgjhfu
+            }
+        }
+    }
+}

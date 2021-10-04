@@ -18,10 +18,7 @@ class SaveEmngyPhNoViewModel (activity: Activity) : BaseObservable() {
     lateinit var dashboardModel: LiveData<Resource<BaseModel>>
 
 
-    fun saveEmngcy(map: HashMap<String, String>): LiveData<Resource<BaseModel>> {
-        dashboardModel = webServiceRepository.saveEmergency(map)
-        return dashboardModel
-    }
+
 
 
 

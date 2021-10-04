@@ -111,7 +111,7 @@ class ChooseVenuseActivity : BaseActivity() {
 
     }
 
-    lateinit var lostItemSubmitViewModel: LostItemSubmitViewModel
+    lateinit var lostItemSubmitViewModel: CommonViewModel
     private fun addLostItemApiCall(build: MultipartBody) {
         customProgressDialog.show(this@ChooseVenuseActivity)
         lostItemSubmitViewModel.submitLostItem(build).observe(this@ChooseVenuseActivity, {
@@ -164,7 +164,7 @@ class ChooseVenuseActivity : BaseActivity() {
     }
 
     private fun initView() {
-        lostItemSubmitViewModel = LostItemSubmitViewModel(this@ChooseVenuseActivity)
+        lostItemSubmitViewModel = CommonViewModel(this@ChooseVenuseActivity)
         homeViewModel = CommonViewModel(this@ChooseVenuseActivity)
         binding.chooseVenuesSend.setOnClickListener(this)
 

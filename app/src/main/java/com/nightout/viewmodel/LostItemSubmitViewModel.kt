@@ -18,11 +18,11 @@ class LostItemSubmitViewModel (activity: Activity) : BaseObservable() {
     private val webServiceRepository: WebServiceRepository = WebServiceRepository(activity)
     lateinit var dashboardModel: LiveData<Resource<BaseModel>>
 
-
-    fun submitLostItem(requestBody: MultipartBody): LiveData<Resource<BaseModel>> {
+/*
+     fun submitLostItem(requestBody: MultipartBody): LiveData<Resource<BaseModel>> {
         dashboardModel = webServiceRepository.submitLostItem(requestBody)
         return dashboardModel
-    }
+    }*/
 
 
 

@@ -26,7 +26,6 @@ import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.DoFavViewModel
 import java.text.DecimalFormat
 
 class EventDetail : BaseActivity(), OnMapReadyCallback {

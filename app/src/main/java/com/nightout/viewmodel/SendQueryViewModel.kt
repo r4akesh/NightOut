@@ -20,14 +20,14 @@ class SendQueryViewModel (activity: Activity) : BaseObservable() {
     lateinit var dashboardModel: LiveData<Resource<BaseModel>>
 
 
-    fun sendQuery(map : HashMap<String, Any>): LiveData<Resource<BaseModel>> {
+   /* fun sendQuery(map : HashMap<String, Any>): LiveData<Resource<BaseModel>> {
         try {
             dashboardModel = webServiceRepository.sendQuery(map)
             return dashboardModel
         } catch (e: Exception) {
             return dashboardModel
         }
-    }
+    }*/
 
 
 

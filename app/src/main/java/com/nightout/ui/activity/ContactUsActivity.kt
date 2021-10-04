@@ -14,6 +14,7 @@ import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.nightout.viewmodel.SendQueryViewModel
 
 
@@ -21,7 +22,7 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding: ActivityContactUsBinding
     var country = arrayOf("Select", "Complain", "Enquiry")
     private var progressDialog = CustomProgressDialog()
-    lateinit var sendQueryViewModel: SendQueryViewModel
+    lateinit var sendQueryViewModel: CommonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_us)
@@ -80,7 +81,7 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun senQueryAPICall() {
         progressDialog.show(this@ContactUsActivity, "")
         // type (0=>Enquiry, 1=>Complaints)
-        var map = HashMap<String, Any>()
+        var map = HashMap<String, String>()
         map["type"] = "0"
         map["email"] = PreferenceKeeper.instance.loginResponse!!.email
         map["name"] = PreferenceKeeper.instance.loginResponse!!.name
@@ -113,7 +114,7 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
 
     private fun initView() {
         try {
-            sendQueryViewModel = SendQueryViewModel(this@ContactUsActivity)
+            sendQueryViewModel = CommonViewModel(this@ContactUsActivity)
             binding.contactUsSubmitBtn.setOnClickListener(this)
             var loginDetail = PreferenceKeeper.instance.loginResponse
             binding.contactUsPhNo.setText(Utills.phoneNoUKFormat(loginDetail!!.phonenumber))

@@ -74,7 +74,7 @@ class Utills {
              val snackView = snackBarView.view
              val params = snackView.layoutParams as FrameLayout.LayoutParams
              params.gravity = Gravity.TOP
-             params.topMargin = 100
+             params.topMargin = 150
              snackView.layoutParams = params
              snackView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_20213A))
              snackBarView.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE

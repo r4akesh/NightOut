@@ -27,12 +27,7 @@ class AllBarCrawaAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: AllbarcrawalGridItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.allbarcrawal_grid_item, parent, false
-        )
-
-
+        val binding: AllbarcrawalGridItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.allbarcrawal_grid_item, parent, false)
         return ViewHolder(binding)
     }
 

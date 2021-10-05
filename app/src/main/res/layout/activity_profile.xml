@@ -228,7 +228,7 @@
 
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:maxLines="2"
+
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/addressOneLabel"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -266,7 +266,7 @@
                         android:text="@{loginModel.userprofile.address2}"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:maxLines="2"
+
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/addressOneLabel"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -284,6 +284,45 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/addressTwo" />
 
+
+                    <TextView
+
+                        style="@style/textNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/addressTwo" />
+
+
+                    <TextView
+
+                        style="@style/textRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="United Kingdom"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/addressOneLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/addressOneLabel" />
+
+
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/color_252342"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/addressTwo" />
 
 
 

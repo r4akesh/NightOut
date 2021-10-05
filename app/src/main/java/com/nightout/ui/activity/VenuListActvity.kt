@@ -72,33 +72,35 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 0 == i
                 }
-
+                binding.venulistingToolBar.toolbarTitle.text = "Bars Menu"
                 venue_type_listAPICALL()
             }
             "2" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 1 == i
                 }
-
+                binding.venulistingToolBar.toolbarTitle.text = "Pubs Menu"
                 venue_type_listAPICALL()
             }
             "3" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 2 == i
                 }
-
+                binding.venulistingToolBar.toolbarTitle.text = "Clubs Menu"
                 venue_type_listAPICALL()
             }
             "4" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 3 == i
                 }
+                binding.venulistingToolBar.toolbarTitle.text = "Food Menu"
                 venue_type_listAPICALL()
             }
             "5" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 4 == i
                 }
+                binding.venulistingToolBar.toolbarTitle.text = "Event Menu"
                 venue_type_listAPICALL()
             }
         }
@@ -269,6 +271,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     for (i in 0 until listStoreType.size) {
                         listStoreType[i].isSelected = pos == i
                     }
+                    binding.venulistingToolBar.toolbarTitle.setText(listStoreType[pos].title+ " Menu")
                     venuAdapterAdapter.notifyDataSetChanged()
                     selectedStrType=listStoreType[pos].id.toString()
                     venue_type_listAPICALL()

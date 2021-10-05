@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.*
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -16,6 +18,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
@@ -30,6 +34,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.home_activity.view.*
+import kotlinx.android.synthetic.main.row_terms_cms_layout.view.*
 
 class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
@@ -48,6 +53,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sideMenuEmrgyContact: TextView? = null
     var sideMenuLogout: TextView? = null
     var sideMenuTrackTrace: TextView? = null
+    var sidemenuCms: TextView? = null
+    var sideMenuCmsArrowImg: ImageView? = null
     var sideMenuEvent: TextView? = null
     var sideMenuFood: TextView? = null
     var sideMenuInvite: TextView? = null
@@ -56,6 +63,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sidemenu_username: TextView? = null
     var sidemenu_email: TextView? = null
     var sideMenuFAQ: TextView? = null
+    var sideMenuCmsLinear: LinearLayout? = null
     var sidemenu_profile: CircleImageView? = null
     lateinit var homeFragment : HomeFragment
 
@@ -209,12 +217,19 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
                 showFragment(ProfileFragment(this))
             }
         }
-        if (v == sideMenuTrackTrace) {
+
+       else  if (v == sideMenuTrackTrace) {
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuTrackTrace?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, TrackTrace::class.java))
-           // overridePendingTransition(0,0)
+
+        }
+        else  if (v == sidemenuCms) {
+            setBtnBgBlank()
+            sidemenuCms?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            transitionAnim(sideMenuCmsLinear,sideMenuCmsArrowImg)
+
         }
         else if(v==sideMenuEvent){
            // slidingRootNav!!.closeMenu()
@@ -222,35 +237,35 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             sideMenuEvent?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
                     startActivity(Intent(this@HomeActivity, VenuListActvity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"5"))//
-           // overridePendingTransition(0,0)
+
         }
         else if(v==sideMenuLostItem){
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuLostItem?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, LostitemActivity::class.java))
-          //  overridePendingTransition(0,0)
+
         }
         else if(v==sideMenuFood){
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFood?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FoodStoreActvity::class.java))
-         //   overridePendingTransition(0,0)
+
         }
         else if(v==sideMenuInvite){
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuInvite?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity,  SideMenuShredListActivity::class.java))
-         //   overridePendingTransition(0,0)
+
         }
         else if(v==sideMenuFav){
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFav?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, FavListActivity::class.java))
-         //   overridePendingTransition(0,0)
+
         }
 
         else if(v==sideMenuEmrgyContact){
@@ -258,7 +273,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             setBtnBgBlank()
             sideMenuEmrgyContact?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EmergencyContactActivity::class.java))
-          //  overridePendingTransition(0,0)
+
         }
         else if(v==sideMenuVenues){
             //slidingRootNav!!.closeMenu()
@@ -266,14 +281,14 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             sideMenuVenues?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, VenuListActvity::class.java)
                 .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"1"))//here 1 is default
-           // overridePendingTransition(0,0)
+
         }
         else if(v==sideMenuEmrgyHistry){
            // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEmrgyHistry?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, EmergencyContactListActivity::class.java))
-         //   overridePendingTransition(0,0)
+
         }
  
         else if(v==sideMenuHome){
@@ -289,41 +304,50 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             setBtnBgBlank()
             sideMenuAbout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, AboutActivity::class.java)
-                .putExtra(AppConstant.INTENT_EXTRAS.WHICH_CMSPAGE,1))
-           // overridePendingTransition(0,0)
+             )
+
         } else if (v == sideMenuTermCond) {
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuTermCond?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            //startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java)
-            startActivity(Intent(this@HomeActivity, AboutActivity::class.java)
-                .putExtra(AppConstant.INTENT_EXTRAS.WHICH_CMSPAGE,3))
-            //overridePendingTransition(0,0)
+            startActivity(Intent(this@HomeActivity, TermsNCondActivity::class.java))
         } else if (v == sideMenuFaq) {
            // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuFaq?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            startActivity(Intent(this@HomeActivity, AboutActivity::class.java)
-                .putExtra(AppConstant.INTENT_EXTRAS.WHICH_CMSPAGE,2))
-          //  overridePendingTransition(0,0)
+            startActivity(Intent(this@HomeActivity, FAQActivity::class.java))
         } else if (v == sideMenuContactUs) {
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuContactUs?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, ContactUsActivity::class.java))
-            overridePendingTransition(0,0)
         } else if (v == sideMenuSetting) {
            // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuSetting?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
             startActivity(Intent(this@HomeActivity, SettingActivity::class.java))
-          //  overridePendingTransition(0,0)
+
         }
         else if (v == sideMenuLogout) {
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuLogout?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
            showAlertLogout()
+        }
+    }
+
+    private fun transitionAnim(mainContainerView: LinearLayout?, button: ImageView?) {
+        if (mainContainerView?.visibility == View.GONE) {
+            TransitionManager.beginDelayedTransition(mainContainerView, AutoTransition())
+            val rotate = ObjectAnimator.ofFloat(button, "rotation", 0f, 90f)
+            rotate.duration = 500
+            rotate.start()
+            mainContainerView.visibility = View.VISIBLE
+        } else {
+            val rotate = ObjectAnimator.ofFloat(button, "rotation", 90f, 0f)
+            rotate.duration = 500
+            rotate.start()
+            mainContainerView?.visibility = View.GONE
         }
     }
 
@@ -361,6 +385,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         sideMenuEmrgyContact?.setBackgroundResource(0)
         sideMenuLostItem?.setBackgroundResource(0)
         sideMenuTrackTrace?.setBackgroundResource(0)
+        sidemenuCms?.setBackgroundResource(0)
         sideMenuVenues?.setBackgroundResource(0)
         sideMenuEmrgyHistry?.setBackgroundResource(0)
         sideMenuHome?.setBackgroundResource(0)
@@ -378,12 +403,15 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
 
     private fun inItView() {
+        sideMenuCmsArrowImg = findViewById(R.id.sideMenuCmsArrowImg)
+        sideMenuCmsLinear = findViewById(R.id.sideMenuCmsLinear)
         sideMenuAbout = findViewById(R.id.sideMenuAbout)
         sideMenuTermCond = findViewById(R.id.sideMenuTermCond)
         sideMenuFaq = findViewById(R.id.sideMenuFAQ)
         sideMenuContactUs = findViewById(R.id.sideMenuContactUs)
         sideMenuSetting = findViewById(R.id.sideMenuSetting)
         sideMenuTrackTrace = findViewById(R.id.sideMenuTrackTrace)
+        sidemenuCms = findViewById(R.id.sidemenuCms)
         sideMenuHome = findViewById(R.id.sideMenuHome)
         sideMenuEvent = findViewById(R.id.sideMenuEvent)
         sideMenuFood = findViewById(R.id.sideMenuFood)
@@ -408,6 +436,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         setTouchNClick(sideMenuAbout)
         setTouchNClick(sideMenuHome)
         setTouchNClick(sideMenuTrackTrace)
+        setTouchNClick(sidemenuCms)
         setTouchNClick(sideMenuFAQ)
         setTouchNClick(sideMenuContactUs)
         setTouchNClick(sideMenuSetting)

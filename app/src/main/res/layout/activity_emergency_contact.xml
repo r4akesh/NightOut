@@ -75,7 +75,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/proximanova_bold"
                     android:gravity="center_horizontal"
-                    android:text="@string/No_contactList_avail"
+                    android:text="@string/youHavntAddEmrgencyCotact"
                     android:textColor="@color/white_second"
                     android:textSize="@dimen/_14ssp" />
 

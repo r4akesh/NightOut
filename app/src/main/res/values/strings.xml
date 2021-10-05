@@ -174,7 +174,7 @@
     <string name="please_enter_complete_otp">Please enter complete OTP</string>
     <string name="facilitynot_avail">Facilities not available</string>
     <string name="countrycode">+44 %s</string>
-    <string name="entrotp_recivedmobno">Enter the OTP you received to</string>
+    <string name="entrotp_recivedmobno">Please Enter the Verification Code Sent to Mobile Number:</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="close">Close</string>
@@ -207,6 +207,11 @@
     <string name="are_sure_del">Are you sure you want to delete?</string>
     <string name="Favourite">Favourite</string>
     <string name="Invited_BarCrawl">Invited Bar Crawl</string>
+    <string name="areUSureUnFav">Are you sure you want to remove from favourite?</string>
+    <string name="No_oneinyour_contact">No one in your contact list uses the App </string>
+    <string name="Sharethelink">Share the link of App with your friend and Add them in Emergency Contact. </string>
+    <string name="youHavntAddEmrgencyCotact">You haven\'t add emergency contact yet</string>
+    <string name="youHavntAddFavStroe">You haven\'t saved any venues to favourite</string>
 
 
 </resources>

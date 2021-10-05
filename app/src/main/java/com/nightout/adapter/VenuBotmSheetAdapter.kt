@@ -15,11 +15,11 @@ import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 
-// var mainPos: Int,
+//
 class VenuBotmSheetAdapter(
     var context: Context,
+    var mainPos: Int,
     var arrayList: ArrayList<DashboardModel.SubRecord>,
-
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -130,7 +130,7 @@ class VenuBotmSheetAdapter(
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
 
-        var mainPos = MyApp.getSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS)
+
         if (mainPos % 2 == 0)
             (viewHolder as View1ViewHolder).bind(position)
         else
@@ -144,7 +144,7 @@ class VenuBotmSheetAdapter(
 
 
     override fun getItemViewType(position: Int): Int {
-        var mainPos = MyApp.getSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS)
+
        if (mainPos % 2 == 0) {
             return VIEW_TYPE_ONE
         } else {

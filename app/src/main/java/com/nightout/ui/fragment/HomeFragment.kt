@@ -58,8 +58,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     private val progressDialog = CustomProgressDialog()
     lateinit var doFavViewModel : CommonViewModel
     var allRecordsList = ArrayList<DashboardModel.AllRecord>()
-    val REQCODE_VENULISTACTIVITY = 1009
-
+   // val REQCODE_VENULISTACTIVITY = 1009
+   lateinit var  fusedLocationProviderClient : FusedLocationProviderClient
+    var geocoder: Geocoder? = null
+    var addresses: List<Address>? = null
     private var mMap: GoogleMap? = null
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 999
@@ -102,66 +104,19 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         } else if (v == binding.headerHome.headerSearch) {
             startActivity(Intent(requireContext(), SearchLocationActivity::class.java))
             activity?.overridePendingTransition(0, 0)
-        }/* else if (v == binding.btmShhetInclue.bottomSheetClubs) {
-            if (dashList != null) {
-                startActivity(Intent(requireActivity(), VenuListActvity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType, "3")
-                )
-            }
-        }*/
+        }
 
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d("TAG", "onAttach: ")
-    }
+
     override fun onMapReady(googleMap: GoogleMap?) {
         try {
             mMap = googleMap
             googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(55.3781, 3.4360)))
-           // mMap!!.setOnCameraIdleListener(onCameraIdleListener)
             if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return
             }
             mMap!!.isMyLocationEnabled = false
         } catch (e: Exception) {
-        }
-    }
-
-
-
-    var geocoder: Geocoder? = null
-    var addresses: List<Address>? = null
-    private fun getAddrsFrmLatlang(latitude: Double, longitude: Double) {
-        geocoder = Geocoder(requireActivity(), Locale.getDefault())
-        try {
-
-            addresses = geocoder!!.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            val addrs = addresses?.get(0)
-                ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            Log.d("ok", "addrs: "+addrs)
-             binding.headerHome.headerAddrs.setText(addrs)
-            PreferenceKeeper.instance.currentAddrs = addrs
-            PreferenceKeeper.instance.currentLat = latitude.toString()
-            PreferenceKeeper.instance.currentLong= longitude.toString()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-
-
-
-
-
-
-     fun onActivityResultMy(requestCode: Int, resultCode: Int, data: Intent?) {
-         if (requestCode == 1001) {
-            if (resultCode == RESULT_OK) {
-                //startLocationUpdate()
-                // getLastLocation();
-            }
         }
     }
 
@@ -189,18 +144,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                                         allRecordsList.addAll(dashList.all_records)
                                         setListAllRecord()
                                     }
-
                                 }
                             } catch (e: Exception) {
                             }
-
                         }
-
                     }
-                    Status.LOADING -> {
-                        //progressBar.visibility = View.VISIBLE
-                        Log.d("ok", "loginCall:LOADING ")
-                    }
+                    Status.LOADING -> { }
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         // progressBar.visibility = View.GONE
@@ -218,8 +167,6 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             })
         } catch (e: Exception) {
         }
-
-
     }
 
     private fun setListAllRecord() {
@@ -228,28 +175,17 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                 startActivity(Intent(requireActivity(), VenuListActvity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.StoreType,allRecordsList[pos].type ))
             }
-
             override fun onClickSub(subpos: Int, pos: Int) {
-                // var vv : ArrayList<DashboardModel.VenueGallery> = allRecordsList[pos].sub_records[subpos].venue_gallery
                 if (MyApp.isConnectingToInternet(requireContext())) {
                     if(allRecordsList[pos].type=="5"){
                         startActivity(Intent(requireActivity(), EventDetail::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                             .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id))
-
-
                     }else{
                         startActivity(Intent(requireActivity(), StoreDetail::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id))
                     }
-
-
                 }
-
-           /* else{
-
-                Utills.showSnackBarOnError(binding.btmShhetInclue.bottomSheet,requireContext().resources.getString(R.string.No_Internet),requireActivity())
-            }*/
             }
 
             override fun onClickFav(subPos: Int, mainPos: Int) {
@@ -279,9 +215,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
       }
     }
 
+
     private fun add_favouriteAPICALL(pos:Int,mainPos:Int) {
         progressDialog.show(requireActivity(), "")
-
         var fav = if(allRecordsList[mainPos].sub_records[pos].favrouite.equals("1"))
             "0" //for opp value
         else
@@ -298,18 +234,16 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
-                            Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
-                           /* if( detailData.data.status == "1"){
+                            if( detailData.data.status == "1"){
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "1"
-                                allRecordAdapter.notifyItemChanged(pos)
-                              // allRecordAdapter.notifyDataSetChanged()
+                                //allRecordAdapter.notifyItemChanged(pos)
+                              allRecordAdapter.notifyDataSetChanged()
                             }else{
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "0"
-
-                                    allRecordAdapter.notifyItemChanged(pos)
+                               // allRecordAdapter.notifyItemChanged(pos)
                                // state = mLayoutManager.onSaveInstanceState();
-                            //   allRecordAdapter.notifyDataSetChanged()
-                            }*/
+                              allRecordAdapter.notifyDataSetChanged()
+                            }
 
                         } catch (e: Exception) {
                         }
@@ -326,6 +260,31 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         })
     }
 
+    private fun getAddrsFrmLatlang(latitude: Double, longitude: Double) {
+        geocoder = Geocoder(requireActivity(), Locale.getDefault())
+        try {
+
+            addresses = geocoder!!.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            val addrs = addresses?.get(0)
+                ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            Log.d("ok", "addrs: "+addrs)
+            binding.headerHome.headerAddrs.setText(addrs)
+            PreferenceKeeper.instance.currentAddrs = addrs
+            PreferenceKeeper.instance.currentLat = latitude.toString()
+            PreferenceKeeper.instance.currentLong= longitude.toString()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun onActivityResultMy(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1001) {
+            if (resultCode == RESULT_OK) {
+                //startLocationUpdate()
+                // getLastLocation();
+            }
+        }
+    }
     private fun setBottomSheet() {
         //for solve issue scrolling
         androidx.core.view.ViewCompat.setNestedScrollingEnabled(binding.btmShhetInclue.bottomSheetrecyclerstory, false)
@@ -387,8 +346,6 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
 
     }
 
-
-      lateinit var  fusedLocationProviderClient : FusedLocationProviderClient
     private fun setUpLocationListener() {
            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         // for getting the current location update after every 2 seconds with high accuracy
@@ -412,8 +369,6 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         )
 
     }
-
-
 
     private val locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -490,4 +445,6 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     override fun methodName() {
 
     }
+
+
 }

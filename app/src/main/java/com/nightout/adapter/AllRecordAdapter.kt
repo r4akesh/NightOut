@@ -38,21 +38,21 @@ class AllRecordAdapter(
         androidx.core.view.ViewCompat.setNestedScrollingEnabled( viewHolder.binding.venuTitleBotmSeetSubRecyler, false)//for scroll issue botmSheet
         viewHolder.binding.venuTitleBotmShetTitle.text = arrayList[position].title
 
-        MyApp.setSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS,position)
-          venuBotmSheetAdapter = VenuBotmSheetAdapter(context, arrayList[position].sub_records, object : VenuBotmSheetAdapter.ClickListener {
+
+          venuBotmSheetAdapter = VenuBotmSheetAdapter(context,position, arrayList[position].sub_records, object : VenuBotmSheetAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     clickListener.onClickSub(pos, position)
                 }
 
             override fun onClickFav(pos: Int) {
-                if(arrayList[position].sub_records[pos].favrouite.equals("1")){
-                    arrayList[position].sub_records[pos].favrouite = "0"
-                }else{
-                    arrayList[position].sub_records[pos].favrouite = "1"
-                }
-                MyApp.setSharedPrefInteger(AppConstant.INTENT_EXTRAS.ADAPTER_POS,position)
-                notifyItemChanged(position)
-               venuBotmSheetAdapter.notifyItemChanged(pos)
+//                if(arrayList[position].sub_records[pos].favrouite.equals("1")){
+//                    arrayList[position].sub_records[pos].favrouite = "0"
+//                }else{
+//                    arrayList[position].sub_records[pos].favrouite = "1"
+//                }
+//
+//                notifyItemChanged(position)
+//               venuBotmSheetAdapter.notifyItemChanged(pos)
                  clickListener.onClickFav(pos,position)
             }
 

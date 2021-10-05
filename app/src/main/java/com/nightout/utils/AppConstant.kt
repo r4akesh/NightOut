@@ -34,14 +34,15 @@ class AppConstant {
         const val ISFROM_EDITITEM = "ISFROM_EDITITEM"
         const val CONTACT_LIST = "CONTACT_LIST"
         const val EMERNGCY_COUNT = "EMERNGCY_COUNT"
-        const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
+        //const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
         const val EVENTDETAIL_POJO = "EVENTDETAIL_POJO"
         const val TOTAL_AMT = "TOTAL_AMT"
         const val TICKET_NO = "TICKET_NO"
         const val TRANSACTION_ID = "TRANSACTION_ID"
-        const val ADAPTER_POS = "ADAPTER_POS"
+      //  const val ADAPTER_POS = "ADAPTER_POS"
         const val TICKET_URL = "TICKET_URL"
         const val FAVROUITE_VALUE = "favrouite"
+       // const val ISFROM_TERMCONDITION = "ISFROM_TERMCONDITION"
 
     }
 }

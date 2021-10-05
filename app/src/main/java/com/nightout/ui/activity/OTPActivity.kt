@@ -38,7 +38,7 @@ class OTPActivity : BaseActivity() {
     }
 
     private fun setPinView() {
-        binding.otpPinView.setPasswordHidden(true);
+        binding.otpPinView.setPasswordHidden(false)
         binding.otpPinView.isCursorVisible = false
         binding.otpPinView.setCursorColor(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()))
         binding.otpPinView.addTextChangedListener(object : TextWatcher {
@@ -62,7 +62,10 @@ class OTPActivity : BaseActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes: Long = millisUntilFinished / 1000 / 60
                 val seconds: Long = millisUntilFinished / 1000 % 60
-                binding.otpTimer.setText("" + minutes + ":" + seconds)
+                if(seconds.toString().length==1)
+                binding.otpTimer.setText("00 : 0" + seconds)
+                else
+                binding.otpTimer.setText("00 : " + seconds)
             }
 
             override fun onFinish() {

@@ -471,9 +471,8 @@
                                 style="@style/appTextAreaEditText"
                                 android:text="@={editPrfleViewModl.addrs1}"
                                 android:lines="2"
-                                android:maxLines="2"
                                 android:gravity="start"
-                                android:minLines="2"
+
                                 android:textStyle="bold"
                                 android:onClick="@{()->editProfileHandler.openLoactionActvity(editPrfleViewModl)}"
                                 android:hint="@string/Tap_addrs1"
@@ -506,7 +505,7 @@
                                 style="@style/textRegular"
                                 android:textColor="@color/text_hint" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/editProfileLocation2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -516,12 +515,11 @@
                                 style="@style/appTextAreaEditText"
                                 android:text="@={editPrfleViewModl.addrs2}"
                                 android:lines="2"
-                                android:maxLines="2"
                                 android:gravity="start"
-                                android:minLines="2"
+                                android:onClick="@{()->editProfileHandler.openLoactionActvity2(editPrfleViewModl)}"
                                 android:textStyle="bold"
-                                android:hint="@string/enter_addrs1"
-                                android:inputType="textMultiLine" />
+                                android:hint="@string/Tap_addrs1"
+                                 />
 
                         </LinearLayout>
 

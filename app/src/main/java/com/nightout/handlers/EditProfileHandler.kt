@@ -51,6 +51,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     var body: MultipartBody.Part? = null
     private val progressDialog = CustomProgressDialog()
     var LAUNCH_GOOGLE_ADDRESS = 1005
+    var LAUNCH_GOOGLE_ADDRESS2 = 1006
 
 //    init {
 //        editProfileViewModel = EditProfileViewModel(activity)
@@ -99,6 +100,15 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
         val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList)
             .build(activity)
         activity.startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
+
+    }
+
+    fun openLoactionActvity2(editProfileViewModel: EditProfileViewModel) {
+        Places.initialize(activity, activity.resources.getString(R.string.google_place_picker_key))
+        val fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList)
+            .build(activity)
+        activity.startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS2)
 
     }
 
@@ -205,15 +215,18 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                 }
             }
         }
+
         if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
             val place = Autocomplete.getPlaceFromIntent(data!!)
-            //  latitudeGlobal = "" + place.latLng!!.latitude
-            //  longitudeGlobal = "" + place.latLng!!.longitude
             activity.binding.editProfileLocation.text = place.address
-            activity.binding.editProfileLocation2.setText(place.address)
+         //   activity.binding.editProfileLocation2.setText(place.address)
             getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
         }
-
+        if (requestCode == LAUNCH_GOOGLE_ADDRESS2 && resultCode == Activity.RESULT_OK) {
+            val place = Autocomplete.getPlaceFromIntent(data!!)
+            activity.binding.editProfileLocation2.text = place.address
+           // getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
+        }
     }
 
     var geocoder: Geocoder? = null

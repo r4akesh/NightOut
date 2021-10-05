@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
@@ -99,6 +100,9 @@ class ContactListActvity : BaseActivity() {
                             listFilter.addAll(it.data?.data!!)
                             if (!listFilter.isNullOrEmpty()) {
                                 setListContact()
+                                binding.contactListNoDataConstrent.visibility = GONE
+                            }else{
+                                binding.contactListNoDataConstrent.visibility = VISIBLE
                             }
                         } catch (e: Exception) {
                         }
@@ -108,11 +112,12 @@ class ContactListActvity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
+                            binding.contactListNoDataConstrent.visibility = VISIBLE
+                           // Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
                             binding.addContactDoneBtn.visibility=GONE
                         } catch (e: Exception) {
                         }
-                        Log.d("ok", "loginCall:ERROR ")
+
                     }
                 }
             })

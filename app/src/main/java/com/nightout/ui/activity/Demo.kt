@@ -17,6 +17,13 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
+import android.widget.Toast
+
+
+import android.app.Dialog
+import android.graphics.Color
+import android.view.View
+
 
 
 class Demo : BaseActivity(){
@@ -26,16 +33,10 @@ class Demo : BaseActivity(){
     var manager: DownloadManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@Demo,R.layout.demo)
-        setListStoreTypeHr()
-        manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val uri: Uri = Uri.parse("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy1111.pdf")
-        val request = DownloadManager.Request(uri)
+        binding = DataBindingUtil.setContentView(this@Demo, com.nightout.R.layout.demo)
 
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"dummy.pdf")
-        val reference = manager!!.enqueue(request)
-        Log.d("TAG", "reference: "+reference)
+
+
     }
 
     private fun setListStoreTypeHr() {

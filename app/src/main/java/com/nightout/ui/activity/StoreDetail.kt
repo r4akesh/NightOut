@@ -221,6 +221,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilAddrs.text = dt.store_address
 
              // fav = intent.getStringExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE)!!
+            binding.storeDeatilFav.visibility= VISIBLE
            if (dt.favrouite == "1") {
            // if (fav == "1") {
                 favStatus = "0"

@@ -234,7 +234,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
-                            if( detailData.data.status == "1"){
+                           /* if( detailData.data.status == "1"){
                                 allRecordsList[mainPos].sub_records[pos].favrouite = "1"
                                 //allRecordAdapter.notifyItemChanged(pos)
                               allRecordAdapter.notifyDataSetChanged()
@@ -243,7 +243,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                                // allRecordAdapter.notifyItemChanged(pos)
                                // state = mLayoutManager.onSaveInstanceState();
                               allRecordAdapter.notifyDataSetChanged()
-                            }
+                            }*/
 
                         } catch (e: Exception) {
                         }

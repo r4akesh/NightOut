@@ -64,8 +64,17 @@ class VenuBotmSheetAdapter(
             }
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)
+                if(arrayList[position].favrouite.equals("1")){
+                    arrayList[position].favrouite = "0"
+                    venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
+                }else{
+                    arrayList[position].favrouite = "1"
+                    venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
+                }
+
             }
             itemView.setOnClickListener {
+
                 clickListener.onClick(position)
 
             }
@@ -99,13 +108,20 @@ class VenuBotmSheetAdapter(
             }
 
             if(arrayList[position].favrouite == "1"){
-                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected)
+                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
             }else{
-                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected)
+                venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
             }
 
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)
+                if(arrayList[position].favrouite.equals("1")){
+                    arrayList[position].favrouite = "0"
+                    venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
+                }else{
+                    arrayList[position].favrouite = "1"
+                    venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
+                }
             }
 
             itemView.setOnClickListener {

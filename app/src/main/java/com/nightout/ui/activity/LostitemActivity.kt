@@ -1,6 +1,7 @@
 package com.nightout.ui.activity
 
 import android.app.Activity
+import android.app.Instrumentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +39,7 @@ class LostitemActivity :BaseActivity() {
     lateinit  var lostItemAdapter:LostItemAdapter
 var isEdit= true //for mainten tost msg
     var savePosForStatus =0
-    var REQUESTCOD_LostItemFoundActvity=1002
+ //   var REQUESTCOD_LostItemFoundActvity=1002
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@LostitemActivity, R.layout.lostitem_actvity)
@@ -112,7 +115,11 @@ var isEdit= true //for mainten tost msg
         binding.lostItemToolBar.toolbarCreateGrop.setText("ADD")
         binding.lostItemToolBar.toolbarCreateGrop.setOnClickListener {
             isEdit = false
-            startActivityForResult(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java),REQUESTCODE_LostItemDetailsActvity)
+
+
+            //startActivityForResult(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java),REQUESTCODE_LostItemDetailsActvity)
+
+            startforResultLostItemDetails.launch(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java))
         }
     }
 
@@ -125,12 +132,12 @@ var isEdit= true //for mainten tost msg
 
                 override fun onClick(pos: Int) {
                       savePosForStatus =pos
-                    startActivityForResult(Intent(this@LostitemActivity,LostItemFoundActvity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos]),REQUESTCOD_LostItemFoundActvity)
+                 /*   startActivityForResult(Intent(this@LostitemActivity,LostItemFoundActvity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos]),REQUESTCOD_LostItemFoundActvity)*/
+                    startForResultLostItemFound.launch(Intent(this@LostitemActivity,LostItemFoundActvity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos]))
                 }
-
             })
-
         binding.lostItemRecycler.also {
             it.layoutManager = LinearLayoutManager(
                 this@LostitemActivity,
@@ -139,10 +146,14 @@ var isEdit= true //for mainten tost msg
             )
             it.adapter = lostItemAdapter
         }
-
     }
-
-    var REQUESTCODE_LostItemDetailsActvity=100
+    val startForResultLostItemFound= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            lostList[savePosForStatus].status="1"
+            lostItemAdapter.notifyItemChanged(savePosForStatus)
+        }
+    }
+  //  var REQUESTCODE_LostItemDetailsActvity=100
     private fun openPopMenu(lostItem3Dot: ImageView, pos:Int) {
         val popup = PopupMenu(this@LostitemActivity, lostItem3Dot)
         if(!lostList[pos].status.equals("1")) {
@@ -153,17 +164,27 @@ var isEdit= true //for mainten tost msg
         popup.setOnMenuItemClickListener { item ->
                 if(item.title.equals("Edit")){
                     isEdit = true
-                   // startActivity(Intent(this@LostitemActivity,LostItemEditActvity::class.java))
-                    startActivityForResult(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java)
+                    startforResultLostItemDetails.launch(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos])
-                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_EDITITEM,true),REQUESTCODE_LostItemDetailsActvity
-                    )
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_EDITITEM,true))
+
+
                 }else{
                     showAlertpopUp(pos)
                 }
             true
         }
         popup.show()
+    }
+
+    val startforResultLostItemDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result:ActivityResult->
+        if(result.resultCode==Activity.RESULT_OK){
+            user_lost_itemsAPICAll()
+            if(isEdit)
+                Utills.showSnackBarOnError(binding.lostConstrentToolbar, "You have updated item successfully", this@LostitemActivity)
+            else
+                Utills.showSnackBarOnError(binding.lostConstrentToolbar, "You have added item successfully", this@LostitemActivity)
+        }
     }
 
     private fun showAlertpopUp(pos: Int) {
@@ -180,7 +201,7 @@ var isEdit= true //for mainten tost msg
 
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+ /*   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==REQUESTCODE_LostItemDetailsActvity && resultCode==Activity.RESULT_OK){
             user_lost_itemsAPICAll()
@@ -189,9 +210,9 @@ var isEdit= true //for mainten tost msg
             else
             Utills.showSnackBarOnError(binding.lostConstrentToolbar, "You have added item successfully", this@LostitemActivity)
         }
-        else if(requestCode==REQUESTCOD_LostItemFoundActvity && resultCode==Activity.RESULT_OK){
+      else if(requestCode==REQUESTCOD_LostItemFoundActvity && resultCode==Activity.RESULT_OK){
             lostList[savePosForStatus].status="1"
             lostItemAdapter.notifyItemChanged(savePosForStatus)
         }
-    }
+    }*/
 }

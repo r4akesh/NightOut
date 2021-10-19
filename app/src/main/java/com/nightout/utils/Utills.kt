@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
+import android.net.Uri
+import android.provider.MediaStore
 import android.telephony.PhoneNumberUtils
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -158,6 +160,13 @@ class Utills {
                 println("error: ${e1.message}")
             }
             return ""
+        }
+
+        fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+            val bytes = ByteArrayOutputStream()
+            inImage.compress(Bitmap.CompressFormat.PNG, 80, bytes)
+            val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+            return Uri.parse(path)
         }
 
         fun dateZonetoDateFormat2(date: String) : String{

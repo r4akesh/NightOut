@@ -11,6 +11,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,20 +61,33 @@ class EmergencyContactActivity : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.addContactBtn) {
-            startActivityForResult(Intent(this@EmergencyContactActivity, ContactListActvity::class.java)
+           /* startActivityForResult(Intent(this@EmergencyContactActivity, ContactListActvity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
                     .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
-            ,REQCODE_ContactListActvity)
+            ,REQCODE_ContactListActvity)*/
+                startForResultContactList.launch(Intent(this, ContactListActvity::class.java)
+                .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
+                .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0))
+
+
+        }
+    }
+    val startForResultContactList = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            // Handle the Intent
+            emergency_contact_listAPICALL()//for again get update list
+            Utills.showSnackBarOnError(binding.emRootLayout, "Contact added successfully", this@EmergencyContactActivity)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+  /*  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode ==REQCODE_ContactListActvity && resultCode== Activity.RESULT_OK ){
             emergency_contact_listAPICALL()//for again get update list
             Utills.showSnackBarOnError(binding.emRootLayout, "Contact added successfully", this@EmergencyContactActivity)
         }
-    }
+    }*/
 
 
     private fun emergency_contact_listAPICALL() {

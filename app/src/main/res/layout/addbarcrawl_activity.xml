@@ -8,6 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/rootLayoutAddBar"
         android:layout_height="match_parent"
         android:background="@color/botmsheet_listcolor">
 
@@ -31,7 +32,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="@dimen/_3sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,8 +45,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:background="@drawable/background_gray"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/background_gray">
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
@@ -113,9 +117,9 @@
                                 android:layout_height="wrap_content"
                                 android:background="@null"
                                 android:hint="Enter Name"
-                                android:textColor="@color/white"
                                 android:paddingTop="@dimen/_5ssp"
                                 android:paddingBottom="@dimen/_5ssp"
+                                android:textColor="@color/white"
                                 android:textColorHint="@color/text_gray"
                                 android:textSize="@dimen/_12ssp"
                                 app:layout_constraintTop_toBottomOf="@+id/textNameofbarcrawl" />
@@ -142,7 +146,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:drawableEnd="@drawable/arrow_down_white"
-                                android:text="Select Bar Crawl"
+                                android:text="Select Venue Bar"
                                 android:textColor="@color/white_thred"
                                 android:textSize="@dimen/_13ssp"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -179,17 +183,22 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:id="@+id/addBarCrawlRecyle"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/constrentThird" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:layout_marginTop="@dimen/_15sdp"
-                           android:paddingEnd="@dimen/_15sdp"
-                           android:paddingStart="@dimen/_15sdp"
-
                             android:background="@color/color_darkbg"
                             android:orientation="vertical"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:visibility="gone"
                             app:layout_constraintTop_toBottomOf="@+id/constrentThird">
 
                             <TextView
@@ -197,9 +206,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:drawableStart="@drawable/chk_box"
+                                android:drawablePadding="@dimen/_10sdp"
                                 android:paddingTop="@dimen/_2sdp"
                                 android:paddingBottom="@dimen/_2sdp"
-                                android:drawablePadding="@dimen/_10sdp"
                                 android:text="@string/dummychk"
                                 android:textColor="@color/white_second"
                                 android:textSize="@dimen/_12ssp" />
@@ -217,9 +226,9 @@
                                 android:layout_marginTop="@dimen/_7sdp"
                                 android:drawableStart="@drawable/chk_box"
                                 android:drawablePadding="@dimen/_10sdp"
-                                android:text="@string/dummychk"
                                 android:paddingTop="@dimen/_2sdp"
                                 android:paddingBottom="@dimen/_2sdp"
+                                android:text="@string/dummychk"
                                 android:textColor="@color/white_second"
                                 android:textSize="@dimen/_12ssp" />
 
@@ -236,19 +245,11 @@
                                 android:layout_marginTop="@dimen/_7sdp"
                                 android:drawableStart="@drawable/chk_box"
                                 android:drawablePadding="@dimen/_10sdp"
-                                android:text="@string/dummychk"
                                 android:paddingTop="@dimen/_2sdp"
                                 android:paddingBottom="@dimen/_2sdp"
+                                android:text="@string/dummychk"
                                 android:textColor="@color/white_second"
                                 android:textSize="@dimen/_12ssp" />
-
-
-
-
-
-
-
-
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>

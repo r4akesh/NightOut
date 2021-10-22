@@ -75,6 +75,8 @@ interface APIInterface {
     @POST("add_favourite")
       fun addFavouriteAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
 
+
+
     @POST("venue_type_list")
     fun venuListAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
@@ -105,4 +107,10 @@ interface APIInterface {
 
     @GET("favourite_list")
     fun favouriteListAPi( ): Call<ResponseBody>
+
+    @POST("add_remove_bar_crawl")
+    fun addRemBrCrwlAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
+
+    @GET("bar_crawl_list")
+    fun bar_crawl_listAPI():  Call<ResponseBody>
 }

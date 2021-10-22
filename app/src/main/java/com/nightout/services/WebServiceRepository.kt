@@ -633,6 +633,75 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
+    fun userAddBarCrawl(map: HashMap<String, String>): LiveData<ApiSampleResource<AddRemveBarCrawlModel>> {
+        val venueListResponseModel = MutableLiveData<ApiSampleResource<AddRemveBarCrawlModel>>()
+        if (networkHelper.isNetworkConnected()) {
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.addRemBrCrwlAPI(map)
+            responseBody.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<AddRemveBarCrawlModel>(data)
+
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    application.resources.getString(R.string.Parsing_Problem),
+                                    null))
+                            }
+                        }
+                        201 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<AddRemveBarCrawlModel>(data)
+
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    application.resources.getString(R.string.Parsing_Problem),
+                                    null))
+                            }
+                        }
+
+                        204->{
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), application.resources.getString(R.string.No_data_found), null))
+                        }
+                        205,400,401,408,409-> {
+                            val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                            var vv=jsonObj.getString("message")
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), jsonObj.getString("message"), null))
+                        }
+                        500->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(
+                                response.code(),
+                                application.resources.getString(R.string.Internal_server_error),
+                                null))
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    if (t is IOException) {
+                        venueListResponseModel.postValue(ApiSampleResource.error(INTERNAL_ERROR, application.resources.getString(R.string.Network_Failure), null))
+                    } else {
+                        venueListResponseModel.postValue(ApiSampleResource.error(PARSING_ERROR, application.resources.getString(R.string.Something_went_wrong), null))
+                    }
+                }
+
+            })
+        } else venueListResponseModel.postValue(ApiSampleResource.error(NO_INTERNET, application.resources.getString(R.string.No_Internet), null))
+        return venueListResponseModel
+    }
+
+
+
     fun userVenueList(map: HashMap<String, String>): LiveData<ApiSampleResource<VenuListModel>> {
         val venueListResponseModel = MutableLiveData<ApiSampleResource<VenuListModel>>()
         if (networkHelper.isNetworkConnected()) {
@@ -1297,6 +1366,71 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
+    fun barCrwlList(): LiveData<ApiSampleResource<BarCrwlListModel>> {
+        val venueListResponseModel = MutableLiveData<ApiSampleResource<BarCrwlListModel>>()
+        if (networkHelper.isNetworkConnected()) {
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.bar_crawl_listAPI( )
+            responseBody.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<BarCrwlListModel>(data)
+
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    application.resources.getString(R.string.Parsing_Problem),
+                                    null))
+                            }
+                        }
+                        201 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<BarCrwlListModel>(data)
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    application.resources.getString(R.string.Parsing_Problem),
+                                    null))
+                            }
+                        }
+
+                        204->{
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), application.resources.getString(R.string.No_data_found), null))
+                        }
+                        205,400,401,408,409-> {
+                            val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                            var vv=jsonObj.getString("message")
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), jsonObj.getString("message"), null))
+                        }
+                        500->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(
+                                response.code(),
+                                application.resources.getString(R.string.Internal_server_error),
+                                null))
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    if (t is IOException) {
+                        venueListResponseModel.postValue(ApiSampleResource.error(INTERNAL_ERROR, application.resources.getString(R.string.Network_Failure), null))
+                    } else {
+                        venueListResponseModel.postValue(ApiSampleResource.error(PARSING_ERROR, application.resources.getString(R.string.Something_went_wrong), null))
+                    }
+                }
+
+            })
+        } else venueListResponseModel.postValue(ApiSampleResource.error(NO_INTERNET, application.resources.getString(R.string.No_Internet), null))
+        return venueListResponseModel
+    }
 }
 
 

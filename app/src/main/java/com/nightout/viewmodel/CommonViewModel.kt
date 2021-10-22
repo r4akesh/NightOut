@@ -19,6 +19,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var dsahModel: LiveData<ApiSampleResource<DashboardModel>>
     lateinit var venuDetailModel: LiveData<ApiSampleResource<VenuDetailModel>>
     lateinit var addFavModel: LiveData<ApiSampleResource<AddFavModel>>
+    lateinit var addRemBarCrwl: LiveData<ApiSampleResource<AddRemveBarCrawlModel>>
     lateinit var venuListModel: LiveData<ApiSampleResource<VenuListModel>>
     lateinit var submitLostItemModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var delItemModel: LiveData<ApiSampleResource<BaseModel>>
@@ -28,6 +29,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var sendQueryModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var bookEventMdl: LiveData<ApiSampleResource<BookEventMdlResponse>>
     lateinit var favListModelRes: LiveData<ApiSampleResource<FavListModelRes>>
+    lateinit var barCrwlListModel: LiveData<ApiSampleResource<BarCrwlListModel>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -64,6 +66,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         return addFavModel
     }
 
+    fun doAddBarCrawl(map: HashMap<String, String>): LiveData<ApiSampleResource<AddRemveBarCrawlModel>> {
+        addRemBarCrwl = webServiceRepository.userAddBarCrawl(map)
+        return addRemBarCrwl
+    }
     fun venulistData(storeType : HashMap<String,String>): LiveData<ApiSampleResource<VenuListModel>> {
         venuListModel = webServiceRepository.userVenueList(storeType)
         return venuListModel
@@ -108,6 +114,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun favList(): LiveData<ApiSampleResource<FavListModelRes>> {
         favListModelRes = webServiceRepository.favList()
         return favListModelRes
+    }
+    fun barCrwlList(): LiveData<ApiSampleResource<BarCrwlListModel>> {
+        barCrwlListModel = webServiceRepository.barCrwlList()
+        return barCrwlListModel
     }
 
 }

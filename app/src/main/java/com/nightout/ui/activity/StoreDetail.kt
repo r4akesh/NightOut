@@ -42,12 +42,15 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
     lateinit var userVenueDetailViewModel: CommonViewModel
     lateinit var doFavViewModel: CommonViewModel
+    lateinit var doAddBarCrawlModel: CommonViewModel
     lateinit var sendQueryViewModel: CommonViewModel
     lateinit var mMap: GoogleMap
     var imageViewPagerAdapter: ImageViewPagerAdapter? = null
     private val progressDialog = CustomProgressDialog()
     var facilityList = ArrayList<VenuDetailModel.Facility>()
     var venuID = ""
+    var favStatus = "0"
+    var addBarCrawlStatus = "0"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
@@ -65,7 +68,10 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     override fun onClick(v: View?) {
         super.onClick(v)
 
-        if (v == binding.storeDeatilFav) {
+        if(v==binding.storeDeatilAddVenuRel){
+            addRemoveBarCrawlAPICall()
+        }
+        else if (v == binding.storeDeatilFav) {
             add_favouriteAPICALL()
         } else if (v == binding.storeDeatilPreBookingBtn) {
             startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
@@ -189,22 +195,24 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         }
     }
 
-  /*  private fun setTopImgSlider() {
-        if (intent != null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)) {
-            try {
-                var venueGalleryList = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<DashboardModel.VenueGallery>
-                imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail, venueGalleryList)
-                binding.viewPager.adapter = imageViewPagerAdapter
-                binding.dotsIndicator.setViewPager(binding.viewPager)
-            } catch (e: Exception) {
-            }
-        }
-
-    }*/
 
 
-    var favStatus = "0"
-    var fav=""
+    /*  private fun setTopImgSlider() {
+          if (intent != null && intent.hasExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST)) {
+              try {
+                  var venueGalleryList = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.GALLERY_LIST) as ArrayList<DashboardModel.VenueGallery>
+                  imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail, venueGalleryList)
+                  binding.viewPager.adapter = imageViewPagerAdapter
+                  binding.dotsIndicator.setViewPager(binding.viewPager)
+              } catch (e: Exception) {
+              }
+          }
+
+      }*/
+
+
+
+
     private fun setData() {
         try {//setSlider
             imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail,  dt.venue_gallery)
@@ -229,6 +237,14 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             } else {
                 favStatus = "1"
                 binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+            }
+            binding.storeDeatilAddRemBarCrl.visibility = VISIBLE
+            if(dt.barcrawl=="1"){
+                addBarCrawlStatus = "0"
+                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+            }else{
+                addBarCrawlStatus = "1"
+                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
             }
             //topImg
             Glide.with(this@StoreDetail)
@@ -789,7 +805,9 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         userVenueDetailViewModel = CommonViewModel(this)
         sendQueryViewModel = CommonViewModel(this)
         doFavViewModel = CommonViewModel(this)
+        doAddBarCrawlModel = CommonViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
+        setTouchNClick(binding.storeDeatilAddVenuRel)
         setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)
         setTouchNClick(binding.storeDeatilBakBtn)
@@ -830,6 +848,49 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             }
         })
     }
+
+
+    private fun addRemoveBarCrawlAPICall() {
+        progressDialog.show(this@StoreDetail, "")
+        var map = HashMap<String, String>()
+        map["venue_id"] = venuID
+        map["vendor_id"] = dt.vendor_detail.id
+        map["status"] =addBarCrawlStatus
+        map["store_type"] =dt.store_type
+
+        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetail, {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        progressDialog.dialog.dismiss()
+                        it.data?.let { detailData ->
+                            try {
+                                Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
+                                if (detailData.data.status == "1") {
+                                    addBarCrawlStatus = "0"
+                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+
+                                } else {
+                                    addBarCrawlStatus = "1"
+                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
+                                }
+                                MyApp.ShowTost(this@StoreDetail,detailData.message)
+                            } catch (e: Exception) {
+                                MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@StoreDetail)
+                            }
+                        }
+                    }
+                    Status.LOADING -> {
+
+                    }
+                    Status.ERROR -> {
+                        progressDialog.dialog.dismiss()
+                        Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetail)
+                    }
+                }
+            })
+
+    }
+
 
     private fun add_favouriteAPICALL() {
         progressDialog.show(this@StoreDetail, "")

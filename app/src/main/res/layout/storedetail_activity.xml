@@ -148,7 +148,7 @@
                         android:layout_marginTop="@dimen/_15ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
                         android:drawableStart="@drawable/star_storedetail"
-                        android:drawablePadding="@dimen/_10ssp"
+                        android:drawablePadding="@dimen/_5ssp"
                         android:fontFamily="@font/proximanova_bold"
                         android:text="4.5"
                         android:textColor="@color/white"
@@ -165,6 +165,7 @@
                         android:layout_marginTop="@dimen/_15ssp"
                         android:fontFamily="@font/proximanova_bold"
                         android:singleLine="true"
+                        android:paddingEnd="@dimen/_5ssp"
                         android:text="Vanity Night Club "
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
@@ -353,9 +354,11 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
+                            android:id="@+id/storeDeatilAddRemBarCrl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:visibility="invisible"
+                            tools:visibility="visible"
                             android:layout_marginEnd="@dimen/_20ssp"
                             android:src="@drawable/save_fav"
                             app:layout_constraintBottom_toBottomOf="@+id/storeDeatilAddVenu"

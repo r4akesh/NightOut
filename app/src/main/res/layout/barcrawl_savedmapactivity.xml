@@ -162,7 +162,7 @@
             android:fontFamily="@font/proximanova_reg"
             android:gravity="center"
             android:padding="@dimen/_10ssp"
-            android:text="@string/Save"
+            android:text="@string/Share"
             android:textColor="@color/black_pure"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"

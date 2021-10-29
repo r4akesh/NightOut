@@ -41,7 +41,7 @@ class PreBookingActivity : BaseActivity() {
         endDate.add(Calendar.MONTH, 2)
         var horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendarView)
             .range(startDate, endDate)
-            .datesNumberOnScreen(5)
+            .datesNumberOnScreen(7)
             .configure()
             //.formatTopText("MMM")
             .formatTopText("EEE")

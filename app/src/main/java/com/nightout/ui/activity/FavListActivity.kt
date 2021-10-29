@@ -143,7 +143,7 @@ class FavListActivity : BaseActivity() {
     }
 
     private fun add_favouriteAPICALL(pos:Int) {
-        customProgressDialog.show(this@FavListActivity, "")
+       // customProgressDialog.show(this@FavListActivity, "")
         var map = HashMap<String, String>()
         map["venue_id"] = dataList[pos].venue_id
         map["vendor_id"] = dataList[pos].venue_detail.user_id
@@ -153,7 +153,7 @@ class FavListActivity : BaseActivity() {
         commonViewModel.doFavItem(map).observe(this@FavListActivity, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    customProgressDialog.dialog.dismiss()
+                  //  customProgressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
                             val listSize = dataList.size
@@ -168,7 +168,7 @@ class FavListActivity : BaseActivity() {
 
                 }
                 Status.ERROR -> {
-                    customProgressDialog.dialog.dismiss()
+                 //   customProgressDialog.dialog.dismiss()
                 }
             }
         })

@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.ui.CMS
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,6 @@ import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.SendQueryViewModel
 
 
 class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
@@ -119,7 +118,7 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
             var loginDetail = PreferenceKeeper.instance.loginResponse
             binding.contactUsPhNo.setText(Utills.phoneNoUKFormat(loginDetail!!.phonenumber))
             binding.contactUsName.setText(loginDetail!!.name)
-            binding.callNumber.setText(Utills.phoneNoUKFormat(loginDetail.admin_detail.phonenumber))
+            binding.callNumber.setText("+44 "+Utills.phoneNoUKFormat(loginDetail.admin_detail.phonenumber))
             binding.email.setText(loginDetail.admin_detail.email)
             binding.contactAddress.setText(loginDetail.admin_detail.address)
 
@@ -131,7 +130,7 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
     private fun setSpinner() {
         binding.spinQuery.onItemSelectedListener = this
         val aa: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.row_spin_item, country)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        aa.setDropDownViewResource(R.layout.simple_spin_dropdownitem_contactus)
 
         binding.spinQuery.setAdapter(aa)
 

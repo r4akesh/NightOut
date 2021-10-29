@@ -42,7 +42,7 @@ class FavVenuAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.binding.venusubitemTitle.text=arrayList[position].venue_detail.store_name
         viewHolder.binding.venusubitemSubTitle.text=arrayList[position].venue_detail.store_address
-        viewHolder.binding.venusubitemOpenclosetime.text="Close : "+arrayList[position].venue_detail.close_time
+        viewHolder.binding.venusubitemOpenclosetime.text="Open : "+arrayList[position].venue_detail.open_time+" "+"Close : "+arrayList[position].venue_detail.close_time
         viewHolder.binding.venusubitemRating.text=arrayList[position].venue_detail.rating.avg_rating
 
         Glide.with(context)

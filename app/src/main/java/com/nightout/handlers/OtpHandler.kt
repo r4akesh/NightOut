@@ -53,11 +53,11 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                           activity.startActivity(Intent(activity, HomeActivity::class.java))
                           activity.finish()
                       }
-                    Utills.showSnackBarOnError(
+                   /* Utills.showSnackBarOnError(
                         activity.binding.otpRootLyout,
                         it.data?.message!!,
                         activity
-                    )
+                    )*/
                 }
                 Status.LOADING -> {
 

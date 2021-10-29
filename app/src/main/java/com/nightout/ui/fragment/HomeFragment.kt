@@ -105,6 +105,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             startActivity(Intent(requireContext(), SearchLocationActivity::class.java))
             activity?.overridePendingTransition(0, 0)
         }
+        else if(v==binding.headerHome.headerNotification){
+            startActivity(Intent(requireContext(), NotificationActivity::class.java))
+
+        }
 
     }
 
@@ -217,7 +221,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
 
 
     private fun add_favouriteAPICALL(pos:Int,mainPos:Int) {
-        progressDialog.show(requireActivity(), "")
+      //  progressDialog.show(requireActivity(), "")
         var fav = if(allRecordsList[mainPos].sub_records[pos].favrouite.equals("1"))
             "0" //for opp value
         else
@@ -231,7 +235,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         doFavViewModel.doFavItem(map).observe(requireActivity(), {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressDialog.dialog.dismiss()
+                  //  progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
                            /* if( detailData.data.status == "1"){
@@ -253,7 +257,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
 
                 }
                 Status.ERROR -> {
-                    progressDialog.dialog.dismiss()
+                   // progressDialog.dialog.dismiss()
                     Utills.showSnackBarOnError(binding.fragmentHomeRootLayout, it.message!!, requireActivity())
                 }
             }
@@ -322,6 +326,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         binding.headerHome.headerSideMenu.setOnClickListener(this)
         binding.headerHome.headerSearch.setOnClickListener(this)
         binding.headerHome.headerSetting.setOnClickListener(this)
+        binding.headerHome.headerNotification.setOnClickListener(this)
         binding.headerHome.headerTitle.text = "Hi, " + PreferenceKeeper.instance.loginResponse?.name
 
 

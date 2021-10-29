@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.ui.CMS
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,6 @@ import com.nightout.adapter.FAQItemAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityFaqactivityBinding
 import com.nightout.model.AboutModelResponse
-import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status

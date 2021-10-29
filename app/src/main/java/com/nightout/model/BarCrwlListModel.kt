@@ -28,6 +28,7 @@ data class BarCrwlListModel(
     )
 
     data class BarcrawlOption(
+        var isSelected : Boolean,
         val created_at: String,
         val id: Int,
         val slug: String,

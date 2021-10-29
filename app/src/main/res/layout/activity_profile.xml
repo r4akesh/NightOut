@@ -250,7 +250,7 @@
                         style="@style/textNormal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/addressTwo"
+                        android:text="Location"
                         android:layout_marginTop="20dp"
                         android:textColor="@color/text_hint"
                         android:textSize="16sp"
@@ -294,12 +294,13 @@
                         android:layout_marginTop="20dp"
                         android:textColor="@color/text_hint"
                         android:textSize="16sp"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/addressTwo" />
 
 
                     <TextView
-
+                        android:visibility="gone"
                         style="@style/textRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -319,6 +320,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         android:background="@color/color_252342"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

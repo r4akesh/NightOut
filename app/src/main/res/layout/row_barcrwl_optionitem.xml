@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="data"
+            type="com.nightout.model.BarCrwlListModel.BarcrawlOption" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +21,8 @@
             android:drawablePadding="@dimen/_5ssp"
             android:fontFamily="@font/proximanova_reg"
             android:padding="@dimen/_10sdp"
-            android:text="terms"
+            android:text="@{data.title}"
+
             android:textColor="@color/white_second"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"

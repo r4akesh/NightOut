@@ -1,8 +1,11 @@
 package com.nightout.ui.activity
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -22,6 +25,7 @@ import com.nightout.utils.FileUtils
 import androidx.core.app.ActivityCompat.startActivityForResult
 
 import android.os.Environment
+import androidx.core.app.ActivityCompat
 import java.io.File
 
 
@@ -35,7 +39,7 @@ class TrackTrace : BaseActivity(),OnMapReadyCallback{
        initView()
         setToolBar()
     }
-
+    private val REQUEST_CAMERA_PERMISSION = 101
     override fun onClick(v: View?) {
         super.onClick(v)
         if(v==binding.tractraceaLostitem){
@@ -43,10 +47,36 @@ class TrackTrace : BaseActivity(),OnMapReadyCallback{
         }
 
         if(v==binding.tractraceaPanic){
-//            val takeVideoIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
-//            if (takeVideoIntent.resolveActivity(packageManager) != null) {
-//                startActivityForResult(takeVideoIntent, CAMERA_REQUEST_CODE_VEDIO)
-//            }
+            val currentAPIVersion = Build.VERSION.SDK_INT
+            if (currentAPIVersion >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(
+                        this@TrackTrace,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this@TrackTrace,
+                        arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        ),
+                        REQUEST_CAMERA_PERMISSION
+                    )
+                } else {
+                    openCameraVideo()
+
+                }
+            } else {
+                openCameraVideo()
+
+            }
+
+        }
+    }
+
+    private fun openCameraVideo() {
+        try {
             val f = File(Environment.getExternalStorageDirectory(), "temp.mp4")
             val takePictureIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
             takePictureIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60) //second
@@ -55,6 +85,8 @@ class TrackTrace : BaseActivity(),OnMapReadyCallback{
             if (takePictureIntent.resolveActivity(packageManager) != null) {
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE_VEDIO)
             }
+        } catch (e: Exception) {
+            Log.d("TAG", "onClick: "+e.toString())
         }
     }
 

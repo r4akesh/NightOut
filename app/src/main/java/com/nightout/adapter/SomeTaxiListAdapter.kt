@@ -16,8 +16,7 @@ class SomeTaxiListAdapter(private val mContext: Context) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View =
-            LayoutInflater.from(mContext).inflate(R.layout.taxi_layout, parent, false)
+        val view: View = LayoutInflater.from(mContext).inflate(R.layout.taxi_layout, parent, false)
         return ViewHolder(view)
     }
 

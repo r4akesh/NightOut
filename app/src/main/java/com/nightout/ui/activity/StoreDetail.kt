@@ -72,6 +72,14 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             addRemoveBarCrawlAPICall()
         }
         else if (v == binding.storeDeatilFav) {
+
+            if (favStatus == "1") {
+                favStatus = "0"
+                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
+            } else {
+                favStatus = "1"
+                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
+            }
             add_favouriteAPICALL()
         } else if (v == binding.storeDeatilPreBookingBtn) {
             startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
@@ -90,11 +98,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             }
         } else if (v == binding.storeDeatilBakBtn) {
             var myIntent = Intent()
-            if(favStatus.equals("0"))
-                myIntent.putExtra("result","1")
-            else
-                myIntent.putExtra("result","0")
-
+            myIntent.putExtra("result",favStatus)
             setResult(Activity.RESULT_OK,myIntent)
             finish()
 
@@ -232,10 +236,10 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilFav.visibility= VISIBLE
            if (dt.favrouite == "1") {
            // if (fav == "1") {
-                favStatus = "0"
+                favStatus = "1"
                 binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
             } else {
-                favStatus = "1"
+                favStatus = "0"
                 binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
             }
             binding.storeDeatilAddRemBarCrl.visibility = VISIBLE
@@ -893,7 +897,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
     private fun add_favouriteAPICALL() {
-        progressDialog.show(this@StoreDetail, "")
+       // progressDialog.show(this@StoreDetail, "")
         var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
@@ -903,17 +907,11 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         doFavViewModel.doFavItem(map).observe(this@StoreDetail, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressDialog.dialog.dismiss()
+                 //   progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
                             Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
-                            if (detailData.data.status == "1") {
-                                favStatus = "0"
-                                binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
-                            } else {
-                                favStatus = "1"
-                                binding.storeDeatilFav.setImageResource(R.drawable.fav_unselected)
-                            }
+
                         } catch (e: Exception) {
                         }
                     }
@@ -922,7 +920,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
                 }
                 Status.ERROR -> {
-                    progressDialog.dialog.dismiss()
+                  //  progressDialog.dialog.dismiss()
                     Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetail)
                 }
             }
@@ -1054,13 +1052,8 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
     override fun onBackPressed() {
-
         var myIntent = Intent()
-        if(favStatus.equals("0"))
-        myIntent.putExtra("result","1")
-        else
-            myIntent.putExtra("result","0")
-
+        myIntent.putExtra("result",favStatus)
         setResult(Activity.RESULT_OK,myIntent)
         super.onBackPressed()
     }

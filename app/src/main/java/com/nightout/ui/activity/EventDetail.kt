@@ -9,6 +9,7 @@ import android.provider.CalendarContract
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -61,11 +62,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         }
         else if(v==binding.eventDetailBakBtn){
             var myIntent = Intent()
-            if(favStatus.equals("0"))
-                myIntent.putExtra("result","1")
-            else
-                myIntent.putExtra("result","0")
-
+            myIntent.putExtra("result",favStatus)
             setResult(Activity.RESULT_OK,myIntent)
             finish()
 
@@ -77,7 +74,10 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             try {
                 val latitude: Double = Commons.strToDouble(dt.store_lattitude)
                 val longitude: Double = Commons.strToDouble(dt.store_longitude)
-                val uri = "http://maps.google.com/maps?saddr=$latitude,$longitude"
+               /// val uri = ("geo:" + latitude.toString() + "," + longitude.toString() + "?q=" + latitude.toString() + "," + longitude)
+              // startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+                // val uri = "http://maps.google.com/maps?saddr=$latitude,$longitude"
+                val uri = "https://www.google.com/maps/?q=$latitude,$longitude"
                 val sharingIntent = Intent(Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain"
                 val ShareSub = "Here is my location"
@@ -129,6 +129,11 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
+                    Utills.showSnackBarOnError(
+                        binding.rootLayoutEventDetal,
+                        it.message!!,
+                        this@EventDetail
+                    )
                 }
             }
         })
@@ -152,13 +157,15 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
     var favStatus = "0"
     private fun setData() {
         try {
+            binding.eventDetailScrollLayout.visibility=VISIBLE
+            binding.eventDeatilFav.visibility=VISIBLE
             //setSlider
-
-            imageViewPagerAdapter = ImageViewPagerAdapter(this@EventDetail, dt.venue_gallery)
-            binding.viewPager.adapter = imageViewPagerAdapter
-            binding.dotsIndicator.setViewPager(binding.viewPager)
-
-
+            try {
+                imageViewPagerAdapter = ImageViewPagerAdapter(this@EventDetail, dt.venue_gallery)
+                binding.viewPager.adapter = imageViewPagerAdapter
+                binding.dotsIndicator.setViewPager(binding.viewPager)
+            } catch (e: Exception) {
+            }
             binding.eventDetailTitle.text = dt.store_name
             //   binding.storeDeatilRating.text = dt.rating.avg_rating
             binding.eventDetailOpenTime.text = "Open at : " + dt.event_start_time + " To " + dt.event_end_time
@@ -166,8 +173,8 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             binding.eventDetailPhno.text = dt.store_number
             binding.eventDetailEmail.text = dt.store_email
             binding.eventDetailDate.text = dt.event_date
-            binding.eventDetailRating.text = "$"+dt.sale_price
-            binding.eventDetailAge.text = dt.age_limit+""
+            binding.eventDetailRating.text = resources.getString(R.string.currency_sumbol)+dt.sale_price
+            binding.eventDetailAge.text = dt.age_limit+" age limit"
             binding.eventDetailMusic.text = dt.party_theme
             binding.eventDetailCocktail.text = dt.dress_code
             binding.eventDetaiAddrs.text = "Address :  ${dt.store_address}"
@@ -245,7 +252,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun add_favouriteAPICALL() {
-        progressDialog.show(this@EventDetail, "")
+        //progressDialog.show(this@EventDetail, "")
         var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
@@ -255,7 +262,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         doFavViewModel.doFavItem(map).observe(this@EventDetail, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressDialog.dialog.dismiss()
+                 //   progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
                             Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
@@ -274,7 +281,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
 
                 }
                 Status.ERROR -> {
-                    progressDialog.dialog.dismiss()
+                  //  progressDialog.dialog.dismiss()
                 }
             }
         })
@@ -287,11 +294,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
 
     override fun onBackPressed() {
         var myIntent = Intent()
-        if(favStatus.equals("0"))
-            myIntent.putExtra("result","1")
-        else
-            myIntent.putExtra("result","0")
-
+        myIntent.putExtra("result",favStatus)
         setResult(Activity.RESULT_OK,myIntent)
         finish()
         super.onBackPressed()

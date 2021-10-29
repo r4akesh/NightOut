@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.FAQItemAdapter
 import com.nightout.adapter.NotificationAdapter
+import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityFaqactivityBinding
 import com.nightout.databinding.ActivityNotificationBinding
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : BaseActivity() {
     lateinit var binding: ActivityNotificationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun setToolBar() {
-        binding.termCondToolBar.toolbarTitle.text = resources.getString(R.string.faq)
+        binding.termCondToolBar.toolbarTitle.text = resources.getString(R.string.Notifications)
         binding.termCondToolBar.toolbarBack.setOnClickListener {
             finish()
         }

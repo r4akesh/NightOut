@@ -45,15 +45,7 @@ class AllRecordAdapter(
                 }
 
             override fun onClickFav(pos: Int) {
-//                if(arrayList[position].sub_records[pos].favrouite.equals("1")){
-//                    arrayList[position].sub_records[pos].favrouite = "0"
-//                }else{
-//                    arrayList[position].sub_records[pos].favrouite = "1"
-//                }
-//
-//                notifyItemChanged(position)
-//               venuBotmSheetAdapter.notifyItemChanged(pos)
-                 clickListener.onClickFav(pos,position)
+                clickListener.onClickFav(pos,position)
             }
 
         })

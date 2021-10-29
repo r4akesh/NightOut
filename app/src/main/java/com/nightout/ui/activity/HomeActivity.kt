@@ -24,6 +24,10 @@ import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.HomeActivityBinding
 import com.nightout.interfaces.OnMenuOpenListener
+import com.nightout.ui.CMS.AboutActivity
+import com.nightout.ui.CMS.ContactUsActivity
+import com.nightout.ui.CMS.FAQActivity
+import com.nightout.ui.CMS.TermsNCondActivity
 import com.nightout.ui.fragment.*
 import com.nightout.utils.AppConstant
 import com.nightout.utils.DialogCustmYesNo

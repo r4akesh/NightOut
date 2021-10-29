@@ -58,6 +58,13 @@ class VenuSubAdapter(
         }
 
         viewHolder.binding.venusubitemFav.setOnClickListener{
+            if(arrayList[position].favrouite.equals("1")){
+                arrayList[position].favrouite = "0"
+                viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
+            }else{
+                arrayList[position].favrouite = "1"
+                viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
+            }
             clickListener.onClickFav(position)
         }
 

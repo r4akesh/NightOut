@@ -93,7 +93,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_2ssp"
                             android:fontFamily="@font/proximanova_reg"
-                            android:text="per person"
+                            android:text="Per Person"
                             android:textColor="@color/white_thred"
                             android:textSize="@dimen/_11ssp"
 

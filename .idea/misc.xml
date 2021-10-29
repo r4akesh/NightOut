@@ -41,6 +41,9 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_emergency_contact.xml" value="0.30462962962962964" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_emergency_contact_list.xml" value="0.30462962962962964" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_faqactivity.xml" value="0.31614583333333335" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_my_cards.xml" value="0.35" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_notification.xml" value="0.35" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_payment.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_profile.xml" value="0.3446153846153846" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/activity_taxi_list.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/addbarcrawl_activity.xml" value="0.27447916666666666" />
@@ -64,7 +67,7 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/creategrup_activity.xml" value="0.2890625" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/demo.xml" value="0.3293381969775925" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/demoactvituy.xml" value="0.3203125" />
-        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/drawer_layout.xml" value="0.18115942028985507" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/drawer_layout.xml" value="0.33" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/drink_item.xml" value="0.33796296296296297" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/eventdetail_actvity.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/facility_dialog.xml" value="0.31296296296296294" />
@@ -105,6 +108,7 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_emergency_contact.xml" value="0.30462962962962964" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_emergency_item.xml" value="0.334375" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_faq_item_layout.xml" value="0.334375" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_notification_layout.xml" value="0.31614583333333335" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_spin_item.xml" value="0.3151041666666667" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_taxi_list.xml" value="0.334375" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_terms_cms_layout.xml" value="0.35" />
@@ -113,6 +117,7 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/shared_item.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/shared_sidemenu_item.xml" value="0.334375" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/sharedmemeber_actvity.xml" value="0.2890625" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/simple_spin_dropdownitem_contactus.xml" value="0.29583333333333334" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/storedetail_activity.xml" value="0.33" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/story_item.xml" value="0.2875" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/termncond_actviity.xml" value="0.3212962962962963" />

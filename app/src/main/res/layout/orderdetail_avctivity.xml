@@ -32,7 +32,7 @@
             android:id="@+id/oredrDetailScroll"
             android:layout_width="match_parent"
           android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintBottom_toTopOf="@+id/orderDetailApply"
+            app:layout_constraintBottom_toTopOf="@+id/orderDetailPay"
             app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar"
             android:layout_height="0dp">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -836,12 +836,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:gravity="start"
+
             android:paddingStart="@dimen/_10ssp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:text="Pay $235"
             android:paddingEnd="@dimen/_10ssp"
             android:drawableEnd="@drawable/arrow_union"
-            android:id="@+id/orderDetailApply"
+            android:id="@+id/orderDetailPay"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/gredient_bg"
           app:layout_constraintBottom_toBottomOf="parent" />

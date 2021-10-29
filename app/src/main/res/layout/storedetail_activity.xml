@@ -8,45 +8,41 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/rootLayoutStorDetail"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_gray">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_height="@dimen/_220sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="@dimen/_220sdp">
-
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <io.github.florent37.shapeofview.shapes.ArcView
+                android:id="@+id/arcLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:elevation="4dp"
-                android:id="@+id/arcLayout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
                 app:shape_arc_height="30dp"
-                app:shape_arc_position="bottom"
-                >
+                app:shape_arc_position="bottom">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primary_clr"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primary_clr"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </io.github.florent37.shapeofview.shapes.ArcView>
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -71,25 +67,25 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@null"
             android:padding="@dimen/_10ssp"
-            tools:visibility="visible"
-            android:visibility="invisible"
             android:src="@drawable/fav_unselected"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
             android:id="@+id/dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_150sdp"
             android:gravity="center"
             android:orientation="horizontal"
             app:dotsColor="@color/text_yello"
             app:dotsSize="@dimen/_7sdp"
             app:dotsStrokeWidth="0.5dp"
-             app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="@dimen/_150sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator>
 
@@ -145,7 +141,7 @@
                         android:id="@+id/storeDeatilRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15ssp"
+
                         android:layout_marginEnd="@dimen/_10ssp"
                         android:drawableStart="@drawable/star_storedetail"
                         android:drawablePadding="@dimen/_5ssp"
@@ -154,7 +150,8 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="@+id/storeDeatilTitle"
+                        app:layout_constraintTop_toTopOf="@+id/storeDeatilTitle" />
 
 
                     <TextView
@@ -164,8 +161,8 @@
                         android:layout_marginStart="@dimen/_7ssp"
                         android:layout_marginTop="@dimen/_15ssp"
                         android:fontFamily="@font/proximanova_bold"
-                        android:singleLine="true"
                         android:paddingEnd="@dimen/_5ssp"
+                        android:singleLine="true"
                         android:text="Vanity Night Club "
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
@@ -179,13 +176,13 @@
 
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_7ssp"
-                        android:layout_marginTop="@dimen/_2ssp"
+                        android:layout_marginTop="@dimen/_4ssp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:fontFamily="@font/proximanova_reg"
                         android:singleLine="true"
                         android:text="Free Entry 9 to 10 pm"
                         android:textColor="@color/white_second"
                         android:textSize="@dimen/_11ssp"
-                        android:layout_marginEnd="@dimen/_5sdp"
                         app:layout_constraintEnd_toStartOf="@+id/storeDeatilDisValue"
                         app:layout_constraintStart_toEndOf="@+id/storeDeatilLogoCard"
                         app:layout_constraintTop_toBottomOf="@id/storeDeatilTitle" />
@@ -197,8 +194,8 @@
                         android:layout_height="@dimen/_10ssp"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:visibility="gone"
                         android:background="@color/bg_view_ver"
+                        android:visibility="gone"
                         app:layout_constraintStart_toEndOf="@+id/storeDeatilSubTitle"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilTitle" />
 
@@ -207,15 +204,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_3ssp"
+
                         android:layout_marginEnd="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_reg"
                         android:text="50% off"
                         android:textColor="@color/text_yello"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toEndOf="parent"
-
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilTitle" />
+                        app:layout_constraintBottom_toBottomOf="@+id/storeDeatilSubTitle"
+                        app:layout_constraintTop_toTopOf="@+id/storeDeatilSubTitle" />
 
                     <TextView
                         android:id="@+id/storeDeatilOpenTime"
@@ -283,9 +280,9 @@
                         android:fontFamily="@font/proximanova_reg"
                         android:gravity="center"
                         android:paddingStart="@dimen/_10ssp"
-                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingTop="@dimen/_7ssp"
                         android:paddingEnd="@dimen/_5ssp"
-                        android:paddingBottom="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_7ssp"
                         android:text="@string/Facilities"
                         android:textColor="@color/text_blk"
                         android:textSize="@dimen/_12ssp"
@@ -305,9 +302,9 @@
                         android:fontFamily="@font/proximanova_reg"
                         android:gravity="center"
                         android:paddingStart="@dimen/_10ssp"
-                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingTop="@dimen/_7ssp"
                         android:paddingEnd="@dimen/_5ssp"
-                        android:paddingBottom="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_7ssp"
                         android:text="@string/Pre_Booking"
                         android:textColor="@color/text_blk"
                         android:textSize="@dimen/_12ssp"
@@ -335,35 +332,30 @@
                             android:id="@+id/storeDeatilAddVenu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:elevation="@dimen/_10ssp"
-
-
                             android:fontFamily="@font/proximanova_reg"
                             android:paddingStart="@dimen/_20ssp"
-
+                            android:paddingTop="@dimen/_2ssp"
                             android:paddingEnd="@dimen/_10ssp"
-
                             android:text="Add venue into bar crawl"
                             android:textAllCaps="true"
                             android:textColor="@color/text_yello"
                             android:textSize="@dimen/_12ssp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/storeDeatilAddRemBarCrl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="invisible"
-                            tools:visibility="visible"
                             android:layout_marginEnd="@dimen/_20ssp"
                             android:src="@drawable/save_fav"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/storeDeatilAddVenu"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/storeDeatilAddVenu" />
+                            app:layout_constraintTop_toTopOf="@+id/storeDeatilAddVenu"
+                            tools:visibility="visible" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

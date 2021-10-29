@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.ui.CMS
 
 import android.os.Build
 import android.os.Bundle
@@ -9,11 +9,9 @@ import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.AboutActviityBinding
-import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
-import com.nightout.viewmodel.AboutViewModel
 import com.nightout.viewmodel.CommonViewModel
 
 class AboutActivity : BaseActivity() {

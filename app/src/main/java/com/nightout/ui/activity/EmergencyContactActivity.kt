@@ -47,8 +47,12 @@ class EmergencyContactActivity : BaseActivity() {
         setToolBar()
         initView()
         /// setUpList()
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            contactsInfoList = getAllContacts()
+            Thread {
+                contactsInfoList = getAllContacts()
+            }.start()
+
             Log.d("TAG", "onCreate: " + contactsInfoList)
             Log.d("TAG", "Size: " + contactsInfoList.size)
         } else {

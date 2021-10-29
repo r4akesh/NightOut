@@ -91,12 +91,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.ContactUsActivity"
+            android:name=".ui.CMS.ContactUsActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.FAQActivity"
+            android:name=".ui.CMS.FAQActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -182,12 +182,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.AboutActivity"
+            android:name=".ui.CMS.AboutActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.TermsNCondActivity"
+            android:name=".ui.CMS.TermsNCondActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -224,8 +224,13 @@
         <activity
             android:name=".ui.activity.TrackTrace"
             android:configChanges="uiMode"
+
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+
+
+
         <activity
             android:name=".ui.activity.ChooseVenuseActivity"
             android:configChanges="uiMode"

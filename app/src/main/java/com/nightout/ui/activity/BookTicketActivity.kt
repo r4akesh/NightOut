@@ -93,10 +93,7 @@ class BookTicketActivity : BaseActivity()  {
 
     private fun setData() {
         try {
-            Glide.with(this@BookTicketActivity)
-                .load(PreferenceKeeper.instance.imgPathSave + pojoEvntDetl.venue_gallery[0].image)
-                .error(R.drawable.no_image)
-                .into(binding.bookTicketImageMain)
+
 
             binding.bookTicketPrice.text = "Price : $${pojoEvntDetl.sale_price}"
             binding.bookTicketURBN.text = pojoEvntDetl.store_name
@@ -109,7 +106,12 @@ class BookTicketActivity : BaseActivity()  {
             val longitude: Double = Commons.strToDouble(pojoEvntDetl.store_longitude)
            binding.bookTicketKM.text =  "${MyApp.getDestance(latitude,longitude,PreferenceKeeper.instance.currentLat!!,PreferenceKeeper.instance.currentLong!!)} Km away"
             totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
+            Glide.with(this@BookTicketActivity)
+                .load(PreferenceKeeper.instance.imgPathSave + pojoEvntDetl.venue_gallery[0].image)
+                .error(R.drawable.no_image)
+                .into(binding.bookTicketImageMain)
         } catch (e: Exception) {
+            Log.d("TAG", "setData: "+e)
         }
 
     }

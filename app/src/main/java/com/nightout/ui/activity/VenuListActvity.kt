@@ -72,35 +72,35 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 0 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Bars Menu"
+                binding.venulistingToolBar.toolbarTitle.text = "Bars"
                 venue_type_listAPICALL()
             }
             "2" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 1 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Pubs Menu"
+                binding.venulistingToolBar.toolbarTitle.text = "Pubs"
                 venue_type_listAPICALL()
             }
             "3" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 2 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Clubs Menu"
+                binding.venulistingToolBar.toolbarTitle.text = "Clubs"
                 venue_type_listAPICALL()
             }
             "4" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 3 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Food Menu"
+                binding.venulistingToolBar.toolbarTitle.text = "Food"
                 venue_type_listAPICALL()
             }
             "5" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 4 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Event Menu"
+                binding.venulistingToolBar.toolbarTitle.text = "Event"
                 venue_type_listAPICALL()
             }
         }
@@ -187,12 +187,12 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun add_favouriteAPICALL(pos:Int) {
-        progressDialog.show(this@VenuListActvity, "")
+       // progressDialog.show(this@VenuListActvity, "")
 
         var fav = if(venuDataList[pos].favrouite == "1")
-            "0" //for opp value
+            "1" //for opp value
         else
-            "1"
+            "0"
         var map = HashMap<String, String>()
         map["venue_id"] = venuDataList[pos].id
         map["vendor_id"] =venuDataList[pos].vendor_detail.id
@@ -202,9 +202,9 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         doFavViewModel.doFavItem(map).observe(this@VenuListActvity, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressDialog.dialog.dismiss()
+                  //  progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
-                        try {
+                       /* try {
                             Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
                             if( detailData.data.status == "1"){
                                 venuDataList[pos].favrouite = "1"
@@ -214,14 +214,14 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                                 venuSubAdapter.notifyItemChanged(pos)
                             }
                         } catch (e: Exception) {
-                        }
+                        }*/
                     }
                 }
                 Status.LOADING -> {
 
                 }
                 Status.ERROR -> {
-                    progressDialog.dialog.dismiss()
+                   // progressDialog.dialog.dismiss()
                     Utills.showSnackBarOnError(binding.constrentToolbar, it.message!!, this@VenuListActvity)
                 }
             }
@@ -262,7 +262,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         listStoreType.add(VenuModel(2, "Pubs", false, isApiCall = false))
         listStoreType.add(VenuModel(3, "Clubs", false, isApiCall = false))
         listStoreType.add(VenuModel(4, "Food", false, isApiCall = false))
-        listStoreType.add(VenuModel(5, "Event", false, isApiCall = false))
+        listStoreType.add(VenuModel(5, "Events", false, isApiCall = false))
 
 
         venuAdapterAdapter = VenuAdapterAdapter(this@VenuListActvity, listStoreType,
@@ -271,7 +271,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     for (i in 0 until listStoreType.size) {
                         listStoreType[i].isSelected = pos == i
                     }
-                    binding.venulistingToolBar.toolbarTitle.setText(listStoreType[pos].title+ " Menu")
+                    binding.venulistingToolBar.toolbarTitle.setText(listStoreType[pos].title)
                     venuAdapterAdapter.notifyDataSetChanged()
                     selectedStrType=listStoreType[pos].id.toString()
                     venue_type_listAPICALL()

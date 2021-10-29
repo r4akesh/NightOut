@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/rootLayoutEventDetal"
         android:layout_height="match_parent"
         android:background="@color/foodstroe_bg">
 
@@ -96,7 +98,8 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@null"
             android:padding="@dimen/_10ssp"
-
+            android:visibility="gone"
+            tools:visibility="visible"
             android:src="@drawable/fav_selected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -120,11 +123,16 @@
 
             <ScrollView
                 android:layout_width="match_parent"
+                android:id="@+id/eventDetailScrollLayout"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
+
                     android:background="@drawable/background_gray"
                     android:paddingBottom="@dimen/_20sdp">
 
@@ -145,7 +153,7 @@
                             android:layout_margin="@dimen/_1ssp"
                             android:background="@drawable/border_yello"
                             android:scaleType="fitXY"
-                            android:src="@drawable/event_logo" />
+                            android:src="@drawable/no_image" />
                     </androidx.cardview.widget.CardView>
 
                     <TextView
@@ -157,7 +165,7 @@
 
                         android:drawablePadding="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_bold"
-                        android:text="$00"
+                        android:text="-"
                         android:textColor="@color/text_yello"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +180,7 @@
                         android:layout_marginTop="@dimen/_15ssp"
                         android:fontFamily="@font/proximanova_bold"
                         android:singleLine="true"
-                        android:text="URBN Saturdays"
+                        android:text="-"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toStartOf="@+id/eventDetailRating"
@@ -187,7 +195,7 @@
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_3ssp"
                         android:fontFamily="@font/proximanova_reg"
-                        android:text="mile"
+                        android:text="-"
                         android:textColor="@color/white_second"
                         android:textSize="@dimen/_11ssp"
                         app:layout_constraintStart_toEndOf="@+id/eventDetailLogoCard"
@@ -199,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_7sdp"
-                        android:text="Start at : 7:30 pm To 02:00 am"
+                        android:text="-"
                         android:textColor="@color/white_second"
                         android:textSize="@dimen/_11ssp"
                         android:fontFamily="@font/proximanova_reg"
@@ -217,7 +225,7 @@
                         android:drawableStart="@drawable/phno_ic"
                         android:drawablePadding="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_bold"
-                        android:text="+91 896 22 54 896"
+                        android:text="-"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +240,7 @@
                         android:drawableStart="@drawable/email_ic"
                         android:drawablePadding="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_reg"
-                        android:text="vanitynight@gmai.com"
+                        android:text="-"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintStart_toStartOf="parent"

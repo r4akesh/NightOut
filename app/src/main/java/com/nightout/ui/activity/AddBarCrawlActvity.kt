@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.R.attr
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -16,8 +17,15 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
+import android.R.attr.country
+import android.widget.AdapterView
 
-class AddBarCrawlActvity : BaseActivity() {
+import android.widget.ArrayAdapter
+
+
+
+
+class AddBarCrawlActvity : BaseActivity() ,AdapterView.OnItemSelectedListener{
     private var customProgressDialog = CustomProgressDialog()
     lateinit var binding: AddbarcrawlActivityBinding
     private lateinit var commonViewModel: CommonViewModel
@@ -39,6 +47,7 @@ class AddBarCrawlActvity : BaseActivity() {
                     it.data?.let {myData->
                     var listOption = myData.data.barcrawl_options
                         setlistOption(listOption)
+                      //  setSpinBarCrawl(myData.data.barcrawl)
                     }
                 }
                 Status.LOADING->{ }
@@ -54,10 +63,23 @@ class AddBarCrawlActvity : BaseActivity() {
         })
     }
 
+    private fun setSpinBarCrawl(barcrawlList: ArrayList<BarCrwlListModel.Barcrawl>) {
+
+        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, barcrawlList)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.addBarCrawlSpinBarCrawl.adapter = aa
+
+
+
+    }
+
     lateinit var barCrawlOptionAdapter : BarCrawlOptionAdapter
     private fun setlistOption(listOption: ArrayList<BarCrwlListModel.BarcrawlOption>) {
         barCrawlOptionAdapter = BarCrawlOptionAdapter(this@AddBarCrawlActvity,listOption,object:BarCrawlOptionAdapter.ClickListener{
             override fun onClick(pos: Int) {
+                listOption[pos].isSelected = !listOption[pos].isSelected
+
+                barCrawlOptionAdapter.notifyItemChanged(pos)
 
             }
 
@@ -99,6 +121,14 @@ class AddBarCrawlActvity : BaseActivity() {
         binding.addBarCrawlToolBar.toolbarCreateGrop.setOnClickListener {
             startActivity(Intent(this@AddBarCrawlActvity,AllBarCrawalNewActivity::class.java))
         }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+         var vv = binding.addBarCrawlSpinBarCrawl.selectedItem.toString()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 
 }

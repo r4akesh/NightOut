@@ -7,8 +7,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/rootLayoutAddBar"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/botmsheet_listcolor">
 
@@ -85,7 +85,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/proximanova_reg"
-                            android:text="Fill the fileld to creat a bra crawl"
+                            android:text="Fill the field to create a bar crawl"
                             android:textColor="@color/white_second"
                             android:textSize="@dimen/_12ssp"
                             app:layout_constraintTop_toBottomOf="@+id/textCreateBar" />
@@ -136,20 +136,29 @@
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:background="@drawable/box_botomsheet"
                             android:paddingStart="@dimen/_15sdp"
-                            android:paddingTop="@dimen/_22sdp"
+
                             android:paddingEnd="@dimen/_15sdp"
-                            android:paddingBottom="@dimen/_22sdp"
+
                             app:layout_constraintTop_toBottomOf="@+id/constrentFirst">
 
-
-                            <TextView
+                            <Spinner
+                                android:id="@+id/addBarCrawlSpinBarCrawl"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/arrow_down_white"
-                                android:text="Select Venue Bar"
-                                android:textColor="@color/white_thred"
-                                android:textSize="@dimen/_13ssp"
+                                android:background="@null"
+                                android:paddingTop="@dimen/_22ssp"
+                                android:paddingBottom="@dimen/_22ssp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/arrow_down_white"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -184,8 +193,8 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
                             android:id="@+id/addBarCrawlRecyle"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             app:layout_constraintTop_toBottomOf="@+id/constrentThird" />

@@ -1,8 +1,6 @@
-package com.nightout.ui.activity
+package com.nightout.ui.CMS
 
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.View.GONE
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +9,6 @@ import com.nightout.adapter.TermsItemAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.TermncondActviityBinding
 import com.nightout.model.AboutModelResponse
-import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status

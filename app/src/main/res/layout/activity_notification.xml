@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
-        android:background="@drawable/background_gray"
-        android:orientation="vertical">
+        android:background="@drawable/background_gray">
 
 
-        <include
-            android:id="@+id/termCondToolBar"
-            layout="@layout/toolbar_common" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filterActivityToolbarConstrent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/termCondToolBar"
+                layout="@layout/toolbar_common" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notificationList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filterActivityToolbarConstrent"
             tools:itemCount="3"
-            tools:listitem="@layout/row_notification_layout">
+            tools:listitem="@layout/row_notification_layout" />
 
 
-        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </LinearLayout>
 
 </layout>

@@ -6,218 +6,233 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/_225sdp"
+
         android:layout_marginTop="@dimen/_5sdp"
-
-        android:background="@color/bg_clr_venu2"
-        android:layout_height="@dimen/_225sdp">
+        android:background="@color/bg_clr_venu2">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_height="@dimen/_215sdp"
-
-
-        android:background="@color/bg_clr_venu">
-
-
-        <ImageView
-            android:id="@+id/venusubitem_topimg"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/venusub_img1"
+            android:layout_height="@dimen/_220sdp"
+            android:background="@color/bg_clr_venu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
-        <ImageView
-            android:id="@+id/venusubitem_fav"
-            android:layout_width="wrap_content"
-            android:background="@null"
-            android:padding="@dimen/_10ssp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/fav_selected"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/_10ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-           android:paddingStart="@dimen/_4ssp"
-           android:paddingEnd="@dimen/_4ssp"
-            android:background="@drawable/box_blk_bg"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="£"
-                android:padding="@dimen/_3sdp"
-                android:fontFamily="@font/proximanova_reg"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="£"
-                android:fontFamily="@font/proximanova_reg"
-                android:padding="@dimen/_3sdp"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="£"
-                android:fontFamily="@font/proximanova_reg"
-                android:padding="@dimen/_3sdp"
-                android:textColor="@color/text_gray"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="£"
-                android:fontFamily="@font/proximanova_reg"
-                android:padding="@dimen/_3sdp"
-                android:textColor="@color/text_gray"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/venusubitem_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10ssp"
-            android:layout_marginTop="@dimen/_5ssp"
-            android:fontFamily="@font/proximanova_reg"
-            android:singleLine="true"
-            android:text="title"
-            android:textColor="@color/white_thred"
-            android:textSize="@dimen/_13ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/venusubitem_topimg" />
-
-        <TextView
-            android:id="@+id/venusubitem_subTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10ssp"
-            android:fontFamily="@font/proximanova_light"
-            android:singleLine="true"
-            android:layout_marginTop="@dimen/_2ssp"
-            android:text="1 Fairclough St, Liverpool1 "
-            android:textColor="@color/white_second"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/venusubitem_title" />
-
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:scrollbars="none"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/venusubitem_subTitle">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/venusubitem_topimg"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/venusub_img1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/venusubitem_per"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:background="@null"
-                   android:src="@drawable/per_img"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/venusubitem_fav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="@dimen/_10ssp"
+                android:src="@drawable/fav_selected"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:background="@color/bg_view_ver"
-                    app:layout_constraintLeft_toRightOf="@+id/venusubitem_per"
-                    app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10ssp"
+                android:background="@drawable/box_blk_bg"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_4ssp"
+                android:paddingEnd="@dimen/_4ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/venusubitem_openclosetime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/proximanova_reg"
-                    android:text="Close : 2:00am"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintLeft_toRightOf="@+id/view1"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:background="@color/bg_view_ver"
-                    app:layout_constraintLeft_toRightOf="@+id/venusubitem_openclosetime"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:padding="@dimen/_3sdp"
+                    android:text="£"
+                    android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/venusubitem_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/view2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@null"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:fontFamily="@font/proximanova_bold"
-                    android:drawablePadding="@dimen/_5ssp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp"
-                    android:drawableStart="@drawable/start_yellobg"
-                    android:text="4.5" />
-
-                <View
-                    android:id="@+id/view3"
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:background="@color/bg_view_ver"
-                    app:layout_constraintLeft_toRightOf="@+id/venusubitem_rating"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/venusubitem_saveToBarvrawl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/view3"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@null"
-                    android:layout_marginStart="@dimen/_10sdp"
-                  android:paddingEnd="@dimen/_10ssp"
                     android:fontFamily="@font/proximanova_reg"
-                    android:drawablePadding="@dimen/_5ssp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:drawableStart="@drawable/save_fav"
-                    android:text="@string/Savetobarcrawl" />
+                    android:padding="@dimen/_3sdp"
+                    android:text="£"
+                    android:textColor="@color/white" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:padding="@dimen/_3sdp"
+                    android:text="£"
+                    android:textColor="@color/text_gray" />
 
-        </HorizontalScrollView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:padding="@dimen/_3sdp"
+                    android:text="£"
+                    android:textColor="@color/text_gray" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/venusubitem_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_5ssp"
+                android:fontFamily="@font/proximanova_reg"
+                android:singleLine="true"
+                android:text="title"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/venusubitem_topimg" />
+
+            <TextView
+                android:id="@+id/venusubitem_subTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_2ssp"
+                android:fontFamily="@font/proximanova_light"
+                android:singleLine="true"
+                android:text="1 Fairclough St, Liverpool1 "
+                android:textColor="@color/white_second"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/venusubitem_title" />
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8ssp"
+                android:layout_marginBottom="@dimen/_8ssp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/venusubitem_subTitle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+
+                    android:layout_height="@dimen/_22sdp">
+
+                    <ImageView
+                        android:id="@+id/venusubitem_per"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:background="@null"
+
+                        android:src="@drawable/per_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                         />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:background="@color/bg_view_ver"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/venusubitem_per"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/venusubitem_openclosetime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Close : 2:00am"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/view1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_15sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:background="@color/bg_view_ver"
+                        app:layout_constraintLeft_toRightOf="@+id/venusubitem_openclosetime"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/venusubitem_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:background="@null"
+                        android:drawableStart="@drawable/start_yellobg"
+                        android:drawablePadding="@dimen/_5ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:gravity="center_vertical"
+                        android:text="4.5"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp"
+                        app:layout_constraintLeft_toRightOf="@+id/view2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:background="@color/bg_view_ver"
+                        app:layout_constraintLeft_toRightOf="@+id/venusubitem_rating"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/venusubitem_saveToBarvrawl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:background="@null"
+                        android:drawableStart="@drawable/save_fav"
+                        android:drawablePadding="@dimen/_5ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingEnd="@dimen/_10ssp"
+                        android:gravity="center_vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/Savetobarcrawl"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintLeft_toRightOf="@+id/view3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

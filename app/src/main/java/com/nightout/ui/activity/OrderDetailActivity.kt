@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -26,6 +27,7 @@ class OrderDetailActivity : BaseActivity() {
         binding.constrentToolbar.toolbar_bell.visibility=GONE
 
         setTouchNClick(  binding.constrentToolbar.oredrDetailToolBar)
+        setTouchNClick( binding.orderDetailPay)
          binding.constrentToolbar.oredrDetailToolBar.setOnClickListener {
              finish()
              overridePendingTransition(0,0)
@@ -35,5 +37,9 @@ class OrderDetailActivity : BaseActivity() {
 
     override fun onClick(v: View?) {
         super.onClick(v)
+        if(v==binding.orderDetailPay){
+            startActivity(Intent(this@OrderDetailActivity,MyCardsActivity::class.java))
+
+        }
     }
 }

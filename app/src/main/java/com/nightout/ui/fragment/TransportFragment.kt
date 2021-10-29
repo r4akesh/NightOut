@@ -1,5 +1,6 @@
 package com.nightout.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.nightout.R
 import com.nightout.adapter.SomeTaxiListAdapter
 import com.nightout.databinding.FragmentTransportLayoutBinding
 import com.nightout.interfaces.OnMenuOpenListener
+import com.nightout.ui.activity.TaxiListActivity
 
 
 class TransportFragment() : Fragment(), OnMapReadyCallback {
@@ -33,6 +35,10 @@ class TransportFragment() : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_transport_layout, container, false)
+        binding.arrowBtn.setOnClickListener {
+            startActivity(Intent(requireContext(),TaxiListActivity::class.java))
+        }
+
         init()
         return binding.root
     }

@@ -46,7 +46,7 @@
     <string name="Foods">Foods</string>
     <string name="Events">Events</string>
     <string name="TrackNTrace"><![CDATA[Track & Trace]]></string>
-    <string name="Reffer_friend">Refer a friend</string>
+    <string name="Reffer_friend">Refer a Friend</string>
     <string name="CMS_Pages">CMS Pages</string>
     <string name="About">About Us</string>
     <string name="FAQ">FAQ</string>
@@ -91,6 +91,7 @@
     <string name="Excellent">Excellent!</string>
     <string name="Create">Create</string>
     <string name="faq">FAQ</string>
+    <string name="Notifications">Notifications</string>
     <string name="toll_free">Toll Free no</string>
     <string name="dummyNumber">+852 5002 4516</string>
     <string name="email">Email</string>
@@ -156,7 +157,7 @@
     <string name="dummy_taxi_company_name">Uber taxi</string>
     <string name="dummy_distance">2.2 km away</string>
     <string name="select_taxi">Select Taxi</string>
-    <string name="select_your_taxi">Select your taxi</string>
+    <string name="select_your_taxi">Select your Taxi</string>
     <string name="Send">Send</string>
     <string name="Share">Share</string>
     <string name="Direction">Direction</string>
@@ -212,6 +213,6 @@
     <string name="Sharethelink">Share the link of App with your friend and Add them in Emergency Contact. </string>
     <string name="youHavntAddEmrgencyCotact">You haven\'t add emergency contact yet</string>
     <string name="youHavntAddFavStroe">You haven\'t saved any venues to favourite</string>
-
+    <string name="currency_sumbol">£</string>
 
 </resources>

@@ -23,35 +23,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notification_title"
+                android:text="Someone has visited your profile"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                style="@style/textBold"
-                android:textSize="18sp"/>
+
+                android:textSize="16sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notification_title"
+                android:text="You want to know who? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing libero"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:textColor="@color/white_second"
                 style="@style/textRegular"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/notification_time"
+                android:text="4:30 AM"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/white_second"
                 style="@style/textRegular"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 />
 
 

@@ -347,12 +347,12 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             }
         }
 
-       else if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
+     /*  else if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
             val place = Autocomplete.getPlaceFromIntent(data!!)
             activity.binding.editProfileLocation.text = place.address
          //   activity.binding.editProfileLocation2.setText(place.address)
             getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
-        }
+        }*/
        else if (requestCode == LAUNCH_GOOGLE_ADDRESS2 && resultCode == Activity.RESULT_OK) {
             val place = Autocomplete.getPlaceFromIntent(data!!)
             activity.binding.editProfileLocation2.text = place.address

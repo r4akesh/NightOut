@@ -16,6 +16,7 @@ class AppConstant {
         const val NO_INTERNET = 502
         const val INTERNAL_ERROR = 500
         const val PARSING_ERROR = 504
+        const val VideoName = "Panic.mp4"
 
 
     }

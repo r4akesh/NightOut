@@ -57,9 +57,9 @@
 
 
                     <Switch
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
-                        android:thumb="@drawable/thumb"
+
                         android:track="@drawable/custom_switch_bg"
                         app:layout_constraintBottom_toBottomOf="@id/notificationIcon"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
                     <Switch
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:thumb="@drawable/thumb"
+
                         android:track="@drawable/custom_switch_bg"
                         app:layout_constraintBottom_toBottomOf="@id/emailNotificationIcon"
                         app:layout_constraintEnd_toEndOf="parent"

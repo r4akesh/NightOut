@@ -41,7 +41,7 @@ data class ApiSampleResource<out T>(val status: Status, val data: T?, val messag
                 204 -> message = msg //empty res
                 408 -> message = msg
                 409 -> message = msg
-                504 -> message = "Parsing Problem Please contact to backend Developer"
+                504 -> message = "Data Parsing Error"
 
 
             }

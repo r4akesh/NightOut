@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,183 +14,220 @@
         android:background="@drawable/background_gray">
 
 
-        <ImageView
-            android:id="@+id/tickeCnfrmRightImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_80sdp"
-            android:src="@drawable/ticket_booked"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tickeCnfrmTicketBooked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:fontFamily="@font/proximanova_reg"
-            android:text="Ticket Booked"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tickeCnfrmRightImg" />
-
-        <TextView
-            android:id="@+id/tickeOrderID"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:layout_marginEnd="@dimen/_50sdp"
-            android:fontFamily="@font/proximanova_reg"
-            android:gravity="center"
-            android:text="orderID"
-            android:textColor="@color/white_second"
-            android:textSize="@dimen/_11ssp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ticketConfrmDownloadBtn"
             app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/tickeCnfrmTicketBooked" />
-
-
+            android:layout_height="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constrentbox"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_165sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tickeOrderID">
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="@dimen/_5sdp"
+            <ImageView
+                android:id="@+id/tickeCnfrmRightImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_80sdp"
+                android:src="@drawable/ticket_booked"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+            <TextView
+                android:id="@+id/tickeCnfrmTicketBooked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:text="Ticket Booked"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tickeCnfrmRightImg" />
+
+            <TextView
+                android:id="@+id/tickeOrderID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="center"
+                android:text="orderID"
+                android:textColor="@color/white_second"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/tickeCnfrmTicketBooked" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrentbox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_165sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tickeOrderID">
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_165sdp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@color/bg_clr_venu"
-                        android:orientation="vertical"
-                        android:padding="@dimen/_10ssp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_165sdp"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/eventName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:text="URBN Saturdays"
-                            android:textColor="@color/white_thred"
-                            android:textSize="@dimen/_12ssp" />
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@color/bg_clr_venu"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_10ssp">
 
-                        <TextView
-                            android:id="@+id/eventTime"
-                            android:layout_below="@+id/eventName"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/eventName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="URBN Saturdays"
+                                android:textColor="@color/white_thred"
+                                android:textSize="@dimen/_12ssp" />
 
-                            android:layout_height="wrap_content"
-                            android:text="Start at : 08:30 pm To 02:00 am"
-                            android:textColor="@color/white_thred"
-                            android:textSize="@dimen/_11ssp" />
+                            <TextView
+                                android:id="@+id/eventTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
 
-
-                        <TextView
-                            android:id="@+id/eventDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="25 June 2021"
-                            android:textColor="@color/white_thred"
-                            android:textSize="@dimen/_13ssp" />
-
-                        <TextView
-                            android:id="@+id/eventAddrs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                             android:layout_alignParentBottom="true"
-                            android:text="Address : 15 Beeston Pl, London SW1W 0JW, United Kingdom"
-                            android:textColor="@color/white_thred"
-                            android:textSize="@dimen/_11ssp" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/text_yello"
-                        android:orientation="vertical"
-                        android:padding="@dimen/_10ssp">
-
-                        <TextView
-                            android:id="@+id/eventUser"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/proximanova_reg"
-                            android:text="John Wick"
-                            android:textColor="@color/black_pure"
-                            android:textSize="@dimen/_12ssp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_above="@+id/eventPrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:fontFamily="@font/proximanova_reg"
-                            android:text="Total"
-                            android:textColor="@color/black_pure"
-                            android:textSize="@dimen/_12ssp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/eventPrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:fontFamily="@font/proximanova_reg"
-                            android:text="$600"
-                            android:textColor="@color/black_pure"
-                            android:textSize="@dimen/_16ssp"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                                android:layout_below="@+id/eventName"
+                                android:text="Start at : 08:30 pm To 02:00 am"
+                                android:textColor="@color/white_thred"
+                                android:textSize="@dimen/_11ssp" />
 
 
+                            <TextView
+                                android:id="@+id/eventDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="25 June 2021"
+                                android:textColor="@color/white_thred"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <TextView
+                                android:id="@+id/eventAddrs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:text="Address : 15 Beeston Pl, London SW1W 0JW, United Kingdom"
+                                android:textColor="@color/white_thred"
+                                android:textSize="@dimen/_11ssp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/text_yello"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_10ssp">
+
+                            <TextView
+                                android:id="@+id/eventUser"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/proximanova_reg"
+                                android:text="John Wick"
+                                android:textColor="@color/black_pure"
+                                android:textSize="@dimen/_12ssp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_above="@+id/eventPrice"
+
+                                android:fontFamily="@font/proximanova_reg"
+                                android:text="Total"
+                                android:textColor="@color/black_pure"
+                                android:textSize="@dimen/_12ssp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/eventPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:fontFamily="@font/proximanova_reg"
+                                android:text="$600"
+                                android:textColor="@color/black_pure"
+                                android:textSize="@dimen/_16ssp"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/ticketConfrmDownloadBtn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ticketDownload"
+                style="@style/buttonTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:background="@drawable/gredient_bg"
+                android:text="@string/Download_Ticket"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_5ssp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/white_second"
+                app:layout_constraintTop_toBottomOf="@+id/ticketDownload"
+                android:text="@string/plzDownlodTicket"
+                android:layout_height="wrap_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ticketDownload"
-            style="@style/buttonTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10ssp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_10ssp"
-            android:background="@drawable/gredient_bg"
-            android:text="@string/Download_Ticket"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constrentbox" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

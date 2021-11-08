@@ -170,7 +170,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             //   binding.storeDeatilRating.text = dt.rating.avg_rating
             binding.eventDetailOpenTime.text = "Open at : " + dt.event_start_time + " To " + dt.event_end_time
             //   binding.storeDeatilSubTitle.text = "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
-            binding.eventDetailPhno.text = dt.store_number
+            binding.eventDetailPhno.text = "+44 "+dt.store_number
             binding.eventDetailEmail.text = dt.store_email
             binding.eventDetailDate.text = dt.event_date
             binding.eventDetailRating.text = resources.getString(R.string.currency_sumbol)+dt.sale_price

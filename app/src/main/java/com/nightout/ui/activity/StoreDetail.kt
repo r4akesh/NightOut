@@ -218,7 +218,10 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
     private fun setData() {
-        try {//setSlider
+        try {
+            binding.constrentCardLayout.visibility= VISIBLE
+
+            //setSlider
             imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail,  dt.venue_gallery)
             binding.viewPager.adapter = imageViewPagerAdapter
             binding.dotsIndicator.setViewPager(binding.viewPager)
@@ -228,7 +231,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
             binding.storeDeatilSubTitle.text =
                 "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
-            binding.storeDeatilPhno.text = dt.store_number
+            binding.storeDeatilPhno.text = "+44 "+dt.store_number
             binding.storeDeatilEmail.text = dt.store_email
             binding.storeDeatilAddrs.text = dt.store_address
 

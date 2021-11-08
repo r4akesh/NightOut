@@ -235,6 +235,14 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             transitionAnim(sideMenuCmsLinear,sideMenuCmsArrowImg)
 
         }
+        else if(v==sideMenuFood){
+            //  slidingRootNav!!.closeMenu()
+            setBtnBgBlank()
+            sideMenuFood?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
+            startActivity(Intent(this@HomeActivity, VenuListActvity::class.java)
+                .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"4"))
+
+        }
         else if(v==sideMenuEvent){
            // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
@@ -247,16 +255,11 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuLostItem?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            startActivity(Intent(this@HomeActivity, LostitemActivity::class.java))
+            startActivity(Intent(this@HomeActivity, LostitemActivity::class.java)
+             )
 
         }
-        else if(v==sideMenuFood){
-          //  slidingRootNav!!.closeMenu()
-            setBtnBgBlank()
-            sideMenuFood?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            startActivity(Intent(this@HomeActivity, FoodStoreActvity::class.java))
 
-        }
         else if(v==sideMenuInvite){
           //  slidingRootNav!!.closeMenu()
             setBtnBgBlank()

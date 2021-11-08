@@ -214,5 +214,7 @@
     <string name="youHavntAddEmrgencyCotact">You haven\'t add emergency contact yet</string>
     <string name="youHavntAddFavStroe">You haven\'t saved any venues to favourite</string>
     <string name="currency_sumbol">£</string>
+    <string name="EnterUrAddrs">Type your address</string>
+    <string name="plzDownlodTicket">Note:- Please download the ticket, So that we can share the ticket on your mail for reference.</string>
 
 </resources>

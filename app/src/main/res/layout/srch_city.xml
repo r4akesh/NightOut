@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:id="@+id/barcrawleSerchMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_marginTop="@dimen/_65sdp"
+            android:layout_marginBottom="@dimen/_80sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/crntloac_ic"
+            app:layout_constraintBottom_toTopOf="@+id/barcrawlBtmConstrent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrentToolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/srchBarCrawlToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/barcrawlBtmConstrent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gredient_btmshet_bg"
+            android:paddingBottom="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:id="@+id/barCrwalView"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_2ssp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_7ssp"
+                android:background="@drawable/box_btn_bg_white2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/barcrawlSrchCityTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_5ssp"
+
+
+                android:fontFamily="@font/proximanova_reg"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/SearchCity"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barCrwalView" />
+
+
+            <TextView
+                android:id="@+id/barcralCity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/box_speed"
+                android:drawableStart="@drawable/ic_current_location"
+                android:drawablePadding="@dimen/_5sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:gravity="start"
+                android:hint="Choose City..."
+                android:padding="@dimen/_7sdp"
+                android:textColor="@color/white_thred"
+                android:textColorHint="@color/white_second"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+
+
+                app:layout_constraintTop_toBottomOf="@+id/barcrawlSrchCityTitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/barcrawlNextBtn"
+                style="@style/buttonTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/gredient_bg"
+                android:text="@string/next"
+                app:layout_constraintTop_toBottomOf="@+id/barcralCity" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

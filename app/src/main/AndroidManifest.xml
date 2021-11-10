@@ -43,7 +43,7 @@
         android:theme="@style/Theme.NightOut"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".ui.activity.barcrawl.BarcrawlListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -330,6 +330,16 @@
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.activity.barcrawl.SearchCityActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+     <!--   <activity
+            android:name=".ui.activity.barcrawl.BarcrawlListActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />-->
 
 
         <activity

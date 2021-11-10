@@ -15,6 +15,7 @@ import com.nightout.ui.activity.AddBarCrawlActvity
 import com.nightout.ui.activity.BarCrawlSaveActivity
 import com.nightout.ui.activity.BarCrawlSavedListActivity
 import com.nightout.ui.activity.BarCrawlShredListActivity
+import com.nightout.ui.activity.barcrawl.SearchCityActivity
 
 class BarCrwalFragment() : Fragment() , View.OnClickListener {
 
@@ -46,7 +47,8 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener {
          }*/
 
         if(v==binding.createBtn){
-            startActivity( Intent (requireActivity(),AddBarCrawlActvity::class.java))
+            //startActivity( Intent (requireActivity(),AddBarCrawlActvity::class.java))
+            startActivity( Intent (requireActivity(),SearchCityActivity::class.java))
         }
         else if(v==binding.savedBtn){
             startActivity( Intent (requireActivity(), BarCrawlSavedListActivity::class.java))

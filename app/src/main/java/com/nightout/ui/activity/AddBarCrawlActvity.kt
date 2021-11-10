@@ -37,7 +37,13 @@ class AddBarCrawlActvity : BaseActivity() ,AdapterView.OnItemSelectedListener{
         initView()
         barcrawllistAPICall()
     }
-
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        if(v==binding.createBtn){
+            startActivity( Intent (this@AddBarCrawlActvity, BarCrawlSaveActivity::class.java))
+            finish()
+        }
+    }
     private fun barcrawllistAPICall() {
         customProgressDialog.show(this@AddBarCrawlActvity, "")
         commonViewModel.barCrwlList().observe(this@AddBarCrawlActvity,{
@@ -96,13 +102,7 @@ class AddBarCrawlActvity : BaseActivity() ,AdapterView.OnItemSelectedListener{
         commonViewModel = CommonViewModel(this@AddBarCrawlActvity)
     }
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        if(v==binding.createBtn){
-            startActivity( Intent (this@AddBarCrawlActvity, BarCrawlSaveActivity::class.java))
-            finish()
-        }
-    }
+
 
     private fun setToolBar() {
         setTouchNClick(binding.addBarCrawlToolBar.toolbarBack)

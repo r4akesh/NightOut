@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/constrntLayoutMain"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_5ssp"
+        android:layout_marginTop="@dimen/_10ssp"
+        android:layout_marginEnd="@dimen/_5ssp"
+        android:background="@drawable/box_yelo_blnk">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/venuesItemCardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_1sdp">
+
+                <ImageView
+                    android:id="@+id/venuesItemImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_1sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/allbar1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:visibility="visible"
+                    android:src="@drawable/ic_mask_grid"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/venuesItemTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+
+                    android:layout_marginBottom="@dimen/_5ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="Text"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintBottom_toTopOf="@+id/venuesItemRating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/venuesItemRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_2ssp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:drawableStart="@drawable/start_yellobg"
+
+                    android:drawablePadding="@dimen/_5ssp"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:gravity="center_vertical"
+                    android:text="4.5"
+                    android:textColor="@color/white_second"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:id="@+id/verLine"
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@color/bg_view_ver"
+                    app:layout_constraintBottom_toBottomOf="@+id/venuesItemRating"
+                    app:layout_constraintStart_toEndOf="@+id/venuesItemRating"
+                    app:layout_constraintTop_toTopOf="@+id/venuesItemRating" />
+
+                <TextView
+                    android:id="@+id/venuesItemDistence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+
+                    android:fontFamily="@font/proximanova_reg"
+
+                    android:gravity="center_vertical"
+                    android:text="Textweewdre"
+                    android:textColor="@color/white_second"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/venuesItemRating"
+                    app:layout_constraintStart_toEndOf="@+id/verLine"
+                    app:layout_constraintTop_toTopOf="@+id/venuesItemRating" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

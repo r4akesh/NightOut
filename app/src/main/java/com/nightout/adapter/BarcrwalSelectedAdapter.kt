@@ -10,18 +10,21 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.CommentItemBinding
 import com.nightout.databinding.RowSelectedbarcrwalvenuBinding
+import com.nightout.model.AllBarCrwalListResponse
 import com.nightout.model.BarCrwalVenuesModel
 import com.nightout.model.ChatModel
 import com.nightout.model.CommentModel
+import com.nightout.utils.PreferenceKeeper
 
 
 class BarcrwalSelectedAdapter(
     var context: Context,
-    var arrayList: ArrayList<BarCrwalVenuesModel>,
+    var arrayList: ArrayList<AllBarCrwalListResponse.Barcrawl>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<BarcrwalSelectedAdapter.ViewHolder>() {
@@ -38,12 +41,16 @@ class BarcrwalSelectedAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.commentItemTitle.text=arrayList[position].title
-        viewHolder.binding.commentItemProfile.setImageResource(arrayList[position].img)
-    //        viewHolder.binding.weekCloseTime.setOnClickListener {
-//            clickListener.onClickCloseTime(position)
-//
-//        }
+        viewHolder.binding.commentItemTitle.text=arrayList[position].venue_detail.store_name
+        Glide.with(context)
+            .load(PreferenceKeeper.instance.imgPathSave + arrayList[position].venue_detail.store_logo)
+            .error(R.drawable.no_image)
+            .into(viewHolder.binding.commentItemProfile)
+
+            viewHolder.binding.commentItemCloseBtn.setOnClickListener {
+            clickListener.onClickClose(position)
+
+        }
     }
 
 
@@ -59,7 +66,7 @@ class BarcrwalSelectedAdapter(
     }
 
     interface ClickListener {
-        fun onClick(pos: Int)
+        fun onClickClose(pos: Int)
 
 
     }

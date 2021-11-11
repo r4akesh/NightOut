@@ -1366,8 +1366,8 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
-    fun barCrwlList(): LiveData<ApiSampleResource<BarCrwlListModel>> {
-        val venueListResponseModel = MutableLiveData<ApiSampleResource<BarCrwlListModel>>()
+    fun barCrwlVenuList(): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
+        val venueListResponseModel = MutableLiveData<ApiSampleResource<AllBarCrwalListResponse>>()
         if (networkHelper.isNetworkConnected()) {
             val responseBody: Call<ResponseBody> = apiInterfaceHeader.bar_crawl_listAPI( )
             responseBody.enqueue(object : Callback<ResponseBody> {
@@ -1376,7 +1376,7 @@ class WebServiceRepository(application: Activity) {
                         200 -> {
                             val data = response.body()?.string()!!
                             try {
-                                val dataResponse = fromJson<BarCrwlListModel>(data)
+                                val dataResponse = fromJson<AllBarCrwalListResponse>(data)
 
                                 venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
                             } catch (ex: Exception) {
@@ -1390,7 +1390,7 @@ class WebServiceRepository(application: Activity) {
                         201 -> {
                             val data = response.body()?.string()!!
                             try {
-                                val dataResponse = fromJson<BarCrwlListModel>(data)
+                                val dataResponse = fromJson<AllBarCrwalListResponse>(data)
                                 venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
                             } catch (ex: Exception) {
                                 ex.printStackTrace()

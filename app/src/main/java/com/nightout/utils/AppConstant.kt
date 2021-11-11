@@ -17,6 +17,7 @@ class AppConstant {
         const val INTERNAL_ERROR = 500
         const val PARSING_ERROR = 504
         const val VideoName = "Panic.mp4"
+        const val FCMTOKEN = "FCMTOKEN"
 
 
     }

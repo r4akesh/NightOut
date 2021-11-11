@@ -45,7 +45,7 @@ class AddBarCrawlActvity : BaseActivity() ,AdapterView.OnItemSelectedListener{
         }
     }
     private fun barcrawllistAPICall() {
-        customProgressDialog.show(this@AddBarCrawlActvity, "")
+      /*  customProgressDialog.show(this@AddBarCrawlActvity, "")
         commonViewModel.barCrwlList().observe(this@AddBarCrawlActvity,{
             when(it.status){
                 Status.SUCCESS->{
@@ -66,7 +66,7 @@ class AddBarCrawlActvity : BaseActivity() ,AdapterView.OnItemSelectedListener{
                     )
                 }
             }
-        })
+        })*/
     }
 
     private fun setSpinBarCrawl(barcrawlList: ArrayList<BarCrwlListModel.Barcrawl>) {

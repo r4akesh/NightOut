@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NightOut</string>
     <string name="google_place_picker_key">AIzaSyBTaViY1yy682xv08Pnp33jE1fgOCAIxq4</string>
+    <string name="default_notification_channel_id">1001</string>
     <string name="txt_progress">Please Wait…</string>
     <string name="No_Internet">No Internet Connection !!</string>
     <string name="Login">Login</string>

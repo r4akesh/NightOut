@@ -79,7 +79,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         //  setBottomSheet()
         initView()
-
+        Log.e("ok", "onCreateView: "+PreferenceKeeper.instance.fcmTokenSave)
         if (NetworkHelper(requireActivity()).isNetworkConnected()) {
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             if(activity!=null && isAdded)

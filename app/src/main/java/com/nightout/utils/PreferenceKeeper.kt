@@ -40,7 +40,11 @@ class PreferenceKeeper private constructor(context: Context?) {
         set(cnt) {
             prefs!!.edit().putString(AppConstant.PrefsName.BearerTOKEN, cnt).apply()
         }
-
+    var fcmTokenSave: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.FCMTOKEN, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.FCMTOKEN, cnt).apply()
+        }
 
     var imgPathSave: String?
         get() = prefs!!.getString(AppConstant.PrefsName.IMAGE_PATH, "")

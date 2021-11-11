@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nightout.R
 import com.nightout.databinding.RowVenuebarcrawalGridBinding
+import com.nightout.model.AllBarCrwalListResponse
 import com.nightout.model.BarCrwalVenuesModel
+import com.nightout.utils.PreferenceKeeper
 
 
 class VenuListBarCrawaAdapter(
     var context: Context,
-    var arrayList: ArrayList<BarCrwalVenuesModel>,
+    var arrayList: ArrayList<AllBarCrwalListResponse.Barcrawl>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -29,10 +33,20 @@ class VenuListBarCrawaAdapter(
         RecyclerView.ViewHolder(itemView) {
         var venuesItemTitle: TextView = itemView.findViewById(R.id.venuesItemTitle)
         var venuesItemImage: ImageView = itemView.findViewById(R.id.venuesItemImage)
+        var constrntLayoutMain: ConstraintLayout = itemView.findViewById(R.id.constrntLayoutMain)
         fun bind(position: Int) {
             val recyclerViewModel = arrayList[position]
-            venuesItemTitle.text = recyclerViewModel.title
-            venuesItemImage.setImageResource(recyclerViewModel.img)
+            venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
+            if(recyclerViewModel.isSelected){
+                constrntLayoutMain.setBackgroundResource(R.drawable.box_yelo_blnk)
+            }else{
+                constrntLayoutMain.setBackgroundResource(0)
+            }
+            Glide.with(context)
+                .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
+                .error(R.drawable.no_image)
+                .into(venuesItemImage)
+
         }
     }
 
@@ -42,8 +56,17 @@ class VenuListBarCrawaAdapter(
         var venuesItemImage: ImageView = itemView.findViewById(R.id.venuesItemImage)
         fun bind(position: Int) {
             val recyclerViewModel = arrayList[position]
-            venuesItemTitle.text = recyclerViewModel.title
-            venuesItemImage.setImageResource(recyclerViewModel.img)
+            venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
+            var constrntLayoutMain: ConstraintLayout = itemView.findViewById(R.id.constrntLayoutMain)
+            if(recyclerViewModel.isSelected){
+                constrntLayoutMain.setBackgroundResource(R.drawable.box_yelo_blnk)
+            }else{
+                constrntLayoutMain.setBackgroundResource(0)
+            }
+            Glide.with(context)
+                .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
+                .error(R.drawable.no_image)
+                .into(venuesItemImage)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

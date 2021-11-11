@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "508383512353",
+    "project_id": "nightoutvendor",
+    "storage_bucket": "nightoutvendor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508383512353:android:69cadd2cce7aacc5e6e060",
+        "android_client_info": {
+          "package_name": "com.nightout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508383512353-oreds2u8pljfk7fmcbqcqi8j68j6aqmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDayRryuZzmDcvUIgTSOD7sSIfRdGBH47c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508383512353-oreds2u8pljfk7fmcbqcqi8j68j6aqmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508383512353:android:f5cb7af27a589eb3e6e060",
+        "android_client_info": {
+          "package_name": "com.nightout.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508383512353-oreds2u8pljfk7fmcbqcqi8j68j6aqmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDayRryuZzmDcvUIgTSOD7sSIfRdGBH47c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508383512353-oreds2u8pljfk7fmcbqcqi8j68j6aqmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

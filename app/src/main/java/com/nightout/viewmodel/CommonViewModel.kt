@@ -29,7 +29,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var sendQueryModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var bookEventMdl: LiveData<ApiSampleResource<BookEventMdlResponse>>
     lateinit var favListModelRes: LiveData<ApiSampleResource<FavListModelRes>>
-    lateinit var barCrwlListModel: LiveData<ApiSampleResource<BarCrwlListModel>>
+    lateinit var barCrwlListModel: LiveData<ApiSampleResource<AllBarCrwalListResponse>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -115,9 +115,12 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         favListModelRes = webServiceRepository.favList()
         return favListModelRes
     }
-    fun barCrwlList(): LiveData<ApiSampleResource<BarCrwlListModel>> {
+ /*   fun barCrwlList(): LiveData<ApiSampleResource<BarCrwlListModel>> {
         barCrwlListModel = webServiceRepository.barCrwlList()
         return barCrwlListModel
+    }*/
+    fun venuListBarCrwl(): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
+        barCrwlListModel = webServiceRepository.barCrwlVenuList()
+        return barCrwlListModel
     }
-
 }

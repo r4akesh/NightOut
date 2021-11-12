@@ -75,7 +75,7 @@
 
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/loginBtn"
+                        android:id="@+id/barCrwalNextBtn"
                         style="@style/buttonTextStyle"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_30sdp"
@@ -97,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/gredient_btmshet_bg"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <View
@@ -147,11 +148,14 @@
 
                     <TextView
                         android:id="@+id/barcrwalSubTitle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5ssp"
                         android:fontFamily="@font/proximanova_reg"
                         android:text="Venity Night Club"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:layout_constraintEnd_toStartOf="@+id/barcrwalCloseBtn"
                         android:textColor="@color/white_second"
                         android:textSize="@dimen/_9sdp"
                         app:layout_constraintStart_toEndOf="@+id/barcrwalLogo"

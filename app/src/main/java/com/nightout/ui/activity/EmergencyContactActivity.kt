@@ -22,10 +22,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityEmergencyContactBinding
 import com.nightout.model.ContactNoModel
 import com.nightout.model.GetEmergencyModel
-import com.nightout.utils.AppConstant
-import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.DialogCustmYesNo
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 
@@ -69,9 +66,15 @@ class EmergencyContactActivity : BaseActivity() {
                     .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
                     .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
             ,REQCODE_ContactListActvity)*/
-                startForResultContactList.launch(Intent(this, ContactListActvity::class.java)
-                .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
-                .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0))
+                if(contactsInfoList.size>0) {
+                    startForResultContactList.launch(
+                        Intent(this, ContactListActvity::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
+                            .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
+                    )
+                }else{
+                    MyApp.popErrorMsg("","No contact found in your device",this@EmergencyContactActivity)
+                }
 
 
         }

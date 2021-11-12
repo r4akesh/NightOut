@@ -26,6 +26,10 @@ class LoginActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@LoginActivity, R.layout.login_activity)
         initView()
 
+       var lineOfCurrencies = "Rak kush";
+        val currencies = lineOfCurrencies.split(" ").toTypedArray()
+
+
 
         binding.loginPhno.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {

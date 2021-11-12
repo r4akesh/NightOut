@@ -1,6 +1,7 @@
 package com.nightout.ui.fragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +54,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private var onMenuOpenListener: OnMenuOpenListener? = null
     lateinit var homeViewModel: CommonViewModel
+    lateinit var deviceModel: CommonViewModel
     lateinit var storyAdapter: StoryAdapter
     lateinit var allRecordAdapter: AllRecordAdapter
     lateinit var dashList: DashboardModel.Data
@@ -84,6 +87,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             if(activity!=null && isAdded)
             dashboardAPICALL()
+            userDeviceAPICAll()
         } else {
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             binding.btmShhetInclue.bottomSheet.visibility = INVISIBLE
@@ -94,6 +98,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         Log.d("TAG", "onCreateView: ")
         return binding.root
     }
+
+
+
     override fun onClick(v: View?) {
         // store_type => required (1=>Bar, 2=>Pub, 3=>Club, 4=>Food, 5=>Event)
         if (v == binding.headerHome.headerSideMenu) {
@@ -120,6 +127,39 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                 return
             }
             mMap!!.isMyLocationEnabled = false
+        } catch (e: Exception) {
+        }
+    }
+
+    @SuppressLint("HardwareIds")
+    private fun userDeviceAPICAll() {
+        try {
+            var map = HashMap<String, String>()
+            map["device_id"] = Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)
+            map["device_type"] = "Android"
+            map["device_token"] = ""+PreferenceKeeper.instance.fcmTokenSave
+            map["device_info"] = "Android Device"
+            deviceModel.userDevice(map).observe(requireActivity(), {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        it.data?.let { users ->
+
+                        }
+                    }
+                    Status.LOADING -> { }
+                    Status.ERROR -> {
+                        try {
+                            Utills.showSnackBarOnError(
+                                binding.fragmentHomeRootLayout,
+                                it.message!!,
+                                requireActivity()
+                            )
+                        } catch (e: Exception) {
+                        }
+                        Log.d("ok", "loginCall:ERROR ")
+                    }
+                }
+            })
         } catch (e: Exception) {
         }
     }
@@ -321,6 +361,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
     private fun initView() {
         doFavViewModel = CommonViewModel(requireActivity())
         homeViewModel = CommonViewModel(requireActivity())
+        deviceModel = CommonViewModel(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.homeMap) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
         binding.headerHome.headerSideMenu.setOnClickListener(this)

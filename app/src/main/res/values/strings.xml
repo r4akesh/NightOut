@@ -186,6 +186,7 @@
     <string name="dummychk">Lorem ipsum dolor sit amet</string>
     <string name="NoteDetail">You can Record the Audio and Video for 15 Minutes in Emergency Case.</string>
     <string name="DONE">DONE</string>
+    <string name="DONE_small">Done</string>
     <string name="Add">ADD</string>
     <string name="Add_small">Add</string>
     <string name="yourQuery">Your Query</string>
@@ -219,5 +220,6 @@
     <string name="EnterUrAddrs">Type your address</string>
     <string name="plzDownlodTicket">Note:- Please download the ticket, So that we can share the ticket on your mail for reference.</string>
     <string name="SearchCity">Search City</string>
+    <string name="noteDialogBarCrwal">Once you have created the Bar crawl you will not be able to edit.</string>
 
 </resources>

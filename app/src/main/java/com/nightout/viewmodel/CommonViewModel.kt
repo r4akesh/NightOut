@@ -30,6 +30,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var bookEventMdl: LiveData<ApiSampleResource<BookEventMdlResponse>>
     lateinit var favListModelRes: LiveData<ApiSampleResource<FavListModelRes>>
     lateinit var barCrwlListModel: LiveData<ApiSampleResource<AllBarCrwalListResponse>>
+    lateinit var userDeviceModel: LiveData<ApiSampleResource<BaseModel>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -122,5 +123,13 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun venuListBarCrwl(): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
         barCrwlListModel = webServiceRepository.barCrwlVenuList()
         return barCrwlListModel
+    }
+    fun userDevice(map:HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {
+        userDeviceModel = webServiceRepository.userDevice(map)
+        return userDeviceModel
+    }
+    fun panic( ): LiveData<ApiSampleResource<BaseModel>> {
+        userDeviceModel = webServiceRepository.panicNoty()
+        return userDeviceModel
     }
 }

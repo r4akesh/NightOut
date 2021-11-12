@@ -1,6 +1,7 @@
 package com.nightout.ui.activity.barcrawl
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -79,6 +80,12 @@ class BarcrawlListActivity : BaseActivity() {
             }
 
         }
+        else if(v==binding.barcrwalCloseBtn){
+            binding.barCrwalBtmDetail.visibility=GONE
+        }
+        else if(v==binding.barCrwalNextBtn){
+            startActivity(Intent(this@BarcrawlListActivity,BarCrwalPathMap::class.java))
+        }
     }
 
     private fun bar_crawl_listAPICAll() {
@@ -119,7 +126,9 @@ class BarcrawlListActivity : BaseActivity() {
 
     }
     private fun initView() {
+         binding.barCrwalNextBtn.setOnClickListener(this)
          binding.barcrwalAddBtn.setOnClickListener(this)
+         binding.barcrwalCloseBtn.setOnClickListener(this)
         getBarCrwalVieModel = CommonViewModel(this)
     }
 

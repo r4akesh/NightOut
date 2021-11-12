@@ -14,7 +14,10 @@ import com.nightout.R
 import com.nightout.databinding.RowVenuebarcrawalGridBinding
 import com.nightout.model.AllBarCrwalListResponse
 import com.nightout.model.BarCrwalVenuesModel
+import com.nightout.utils.Commons
+import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
+import java.text.DecimalFormat
 
 
 class VenuListBarCrawaAdapter(
@@ -32,20 +35,32 @@ class VenuListBarCrawaAdapter(
     private inner class View1ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var venuesItemTitle: TextView = itemView.findViewById(R.id.venuesItemTitle)
+      //  var venuesItemRating: TextView = itemView.findViewById(R.id.venuesItemRating)
+        var venuesItemDistence: TextView = itemView.findViewById(R.id.venuesItemDistence)
         var venuesItemImage: ImageView = itemView.findViewById(R.id.venuesItemImage)
         var constrntLayoutMain: ConstraintLayout = itemView.findViewById(R.id.constrntLayoutMain)
         fun bind(position: Int) {
-            val recyclerViewModel = arrayList[position]
-            venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
-            if(recyclerViewModel.isSelected){
-                constrntLayoutMain.setBackgroundResource(R.drawable.box_yelo_blnk)
-            }else{
-                constrntLayoutMain.setBackgroundResource(0)
+            try {
+                val recyclerViewModel = arrayList[position]
+                venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
+                var crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
+                var crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
+                var eventLat = (recyclerViewModel.venue_detail.store_lattitude)
+                var eventLong = (recyclerViewModel.venue_detail.store_longitude)
+                var vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
+                venuesItemDistence.text =""+ DecimalFormat("##.##").format(vv)+" miles"
+
+                if(recyclerViewModel.isSelected){
+                    constrntLayoutMain.setBackgroundResource(R.drawable.box_yelo_blnk)
+                }else{
+                    constrntLayoutMain.setBackgroundResource(0)
+                }
+                Glide.with(context)
+                    .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
+                    .error(R.drawable.no_image)
+                    .into(venuesItemImage)
+            } catch (e: Exception) {
             }
-            Glide.with(context)
-                .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
-                .error(R.drawable.no_image)
-                .into(venuesItemImage)
 
         }
     }
@@ -54,19 +69,29 @@ class VenuListBarCrawaAdapter(
         RecyclerView.ViewHolder(itemView) {
         var venuesItemTitle: TextView = itemView.findViewById(R.id.venuesItemTitle)
         var venuesItemImage: ImageView = itemView.findViewById(R.id.venuesItemImage)
+        var venuesItemDistence: TextView = itemView.findViewById(R.id.venuesItemDistence)
         fun bind(position: Int) {
-            val recyclerViewModel = arrayList[position]
-            venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
-            var constrntLayoutMain: ConstraintLayout = itemView.findViewById(R.id.constrntLayoutMain)
-            if(recyclerViewModel.isSelected){
-                constrntLayoutMain.setBackgroundResource(R.drawable.box_yelo_blnk)
-            }else{
-                constrntLayoutMain.setBackgroundResource(0)
+            try {
+                val recyclerViewModel = arrayList[position]
+                venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
+                var crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
+                var crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
+                var eventLat = (recyclerViewModel.venue_detail.store_lattitude)
+                var eventLong = (recyclerViewModel.venue_detail.store_longitude)
+                var vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
+                venuesItemDistence.text =""+ DecimalFormat("##.##").format(vv)+" miles"
+                var constrntLayoutMain: ConstraintLayout = itemView.findViewById(R.id.constrntLayoutMain)
+                if(recyclerViewModel.isSelected){
+                    constrntLayoutMain.setBackgroundResource(R.drawable.box_yelo_blnk)
+                }else{
+                    constrntLayoutMain.setBackgroundResource(0)
+                }
+                Glide.with(context)
+                    .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
+                    .error(R.drawable.no_image)
+                    .into(venuesItemImage)
+            } catch (e: Exception) {
             }
-            Glide.with(context)
-                .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
-                .error(R.drawable.no_image)
-                .into(venuesItemImage)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -113,4 +113,11 @@ interface APIInterface {
 
     @GET("bar_crawl_list")
     fun bar_crawl_listAPI():  Call<ResponseBody>
+
+    @POST("user_device")
+    fun user_deviceAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
+
+    @GET("panic_notification")
+    fun panic_notificationAPI():  Call<ResponseBody>
+
 }

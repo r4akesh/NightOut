@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -24,9 +25,9 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.TracktraceActvityBinding
-import com.nightout.utils.AppConstant
-import com.nightout.utils.DialogCustmYesNo
-import com.nightout.utils.MyApp
+import com.nightout.utils.*
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import java.io.File
 import java.util.*
 
@@ -37,13 +38,43 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
     private val REQUEST_CAMERA_PERMISSION = 101
     var LAUNCH_GOOGLE_ADDRESS = 102
     var googleMap: GoogleMap? = null
+    lateinit var panicViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this@TrackTrace, R.layout.tracktrace_actvity)
         initView()
         setToolBar()
+
+    }
+
+    private fun panicNotificationAPICall() {
+        try {
+
+            panicViewModel.panic().observe(this@TrackTrace, {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        it.data?.let { users ->
+
+                        }
+                    }
+                    Status.LOADING -> { }
+                    Status.ERROR -> {
+                       /* try {
+                            Utills.showSnackBarOnError(
+                                binding.fragmentHomeRootLayout,
+                                it.message!!,
+                                requireActivity()
+                            )
+                        } catch (e: Exception) {
+                        }*/
+                        Log.d("ok", "loginCall:ERROR ")
+                    }
+                }
+            })
+        } catch (e: Exception) {
+        }
+
     }
 
     override fun onClick(v: View?) {
@@ -61,6 +92,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
         } else if (v == binding.tractraceaLostitem) {
             startActivity(Intent(this@TrackTrace, LostitemActivity::class.java))
         } else if (v == binding.tractraceaPanic) {
+
             val currentAPIVersion = Build.VERSION.SDK_INT
             if (currentAPIVersion >= Build.VERSION_CODES.M) {
                 if (ActivityCompat.checkSelfPermission(
@@ -84,6 +116,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
                         "Are you sure you want to record the video ?",
                         object : DialogCustmYesNo.Dialogclick {
                             override fun onYES() {
+                                panicNotificationAPICall()
                                 openCameraVideo()
                             }
 
@@ -102,6 +135,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
                     "Are you sure you want to record the video ?",
                     object : DialogCustmYesNo.Dialogclick {
                         override fun onYES() {
+                            panicNotificationAPICall()
                             openCameraVideo()
                         }
 
@@ -140,6 +174,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun initView() {
+        panicViewModel = CommonViewModel(this@TrackTrace)
         binding.tractraceaLostitem.setOnClickListener(this)
         binding.tractraceaPanic.setOnClickListener(this)
         binding.tractraceaSetEndLoc.setOnClickListener(this)

@@ -13,16 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.VenuesItemBinding
-import com.nightout.model.ChatModel
-import com.nightout.model.DashboardModel
-import com.nightout.model.VenuListModel
-import com.nightout.model.VenuesModel
+import com.nightout.model.*
 import com.nightout.utils.Utills
 
 
 class VenuesAdapter(
     var context: Context,
-    var arrayList: ArrayList<DashboardModel.SubRecord>,
+    var arrayList: ArrayList<LostItemChooseVenuResponse.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<VenuesAdapter.ViewHolder>() {
@@ -43,11 +40,11 @@ class VenuesAdapter(
 
         viewHolder.binding.venuesItemTitle.text=arrayList[position].store_name
         viewHolder.binding.venuesItemSubTitle.text=arrayList[position].store_address
-        viewHolder.binding.venuesItemDistence.text=arrayList[position].store_address
+      //  viewHolder.binding.venuesItemDistence.text=arrayList[position].store_address
 
         Utills.setImageNormal(context,  viewHolder.binding.venuesItemImage,arrayList[position].store_logo)
 
-        if(arrayList[position].isChked){
+        if(arrayList[position].isChk){
             viewHolder.binding.venuesItemChk.setImageResource(R.drawable.chk_box)
         }else{
             viewHolder.binding.venuesItemChk.setImageResource(R.drawable.unchk_box)

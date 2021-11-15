@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_reg"
-            android:text="Text"
+
             android:textColor="@color/white_second"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toEndOf="parent"

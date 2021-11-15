@@ -1,7 +1,6 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.LostItem
 
 import android.app.Activity
-import android.app.Instrumentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,8 +25,6 @@ import com.nightout.utils.DialogCustmYesNo
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.DelItemViewModel
-import com.nightout.viewmodel.GetLostListViewModel
 
 
 class LostitemActivity :BaseActivity() {
@@ -119,7 +116,8 @@ var isEdit= true //for mainten tost msg
 
             //startActivityForResult(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java),REQUESTCODE_LostItemDetailsActvity)
 
-            startforResultLostItemDetails.launch(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java))
+            startforResultLostItemDetails.launch(Intent(this@LostitemActivity,
+                LostItemDetailsActvity::class.java))
         }
     }
 
@@ -132,9 +130,9 @@ var isEdit= true //for mainten tost msg
 
                 override fun onClick(pos: Int) {
                       savePosForStatus =pos
-                 /*   startActivityForResult(Intent(this@LostitemActivity,LostItemFoundActvity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos]),REQUESTCOD_LostItemFoundActvity)*/
-                    startForResultLostItemFound.launch(Intent(this@LostitemActivity,LostItemFoundActvity::class.java)
+
+                    startForResultLostItemFound.launch(Intent(this@LostitemActivity,
+                        LostItemFoundActvity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos]))
                 }
             })
@@ -164,7 +162,8 @@ var isEdit= true //for mainten tost msg
         popup.setOnMenuItemClickListener { item ->
                 if(item.title.equals("Edit")){
                     isEdit = true
-                    startforResultLostItemDetails.launch(Intent(this@LostitemActivity,LostItemDetailsActvity::class.java)
+                    startforResultLostItemDetails.launch(Intent(this@LostitemActivity,
+                        LostItemDetailsActvity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO,lostList[pos])
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_EDITITEM,true))
 

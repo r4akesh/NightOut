@@ -33,7 +33,7 @@ class PreBookingActivity : BaseActivity() {
         // Default Date set to Today.
         var defaultSelectedDate = Calendar.getInstance();
         val startDate: Calendar = Calendar.getInstance()
-        startDate.add(Calendar.MONTH, -1)
+        startDate.add(Calendar.MONTH, 1)//from current
 
 /* ends after 1 month from now */
 /* ends after 1 month from now */
@@ -49,7 +49,7 @@ class PreBookingActivity : BaseActivity() {
             // .formatBottomText("EEE")
             .showTopText(true)
             .showBottomText(false)
-            .textColor(Color.LTGRAY, Color.WHITE)
+            .textColor(Color.LTGRAY, resources.getColor(R.color.text_yello))
             .colorTextMiddle(Color.LTGRAY, Color.parseColor("#ffd54f"))
             .end()
             .defaultSelectedDate(defaultSelectedDate)

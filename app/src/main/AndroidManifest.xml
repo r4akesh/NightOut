@@ -91,12 +91,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.CMS.ContactUsActivity"
+            android:name="com.nightout.ui.activity.CMS.ContactUsActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.CMS.FAQActivity"
+            android:name="com.nightout.ui.activity.CMS.FAQActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -182,12 +182,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.CMS.AboutActivity"
+            android:name="com.nightout.ui.activity.CMS.AboutActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.CMS.TermsNCondActivity"
+            android:name="com.nightout.ui.activity.CMS.TermsNCondActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -232,13 +232,13 @@
 
 
         <activity
-            android:name=".ui.activity.ChooseVenuseActivity"
+            android:name=".ui.activity.LostItem.ChooseVenuseActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:name=".ui.activity.LostItemDetailsActvity"
+            android:name=".ui.activity.LostItem.LostItemDetailsActvity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -260,12 +260,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.LostitemActivity"
+            android:name=".ui.activity.LostItem.LostitemActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.LostItemFoundActvity"
+            android:name=".ui.activity.LostItem.LostItemFoundActvity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />

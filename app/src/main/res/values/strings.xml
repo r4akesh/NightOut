@@ -221,5 +221,6 @@
     <string name="plzDownlodTicket">Note:- Please download the ticket, So that we can share the ticket on your mail for reference.</string>
     <string name="SearchCity">Search City</string>
     <string name="noteDialogBarCrwal">Once you have created the Bar crawl you will not be able to edit.</string>
+    <string name="Please_Select_Venues">Please Select Venues !!</string>
 
 </resources>

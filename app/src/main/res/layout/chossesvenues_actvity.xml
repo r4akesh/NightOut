@@ -28,25 +28,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            style="@style/MyCustomTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
 
-            android:background="@null"
-            android:tabStripEnabled="false"
-            app:tabGravity="fill"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@+id/chooseVenuesToolbarConstrent"
-            app:tabIndicator="@null"
-            app:tabIndicatorColor="@android:color/transparent"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabTextAppearance="@style/MyCustomTextAppearanceTAB"
-            app:tabTextColor="@color/white" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -57,7 +39,7 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10ssp"
             app:layout_constraintBottom_toTopOf="@+id/chooseVenuesSend"
-            app:layout_constraintTop_toBottomOf="@+id/tabs" />
+            app:layout_constraintTop_toBottomOf="@+id/chooseVenuesToolbarConstrent" />
 
 
         <com.google.android.material.button.MaterialButton

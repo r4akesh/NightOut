@@ -43,6 +43,7 @@ import kotlin.collections.ArrayList
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import com.nightout.R
 import java.lang.NumberFormatException
 import java.text.DecimalFormat
 
@@ -170,12 +171,9 @@ class MyApp : Application() {
         }
 
 
-        fun popErrorMsg(
-            titleMsg: String, errorMsg: String,
-            context: Context
-        ) {
+        fun popErrorMsg(titleMsg: String, errorMsg: String, context: Context) {
             // pop error message
-            val builder = MaterialAlertDialogBuilder(context)
+            val builder = MaterialAlertDialogBuilder(context, R.style.Theme_MyApp_Dialog_Alert)
             builder.setTitle(titleMsg).setMessage(errorMsg)
                 .setPositiveButton("OK") { dialog, which -> dialog.dismiss() }
 

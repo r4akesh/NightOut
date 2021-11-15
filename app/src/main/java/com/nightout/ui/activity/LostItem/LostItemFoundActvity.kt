@@ -1,11 +1,13 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.LostItem
 
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
+import com.nightout.adapter.VenuListDetailAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.LostitemeditActvityBinding
 import com.nightout.model.GetLostItemListModel
@@ -34,19 +36,36 @@ class LostItemFoundActvity : BaseActivity() {
     }
 
     private fun initView() {
-        setTouchNClick(binding.lostEditFound)
-        itemFoundViewModel = CommonViewModel(this@LostItemFoundActvity)
-          lostModel = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO) as GetLostItemListModel.Data
-        binding.lostEditItemNameValue.setText(lostModel.product_name)
-        binding.lostEditColorValue.setText(lostModel.product_detail)
-        if(lostModel.status.equals("1")) binding.lostEditFound.visibility=GONE
-        var stringBuilder = StringBuilder()
-        for (i in 0 until lostModel.venues.size){
-            stringBuilder.append(lostModel.venues[i].store_name+", ")
+        try {
+            setTouchNClick(binding.lostEditFound)
+            itemFoundViewModel = CommonViewModel(this@LostItemFoundActvity)
+            lostModel = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.LOSTITEM_POJO) as GetLostItemListModel.Data
+            binding.lostEditItemNameValue.setText(lostModel.product_name)
+            binding.lostEditColorValue.setText(lostModel.product_detail)
+            if(lostModel.status.equals("1")) binding.lostEditFound.visibility=GONE
+            if(lostModel.venues.isNotEmpty()){
+               // setVenuList
+                var venuListDetailAdapter=
+                    VenuListDetailAdapter(this@LostItemFoundActvity,lostModel.venues,object:VenuListDetailAdapter.ClickListener{
+                    override fun onClickChk(pos: Int) {
+
+                    }
+
+                })
+                binding.lostEditVenuesValuesRecycle.also {
+                    it.layoutManager = LinearLayoutManager(this@LostItemFoundActvity,LinearLayoutManager.VERTICAL,false)
+                    it.adapter = venuListDetailAdapter
+                }
+            }
+            /*       var stringBuilder = StringBuilder()
+                              for (i in 0 until lostModel.venues.size){
+                                  stringBuilder.append(lostModel.venues[i].store_name+", ")
+                              }
+                              var venuList= stringBuilder.toString()
+                              binding.lostEditVenuesValues.text = venuList.substring(0,venuList.length-2)*/
+            Utills.setImageNormal(this@LostItemFoundActvity,binding.lostEditImage,lostModel.image)
+        } catch (e: Exception) {
         }
-        var venuList= stringBuilder.toString()
-        binding.lostEditVenuesValues.text = venuList.substring(0,venuList.length-2)
-        Utills.setImageNormal(this@LostItemFoundActvity,binding.lostEditImage,lostModel.image)
     }
 
     override fun onClick(v: View?) {

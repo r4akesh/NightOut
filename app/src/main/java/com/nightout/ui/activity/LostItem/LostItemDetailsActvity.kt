@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.LostItem
 
 import android.Manifest
 import android.app.Activity

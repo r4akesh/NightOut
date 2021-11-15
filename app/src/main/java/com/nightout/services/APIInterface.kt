@@ -120,4 +120,7 @@ interface APIInterface {
     @GET("panic_notification")
     fun panic_notificationAPI():  Call<ResponseBody>
 
+    @POST("lost_item_venues")
+    fun lost_item_venuesAPI():  Call<ResponseBody>
+
 }

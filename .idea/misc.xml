@@ -21,6 +21,7 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_red_bg.xml" value="0.33794871794871795" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_white.xml" value="0.27760416666666665" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_whitepin_bg.xml" value="0.3364102564102564" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_yelo.xml" value="0.33897435897435896" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/box_yelo_blnk.xml" value="0.30364583333333334" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/circle_gray.xml" value="0.3605128205128205" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/drawable/circle_white.xml" value="0.3605128205128205" />
@@ -124,6 +125,7 @@
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_notification_layout.xml" value="0.31614583333333335" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_selectedbarcrwalvenu.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_spin_item.xml" value="0.3151041666666667" />
+        <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_stringitem.xml" value="0.3380208333333333" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_taxi_list.xml" value="0.334375" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/row_terms_cms_layout.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightOut/app/src/main/res/layout/saved_item.xml" value="0.35" />

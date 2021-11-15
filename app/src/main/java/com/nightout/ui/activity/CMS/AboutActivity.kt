@@ -1,4 +1,4 @@
-package com.nightout.ui.CMS
+package com.nightout.ui.activity.CMS
 
 import android.os.Build
 import android.os.Bundle

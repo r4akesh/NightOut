@@ -29,6 +29,7 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
     override fun onMessageReceived(payload: RemoteMessage) {
         super.onMessageReceived(payload)
         if (payload.notification != null) {
+            var type=payload.data[1].toString()
             sendNotification(payload.notification!!.title, payload.notification!!.body)
         } else {
             sendNotificationData(payload.data)

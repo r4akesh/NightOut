@@ -222,5 +222,6 @@
     <string name="SearchCity">Search City</string>
     <string name="noteDialogBarCrwal">Once you have created the Bar crawl you will not be able to edit.</string>
     <string name="Please_Select_Venues">Please Select Venues !!</string>
+    <string name="Select_Date">Select Date</string>
 
 </resources>

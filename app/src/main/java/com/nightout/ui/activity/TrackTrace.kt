@@ -30,6 +30,7 @@ import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import java.io.File
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class TrackTrace : BaseActivity(), OnMapReadyCallback {
@@ -50,29 +51,27 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
 
     private fun panicNotificationAPICall() {
         try {
+            var hmap= HashMap<String,String>()
+            hmap["longitude"] = PreferenceKeeper.instance.currentLong!!//lat-lang save on home screen at time App open
+            hmap["lattitude"] = PreferenceKeeper.instance.currentLat!!
+            hmap["address"] = PreferenceKeeper.instance.currentAddrs!!
 
-            panicViewModel.panic().observe(this@TrackTrace, {
+            panicViewModel.panic(hmap).observe(this@TrackTrace, {
                 when (it.status) {
                     Status.SUCCESS -> {
                         it.data?.let { users ->
-
+                            Log.d("ok", "loginCall:SUCCESS ")
                         }
                     }
                     Status.LOADING -> { }
                     Status.ERROR -> {
-                       /* try {
-                            Utills.showSnackBarOnError(
-                                binding.fragmentHomeRootLayout,
-                                it.message!!,
-                                requireActivity()
-                            )
-                        } catch (e: Exception) {
-                        }*/
+
                         Log.d("ok", "loginCall:ERROR ")
                     }
                 }
             })
         } catch (e: Exception) {
+            Log.d("ok", "loginCall:ERROR ")
         }
 
     }
@@ -113,7 +112,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
                     DialogCustmYesNo.getInstance().createDialog(
                         this@TrackTrace,
                         "",
-                        "Are you sure you want to record the video ?",
+                        "Are you sure you want to record the video?",
                         object : DialogCustmYesNo.Dialogclick {
                             override fun onYES() {
                                 panicNotificationAPICall()

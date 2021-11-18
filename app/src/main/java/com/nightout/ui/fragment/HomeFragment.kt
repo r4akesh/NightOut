@@ -3,7 +3,6 @@ package com.nightout.ui.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -48,7 +47,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.viewmodel.CommonViewModel
 
 
-class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, ActivtyToFrag {
+class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyToFrag {
 
     lateinit var binding: FragmentHomeBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
@@ -87,7 +86,13 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             if(activity!=null && isAdded)
             dashboardAPICALL()
-            userDeviceAPICAll()
+            if(PreferenceKeeper.instance.isUserDeviceAPICall){
+                Log.d("TAG", "doNothing")
+            }else{
+                userDeviceAPICAll()
+                PreferenceKeeper.instance.isUserDeviceAPICall=true
+            }
+
         } else {
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             binding.btmShhetInclue.bottomSheet.visibility = INVISIBLE
@@ -112,7 +117,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             startActivity(Intent(requireContext(), SearchLocationActivity::class.java))
             activity?.overridePendingTransition(0, 0)
         }
-        else if(v==binding.headerHome.headerNotification){
+        else if(v==binding.headerHome.headerNotificationRel){
             startActivity(Intent(requireContext(), NotificationActivity::class.java))
 
         }
@@ -177,6 +182,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
                                 setBottomSheet()
                                 //save imgPath
                                 dashList = users.data
+                                if(dashList.noti_count.equals("0")){
+                                    binding.headerHome.headerNotificationText.visibility=GONE
+                                }else{
+                                    binding.headerHome.headerNotificationText.visibility= VISIBLE
+                                    binding.headerHome.headerNotificationText.text = dashList.noti_count
+                                }
                              //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
                                 PreferenceKeeper.instance.imgPathSave = "https://nightout.ezxdemo.com/storage/"
                                 if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
@@ -222,11 +233,11 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
             override fun onClickSub(subpos: Int, pos: Int) {
                 if (MyApp.isConnectingToInternet(requireContext())) {
                     if(allRecordsList[pos].type=="5"){
-                        startActivity(Intent(requireActivity(), EventDetail::class.java)
+                        startActivity(Intent(requireActivity(), EventDetailActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                             .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id))
                     }else{
-                        startActivity(Intent(requireActivity(), StoreDetail::class.java)
+                        startActivity(Intent(requireActivity(), StoreDetailActvity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + allRecordsList[pos].sub_records[subpos].id))
                     }
                 }
@@ -367,7 +378,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, View.OnClickListener, Act
         binding.headerHome.headerSideMenu.setOnClickListener(this)
         binding.headerHome.headerSearch.setOnClickListener(this)
         binding.headerHome.headerSetting.setOnClickListener(this)
-        binding.headerHome.headerNotification.setOnClickListener(this)
+        binding.headerHome.headerNotificationRel.setOnClickListener(this)
         binding.headerHome.headerTitle.text = "Hi, " + PreferenceKeeper.instance.loginResponse?.name
 
 

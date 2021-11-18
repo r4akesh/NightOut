@@ -12,6 +12,7 @@ import org.json.JSONObject
 
 class CommonViewModel (activity: Activity) : BaseObservable() {
     private var webServiceRepository = WebServiceRepository(activity)
+    lateinit var baseModel: LiveData<ApiSampleResource<BaseModel>>
     private lateinit var cmsResponse: LiveData<ApiSampleResource<AboutModelResponse>>
     private lateinit var contactListResponse: LiveData<ApiSampleResource<ContactFillterModel>>
     lateinit var getEmergencyModel: LiveData<ApiSampleResource<GetEmergencyModel>>
@@ -32,6 +33,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var barCrwlListModel: LiveData<ApiSampleResource<AllBarCrwalListResponse>>
     lateinit var userDeviceModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var lostItemChooseVenuResponse: LiveData<ApiSampleResource<LostItemChooseVenuResponse>>
+    lateinit var notificationResponse: LiveData<ApiSampleResource<NotificationResponse>>
+    lateinit var panicHistoryRes: LiveData<ApiSampleResource<PanicHistoryRes>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -129,13 +132,27 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         userDeviceModel = webServiceRepository.userDevice(map)
         return userDeviceModel
     }
-    fun panic( ): LiveData<ApiSampleResource<BaseModel>> {
-        userDeviceModel = webServiceRepository.panicNoty()
+    fun panic( map:HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {
+        userDeviceModel = webServiceRepository.panicNoty(map)
         return userDeviceModel
     }
 
     fun lostChooseVenues( ): LiveData<ApiSampleResource<LostItemChooseVenuResponse>> {
         lostItemChooseVenuResponse = webServiceRepository.lostChooseVenues()
         return lostItemChooseVenuResponse
+    }
+
+    fun notificationList( ): LiveData<ApiSampleResource<NotificationResponse>> {
+        notificationResponse = webServiceRepository.notificationList()
+        return notificationResponse
+    }
+     fun panicHistory( ): LiveData<ApiSampleResource<PanicHistoryRes>> {
+         panicHistoryRes = webServiceRepository.panicHisrtyList()
+        return panicHistoryRes
+    }
+
+    fun createBarCrwalWidImg(requestBody: MultipartBody): LiveData<ApiSampleResource<BaseModel>> {
+        baseModel = webServiceRepository.createBarCrwalWidImg(requestBody)
+        return baseModel
     }
 }

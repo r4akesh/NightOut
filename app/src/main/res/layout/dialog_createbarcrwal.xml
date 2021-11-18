@@ -38,8 +38,43 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/view_line_gray2"
+            android:background="@color/view_line_clr"
             app:layout_constraintTop_toBottomOf="@+id/dgTitle" />
+
+        <RelativeLayout
+            android:id="@+id/userImgBarcrwalRel"
+
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dgLineHr">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImgBarcrwal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/boy"
+                app:civ_border_color="@color/text_yello"
+                app:civ_border_width="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/select_pic_camera"
+
+
+                />
+
+        </RelativeLayout>
+
 
         <EditText
             android:id="@+id/dgEtBarCrwal"
@@ -58,7 +93,7 @@
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dgLineHr" />
+            app:layout_constraintTop_toBottomOf="@+id/userImgBarcrwalRel" />
 
         <TextView
             android:id="@+id/dgDateBtn"
@@ -71,24 +106,61 @@
             android:drawableEnd="@drawable/ic_dialogcal"
             android:padding="@dimen/_10sdp"
             android:singleLine="true"
-            android:text="Select Date"
+            android:text="@string/Select_Date"
             android:textColor="@color/white"
             android:textColorHint="@color/text_hint"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintTop_toBottomOf="@+id/dgEtBarCrwal" />
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dgSpinnerConstrant"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/box_botomsheet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dgDateBtn">
+
+            <Spinner
+                android:id="@+id/dgSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_10sdp"
+                android:src="@drawable/arrow_down_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dgDoneBtn"
             style="@style/buttonTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_25sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_25sdp"
             android:background="@drawable/gredient_bg"
+            android:textSize="@dimen/_13ssp"
+            android:padding="@dimen/_1sdp"
             android:text="@string/DONE_small"
-            app:layout_constraintTop_toBottomOf="@+id/dgDateBtn" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dgSpinnerConstrant" />
 
         <TextView
             android:layout_width="match_parent"
@@ -97,10 +169,10 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:fontFamily="@font/proximanova_reg"
+            android:paddingBottom="@dimen/_5sdp"
             android:text="@string/noteDialogBarCrwal"
             android:textColor="@color/white_second"
-            android:textSize="@dimen/_11sdp"
-            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@+id/dgDoneBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

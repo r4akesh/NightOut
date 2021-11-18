@@ -95,7 +95,7 @@ class FavListActivity : BaseActivity() {
                 posSave = pos
                 if(dataList[pos].venue_detail.store_type == "5"){
                    startActivityForResult(
-                        Intent(this@FavListActivity, EventDetail::class.java)
+                        Intent(this@FavListActivity, EventDetailActivity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                         .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
                         .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE,  "1")
@@ -104,7 +104,7 @@ class FavListActivity : BaseActivity() {
 
                 }else {
                     startActivityForResult(
-                        Intent(this@FavListActivity, StoreDetail::class.java)
+                        Intent(this@FavListActivity, StoreDetailActvity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                             .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
                             .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, "1")

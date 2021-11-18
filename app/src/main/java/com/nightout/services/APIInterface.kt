@@ -1,14 +1,9 @@
 package com.nightout.vendor.services
 
-import com.nightout.model.AddFavModel
-import com.nightout.model.BaseModel
-import com.nightout.model.LoginModel
-import com.nightout.model.VenuDetailModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,27 +12,8 @@ import retrofit2.http.POST
 interface APIInterface {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //    @POST("user_pages")
 //    suspend fun userPagesAPI(): Response<AboutModelResponse>
-
 
 
     @POST("user_pages")
@@ -70,33 +46,32 @@ interface APIInterface {
 
 
     @POST("user_venue_detail")
-      fun userVenueDetailAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+    fun userVenueDetailAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("add_favourite")
-      fun addFavouriteAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
-
+    fun addFavouriteAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
 
     @POST("venue_type_list")
     fun venuListAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("profile_update")
-      fun updateProfileAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
+    fun updateProfileAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
 
     @POST("add_update_lost_item")
-      fun addlostitemAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
+    fun addlostitemAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
 
     @POST("delete_lost_item")
-      fun delItemsAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+    fun delItemsAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("found_lost_item")
-      fun foundItemsAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+    fun foundItemsAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("add_emergency_contact")
-      fun saveEmergencyAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+    fun saveEmergencyAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("delete_emergency_contact")
-      fun delEmergencyAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+    fun delEmergencyAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
 
     @POST("send_query")
@@ -106,21 +81,29 @@ interface APIInterface {
     fun bookEventTicketAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @GET("favourite_list")
-    fun favouriteListAPi( ): Call<ResponseBody>
+    fun favouriteListAPi(): Call<ResponseBody>
 
     @POST("add_remove_bar_crawl")
-    fun addRemBrCrwlAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
+    fun addRemBrCrwlAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @GET("bar_crawl_list")
-    fun bar_crawl_listAPI():  Call<ResponseBody>
+    fun bar_crawl_listAPI(): Call<ResponseBody>
 
     @POST("user_device")
-    fun user_deviceAPI(@Body params: HashMap<String, String>):  Call<ResponseBody>
+    fun user_deviceAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
-    @GET("panic_notification")
-    fun panic_notificationAPI():  Call<ResponseBody>
+    @POST("panic_notification")
+    fun panic_notificationAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @POST("lost_item_venues")
-    fun lost_item_venuesAPI():  Call<ResponseBody>
+    fun lost_item_venuesAPI(): Call<ResponseBody>
 
+    @POST("user_notification")
+    fun user_notificationAPI(): Call<ResponseBody>
+
+    @GET("panic_history")
+    fun panic_historyAPI(): Call<ResponseBody>
+
+    @POST("create_update_bar_crawl")
+    fun create_update_bar_crawlAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
 }

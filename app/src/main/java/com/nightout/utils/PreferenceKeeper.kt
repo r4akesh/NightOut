@@ -33,7 +33,12 @@ class PreferenceKeeper private constructor(context: Context?) {
                 .apply()
         }
 
-
+    var isUserDeviceAPICall: Boolean
+        get() = prefs!!.getBoolean(AppConstant.PrefsName.IS_USERDEVICE_API, false)
+        set(islogin) {
+            prefs!!.edit().putBoolean(AppConstant.PrefsName.IS_USERDEVICE_API, islogin)
+                .apply()
+        }
 
      var bearerTokenSave: String?
         get() = prefs!!.getString(AppConstant.PrefsName.BearerTOKEN, "")

@@ -131,14 +131,27 @@ class MyApp : Application() {
         }
 
 
-        fun dateZonetoDateFormat(date: String): String {
+        fun dateZoneToTimeFormat(date: String): String {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
             val date: Date =
                 dateFormat.parse(date) //You will get date object relative to server/client timezone wherever it is parsed
             // dateFormat.parse("2017-04-26T20:55:00.000Z") //You will get date object relative to server/client timezone wherever it is parsed
             //2021-04-20T08:27:38.000000Z
-            val formatter =
-                SimpleDateFormat("MMM dd, yyyy HH:mm") //If you need time just put specific format for time like 'HH:mm:ss'
+          //  val formatter = SimpleDateFormat("MMM dd, yyyy HH:mm") //If you need time just put specific format for time like 'HH:mm:ss'
+            val formatter = SimpleDateFormat("hh:mm aa")
+
+            val dateStr: String = formatter.format(date)
+            return dateStr
+        }
+
+         fun dateZoneToDateFormat(date: String): String {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
+            val date: Date =
+                dateFormat.parse(date) //You will get date object relative to server/client timezone wherever it is parsed
+            // dateFormat.parse("2017-04-26T20:55:00.000Z") //You will get date object relative to server/client timezone wherever it is parsed
+            //2021-04-20T08:27:38.000000Z
+            //  val formatter = SimpleDateFormat("MMM dd, yyyy HH:mm") //If you need time just put specific format for time like 'HH:mm:ss'
+            val formatter = SimpleDateFormat("MMM dd, yyyy")
 
             val dateStr: String = formatter.format(date)
             return dateStr
@@ -151,7 +164,7 @@ class MyApp : Application() {
             // dateFormat.parse("2017-04-26T20:55:00.000Z") //You will get date object relative to server/client timezone wherever it is parsed
             //2021-04-20T08:27:38.000000Z
             val formatter =
-                SimpleDateFormat("MMM dd, yyyy HH:mm aa") //If you need time just put specific format for time like 'HH:mm:ss'
+                SimpleDateFormat("HH:mm aa") //If you need time just put specific format for time like 'HH:mm:ss'
 
             val dateStr: String = formatter.format(date)
             return dateStr

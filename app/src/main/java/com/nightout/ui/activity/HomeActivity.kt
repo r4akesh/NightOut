@@ -295,7 +295,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
            // slidingRootNav!!.closeMenu()
             setBtnBgBlank()
             sideMenuEmrgyHistry?.setBackgroundResource(R.drawable.gredient_bg_nocorner)
-            startActivity(Intent(this@HomeActivity, EmergencyContactListActivity::class.java))
+            startActivity(Intent(this@HomeActivity, PanicHistoryActivity::class.java))
 
         }
  

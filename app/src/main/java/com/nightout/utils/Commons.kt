@@ -185,7 +185,7 @@ object Commons {
     }
 
     fun strToTimemills3(dt: String?): Long {
-        val sdf = SimpleDateFormat("MM-dd-yyyy", Locale.US)
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.US)
         var date: Date? = null
         val calendar = Calendar.getInstance()
         try {

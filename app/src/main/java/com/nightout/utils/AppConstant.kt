@@ -7,6 +7,7 @@ class AppConstant {
     object PrefsName {
         const val LOGIN_POJO = "LOGIN_POJO"
         const val IS_LOGIN = "IS_LOGIN"
+        const val IS_USERDEVICE_API = "IS_USERDEVICE_API"
         const val BearerTOKEN = "BearerTOKEN"
         const val IMAGE_PATH = "IMAGE_PATH"
         const val LATITUDE_CURRENT = "LATITUDE_CURRENT"
@@ -18,6 +19,7 @@ class AppConstant {
         const val PARSING_ERROR = 504
         const val VideoName = "Panic.mp4"
         const val FCMTOKEN = "FCMTOKEN"
+        const val SelectedBarcrwalList = "SelectedBarcrwalList"
 
 
     }

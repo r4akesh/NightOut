@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/_5ssp"
+            android:background="@drawable/rounded_dark_blue"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/panicHitryItemTitle"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_name"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/panicHitryItemSubTitle"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_address"
+                android:textColor="@color/white_second"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/panicHitryItemTitle"
+                app:layout_constraintTop_toBottomOf="@+id/panicHitryItemTitle" />
+
+
+            <TextView
+                android:id="@+id/panicHitryItemTime"
+                style="@style/textNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/dummy_time"
+                android:textColor="@color/white_second"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/panicHitryItemDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/panicHitryItemDate" />
+
+            <TextView
+                android:id="@+id/panicHitryItemDate"
+                style="@style/textNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="date"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/panicHitryItemSubTitle" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+</layout>

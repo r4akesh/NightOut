@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.ui.activity.EmergencyContactListActivity
 import com.nightout.ui.activity.TaxiListActivity
 
 

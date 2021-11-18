@@ -21,10 +21,8 @@ import com.nightout.databinding.BarcrwallistActivityBinding
 import com.nightout.model.AllBarCrwalListResponse
 import com.nightout.model.BarCrwalVenuesModel
 import com.nightout.model.ContactNoModel
-import com.nightout.utils.AppConstant
-import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Utills
+import com.nightout.ui.activity.DemoMap
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import org.json.JSONArray
@@ -84,7 +82,14 @@ class BarcrawlListActivity : BaseActivity() {
             binding.barCrwalBtmDetail.visibility=GONE
         }
         else if(v==binding.barCrwalNextBtn){
-            startActivity(Intent(this@BarcrawlListActivity,BarCrwalPathMap::class.java))
+           if(listHr.size<2){
+               MyApp.popErrorMsg("","Please select at least two venue.",THIS!!)
+           }else {
+               startActivity(
+                   Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
+                       .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
+               )
+           }
         }
     }
 

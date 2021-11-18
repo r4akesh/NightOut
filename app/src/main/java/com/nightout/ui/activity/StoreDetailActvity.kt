@@ -30,7 +30,6 @@ import com.nightout.databinding.StoredetailActivityBinding
 import com.nightout.model.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
-import com.nightout.viewmodel.SendQueryViewModel
 import kotlinx.android.synthetic.main.discount_desc.view.*
 import android.text.Editable
 
@@ -38,7 +37,7 @@ import android.text.TextWatcher
 import com.nightout.viewmodel.CommonViewModel
 
 
-class StoreDetail : BaseActivity(), OnMapReadyCallback {
+class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: StoredetailActivityBinding
     lateinit var userVenueDetailViewModel: CommonViewModel
     lateinit var doFavViewModel: CommonViewModel
@@ -53,7 +52,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     var addBarCrawlStatus = "0"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@StoreDetail, R.layout.storedetail_activity)
+        binding = DataBindingUtil.setContentView(this@StoreDetailActvity, R.layout.storedetail_activity)
         initView()
 
         venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
@@ -82,10 +81,10 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             }
             add_favouriteAPICALL()
         } else if (v == binding.storeDeatilPreBookingBtn) {
-            startActivity(Intent(this@StoreDetail, PreBookingActivity::class.java))
+            startActivity(Intent(this@StoreDetailActvity, PreBookingActivity::class.java))
 
         } else if (v == binding.storeDeatilPlaceOrder) {
-            startActivity(Intent(this@StoreDetail, OrderDetailActivity::class.java))
+            startActivity(Intent(this@StoreDetailActvity, OrderDetailActivity::class.java))
 
         } else if (v == binding.storeDeatilFacilityBtn) {
             if (facilityList != null && facilityList.size > 0)
@@ -93,7 +92,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                 MyApp.popErrorMsg(
                     "",
                     resources.getString(R.string.facilitynot_avail),
-                    this@StoreDetail
+                    this@StoreDetailActvity
                 )
             }
         } else if (v == binding.storeDeatilBakBtn) {
@@ -222,7 +221,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             binding.constrentCardLayout.visibility= VISIBLE
 
             //setSlider
-            imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetail,  dt.venue_gallery)
+            imageViewPagerAdapter = ImageViewPagerAdapter(this@StoreDetailActvity,  dt.venue_gallery)
             binding.viewPager.adapter = imageViewPagerAdapter
             binding.dotsIndicator.setViewPager(binding.viewPager)
 
@@ -254,7 +253,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
             }
             //topImg
-            Glide.with(this@StoreDetail)
+            Glide.with(this@StoreDetailActvity)
                 .load(PreferenceKeeper.instance.imgPathSave + dt.store_logo)
                 .error(R.drawable.no_image)
                 .into(binding.storeDeatilLogo)
@@ -301,7 +300,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         listFood.add(StorDetailFoodModel("Packages", false))
 
         storDetailFoodHorizontalAdapter = StorDetailFoodHorizontalAdapter(
-            this@StoreDetail,
+            this@StoreDetailActvity,
             listFood,
             object : StorDetailFoodHorizontalAdapter.ClickListener {
                 override fun onClick(pos: Int) {
@@ -325,7 +324,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
         binding.storeDeatilHorizintalRecycler.also {
             it.layoutManager =
-                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.HORIZONTAL, false)
             it.adapter = storDetailFoodHorizontalAdapter
         }
 
@@ -399,7 +398,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         )
 
         subAdapter =
-            DrinksSubAdapter(this@StoreDetail, listDrinks, object : DrinksSubAdapter.ClickListener {
+            DrinksSubAdapter(this@StoreDetailActvity, listDrinks, object : DrinksSubAdapter.ClickListener {
                 override fun onClickChk(subPos: Int) {
                     listDrinks[subPos].isChekd = !listDrinks[subPos].isChekd
 
@@ -409,7 +408,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
             })
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
-                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = subAdapter
         }
     }
@@ -514,7 +513,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         listDrinks.add(StoreDetailDrinksModel("Chinese", false, listSub))
 
         drinksAdapter =
-            DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+            DrinksAdapter(this@StoreDetailActvity, listDrinks, object : DrinksAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     listDrinks[pos].isSelected = !listDrinks[pos].isSelected
                     drinksAdapter.notifyDataSetChanged()
@@ -532,7 +531,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
-                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = drinksAdapter
         }
 
@@ -632,7 +631,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
         drinksAdapter =
-            DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+            DrinksAdapter(this@StoreDetailActvity, listDrinks, object : DrinksAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     listDrinks[pos].isSelected = !listDrinks[pos].isSelected
                     drinksAdapter.notifyDataSetChanged()
@@ -650,7 +649,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
-                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = drinksAdapter
         }
     }
@@ -781,7 +780,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
         drinksAdapter =
-            DrinksAdapter(this@StoreDetail, listDrinks, object : DrinksAdapter.ClickListener {
+            DrinksAdapter(this@StoreDetailActvity, listDrinks, object : DrinksAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     listDrinks[pos].isSelected = !listDrinks[pos].isSelected
                     drinksAdapter.notifyDataSetChanged()
@@ -799,7 +798,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
-                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = drinksAdapter
         }
     }
@@ -807,7 +806,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     private fun initView() {
         val supportMapFragment =
             (supportFragmentManager.findFragmentById(R.id.storeDeatillocMap) as SupportMapFragment?)!!
-        supportMapFragment.getMapAsync(this@StoreDetail)
+        supportMapFragment.getMapAsync(this@StoreDetailActvity)
 
         userVenueDetailViewModel = CommonViewModel(this)
         sendQueryViewModel = CommonViewModel(this)
@@ -833,11 +832,11 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
     lateinit var dt: VenuDetailModel.Data
     private fun user_venue_detailAPICALL() {
-        progressDialog.show(this@StoreDetail, "")
+        progressDialog.show(this@StoreDetailActvity, "")
         var map = HashMap<String, String>()
         map["id"] = venuID!!
 
-        userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetail, {
+        userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetailActvity, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
@@ -858,14 +857,14 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
 
     private fun addRemoveBarCrawlAPICall() {
-        progressDialog.show(this@StoreDetail, "")
+        progressDialog.show(this@StoreDetailActvity, "")
         var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
         map["status"] =addBarCrawlStatus
         map["store_type"] =dt.store_type
 
-        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetail, {
+        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetailActvity, {
                 when (it.status) {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
@@ -880,9 +879,9 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                                     addBarCrawlStatus = "1"
                                     binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
                                 }
-                                MyApp.ShowTost(this@StoreDetail,detailData.message)
+                                MyApp.ShowTost(this@StoreDetailActvity,detailData.message)
                             } catch (e: Exception) {
-                                MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@StoreDetail)
+                                MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@StoreDetailActvity)
                             }
                         }
                     }
@@ -891,7 +890,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                     }
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
-                        Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetail)
+                        Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetailActvity)
                     }
                 }
             })
@@ -907,7 +906,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         map["status"] = favStatus
 
 
-        doFavViewModel.doFavItem(map).observe(this@StoreDetail, {
+        doFavViewModel.doFavItem(map).observe(this@StoreDetailActvity, {
             when (it.status) {
                 Status.SUCCESS -> {
                  //   progressDialog.dialog.dismiss()
@@ -924,14 +923,14 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                   //  progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetail)
+                    Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetailActvity)
                 }
             }
         })
     }
 
     private fun showPopUpFacilities() {
-        val adDialog = Dialog(this@StoreDetail, R.style.MyDialogThemeBlack)
+        val adDialog = Dialog(this@StoreDetailActvity, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
         adDialog.setContentView(R.layout.facility_dialog)
@@ -943,7 +942,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(dialog_close)
         //  var list = setListFacility()
         var facilityAdapter =
-            FacilityAdapter(this@StoreDetail, facilityList, object : FacilityAdapter.ClickListener {
+            FacilityAdapter(this@StoreDetailActvity, facilityList, object : FacilityAdapter.ClickListener {
                 override fun onClick(pos: Int) {
 
                 }
@@ -957,7 +956,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
 
         listRecyclerview.also {
             it.layoutManager =
-                LinearLayoutManager(this@StoreDetail, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
             it.setHasFixedSize(true)
             it.adapter = facilityAdapter
 
@@ -971,7 +970,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun showQueryPopup() {
-        val adDialog = Dialog(this@StoreDetail, R.style.MyDialogThemeBlack)
+        val adDialog = Dialog(this@StoreDetailActvity, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
         adDialog.setContentView(R.layout.query_dialog)
@@ -1010,7 +1009,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun userFacilityAPICALL() {
-        progressDialog.show(this@StoreDetail, "")
+        progressDialog.show(this@StoreDetailActvity, "")
         // type (0=>Enquiry, 1=>Complaints)
         var map = HashMap<String, String>()
         map["type"] = "0"
@@ -1019,7 +1018,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
         map["phonenumber"] = PreferenceKeeper.instance.loginResponse!!.phonenumber
         map["query"] = "my query"
 
-        sendQueryViewModel.sendQuery(map).observe(this@StoreDetail, {
+        sendQueryViewModel.sendQuery(map).observe(this@StoreDetailActvity, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
@@ -1028,13 +1027,13 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                             Utills.showSnackBarOnError(
                                 binding.rootLayoutStorDetail,
                                 detailData.message!!,
-                                this@StoreDetail
+                                this@StoreDetailActvity
                             )
                         } catch (e: Exception) {
                             Utills.showSnackBarOnError(
                                 binding.rootLayoutStorDetail,
                                 e.toString(),
-                                this@StoreDetail
+                                this@StoreDetailActvity
                             )
                         }
                     }
@@ -1046,7 +1045,7 @@ class StoreDetail : BaseActivity(), OnMapReadyCallback {
                     Utills.showSnackBarOnError(
                         binding.rootLayoutStorDetail,
                         it.message!!,
-                        this@StoreDetail
+                        this@StoreDetailActvity
                     )
                 }
             }

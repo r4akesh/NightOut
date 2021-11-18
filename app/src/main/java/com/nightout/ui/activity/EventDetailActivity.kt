@@ -29,7 +29,7 @@ import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import java.text.DecimalFormat
 
-class EventDetail : BaseActivity(), OnMapReadyCallback {
+class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
 
     lateinit var binding :EventdetailActvityBinding
     var imageViewPagerAdapter: ImageViewPagerAdapter? = null
@@ -42,7 +42,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@EventDetail,R.layout.eventdetail_actvity)
+        binding = DataBindingUtil.setContentView(this@EventDetailActivity,R.layout.eventdetail_actvity)
         inItView()
 
         venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
@@ -57,7 +57,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
     override fun onClick(v: View?) {
         super.onClick(v)
         if(v==binding.eventDetailBuyTkt){
-            startActivity(Intent (this@EventDetail,BookTicketActivity::class.java)
+            startActivity(Intent (this@EventDetailActivity,BookTicketActivity::class.java)
                 .putExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO,dt))
         }
         else if(v==binding.eventDetailBakBtn){
@@ -111,11 +111,11 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
 
 
     private fun user_venue_detailAPICALL() {
-        progressDialog.show(this@EventDetail, "")
+        progressDialog.show(this@EventDetailActivity, "")
         var map = HashMap<String, String>()
         map["id"] = venuID!!
 
-        userVenueDetailViewModel.userVenueDetail(map).observe(this@EventDetail, {
+        userVenueDetailViewModel.userVenueDetail(map).observe(this@EventDetailActivity, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
@@ -132,7 +132,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
                     Utills.showSnackBarOnError(
                         binding.rootLayoutEventDetal,
                         it.message!!,
-                        this@EventDetail
+                        this@EventDetailActivity
                     )
                 }
             }
@@ -161,7 +161,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
             binding.eventDeatilFav.visibility=VISIBLE
             //setSlider
             try {
-                imageViewPagerAdapter = ImageViewPagerAdapter(this@EventDetail, dt.venue_gallery)
+                imageViewPagerAdapter = ImageViewPagerAdapter(this@EventDetailActivity, dt.venue_gallery)
                 binding.viewPager.adapter = imageViewPagerAdapter
                 binding.dotsIndicator.setViewPager(binding.viewPager)
             } catch (e: Exception) {
@@ -199,7 +199,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
                 binding.eventDeatilFav.setImageResource(R.drawable.fav_unselected)
             }
             //topImg
-            Glide.with(this@EventDetail)
+            Glide.with(this@EventDetailActivity)
                 .load(PreferenceKeeper.instance.imgPathSave + dt.store_logo)
                 .error(R.drawable.no_image)
                 .into(binding.eventDetailLogo)
@@ -245,10 +245,10 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(binding.eventDetaiDirection)
         setTouchNClick(binding.eventDetailShareLoc)
         setTouchNClick(binding.eventDeatilFav)
-        userVenueDetailViewModel = CommonViewModel(this@EventDetail)
-        doFavViewModel = CommonViewModel(this@EventDetail)
+        userVenueDetailViewModel = CommonViewModel(this@EventDetailActivity)
+        doFavViewModel = CommonViewModel(this@EventDetailActivity)
         val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.eventDeatillocMap) as SupportMapFragment?)!!
-        supportMapFragment.getMapAsync(this@EventDetail)
+        supportMapFragment.getMapAsync(this@EventDetailActivity)
     }
 
     private fun add_favouriteAPICALL() {
@@ -259,7 +259,7 @@ class EventDetail : BaseActivity(), OnMapReadyCallback {
         map["status"] = favStatus
 
 
-        doFavViewModel.doFavItem(map).observe(this@EventDetail, {
+        doFavViewModel.doFavItem(map).observe(this@EventDetailActivity, {
             when (it.status) {
                 Status.SUCCESS -> {
                  //   progressDialog.dialog.dismiss()

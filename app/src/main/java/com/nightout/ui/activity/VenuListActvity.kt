@@ -3,7 +3,6 @@ package com.nightout.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
@@ -147,14 +146,14 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     posSaveForUpdate = pos
                     var vv=venuDataList[pos].venue_gallery
                     if(selectedStrType == "5"){
-                        startActivityForResult(Intent(this@VenuListActvity, EventDetail::class.java)
+                        startActivityForResult(Intent(this@VenuListActvity, EventDetailActivity::class.java)
                                 .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                                 .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
                                 .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)
                             ,REQCODE_STOREDETAILACTIVITY)
                     }else {
                         startActivityForResult(
-                            Intent(this@VenuListActvity, StoreDetail::class.java)
+                            Intent(this@VenuListActvity, StoreDetailActvity::class.java)
                                 .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                                 .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
                                 .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)

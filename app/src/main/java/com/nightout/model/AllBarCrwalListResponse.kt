@@ -1,5 +1,7 @@
 package com.nightout.model
 
+import java.io.Serializable
+
 data class AllBarCrwalListResponse(
     val `data`: Data,
     val image_path: String,
@@ -7,13 +9,13 @@ data class AllBarCrwalListResponse(
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) {
+):Serializable {
 
     data class Data(
         val barcrawl: ArrayList<Barcrawl>,
         val barcrawl_options: ArrayList<BarcrawlOption>,
         val favrtvenues: ArrayList<Favrtvenue>
-    )
+    ):Serializable
 
     data class Barcrawl(
         var viewType : Int,
@@ -27,7 +29,7 @@ data class AllBarCrwalListResponse(
         val vendor_id: Int,
         val venue_detail: VenueDetail,
         val venue_id: Int
-    )
+    ):Serializable
 
     data class BarcrawlOption(
         val created_at: String,
@@ -36,7 +38,7 @@ data class AllBarCrwalListResponse(
         val status: Int,
         val title: String,
         val updated_at: String
-    )
+    ):Serializable
 
     data class Favrtvenue(
         val created_at: String,
@@ -47,7 +49,7 @@ data class AllBarCrwalListResponse(
         val vendor_id: Int,
         val venue_detail: VenueDetailX,
         val venue_id: Int
-    )
+    ):Serializable
 
     data class VenueDetail(
         val age_limit: String,
@@ -94,7 +96,7 @@ data class AllBarCrwalListResponse(
         val updated_at: String,
         val user_id: Int,
         val venue_address: String
-    )
+    ):Serializable
 
     data class VenueDetailX(
         val age_limit: String,
@@ -141,5 +143,5 @@ data class AllBarCrwalListResponse(
         val updated_at: String,
         val user_id: Int,
         val venue_address: Any
-    )
+    ):Serializable
 }

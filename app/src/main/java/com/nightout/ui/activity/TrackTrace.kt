@@ -40,14 +40,18 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
     var LAUNCH_GOOGLE_ADDRESS = 102
     var googleMap: GoogleMap? = null
     lateinit var panicViewModel: CommonViewModel
-
+    lateinit var setEndLocViewModel: CommonViewModel
+    private val progressDialog = CustomProgressDialog()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@TrackTrace, R.layout.tracktrace_actvity)
         initView()
         setToolBar()
+        getEndLocationAPICall()
 
     }
+
+
 
     private fun panicNotificationAPICall() {
         try {
@@ -174,6 +178,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
 
     private fun initView() {
         panicViewModel = CommonViewModel(this@TrackTrace)
+        setEndLocViewModel = CommonViewModel(this@TrackTrace)
         binding.tractraceaLostitem.setOnClickListener(this)
         binding.tractraceaPanic.setOnClickListener(this)
         binding.tractraceaSetEndLoc.setOnClickListener(this)
@@ -214,6 +219,8 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
             val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15f).build()
             googleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
+                setEndLocationAPICAll(place.latLng!!.latitude, place.latLng!!.longitude,place.address)
+
             Handler(Looper.getMainLooper()).postDelayed({
                 DialogCustmYesNo.getInstance().createDialogOK(this@TrackTrace,""+place.address,"You have set your End location successfully.",object:DialogCustmYesNo.Dialogclick{
                     override fun onYES() {}
@@ -225,5 +232,59 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
 
 
         }
+    }
+
+    private fun setEndLocationAPICAll(latitude: Double, longitude: Double, address: String?) {
+        //progressDialog.show(this@EventDetail, "")
+        var map = HashMap<String, String>()
+        map["longitude"] = ""+longitude
+        map["lattitude"] = ""+latitude
+        map["address"] = address!!
+
+
+        setEndLocViewModel.setEndLoc(map).observe(this@TrackTrace, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                       progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                            Log.d("ok", "TrackTrace: " + detailData.data.address)
+
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                      progressDialog.dialog.dismiss()
+                }
+            }
+        })
+    }
+
+    private fun getEndLocationAPICall() {
+        progressDialog.show(this@TrackTrace, "")
+        setEndLocViewModel.getEndLoc().observe(this@TrackTrace, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                            Log.d("ok", "TrackTrace: " + detailData.data.address)
+
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                }
+            }
+        })
     }
 }

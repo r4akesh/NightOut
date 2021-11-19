@@ -89,6 +89,7 @@ class BarcrawlListActivity : BaseActivity() {
                    Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
                        .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                )
+               finish()
            }
         }
     }

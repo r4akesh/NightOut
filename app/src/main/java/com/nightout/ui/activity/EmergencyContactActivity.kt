@@ -73,7 +73,7 @@ class EmergencyContactActivity : BaseActivity() {
                             .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
                     )
                 }else{
-                    MyApp.popErrorMsg("","No contact found in your device",this@EmergencyContactActivity)
+                    MyApp.popErrorMsg("",resources.getString(R.string.Nocontactfounddevice),this@EmergencyContactActivity)
                 }
 
 
@@ -276,11 +276,7 @@ class EmergencyContactActivity : BaseActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_READ_CONTACTS -> {
@@ -289,7 +285,7 @@ class EmergencyContactActivity : BaseActivity() {
                 } else {
                     Toast.makeText(
                         this,
-                        "You have disabled a contacts permission",
+                        resources.getString(R.string.disble_permison_contact),
                         Toast.LENGTH_LONG
                     ).show()
                 }

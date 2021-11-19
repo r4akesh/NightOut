@@ -223,5 +223,7 @@
     <string name="noteDialogBarCrwal">Once you have created the Bar crawl you will not be able to edit.</string>
     <string name="Please_Select_Venues">Please Select Venues !!</string>
     <string name="Select_Date">Select Date</string>
+    <string name="disble_permison_contact">You have disabled a contacts permission</string>
+    <string name="Nocontactfounddevice">No contact found in your device</string>
 
 </resources>

@@ -44,10 +44,12 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.CameraUpdate
 import com.nightout.model.BarCrwlListModel
 import com.nightout.model.LoginModel
+import com.nightout.ui.activity.ContactListNewActvity
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -162,9 +164,11 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private fun isValidate(): Boolean {
         if(dgEtBarCrwal.text.isNullOrEmpty()){
             MyApp.popErrorMsg("","Please enter Barcrawl name",THIS!!)
+            return false
         }
         else if(dgDateBtn.text.equals(resources.getString(R.string.Select_Date))){
             MyApp.popErrorMsg("","Please choose date",THIS!!)
+            return false
         }
         return true
 
@@ -173,17 +177,18 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private fun create_update_bar_crawlAPICall() {
         var stringBuilder = StringBuilder()
         for (i in 0 until listBarcrwal.size){
-            stringBuilder.append(listBarcrwal[i].id)
+            stringBuilder.append(listBarcrwal[i].venue_id)
             stringBuilder.append(",")
 
         }
-        var listOfId =stringBuilder.toString().length-1
+        var listOfId =stringBuilder.toString().substring(0,stringBuilder.toString().length-1)
         val builder = MultipartBody.Builder()
         builder.setType(MultipartBody.FORM)
         builder.addFormDataPart("name", dgEtBarCrwal.text.toString())
         builder.addFormDataPart("venue_list",""+listOfId )
-        builder.addFormDataPart("public_private", dgSpin.selectedItem.toString())
-        builder.addFormDataPart("date", ""+Commons.strToTimemills3(dgDateBtn.text.toString()))
+        builder.addFormDataPart("public_private", publicPrivetValue)
+         builder.addFormDataPart("date", ""+Commons.strToTimemills3(dgDateBtn.text.toString()))
+
         //builder.addFormDataPart("id", editProfileViewModel.addrs2) send durring editing
 
         // if (editProfileViewModel.profilePic != null) {
@@ -194,18 +199,37 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             builder.addFormDataPart("image", "")
         }
 
-        saveProfileAPICall(builder.build())
+
+         createBarCrewal(builder.build())
     }
 
 
-    private fun saveProfileAPICall(requestBody: MultipartBody) {
+    private fun createBarCrewal(requestBody: MultipartBody) {
         progressDialog.show(this@BarCrwalPathMap)
         commonViewModel.createBarCrwalWidImg(requestBody).observe(this@BarCrwalPathMap, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let {
-                        bfghfghrghfg
+                        Log.d("ok", "success: ")
+                        var vv=it.data.id
+                        DialogCustmYesNo.getInstance().createDialog(this@BarCrwalPathMap,"You have created successfully Barcrwal.","Do you want share with your friends now?",object:DialogCustmYesNo.Dialogclick{
+                            override fun onYES() {
+                                startActivity(Intent(this@BarCrwalPathMap, ContactListNewActvity::class.java)
+                                    .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,true)
+                                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,it.data.id))
+                                finish()
+                            }
+
+                            override fun onNO() {
+                                finish()
+                            }
+
+                        })
+
+
+
+
                     }
 
                 }
@@ -220,7 +244,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             }
         })
     }
-
+var publicPrivetValue="1"
     private fun setSpin() {
 
                 var listSpin = ArrayList<String>()
@@ -233,7 +257,11 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
         dgSpin.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
+                    if(position==0){
+                        publicPrivetValue="1"
+                    }else{
+                        publicPrivetValue="2"
+                    }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -372,7 +400,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                     userImgBarcrwal.setImageBitmap(bitmap)
-                    //setBody(bitmap!!, "profile")
+                    setBody(bitmap!!, "profile")
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -381,6 +409,24 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             }
         }
     }
+    private fun setBody(bitmap: Bitmap, flag: String): MultipartBody.Part {
+        val filePath = Utills.saveImage(this@BarCrwalPathMap, bitmap)
+        this.filePath = File(filePath)
+        reqFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), this.filePath!!)
+
+//        if (flag == "store_logo") {
+//            activity.binding.iconName.text = this.filePath!!.name
+//        }
+
+        body = MultipartBody.Part.createFormData(
+            flag,
+            this.filePath!!.name,
+            reqFile
+        )
+
+        return body!!
+    }
+
     private fun startCropActivity(imageUri: Uri) {
         CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
             .setMultiTouchEnabled(true)

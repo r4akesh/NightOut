@@ -106,4 +106,13 @@ interface APIInterface {
 
     @POST("create_update_bar_crawl")
     fun create_update_bar_crawlAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
+
+    @POST("bar_crawl_invitation")
+    fun bar_crawl_invitationAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("set_end_location")
+    fun set_end_locationAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("get_end_location")
+    fun get_end_locationAPI(): Call<ResponseBody>
 }

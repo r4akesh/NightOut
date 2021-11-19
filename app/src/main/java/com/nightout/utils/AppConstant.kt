@@ -20,6 +20,8 @@ class AppConstant {
         const val VideoName = "Panic.mp4"
         const val FCMTOKEN = "FCMTOKEN"
         const val SelectedBarcrwalList = "SelectedBarcrwalList"
+        const val ISFROM_BarCrwalPathMapActvity = "ISFROM_BarCrwalPathMapActvity"
+
 
 
     }
@@ -46,7 +48,7 @@ class AppConstant {
          const val ADAPTER_POS = "ADAPTER_POS"
         const val TICKET_URL = "TICKET_URL"
         const val FAVROUITE_VALUE = "favrouite"
-
+        const val BarcrwalID = "BarcrwalID"
        // const val ISFROM_TERMCONDITION = "ISFROM_TERMCONDITION"
 
     }

@@ -47,6 +47,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         }
         if (v == binding.barcrawlNextBtn) {
             startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java))
+            finish()
         }
     }
 

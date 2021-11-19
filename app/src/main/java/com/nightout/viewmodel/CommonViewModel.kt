@@ -35,6 +35,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var lostItemChooseVenuResponse: LiveData<ApiSampleResource<LostItemChooseVenuResponse>>
     lateinit var notificationResponse: LiveData<ApiSampleResource<NotificationResponse>>
     lateinit var panicHistoryRes: LiveData<ApiSampleResource<PanicHistoryRes>>
+    lateinit var createUpdateBarcrwalResponse: LiveData<ApiSampleResource<CreateUpdateBarcrwalResponse>>
+    lateinit var setEndLocModel: LiveData<ApiSampleResource<SetEndLocModel>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -151,8 +153,22 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         return panicHistoryRes
     }
 
-    fun createBarCrwalWidImg(requestBody: MultipartBody): LiveData<ApiSampleResource<BaseModel>> {
-        baseModel = webServiceRepository.createBarCrwalWidImg(requestBody)
-        return baseModel
+    fun createBarCrwalWidImg(requestBody: MultipartBody): LiveData<ApiSampleResource<CreateUpdateBarcrwalResponse>> {
+        createUpdateBarcrwalResponse = webServiceRepository.createBarCrwalWidImg(requestBody)
+        return createUpdateBarcrwalResponse
+    }
+    fun shareBarCrwal( map:HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {
+        userDeviceModel = webServiceRepository.shareBarCrwal(map)
+        return userDeviceModel
+    }
+
+    fun setEndLoc(map: HashMap<String, String>): LiveData<ApiSampleResource<SetEndLocModel>> {
+        setEndLocModel = webServiceRepository.setEndLoc(map)
+        return setEndLocModel
+    }
+
+    fun getEndLoc(): LiveData<ApiSampleResource<SetEndLocModel>> {
+        setEndLocModel = webServiceRepository.getEndLoc()
+        return setEndLocModel
     }
 }

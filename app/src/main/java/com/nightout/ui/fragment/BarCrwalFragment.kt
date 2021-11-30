@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.nightout.R
-import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.databinding.FragmentBarcrawlnewBinding
 import com.nightout.interfaces.OnMenuOpenListener
-import com.nightout.ui.activity.AddBarCrawlActvity
-import com.nightout.ui.activity.BarCrawlSaveActivity
-import com.nightout.ui.activity.BarCrawlSavedListActivity
-import com.nightout.ui.activity.BarCrawlShredListActivity
+import com.nightout.ui.activity.barcrawl.BarCrawlSavedListActivity
+import com.nightout.ui.activity.barcrawl.BarCrawlShredListActivity
 import com.nightout.ui.activity.barcrawl.SearchCityActivity
 
 class BarCrwalFragment() : Fragment() , View.OnClickListener {
@@ -38,13 +35,7 @@ class BarCrwalFragment() : Fragment() , View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        /* if(v==binding.menuOpenBtnBar){
-             onMenuOpenListener?.onOpenMenu()
-         }
 
-         else if(v==binding.barcrawlSharBarCrawal){
-             startActivity(Intent(requireActivity(), ListParticipteActvity::class.java))
-         }*/
 
         if(v==binding.createBtn){
             //startActivity( Intent (requireActivity(),AddBarCrawlActvity::class.java))

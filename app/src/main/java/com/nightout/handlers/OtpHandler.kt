@@ -3,6 +3,7 @@ package com.nightout.handlers
 
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.OTPActivity
@@ -73,6 +74,8 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
 
       fun sendAgain(regViewModel: OtpViewModel){
           progressDialog.show(activity)
+          activity.binding.otpActivitySendAgain.visibility = View.GONE
+          activity.showTimer()
           val map = HashMap<String, String>()
           var mobNo = mobNo
           mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()

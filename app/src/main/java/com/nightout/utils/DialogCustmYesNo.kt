@@ -33,6 +33,7 @@ class DialogCustmYesNo : BaseActivity() {
         this.dialogclick = dialogclick
         this.title = title
         this.errrMsg = errrMsg
+
 //        customDialog = Dialog(mContext, android.R.style.ThemeOverlay_Material_Dialog_Alert)
 //        customDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
 //        customDialog!!.window!!.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
@@ -41,6 +42,7 @@ class DialogCustmYesNo : BaseActivity() {
 //        customDialog!!.show()
        // init()
         val builder = MaterialAlertDialogBuilder(mContext, R.style.Theme_MyApp_Dialog_Alert)
+        builder.setCancelable(false)
         builder.setTitle(title).setMessage(errrMsg)
             .setPositiveButton("YES") { dialog, which ->
                 dialog.dismiss()
@@ -74,15 +76,7 @@ class DialogCustmYesNo : BaseActivity() {
 
     }
 
-    private fun init() {
 
-//        action_yes = customDialog!!.findViewById(R.id.action_yes)
-//        setTouchNClick(action_yes)
-//        action_reset = customDialog!!.findViewById(R.id.action_reset)
-//        setTouchNClick(action_reset)
-
-
-    }
 
     interface Dialogclick {
 

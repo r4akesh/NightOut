@@ -3,6 +3,7 @@ package com.nightout.ui.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -65,12 +66,24 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     var geocoder: Geocoder? = null
     var addresses: List<Address>? = null
     private var mMap: GoogleMap? = null
+
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 999
     }
 
     constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
         this.onMenuOpenListener = onMenuOpenListener
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("TAG", "onResume: ")
+        if(PreferenceKeeper.instance.isNotificationOpen){
+            binding.headerHome.headerNotificationText.visibility=GONE
+            PreferenceKeeper.instance.isNotificationOpen =false
+        }
     }
 
     override fun onCreateView(
@@ -86,8 +99,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             if(activity!=null && isAdded)
             dashboardAPICALL()
+            Log.d("TAG", "onCreateView: ")
             if(PreferenceKeeper.instance.isUserDeviceAPICall){
-                Log.d("TAG", "doNothing")
+              //  Log.d("TAG", "onCreateView")
             }else{
                 userDeviceAPICAll()
                 PreferenceKeeper.instance.isUserDeviceAPICall=true
@@ -182,7 +196,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                 setBottomSheet()
                                 //save imgPath
                                 dashList = users.data
-                                if(dashList.noti_count.equals("0")){
+                                if(dashList.noti_count == "0"){
                                     binding.headerHome.headerNotificationText.visibility=GONE
                                 }else{
                                     binding.headerHome.headerNotificationText.visibility= VISIBLE

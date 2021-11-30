@@ -57,7 +57,7 @@ class OTPActivity : BaseActivity() {
         })
     }
 
-    private fun showTimer() {
+     fun showTimer() {
         object : CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes: Long = millisUntilFinished / 1000 / 60

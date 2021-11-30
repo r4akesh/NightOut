@@ -21,6 +21,8 @@ class AppConstant {
         const val FCMTOKEN = "FCMTOKEN"
         const val SelectedBarcrwalList = "SelectedBarcrwalList"
         const val ISFROM_BarCrwalPathMapActvity = "ISFROM_BarCrwalPathMapActvity"
+        const val ISNotificationOpen = "ISNotificationOpen"
+        const val IsUpdatedBarcrwalSuccesfully = "IsUpdatedBarcrwalSuccesfully"
 
 
 
@@ -29,27 +31,26 @@ class AppConstant {
     object INTENT_EXTRAS {
         const val EMAILID = "EMAILID"
         const val MOBILENO = "MOBILENO"
-        const val VENU_LIST_POS = "VENU_LIST_POS"
-        const val VENU_POS = "VENU_POS"
+
         const val VENU_ID = "VENU_ID"
         const val StoreType = "StoreType"
-      //   const val GALLERY_LIST = "GALLERY_LIST"
+
         const val VIDEO_URL = "VIDEO_URL"
         const val ISFROM_VENULISTACTIVITY = "ISFROM_VENULISTACTIVITY"
         const val LOSTITEM_POJO = "LOSTITEM_ID"
         const val ISFROM_EDITITEM = "ISFROM_EDITITEM"
         const val CONTACT_LIST = "CONTACT_LIST"
         const val EMERNGCY_COUNT = "EMERNGCY_COUNT"
-        //const val WHICH_CMSPAGE = "WHICH_CMSPAGE"
+
         const val EVENTDETAIL_POJO = "EVENTDETAIL_POJO"
         const val TOTAL_AMT = "TOTAL_AMT"
         const val TICKET_NO = "TICKET_NO"
-        const val TRANSACTION_ID = "TRANSACTION_ID"
-         const val ADAPTER_POS = "ADAPTER_POS"
+
         const val TICKET_URL = "TICKET_URL"
         const val FAVROUITE_VALUE = "favrouite"
         const val BarcrwalID = "BarcrwalID"
-       // const val ISFROM_TERMCONDITION = "ISFROM_TERMCONDITION"
+        const val BarcrwalList = "BarcrwalList"
+
 
     }
 }

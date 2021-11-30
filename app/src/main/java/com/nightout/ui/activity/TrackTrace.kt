@@ -219,7 +219,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
             val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15f).build()
             googleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
-                setEndLocationAPICAll(place.latLng!!.latitude, place.latLng!!.longitude,place.address)
+               setEndLocationAPICAll(place.latLng!!.latitude, place.latLng!!.longitude,place.address)
 
             Handler(Looper.getMainLooper()).postDelayed({
                 DialogCustmYesNo.getInstance().createDialogOK(this@TrackTrace,""+place.address,"You have set your End location successfully.",object:DialogCustmYesNo.Dialogclick{
@@ -235,7 +235,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun setEndLocationAPICAll(latitude: Double, longitude: Double, address: String?) {
-        //progressDialog.show(this@EventDetail, "")
+        progressDialog.show(this@TrackTrace, "")
         var map = HashMap<String, String>()
         map["longitude"] = ""+longitude
         map["lattitude"] = ""+latitude
@@ -248,6 +248,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
                        progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
+
                             Log.d("ok", "TrackTrace: " + detailData.data.address)
 
                         } catch (e: Exception) {
@@ -272,7 +273,16 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
-                            Log.d("ok", "TrackTrace: " + detailData.data.address)
+                            googleMap!!.clear()
+                            val latLng = LatLng(Commons.strToDouble(detailData.data.lattitude), Commons.strToDouble(detailData.data.longitude))
+                            val yourBitmap = getDrawable(R.drawable.ic_crnt_loc)!!.toBitmap(50, 55)//svg img
+                            googleMap!!.addMarker(
+                                MarkerOptions().position(latLng)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(yourBitmap))
+                            )
+                            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15f).build()
+                            googleMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+
 
                         } catch (e: Exception) {
                         }

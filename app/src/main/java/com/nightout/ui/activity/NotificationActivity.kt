@@ -10,6 +10,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityNotificationBinding
 import com.nightout.model.NotificationResponse
 import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -23,6 +24,8 @@ class NotificationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_notification)
         notificationViewMode = CommonViewModel(this@NotificationActivity)
+        //change Status
+        PreferenceKeeper.instance.isNotificationOpen =true
         setToolBar()
         user_notificationAPICall()
     }

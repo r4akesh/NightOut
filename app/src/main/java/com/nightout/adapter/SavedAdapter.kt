@@ -1,6 +1,7 @@
 package com.nightout.adapter
 
 import android.content.Context
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -16,15 +17,14 @@ import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.FacilityItemBinding
 import com.nightout.databinding.SavedItemBinding
 import com.nightout.databinding.SharedItemBinding
-import com.nightout.model.ChatModel
-import com.nightout.model.FacilityModel
-import com.nightout.model.SharedModel
-import com.nightout.model.VenuDetailModel
+import com.nightout.model.*
+import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 
 
 class SavedAdapter(
     var context: Context,
-    var arrayList: ArrayList<SharedModel>,
+    var arrayList: ArrayList<BarcrwalSavedRes.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<SavedAdapter.ViewHolder>() {
@@ -41,13 +41,18 @@ class SavedAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        try {
+            viewHolder.binding.sharedItemTitle.setText(arrayList[position].name)
+            //plz show the date value instead of created_at
+            var vDate = MyApp.dateZoneToDateFormat(arrayList[position].created_at)
+            viewHolder.binding.sharedItemDate.setText(vDate)
 
-
-        viewHolder.binding.sharedItemImg.setImageResource(arrayList[position].imgProfile)
-        viewHolder.binding.sharedItemDate.setText(arrayList[position].subTitle)
-        viewHolder.binding.sharedItemTitle.setText(arrayList[position].title)
-        viewHolder.itemView.setOnClickListener {
-            clickListener.onClick(position)
+            Utills.setImageNormal(context, viewHolder.binding.sharedItemImg,arrayList[position].image)
+            viewHolder.itemView.setOnClickListener {
+                clickListener.onClick(position)
+            }
+        } catch (e: Exception) {
+            Log.d("TAG", "Exception: $e")
         }
 
 

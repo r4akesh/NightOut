@@ -33,6 +33,19 @@ class PreferenceKeeper private constructor(context: Context?) {
                 .apply()
         }
 
+    var isNotificationOpen: Boolean
+        get() = prefs!!.getBoolean(AppConstant.PrefsName.ISNotificationOpen, false)
+        set(islogin) {
+            prefs!!.edit().putBoolean(AppConstant.PrefsName.ISNotificationOpen, islogin)
+                .apply()
+        }
+
+    var isUpdatedBarcrwalSuccesfully: Boolean
+        get() = prefs!!.getBoolean(AppConstant.PrefsName.IsUpdatedBarcrwalSuccesfully, false)
+        set(islogin) {
+            prefs!!.edit().putBoolean(AppConstant.PrefsName.IsUpdatedBarcrwalSuccesfully, islogin)
+                .apply()
+        }
     var isUserDeviceAPICall: Boolean
         get() = prefs!!.getBoolean(AppConstant.PrefsName.IS_USERDEVICE_API, false)
         set(islogin) {

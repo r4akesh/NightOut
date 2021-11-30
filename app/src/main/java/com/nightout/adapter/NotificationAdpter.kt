@@ -37,10 +37,10 @@ class NotificationAdpter(var context: Context, var arrayList: ArrayList<Notifica
             viewHolder.binding.title.text=arrayList[position].subject
             viewHolder.binding.subTitle.text= arrayList[position].message
             var time = arrayList[position].created_at
-           var vv=  MyApp.dateZoneToTimeFormat(time)
-            viewHolder.binding.timeValue.text= vv
-
-
+           var vTime=  MyApp.dateZoneToTimeFormat(time)
+            viewHolder.binding.timeValue.text= vTime
+            vTime=  MyApp.dateZoneToDateFormat(time)
+            viewHolder.binding.dateValue.text= vTime
 
 
 

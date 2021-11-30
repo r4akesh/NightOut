@@ -113,6 +113,15 @@ interface APIInterface {
     @POST("set_end_location")
     fun set_end_locationAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
-    @POST("get_end_location")
+    @GET("get_end_location")
     fun get_end_locationAPI(): Call<ResponseBody>
+
+    @GET("bar_crawl_invitation_list")
+    fun bar_crawl_invitation_listAPI(): Call<ResponseBody>
+
+    @POST("user_bar_crawl_list")
+    fun getSavedBarCrawlList(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("delete_bar_crawl")
+    fun delete_bar_crawlAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 }

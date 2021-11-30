@@ -8,41 +8,36 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-
         android:layout_marginTop="@dimen/_7ssp"
-        android:layout_height="wrap_content"
-         >
+        android:layout_height="wrap_content">
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/sharedItemCard"
+
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/sharedItemImg"
             android:layout_width="@dimen/_45sdp"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_height="@dimen/_45sdp"
-            app:cardBackgroundColor="@color/text_yello"
-            app:cardCornerRadius="@dimen/_4sdp"
+            android:layout_marginStart="@dimen/_5ssp"
+            app:strokeColor="@color/text_yello"
+            app:strokeWidth="@dimen/_1sdp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            android:src="@drawable/no_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/sharedItemImg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/_1ssp"
-                android:src="@drawable/shared_img1" />
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/sharedItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/proximanova_reg"
-            android:text="Vanity Night Club"
+            android:text="Title"
             android:layout_marginStart="@dimen/_7sdp"
-            android:textColor="@color/white_thred"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toEndOf="@+id/sharedItemCard"
-            app:layout_constraintTop_toTopOf="@+id/sharedItemCard" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toEndOf="@+id/sharedItemImg"
+            app:layout_constraintTop_toTopOf="@+id/sharedItemImg" />
 
         <TextView
             android:id="@+id/sharedItemDate"
@@ -52,9 +47,9 @@
             android:layout_marginStart="@dimen/_7sdp"
             android:fontFamily="@font/proximanova_reg"
             android:text="25 June 2021"
-            android:textColor="@color/white_thred"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@+id/sharedItemCard"
+            android:textColor="@color/white_second"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintStart_toEndOf="@+id/sharedItemImg"
             app:layout_constraintTop_toBottomOf="@+id/sharedItemTitle" />
 
 
@@ -70,15 +65,15 @@
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:src="@drawable/arrow_right_21"
-            app:layout_constraintBottom_toBottomOf="@+id/sharedItemCard"
+            app:layout_constraintBottom_toBottomOf="@+id/sharedItemImg"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/sharedItemCard" />
+            app:layout_constraintTop_toTopOf="@+id/sharedItemImg" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_7ssp"
-            app:layout_constraintTop_toBottomOf="@+id/sharedItemCard"
+            app:layout_constraintTop_toBottomOf="@+id/sharedItemImg"
             android:background="@color/view_line_clr"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"

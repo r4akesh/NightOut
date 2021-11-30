@@ -15,15 +15,15 @@ import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.FacilityItemBinding
 import com.nightout.databinding.SharedItemBinding
-import com.nightout.model.ChatModel
-import com.nightout.model.FacilityModel
-import com.nightout.model.SharedModel
-import com.nightout.model.VenuDetailModel
+import com.nightout.model.*
+import com.nightout.utils.Commons
+import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 
 
 class SharedAdapter(
     var context: Context,
-    var arrayList: ArrayList<SharedModel>,
+    var arrayList: ArrayList<SharedBarcrwalRes.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<SharedAdapter.ViewHolder>() {
@@ -42,9 +42,19 @@ class SharedAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.sharedItemImg.setImageResource(arrayList[position].imgProfile)
-        viewHolder.binding.sharedItem3Dot.setOnClickListener {
-            clickListener.onClick3Dot(position, viewHolder.binding.sharedItem3Dot)
+        try {
+            viewHolder.binding.sharedItemTitle.text = arrayList[position].bar_crawl.name
+           var vDate= MyApp.dateZoneToDateFormat(arrayList[position].bar_crawl.created_at)
+           var vTime= MyApp.dateZoneToTimeFormat(arrayList[position].bar_crawl.created_at)
+
+            viewHolder.binding.sharedItemDate.text = vDate
+            viewHolder.binding.sharedItemTime.text = vTime
+            Utills.setImageNormal(context, viewHolder.binding.sharedItemImg,arrayList[position].bar_crawl.image)
+            viewHolder.binding.sharedItem3Dot.setOnClickListener {
+                clickListener.onClick3Dot(position, viewHolder.binding.sharedItem3Dot)
+            }
+        } catch (e: Exception) {
+
         }
 
 

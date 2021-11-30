@@ -74,17 +74,27 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     var sizeOfList = 0
     private var bounds: LatLngBounds? = null
     private var builder: LatLngBounds.Builder? = null
-
+    var barcrwalId : String= ""
     //  private val BROOKLYN_BRIDGE = LatLng(40.7057, -73.9964)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding =
-            DataBindingUtil.setContentView(this@BarCrwalPathMap, R.layout.barcrwalmappath_actvity)
-        listBarcrwal = ArrayList<AllBarCrwalListResponse.Barcrawl>()
-        listBarcrwal =
-            intent.getSerializableExtra(AppConstant.PrefsName.SelectedBarcrwalList) as ArrayList<AllBarCrwalListResponse.Barcrawl>
+        binding = DataBindingUtil.setContentView(this@BarCrwalPathMap, R.layout.barcrwalmappath_actvity)
+        barcrwalId = try {
+            intent.getStringExtra(AppConstant.INTENT_EXTRAS.BarcrwalID)!!
+        } catch (e: Exception) {
+            ""
+        }
+        if(barcrwalId.isNotBlank()) {
+            Log.d("TAG", "NotBlank() ")
+        }else{
+            Log.d("TAG", "YesBlank()  ")
+        }
+
+
+        listBarcrwal = ArrayList ()
+        listBarcrwal = intent.getSerializableExtra(AppConstant.PrefsName.SelectedBarcrwalList) as ArrayList<AllBarCrwalListResponse.Barcrawl>
         sizeOfList = listBarcrwal.size
         initView()
         setToolBar()
@@ -150,6 +160,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         }
         dgDoneBtn.setOnClickListener {
             if(isValidate()) {
+                adDialog.dismiss()
                 create_update_bar_crawlAPICall()
                 //    startActivity(Intent(this@BarCrwalPathMap, SharedMemeberActvity::class.java))
             }
@@ -188,6 +199,9 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         builder.addFormDataPart("venue_list",""+listOfId )
         builder.addFormDataPart("public_private", publicPrivetValue)
          builder.addFormDataPart("date", ""+Commons.strToTimemills3(dgDateBtn.text.toString()))
+        if(barcrwalId.isNotBlank()) {
+            builder.addFormDataPart("id", barcrwalId)
+        }
 
         //builder.addFormDataPart("id", editProfileViewModel.addrs2) send durring editing
 
@@ -213,12 +227,12 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                     it.data?.let {
                         Log.d("ok", "success: ")
                         var vv=it.data.id
-                        DialogCustmYesNo.getInstance().createDialog(this@BarCrwalPathMap,"You have created successfully Barcrwal.","Do you want share with your friends now?",object:DialogCustmYesNo.Dialogclick{
+                        DialogCustmYesNo.getInstance().createDialog(this@BarCrwalPathMap,"Bar crawl created Successfully.","Do you want share the created bar crawl with Friends?",object:DialogCustmYesNo.Dialogclick{
                             override fun onYES() {
                                 startActivity(Intent(this@BarCrwalPathMap, ContactListNewActvity::class.java)
                                     .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,true)
                                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,it.data.id))
-                                finish()
+                             finish()
                             }
 
                             override fun onNO() {
@@ -387,11 +401,11 @@ var publicPrivetValue="1"
         else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                val bitmap: Bitmap?
+                try {  val bitmap: Bitmap?
                 userImgBarcrwal.setImageBitmap(null)
                 imageUrl = result.originalUri
                 val resultUri = result.uri
-                try {
+
                     if (Build.VERSION.SDK_INT < 28) {
                         bitmap =
                             MediaStore.Images.Media.getBitmap(this@BarCrwalPathMap.contentResolver, resultUri)
@@ -404,7 +418,7 @@ var publicPrivetValue="1"
 
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Utills.showSnackBarFromTop(userImgBarcrwal, "catch-> $e", this@BarCrwalPathMap)
+                   // Utills.showSnackBarFromTop(userImgBarcrwal, "catch-> $e", this@BarCrwalPathMap)
                 }
             }
         }

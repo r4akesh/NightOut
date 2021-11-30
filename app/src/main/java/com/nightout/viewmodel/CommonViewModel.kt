@@ -17,6 +17,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     private lateinit var contactListResponse: LiveData<ApiSampleResource<ContactFillterModel>>
     lateinit var getEmergencyModel: LiveData<ApiSampleResource<GetEmergencyModel>>
     lateinit var getLostItem: LiveData<ApiSampleResource<GetLostItemListModel>>
+    lateinit var getSharedViewModel: LiveData<ApiSampleResource<SharedBarcrwalRes>>
+    lateinit var getSavedViewModel: LiveData<ApiSampleResource<BarcrwalSavedRes>>
     lateinit var dsahModel: LiveData<ApiSampleResource<DashboardModel>>
     lateinit var venuDetailModel: LiveData<ApiSampleResource<VenuDetailModel>>
     lateinit var addFavModel: LiveData<ApiSampleResource<AddFavModel>>
@@ -32,11 +34,13 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var favListModelRes: LiveData<ApiSampleResource<FavListModelRes>>
     lateinit var barCrwlListModel: LiveData<ApiSampleResource<AllBarCrwalListResponse>>
     lateinit var userDeviceModel: LiveData<ApiSampleResource<BaseModel>>
+
     lateinit var lostItemChooseVenuResponse: LiveData<ApiSampleResource<LostItemChooseVenuResponse>>
     lateinit var notificationResponse: LiveData<ApiSampleResource<NotificationResponse>>
     lateinit var panicHistoryRes: LiveData<ApiSampleResource<PanicHistoryRes>>
     lateinit var createUpdateBarcrwalResponse: LiveData<ApiSampleResource<CreateUpdateBarcrwalResponse>>
     lateinit var setEndLocModel: LiveData<ApiSampleResource<SetEndLocModel>>
+    lateinit var barcrwalCreatedViewModel: LiveData<ApiSampleResource<BarcrwalCreatedRes>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -157,10 +161,13 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         createUpdateBarcrwalResponse = webServiceRepository.createBarCrwalWidImg(requestBody)
         return createUpdateBarcrwalResponse
     }
-    fun shareBarCrwal( map:HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {
-        userDeviceModel = webServiceRepository.shareBarCrwal(map)
-        return userDeviceModel
+
+    fun shareBarCrwal( map:HashMap<String,String>): LiveData<ApiSampleResource<BarcrwalCreatedRes>> {
+        barcrwalCreatedViewModel = webServiceRepository.shareBarCrwal(map)
+        return barcrwalCreatedViewModel
     }
+
+
 
     fun setEndLoc(map: HashMap<String, String>): LiveData<ApiSampleResource<SetEndLocModel>> {
         setEndLocModel = webServiceRepository.setEndLoc(map)
@@ -170,5 +177,17 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun getEndLoc(): LiveData<ApiSampleResource<SetEndLocModel>> {
         setEndLocModel = webServiceRepository.getEndLoc()
         return setEndLocModel
+    }
+    fun getSharedList(): LiveData<ApiSampleResource<SharedBarcrwalRes>> {
+        getSharedViewModel = webServiceRepository.getSharedBarCrwalList()
+        return getSharedViewModel
+    }
+    fun delSharedList(map: HashMap<String, String>): LiveData<ApiSampleResource<BaseModel>> {
+        baseModel = webServiceRepository.delSharedBarCrwalList(map)
+        return baseModel
+    }
+    fun getSavedList(map: HashMap<String, String>): LiveData<ApiSampleResource<BarcrwalSavedRes>> {
+        getSavedViewModel = webServiceRepository.savedBarCrwalList(map)
+        return getSavedViewModel
     }
 }

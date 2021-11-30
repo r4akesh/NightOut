@@ -1,6 +1,5 @@
 package com.nightout.ui.activity
 
-import android.R.attr
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,15 +13,11 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.AddbarcrawlActivityBinding
 import com.nightout.model.BarCrwlListModel
 import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.Utills
-import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import android.R.attr.country
 import android.widget.AdapterView
 
 import android.widget.ArrayAdapter
-
-
+import com.nightout.ui.activity.barcrawl.BarCrawlSaveActivity
 
 
 class AddBarCrawlActvity : BaseActivity() ,AdapterView.OnItemSelectedListener{

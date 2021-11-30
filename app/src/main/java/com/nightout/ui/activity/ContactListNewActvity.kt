@@ -24,8 +24,10 @@ import com.nightout.model.ContactNoModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.ContactFillterViewModel
-import com.nightout.viewmodel.SaveEmngyPhNoViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -36,7 +38,7 @@ class ContactListNewActvity : BaseActivity() {
     private val progressDialog = CustomProgressDialog()
     lateinit var contactFillterViewModel: CommonViewModel
     lateinit var saveEmngyPhNoViewModel: CommonViewModel
-      var listFilter= ArrayList<ContactFillterModel.Data>()
+    var listFilter = ArrayList<ContactFillterModel.Data>()
     var chkSelectedCnt = 0
 
     val REQUEST_READ_CONTACTS = 80
@@ -49,14 +51,23 @@ class ContactListNewActvity : BaseActivity() {
         setToolBar()
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            Handler(Looper.getMainLooper()).post {
+            progressDialog.show(this@ContactListNewActvity, "")
+            GlobalScope.launch (Dispatchers.Main){
                 contactsInfoList = getAllContacts()
-                if(contactsInfoList.size>0)
+                if (contactsInfoList.size > 0)
                     contact_listAPICAll()
                 else
-                    MyApp.popErrorMsg("",resources.getString(R.string.Nocontactfounddevice),this@ContactListNewActvity)
+                    MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
             }
+           /* Handler(Looper.getMainLooper()).post {
+                contactsInfoList = getAllContacts()
+                if (contactsInfoList.size > 0)
+                    contact_listAPICAll()
+                else
+                    MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
+            }*/
         } else {
+
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
     }
@@ -83,12 +94,12 @@ class ContactListNewActvity : BaseActivity() {
             var existingCount = intent.getIntExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
             var totCnt = existingCount + chkSelectedCnt
             if (chkSelectedCnt > 0) {
-                if (totCnt > 2) {
-                    MyApp.popErrorMsg("", "You can add only two contact number", this@ContactListNewActvity)
+                if (intent.getBooleanExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, false)) {
+                    bar_crawl_invitationAPICall()
                 } else {
-                    if(intent.getBooleanExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,false)){
-                        bar_crawl_invitationAPICall()
-                    }else {
+                    if (totCnt > 2) {
+                        MyApp.popErrorMsg("", "You can add only two contact number", this@ContactListNewActvity)
+                    } else {
                         add_emergency_contactAPICALL()
                     }
                 }
@@ -102,21 +113,26 @@ class ContactListNewActvity : BaseActivity() {
         progressDialog.show(this@ContactListNewActvity, "")
         val map = HashMap<String, String>()
         var stringBuilder = StringBuilder()
-        for (i in 0 until listFilter.size){
-            if(listFilter[i].isChk){
+        for (i in 0 until listFilter.size) {
+            if (listFilter[i].isChk) {
                 stringBuilder.append(listFilter[i].uid)
                 stringBuilder.append(",")
             }
         }
-        var vID = stringBuilder.substring(0,stringBuilder.length-1)
+        var vID = stringBuilder.substring(0, stringBuilder.length - 1)
         map["id"] = intent.getStringExtra(AppConstant.INTENT_EXTRAS.BarcrwalID).toString()
         map["user_ids"] = vID
         try {
             contactFillterViewModel.shareBarCrwal(map).observe(this@ContactListNewActvity, {
                 when (it.status) {
                     Status.SUCCESS -> {
+                        progressDialog.dialog.dismiss()
                         try {
-                            Log.d("ok", "bar_crawl_invitationAPICall: "+it.message)
+                            Log.d("ok", "bar_crawl_invitationAPICall: " + it.message)
+
+                            MyApp.ShowTost(this@ContactListNewActvity,it.message!!)
+                            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
+                            finish()
                         } catch (e: Exception) {
                         }
                     }
@@ -127,7 +143,8 @@ class ContactListNewActvity : BaseActivity() {
                         try {
 
                             // Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
-                            binding.addContactDoneBtn.visibility=GONE
+                            binding.addContactDoneBtn.visibility = GONE
+                            finish()
                         } catch (e: Exception) {
                         }
 
@@ -148,7 +165,7 @@ class ContactListNewActvity : BaseActivity() {
     }
 
     private fun contact_listAPICAll() {
-        progressDialog.show(this@ContactListNewActvity, "")
+       // progressDialog.show(this@ContactListNewActvity, "")
         val jsnObjMain = JSONObject()
         val jarr = JSONArray()
         for (i in 0 until contactsInfoList.size) {
@@ -159,40 +176,42 @@ class ContactListNewActvity : BaseActivity() {
         }
         jsnObjMain.put("contact_list", jarr)
         try {
-            contactFillterViewModel.getContactFilter(jsnObjMain).observe(this@ContactListNewActvity, {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        try {
-                            progressDialog.dialog.dismiss()
-                            listFilter.addAll(it.data?.data!!)
-                            if (!listFilter.isNullOrEmpty()) {
-                                setListContact()
+            contactFillterViewModel.getContactFilter(jsnObjMain)
+                .observe(this@ContactListNewActvity, {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            try {
+                                progressDialog.dialog.dismiss()
+                                listFilter.addAll(it.data?.data!!)
+                                if (!listFilter.isNullOrEmpty()) {
+                                    setListContact()
 
-                                binding.addContactDoneBtn.text="Share"
-                                binding.addContactDoneBtn.visibility= VISIBLE
-                                binding.contactListNoDataConstrent.visibility = GONE
-                            }else{
-                                binding.contactListNoDataConstrent.visibility = VISIBLE
-                                binding.addContactDoneBtn.visibility= VISIBLE
+                                    binding.addContactDoneBtn.text = "Share"
+                                    binding.addContactDoneBtn.visibility = VISIBLE
+                                    binding.contactListNoDataConstrent.visibility = GONE
+                                } else {
+                                    binding.contactListNoDataConstrent.visibility = VISIBLE
+                                    binding.addContactDoneBtn.visibility = VISIBLE
+                                }
+                            } catch (e: Exception) {
                             }
-                        } catch (e: Exception) {
                         }
-                    }
-                    Status.LOADING -> {
-                    }
-                    Status.ERROR -> {
-                        progressDialog.dialog.dismiss()
-                        try {
-                            binding.contactListNoDataConstrent.visibility = VISIBLE
-                           // Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
-                            binding.addContactDoneBtn.visibility=GONE
-                        } catch (e: Exception) {
+                        Status.LOADING -> {
                         }
+                        Status.ERROR -> {
+                            progressDialog.dialog.dismiss()
+                            try {
+                                binding.contactListNoDataConstrent.visibility = VISIBLE
+                                // Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
+                                binding.addContactDoneBtn.visibility = GONE
+                            } catch (e: Exception) {
+                            }
 
+                        }
                     }
-                }
-            })
+                })
         } catch (e: Exception) {
+            Log.d("ok", "contact_listAPICAll: "+e)
         }
 
 
@@ -234,7 +253,10 @@ class ContactListNewActvity : BaseActivity() {
     }
 
     private fun setListContact() {
-        contactListAdapter = ContactListAdapter(this@ContactListNewActvity, listFilter!!, object : ContactListAdapter.ClickListener {
+        contactListAdapter = ContactListAdapter(
+            this@ContactListNewActvity,
+            listFilter!!,
+            object : ContactListAdapter.ClickListener {
                 override fun onClickChk(pos: Int) {
                     listFilter!![pos].isChk = !listFilter[pos].isChk
                     contactListAdapter.notifyItemChanged(pos)
@@ -252,27 +274,17 @@ class ContactListNewActvity : BaseActivity() {
 
 
     private fun getAllContacts(): ArrayList<ContactNoModel> {
+     //  progressDialog.show(this@ContactListNewActvity, "")
         var contactId: String? = null
         var displayName: String? = null
         contactsInfoList = ArrayList()
-        val cursor = getContentResolver().query(
-            ContactsContract.Contacts.CONTENT_URI,
-            null,
-            null,
-            null,
-            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
-        )
+        val cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC")
         if (cursor!!.count > 0) {
             while (cursor.moveToNext()) {
-                val hasPhoneNumber =
-                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
-                        .toInt()
+                val hasPhoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)).toInt()
                 if (hasPhoneNumber > 0) {
-
-                    contactId =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                    displayName =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                    contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+                    displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                     // contactsInfo.setContactId(contactId)
                     // contactsInfo.setDisplayName(displayName)
                     val phoneCursor = getContentResolver().query(
@@ -307,16 +319,23 @@ class ContactListNewActvity : BaseActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_READ_CONTACTS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    contactsInfoList = getAllContacts()
-                    if(contactsInfoList.size>0)
-                    contact_listAPICAll()
-                    else
-                        MyApp.popErrorMsg("",resources.getString(R.string.Nocontactfounddevice),this@ContactListNewActvity)
+                    GlobalScope.launch (Dispatchers.Main){
+                        contactsInfoList = getAllContacts()
+                        if (contactsInfoList.size > 0)
+                        contact_listAPICAll()
+                        else
+                        MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
+                    }
+
                 } else {
                     Toast.makeText(
                         this,

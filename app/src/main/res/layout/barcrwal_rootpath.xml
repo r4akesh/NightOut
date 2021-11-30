@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consterntPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgSource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/box_pin"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/pin_source_ic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/textSource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:text="Point A to Point B (Drive 3 KM)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgSource"
+                app:layout_constraintStart_toEndOf="@+id/imgSource"
+                app:layout_constraintTop_toTopOf="@+id/imgSource" />
+
+
+            <TextView
+                android:id="@+id/img_line"
+                android:layout_width="2dp"
+                android:layout_height="@dimen/_20sdp"
+                android:background="@drawable/ver_line_ic"
+                android:padding="@dimen/_5sdp"
+
+                app:layout_constraintEnd_toEndOf="@+id/imgSource"
+                app:layout_constraintStart_toStartOf="@+id/imgSource"
+                app:layout_constraintTop_toBottomOf="@+id/imgSource" />
+
+
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@color/view_line_clr"
+                app:layout_constraintBottom_toBottomOf="@+id/img_line"
+                app:layout_constraintStart_toEndOf="@+id/img_line"
+                app:layout_constraintTop_toTopOf="@+id/img_line" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>

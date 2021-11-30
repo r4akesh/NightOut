@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.barcrawl
 
 import android.os.Bundle
 import android.view.View

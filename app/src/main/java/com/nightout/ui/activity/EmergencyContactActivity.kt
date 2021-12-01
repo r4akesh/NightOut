@@ -68,7 +68,7 @@ class EmergencyContactActivity : BaseActivity() {
             ,REQCODE_ContactListActvity)*/
                 if(contactsInfoList.size>0) {
                     startForResultContactList.launch(
-                        Intent(this, ContactListActvity::class.java)
+                        Intent(this, ContactListNewActvity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.CONTACT_LIST, contactsInfoList)
                             .putExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
                     )

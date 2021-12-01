@@ -326,21 +326,23 @@
 
                     <TextView
                         android:id="@+id/bookTicketUrLoc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_reg"
                         android:text="Your Location"
+                        android:layout_marginEnd="@dimen/_5ssp"
                         android:layout_marginTop="@dimen/_5ssp"
                         android:textColor="@color/white_thred"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/bookTicketEventLoc"
                         app:layout_constraintTop_toBottomOf="@+id/bookTicketKM" />
 
 
                     <TextView
                         android:id="@+id/bookTicketEventLoc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
@@ -349,6 +351,7 @@
                         android:layout_marginTop="@dimen/_5ssp"
                         android:textColor="@color/white_thred"
                         android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toEndOf="@+id/bookTicketUrLoc"
                         app:layout_constraintBottom_toBottomOf="@+id/bookTicketUrLoc"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/bookTicketUrLoc" />
@@ -358,9 +361,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginEnd="@dimen/_10ssp"
+
                         android:fontFamily="@font/proximanova_reg"
                         android:text="@string/address"
+                        android:layout_marginEnd="@dimen/_5ssp"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toStartOf="@+id/bookTicketDAddrs"
@@ -371,7 +375,7 @@
                         android:id="@+id/bookTicketDAddrs"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
+
                         android:fontFamily="@font/proximanova_reg"
                         android:text="@string/address"
                         android:textColor="@color/text_gray"

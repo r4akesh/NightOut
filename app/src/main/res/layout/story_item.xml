@@ -12,9 +12,10 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/storyitem_img"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:scaleType="fitXY"
+            android:src="@drawable/no_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,6 +34,7 @@
             android:paddingEnd="@dimen/_5sdp"
             android:singleLine="true"
             android:text="title"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/_9ssp"
             app:layout_constraintEnd_toEndOf="parent"

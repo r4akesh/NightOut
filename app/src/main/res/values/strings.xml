@@ -225,5 +225,6 @@
     <string name="Select_Date">Select Date</string>
     <string name="disble_permison_contact">You have disabled a contacts permission</string>
     <string name="Nocontactfounddevice">No contact found in your device</string>
+    <string name="Select_Venues">Select Venues</string>
 
 </resources>

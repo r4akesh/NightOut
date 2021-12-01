@@ -15,11 +15,21 @@ import devs.mulham.horizontalcalendar.model.CalendarEvent
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import java.util.*
+import android.widget.DatePicker
+
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.widget.TimePicker
+
+import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
+
 
 //calendra link-https://github.com/Mulham-Raee/Horizontal-Calendar
 class PreBookingActivity : BaseActivity() {
     var intialValuePeople: Int = 4
     lateinit var binding: PrebookingActivityBinding
+    lateinit var horizontalCalendar : HorizontalCalendar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =
@@ -33,20 +43,23 @@ class PreBookingActivity : BaseActivity() {
         // Default Date set to Today.
         var defaultSelectedDate = Calendar.getInstance();
         val startDate: Calendar = Calendar.getInstance()
-        startDate.add(Calendar.MONTH, 1)//from current
+        startDate.add(Calendar.MONTH, 0)//from current
 
 /* ends after 1 month from now */
 /* ends after 1 month from now */
         val endDate: Calendar = Calendar.getInstance()
-        endDate.add(Calendar.MONTH, 2)
-        var horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendarView)
+        endDate.add(Calendar.MONTH, 6)
+          horizontalCalendar = HorizontalCalendar.Builder(this, R.id.calendarView)
             .range(startDate, endDate)
             .datesNumberOnScreen(7)
             .configure()
-            //.formatTopText("MMM")
-            .formatTopText("EEE")
-            .formatMiddleText("dd")
-            // .formatBottomText("EEE")
+              .formatTopText("EEE")
+              .formatMiddleText("dd")
+                //  jhkjhk
+
+//             .formatTopText("MMM")
+//          .formatMiddleText("dd")
+//              .formatBottomText("EEE")
             .showTopText(true)
             .showBottomText(false)
             .textColor(Color.LTGRAY, resources.getColor(R.color.text_yello))
@@ -61,6 +74,8 @@ class PreBookingActivity : BaseActivity() {
                 //do something
             }
         }
+
+
     }
 
     lateinit var subAdapter: DrinksSubAdapter
@@ -154,6 +169,8 @@ class PreBookingActivity : BaseActivity() {
         setTouchNClick(binding.preBookingPlus)
         setTouchNClick(binding.preBookingMinus)
         setTouchNClick(binding.toolbarBack)
+        setTouchNClick(binding.toolbarCelendra)
+        setTouchNClick(binding.preBookingTimePicker)
     }
 
     override fun onClick(v: View?) {
@@ -173,5 +190,60 @@ class PreBookingActivity : BaseActivity() {
                 binding.preBookingPeopleValue.setText("" + intialValuePeople)
             }
         }
+        else if(v==binding.toolbarCelendra){
+            showDatePicker()
+        }
+        else if(v==binding.preBookingTimePicker){
+            showTimePicker()
+        }
+    }
+
+    private fun showTimePicker() {
+        // Get Current Time
+
+        val c = Calendar.getInstance()
+       var  mHour = c[Calendar.HOUR_OF_DAY]
+      var  mMinute = c[Calendar.MINUTE]
+
+        // Launch Time Picker Dialog
+
+
+        val timePickerDialog = TimePickerDialog(this,
+            { view, hourOfDay, minute ->
+                var min = minute.toString()
+                if(min.length==1){
+                    min = "0$min"
+                }
+                binding.preBookingTimePicker.text = "$hourOfDay:$min" },
+            mHour,
+            mMinute,
+            true
+        )
+        timePickerDialog.show()
+    }
+
+    private fun showDatePicker() {
+        val c = Calendar.getInstance()
+        var mYear = c[Calendar.YEAR]
+        var mMonth = c[Calendar.MONTH]
+        var mDay = c[Calendar.DAY_OF_MONTH]
+
+
+        val datePickerDialog = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
+            //binding.preBookingTimePicker.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+            c[Calendar.YEAR] = year
+            c[Calendar.MONTH] = monthOfYear
+            c[Calendar.DAY_OF_MONTH] = dayOfMonth
+            horizontalCalendar.selectDate(c,false)//set date to horizontal cal
+                                                      },
+            mYear,
+            mMonth,
+            mDay
+        )
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        val calendr = Calendar.getInstance()
+        calendr.add(Calendar.MONTH, 6)
+        datePickerDialog.datePicker.maxDate= calendr.timeInMillis
+        datePickerDialog.show()
     }
 }

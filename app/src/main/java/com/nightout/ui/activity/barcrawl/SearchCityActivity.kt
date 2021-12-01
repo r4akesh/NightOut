@@ -18,6 +18,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.SrchCityBinding
+import com.nightout.utils.MyApp
 import java.util.*
 
 class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
@@ -46,8 +47,12 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
             startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
         }
         if (v == binding.barcrawlNextBtn) {
-            startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java))
-            finish()
+            if(binding.barcralCity.text.toString().isNullOrBlank()){
+                MyApp.popErrorMsg("","Please select city",THIS!!)
+            }else {
+                startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java))
+                finish()
+            }
         }
     }
 

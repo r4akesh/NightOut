@@ -298,7 +298,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:name=".ui.activity.BarCrawlSavedMapActivity"
+            android:name=".ui.activity.barcrawl.BarCrawlSavedMapActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />

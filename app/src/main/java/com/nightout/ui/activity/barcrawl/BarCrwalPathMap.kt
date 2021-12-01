@@ -66,16 +66,14 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private val progressDialog = CustomProgressDialog()
     var listBarcrwal = ArrayList<AllBarCrwalListResponse.Barcrawl>()
     private lateinit var commonViewModel: CommonViewModel
-    private var mOrigin: LatLng? = null
-    private var mDestination: LatLng? = null
-    private var mPolyline: Polyline? = null
+
     var mMarkerPoints: ArrayList<LatLng>? = null
     var indexOfList = 0
     var sizeOfList = 0
     private var bounds: LatLngBounds? = null
     private var builder: LatLngBounds.Builder? = null
     var barcrwalId : String= ""
-    //  private val BROOKLYN_BRIDGE = LatLng(40.7057, -73.9964)
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,7 +172,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
     private fun isValidate(): Boolean {
         if(dgEtBarCrwal.text.isNullOrEmpty()){
-            MyApp.popErrorMsg("","Please enter Barcrawl name",THIS!!)
+            MyApp.popErrorMsg("","Please enter Bar Crawl name",THIS!!)
             return false
         }
         else if(dgDateBtn.text.equals(resources.getString(R.string.Select_Date))){
@@ -236,6 +234,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                             }
 
                             override fun onNO() {
+                                //startActivity(Intent(this@BarCrwalPathMap, BarCrawlSavedListActivity::class.java))
                                 finish()
                             }
 
@@ -258,7 +257,8 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             }
         })
     }
-var publicPrivetValue="1"
+
+    var publicPrivetValue="1"
     private fun setSpin() {
 
                 var listSpin = ArrayList<String>()
@@ -423,6 +423,7 @@ var publicPrivetValue="1"
             }
         }
     }
+
     private fun setBody(bitmap: Bitmap, flag: String): MultipartBody.Part {
         val filePath = Utills.saveImage(this@BarCrwalPathMap, bitmap)
         this.filePath = File(filePath)
@@ -514,6 +515,7 @@ var publicPrivetValue="1"
         googleMap.addMarker(markerOptions)
         builder?.include(markerOptions.position)
     }
+
     private fun mapsApiDirectionsUrl(): String {
         val origin =
             "origin=" + listBarcrwal[indexOfList].venue_detail.store_lattitude + "," + listBarcrwal[indexOfList].venue_detail.store_longitude
@@ -556,7 +558,7 @@ var publicPrivetValue="1"
                         }
                         polyLineOptions.addAll(points)
                         polyLineOptions.width(5f)
-                        polyLineOptions.color(Color.BLUE)
+                        polyLineOptions.color(resources.getColor(R.color.text_yello))
 
                     }
                     runOnUiThread {

@@ -51,6 +51,10 @@ class SavedAdapter(
             viewHolder.itemView.setOnClickListener {
                 clickListener.onClick(position)
             }
+
+            viewHolder.binding.sharedItem3Dott.setOnClickListener {
+                clickListener.onClick3Dot(position, viewHolder.binding.sharedItem3Dott)
+            }
         } catch (e: Exception) {
             Log.d("TAG", "Exception: $e")
         }
@@ -72,6 +76,7 @@ class SavedAdapter(
 
     interface ClickListener {
         fun onClick(pos: Int)
+        fun onClick3Dot(pos: Int,img:ImageView)
 
 
     }

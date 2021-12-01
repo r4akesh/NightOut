@@ -2,6 +2,7 @@ package com.nightout.ui.activity
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +22,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.ContactlistActvityBinding
 import com.nightout.model.ContactFillterModel
 import com.nightout.model.ContactNoModel
+import com.nightout.ui.activity.barcrawl.BarCrawlSavedListActivity
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -40,7 +42,7 @@ class ContactListNewActvity : BaseActivity() {
     lateinit var saveEmngyPhNoViewModel: CommonViewModel
     var listFilter = ArrayList<ContactFillterModel.Data>()
     var chkSelectedCnt = 0
-
+    var isFROM_BarCrwalPathMapActvity=false
     val REQUEST_READ_CONTACTS = 80
     var contactsInfoList = ArrayList<ContactNoModel>()
 
@@ -49,6 +51,7 @@ class ContactListNewActvity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@ContactListNewActvity, R.layout.contactlist_actvity)
         initView()
         setToolBar()
+          isFROM_BarCrwalPathMapActvity = intent.getBooleanExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, false)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             progressDialog.show(this@ContactListNewActvity, "")
@@ -94,9 +97,10 @@ class ContactListNewActvity : BaseActivity() {
             var existingCount = intent.getIntExtra(AppConstant.INTENT_EXTRAS.EMERNGCY_COUNT, 0)
             var totCnt = existingCount + chkSelectedCnt
             if (chkSelectedCnt > 0) {
-                if (intent.getBooleanExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, false)) {
+                if (isFROM_BarCrwalPathMapActvity) {
                     bar_crawl_invitationAPICall()
                 } else {
+                    //form EmergencyContactActivity
                     if (totCnt > 2) {
                         MyApp.popErrorMsg("", "You can add only two contact number", this@ContactListNewActvity)
                     } else {
@@ -129,7 +133,6 @@ class ContactListNewActvity : BaseActivity() {
                         progressDialog.dialog.dismiss()
                         try {
                             Log.d("ok", "bar_crawl_invitationAPICall: " + it.message)
-
                             MyApp.ShowTost(this@ContactListNewActvity,it.message!!)
                             PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
                             finish()
@@ -141,7 +144,7 @@ class ContactListNewActvity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-
+                            MyApp.ShowTost(this@ContactListNewActvity,"Error occurred")
                             // Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
                             binding.addContactDoneBtn.visibility = GONE
                             finish()
@@ -185,8 +188,10 @@ class ContactListNewActvity : BaseActivity() {
                                 listFilter.addAll(it.data?.data!!)
                                 if (!listFilter.isNullOrEmpty()) {
                                     setListContact()
-
+                                  if(isFROM_BarCrwalPathMapActvity)
                                     binding.addContactDoneBtn.text = "Share"
+                                    else
+                                      binding.addContactDoneBtn.text = "Add"
                                     binding.addContactDoneBtn.visibility = VISIBLE
                                     binding.contactListNoDataConstrent.visibility = GONE
                                 } else {

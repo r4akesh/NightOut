@@ -83,7 +83,7 @@ class BarcrawlListActivity : BaseActivity() {
             binding.barCrwalBtmDetail.visibility = GONE
         } else if (v == binding.barCrwalNextBtn) {
             if (listHr.size < 2) {
-                MyApp.popErrorMsg("", "Please select at least two venue.", THIS!!)
+                MyApp.popErrorMsg("", "Please select at least two venues.", THIS!!)
             } else {
                 startActivity(
                     Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
@@ -270,6 +270,7 @@ class BarcrawlListActivity : BaseActivity() {
             .load(PreferenceKeeper.instance.imgPathSave + barcrawlData.venue_detail.store_logo)
             .error(R.drawable.no_image)
             .into(binding.barcrwalLogo)
+        binding.barcrwalTitle.text = barcrawlData.venue_detail.store_name
         binding.barcrwalSubTitle.text = barcrawlData.venue_detail.store_address
         binding.barcralListClostTime.text = "Close: " + barcrawlData.venue_detail.close_time
 
@@ -277,7 +278,7 @@ class BarcrawlListActivity : BaseActivity() {
     }
 
     private fun setToolBar() {
-        binding.BarCrawlListToolBar.toolbarTitle.setText("Bar Crawl")
+        binding.BarCrawlListToolBar.toolbarTitle.setText(resources.getString(R.string.Select_Venues))
         setTouchNClick(binding.BarCrawlListToolBar.toolbarBack)
         binding.BarCrawlListToolBar.toolbarBack.setOnClickListener { finish() }
         binding.BarCrawlListToolBar.toolbar3dot.visibility = View.GONE

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.View.GONE
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
@@ -12,20 +11,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.SavedAdapter
-import com.nightout.adapter.SharedAdapter
 import com.nightout.base.BaseActivity
-import com.nightout.databinding.BarshredActivityBinding
 import com.nightout.databinding.BarssavedActivityBinding
-import com.nightout.databinding.FragmentBarcrawlnewBinding
 import com.nightout.model.BarcrwalSavedRes
-import com.nightout.model.SharedBarcrwalRes
-import com.nightout.model.SharedModel
-import com.nightout.ui.activity.BarCrawlSavedMapActivity
 import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
+import kotlinx.android.synthetic.main.image_view_item.*
 
 class BarCrawlSavedListActivity : BaseActivity() {
 
@@ -33,6 +28,7 @@ class BarCrawlSavedListActivity : BaseActivity() {
     private var customProgressDialog = CustomProgressDialog()
     lateinit var getSavedListViewModel : CommonViewModel
      lateinit  var listtSaved : ArrayList<BarcrwalSavedRes.Data>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +89,10 @@ class BarCrawlSavedListActivity : BaseActivity() {
                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalList,listtSaved[pos]))
             }
 
+            override fun onClick3Dot(pos: Int, imgview:ImageView) {
+                openPopMenu(pos,imgview)
+            }
+
         })
 
         binding.savedRecycleView.also {
@@ -101,5 +101,49 @@ class BarCrawlSavedListActivity : BaseActivity() {
         }
     }
 
+    private fun openPopMenu(pos: Int, imageView: ImageView) {
+        val popup = PopupMenu(this@BarCrawlSavedListActivity, imageView)
+        popup.menu.add("Edit")
+        popup.menu.add("Delete")
+        popup.setGravity(Gravity.END)
+        popup.setOnMenuItemClickListener { item ->
+            // item.title
+            if(item.title.equals("Edit")){
+                startActivity(Intent(this@BarCrawlSavedListActivity,BarcrawlListActivity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtSaved[pos].id))
+            }else{
+                 delete_bar_crawlAPICall(pos)
+            }
+            true
+        }
+        popup.show()
+    }
+    private fun delete_bar_crawlAPICall(posList:Int) {
+        customProgressDialog.show(this@BarCrawlSavedListActivity, "")
+        var map = HashMap<String,String>()
+        map["id"] = listtSaved[posList].id
+
+        getSavedListViewModel.delSharedList(map).observe(this@BarCrawlSavedListActivity,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    var listSize = listtSaved.size
+                    listtSaved.removeAt(posList)
+                    sharedAdapter.notifyItemRemoved(posList)
+                    sharedAdapter.notifyItemRangeChanged(posList, listSize)
+                    MyApp.popErrorMsg("",it.message!!,this@BarCrawlSavedListActivity)
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+                    MyApp.popErrorMsg("",it.message!!,this@BarCrawlSavedListActivity)
+                    //  Utills.showSnackBarOnError(binding.barcrwalSharedListMainLayoyt, it.message!!, this@BarCrawlShredListActivity)
+                    // binding.barcrwalSharedListMainLayoyt.visibility= View.VISIBLE
+                }
+            }
+        })
+    }
 
 }

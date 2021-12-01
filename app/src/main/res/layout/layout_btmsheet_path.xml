@@ -44,6 +44,19 @@
                     android:layout_marginTop="@dimen/_10ssp" />
 
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bottomSheetShareBtn"
+                    style="@style/buttonTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/gredient_bg"
+                    android:text="@string/Share"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+
             </LinearLayout>
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

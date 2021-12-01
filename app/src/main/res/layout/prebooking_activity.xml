@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imgToolBarMap" />
 
             <ImageView
-                android:id="@+id/toolbar_celendra"
+                android:id="@+id/toolbarCelendra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10ssp"
-                app:selectedDateBackground="@drawable/border_yello"
+
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

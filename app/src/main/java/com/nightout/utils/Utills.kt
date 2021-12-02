@@ -2,20 +2,29 @@ package com.nightout.utils
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.telephony.PhoneNumberUtils
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -25,6 +34,8 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.makeramen.roundedimageview.RoundedImageView
 import com.nightout.R
+import com.nightout.model.DashboardModel
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -83,6 +94,21 @@ class Utills {
              snackBarView.show()
         }
 
+        fun showSnakBarCstm(view: View, message: String, context: Context){
+
+
+
+            val snackbar: Snackbar
+            snackbar = Snackbar.make(view, "Message", Snackbar.LENGTH_SHORT)
+            val snackBarView = snackbar.view
+            snackBarView.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+            val textView: TextView = snackBarView.findViewById<View>(R.id.snackbar_text) as TextView
+            textView.setTextColor(ContextCompat.getColor(context,R.color.red_clr2))
+            snackbar.show()
+
+
+
+        }
 
         private fun Snackbar.changeFont() {
             val tv = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
@@ -232,5 +258,65 @@ class Utills {
 //        })
 
         }
+        ///next fun
+          fun showDialogImage(context: Context,imgPath: String,title: String) {
+            val imagedialog = Dialog(context)
+            val window: Window = imagedialog.getWindow()!!
+            window.setGravity(Gravity.TOP)
+            val layoutParams: WindowManager.LayoutParams = imagedialog.getWindow()!!.getAttributes()
+            layoutParams.y = 170//margin top
+            imagedialog.getWindow()!!.setAttributes(layoutParams);
+
+            imagedialog.setContentView( R.layout.imagedialog)
+            imagedialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            var  photo    = imagedialog.findViewById(R.id.photoenlarge) as ImageView
+            var  viewTransTop    = imagedialog.findViewById(R.id.viewTransTop) as View
+            var  titleDialog    = imagedialog.findViewById(R.id.titleDialog) as TextView
+
+            titleDialog.setText(title)
+
+            Glide.with(context)
+                .load(imgPath)
+                .error(R.drawable.no_image)
+                .into(photo)
+            val fade_in = ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+            fade_in.duration = 500
+            fade_in.fillAfter = true
+            photo.startAnimation(fade_in)
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewTransTop.visibility= View.VISIBLE
+                titleDialog.visibility= View.VISIBLE
+
+            },490)
+
+            imagedialog.show()
+        }
+
+        fun slideUp(view: View) {
+            view.visibility = View.VISIBLE
+            val animate = TranslateAnimation(0f,   0f,   view.height.toFloat(),  0f)
+            animate.duration = 500
+            animate.fillAfter = true
+            view.startAnimation(animate)
+        }
+        fun slideDown(view: View) {
+            val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat()) // toYDelta
+            animate.duration = 1000
+            animate.fillAfter = true
+            view.startAnimation(animate)
+        }
+
+        fun showErrorToast(ctx: Context, msg: String) {
+            DynamicToast.makeError(ctx, msg, Toast.LENGTH_SHORT).show()
+        }
+
+        fun showSuccessToast(ctx: Context, msg: String) {
+            DynamicToast.makeSuccess(ctx, msg, Toast.LENGTH_LONG).show()
+        }
+
+        fun showWarningToast(ctx: Context, msg: String) {
+            DynamicToast.makeWarning(ctx, msg, Toast.LENGTH_LONG).show()
+        }
+
     }
 }

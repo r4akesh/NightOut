@@ -35,6 +35,17 @@ import android.text.Editable
 
 import android.text.TextWatcher
 import com.nightout.viewmodel.CommonViewModel
+import android.graphics.drawable.BitmapDrawable
+import android.os.Handler
+import android.os.Looper
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.WindowManager
+
+
+
 
 
 class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
@@ -62,6 +73,41 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         setListHorizntalFood()
         setListDrinksDummy()//first time set
         // add_Remove_bar_crawlAPICAll()
+        //duumy
+        setTouchNClick(binding.storeDeatilLogo)
+
+         binding.storeDeatilLogo.setOnClickListener {
+
+            val imagedialog = Dialog(this@StoreDetailActvity)
+             val window: Window = imagedialog.getWindow()!!
+             window.setGravity(Gravity.TOP)
+             val layoutParams: WindowManager.LayoutParams = imagedialog.getWindow()!!.getAttributes()
+             layoutParams.y = 170//margin top
+             imagedialog.getWindow()!!.setAttributes(layoutParams);
+
+                imagedialog.setContentView( R.layout.imagedialog)
+             imagedialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            var  photo    = imagedialog.findViewById(R.id.photoenlarge) as ImageView
+            var  viewTransTop    = imagedialog.findViewById(R.id.viewTransTop) as View
+
+
+
+             Glide.with(this@StoreDetailActvity)
+                 .load(PreferenceKeeper.instance.imgPathSave + dt.store_logo)
+                 .error(R.drawable.no_image)
+                 .into(photo)
+             val fade_in = ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+             fade_in.duration = 500
+             fade_in.fillAfter = true
+             photo.startAnimation(fade_in)
+               Handler(Looper.getMainLooper()).postDelayed({
+                   viewTransTop.visibility= VISIBLE
+
+             },490)
+
+                imagedialog.show()
+
+        }
     }
 
     override fun onClick(v: View?) {
@@ -823,6 +869,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(binding.storeDeatilSharLoc)
         setTouchNClick(binding.storeDeatilDirection)
         setTouchNClick(binding.storeDeatilFav)
+
         val str1 = resources.getString(R.string.Direction)
         var settext = "<u>$str1 </u>"
         binding.storeDeatilDirection.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)

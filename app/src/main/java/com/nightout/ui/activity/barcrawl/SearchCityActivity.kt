@@ -2,8 +2,16 @@ package com.nightout.ui.activity.barcrawl
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import android.widget.RelativeLayout
+import android.widget.RelativeLayout.ALIGN_PARENT_TOP
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,6 +27,7 @@ import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.SrchCityBinding
 import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 import java.util.*
 
 class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
@@ -31,6 +40,11 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         binding = DataBindingUtil.setContentView(this@SearchCityActivity, R.layout.srch_city)
         setToolBar()
         initView()
+        Handler(Looper.getMainLooper()).postDelayed({
+            Utills.slideUp(binding.barcrawlBtmConstrent)
+        },100)
+
+
     }
 
     override fun onClick(v: View?) {
@@ -95,4 +109,6 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         } catch (e: Exception) {
         }
     }
+
+
 }

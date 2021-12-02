@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_200sdp"
+    android:layout_height="@dimen/_200sdp">
+
+    <ImageView
+        android:id="@+id/photoenlarge"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:background="@drawable/border_yello"
+        android:padding="@dimen/_1sdp"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/viewTransTop"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@color/transcolor_color"
+        android:layout_marginStart="@dimen/_1sdp"
+        android:layout_marginEnd="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/photoenlarge"
+        app:layout_constraintStart_toStartOf="@+id/photoenlarge"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imgCloseDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_7sdp"
+        android:src="@drawable/close_dialog"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTransTop"
+        app:layout_constraintEnd_toEndOf="@+id/photoenlarge"
+        app:layout_constraintTop_toTopOf="@+id/viewTransTop"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/titleDialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5ssp"
+        android:layout_marginEnd="@dimen/_5ssp"
+        android:singleLine="true"
+        android:text=""
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTransTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewTransTop" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -212,4 +212,9 @@
         <item name="colorControlNormal">#f57c00</item>
         <item name="colorControlActivated">#c51162</item>
     </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 </resources>

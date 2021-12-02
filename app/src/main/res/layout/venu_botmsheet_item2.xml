@@ -163,14 +163,14 @@
                             android:id="@+id/venusubitem_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                                android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/_10ssp"
                             android:background="@null"
                             android:drawableStart="@drawable/start_yellobg"
                             android:drawablePadding="@dimen/_5ssp"
                             android:fontFamily="@font/proximanova_bold"
-                            android:text="4.5"
+                            android:text="3"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_13ssp" />
 

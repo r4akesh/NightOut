@@ -3,19 +3,21 @@ package com.nightout.ui.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
-import android.content.Context
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.*
-import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -44,6 +46,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 import com.nightout.viewmodel.CommonViewModel
 
@@ -402,7 +405,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
         storyAdapter = StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-
+                   // showDialogImage(listStory,pos)
+                    Utills.showDialogImage(requireActivity(),PreferenceKeeper.instance.imgPathSave + listStory[pos].storydetail[0].image,listStory[pos].vendor_detail.name)
                 }
             })
 
@@ -416,6 +420,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         }
 
     }
+
+
 
     private fun setUpLocationListener() {
            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())

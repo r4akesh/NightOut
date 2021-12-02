@@ -75,6 +75,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
       fun sendAgain(regViewModel: OtpViewModel){
           progressDialog.show(activity)
           activity.binding.otpActivitySendAgain.visibility = View.GONE
+          activity.binding.otpDidnot.visibility = View.GONE
           activity.showTimer()
           val map = HashMap<String, String>()
           var mobNo = mobNo

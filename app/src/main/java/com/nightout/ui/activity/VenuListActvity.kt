@@ -92,14 +92,14 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 3 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Food"
+                binding.venulistingToolBar.toolbarTitle.text = "Foods"
                 venue_type_listAPICALL()
             }
             "5" -> {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 4 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Event"
+                binding.venulistingToolBar.toolbarTitle.text = "Events"
                 venue_type_listAPICALL()
             }
         }
@@ -260,7 +260,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         listStoreType.add(VenuModel(1, "Bars", false, isApiCall = false))
         listStoreType.add(VenuModel(2, "Pubs", false, isApiCall = false))
         listStoreType.add(VenuModel(3, "Clubs", false, isApiCall = false))
-        listStoreType.add(VenuModel(4, "Food", false, isApiCall = false))
+        listStoreType.add(VenuModel(4, "Foods", false, isApiCall = false))
         listStoreType.add(VenuModel(5, "Events", false, isApiCall = false))
 
 

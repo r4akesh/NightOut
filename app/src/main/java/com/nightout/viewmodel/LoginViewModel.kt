@@ -27,19 +27,14 @@ class LoginViewModel(activity: Activity) : BaseObservable() {
         when {
             activity.binding.loginPhno.text.toString() == "" -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(
-                    activity.binding.loginPhno,
-                    activity.resources.getString(R.string.please_enter_phno),
-                    activity
-                )
+                //Utills.showSnackBarOnError(activity.binding.loginPhno, activity.resources.getString(R.string.please_enter_phno), activity)
+                //Utills.showSnakBarCstm(activity.binding.loginPhno, activity.resources.getString(R.string.please_enter_phno), activity)
+                Utills.showErrorToast(activity,activity.resources.getString(R.string.please_enter_phno))
             }
             activity.binding.loginPhno.text.toString().length<14->{
                 isFormValidated = false
-                Utills.showSnackBarOnError(
-                    activity.binding.loginPhno,
-                    activity.resources.getString(R.string.please_enter_valid_phno),
-                    activity
-                )
+              //  Utills.showSnackBarOnError(activity.binding.loginPhno, activity.resources.getString(R.string.please_enter_valid_phno), activity)
+                Utills.showErrorToast(activity,activity.resources.getString(R.string.please_enter_valid_phno))
             }
 
             else -> {

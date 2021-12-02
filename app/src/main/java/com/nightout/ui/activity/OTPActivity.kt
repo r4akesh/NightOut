@@ -71,6 +71,7 @@ class OTPActivity : BaseActivity() {
             override fun onFinish() {
                 binding.otpDidnot.visibility=VISIBLE
                 binding.otpActivitySendAgain.visibility=VISIBLE
+
                 Log.d("seconds remaining: ", "DONE")
             }
         }.start()
@@ -90,7 +91,7 @@ class OTPActivity : BaseActivity() {
                 mob2 = mobNo.substring(mobNo.length - 2)
                 mob1 = mobNo.substring(1, 3)
             }
-            binding.loginPhOtpText.setText(resources.getString(R.string.entrotp_recivedmobno) + "+44 " + mob1 + "******" + mob2)
+            binding.loginPhOtpText.setText(resources.getString(R.string.entrotp_recivedmobno) + " +44 " + mob1 + "******" + mob2)
         }
 
 

@@ -40,7 +40,7 @@ class StoryAdapter(
             Glide
                 .with(context)
                 .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].storydetail[0].image)
-                 .error(R.drawable.app_icon)
+                 .error(R.drawable.no_image)
                 .into(viewHolder.binding.storyitemImg)
             viewHolder.itemView.setOnClickListener {
                 clickListener.onClick(position)

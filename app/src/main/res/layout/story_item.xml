@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:riv_border_color="@color/text_yello"
-            app:riv_border_width="2dp"
+            app:riv_border_width="1dp"
             app:riv_corner_radius="5dp" />
 
 

@@ -167,7 +167,7 @@
     <string name="please_enter_phno">Please enter mobile number</string>
     <string name="please_enter_fName">Please enter first name</string>
     <string name="please_enter_lName">Please enter last name</string>
-    <string name="please_enter_valid_phno">Please enter valid phone number</string>
+    <string name="please_enter_valid_phno">Mobile number should be 10 digit</string>
     <string name="please_enter_fname">Please enter first name</string>
     <string name="please_enter_lname">Please enter last name</string>
     <string name="please_enter_email">Please enter email</string>
@@ -216,6 +216,9 @@
     <string name="Sharethelink">Share the link of App with your friend and Add them in Emergency Contact. </string>
     <string name="youHavntAddEmrgencyCotact">You haven\'t add emergency contact yet</string>
     <string name="youHavntAddFavStroe">You haven\'t saved any venues to favourite</string>
+    <string name="youHavntShareBracrwal">You haven\'t shared Bar Crawl yet</string>
+    <string name="youHavntSavedBracrwal">You haven\'t saved Bar Crawl yet</string>
+    <string name="youHavntVenueBracrwal">You haven\'t added Venue into Bar Crawl yet</string>
     <string name="currency_sumbol">£</string>
     <string name="EnterUrAddrs">Type your address</string>
     <string name="plzDownlodTicket">Note:- Please download the ticket, So that we can share the ticket on your mail for reference.</string>

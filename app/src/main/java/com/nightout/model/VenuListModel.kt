@@ -15,7 +15,7 @@ data class VenuListModel(
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,
-        val barcrawl: String,
+        var barcrawl: String,
         val by_default: String,
         val close_time: String,
         val created_at: String,

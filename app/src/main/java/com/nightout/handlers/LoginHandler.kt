@@ -48,7 +48,7 @@ open class LoginHandler(val activity: LoginActivity) {
 //                    it.data?.let {user->
 //                    user.data.email
 //                    }
-                    Utills.showSuccessToast(activity,"Logged in successfully")
+                    //Utills.showSuccessToast(activity,"Logged in successfully")
                     activity.startActivity(
                         Intent(activity, OTPActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.MOBILENO, loginViewModel.PhNo!!)

@@ -306,13 +306,13 @@ class Utills {
             view.startAnimation(animate)
         }
 
-        fun showErrorToast(ctx: Context, msg: String) {
-            DynamicToast.makeError(ctx, msg, Toast.LENGTH_SHORT).show()
-        }
-
-        fun showSuccessToast(ctx: Context, msg: String) {
-            DynamicToast.makeSuccess(ctx, msg, Toast.LENGTH_LONG).show()
-        }
+//        fun showErrorToast(ctx: Context, msg: String) {
+//            DynamicToast.makeError(ctx, msg, Toast.LENGTH_SHORT).show()
+//        }
+//
+//        fun showSuccessToast(ctx: Context, msg: String) {
+//            DynamicToast.makeSuccess(ctx, msg, Toast.LENGTH_LONG).show()
+//        }
 
         fun showWarningToast(ctx: Context, msg: String) {
             DynamicToast.makeWarning(ctx, msg, Toast.LENGTH_LONG).show()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
@@ -51,8 +52,13 @@ class BarCrawlSavedListActivity : BaseActivity() {
                         listtSaved =  ArrayList()
                        // listtSaved = myData.data.reversed() as ArrayList<BarcrwalSavedRes.Data>
                         listtSaved.addAll(myData.data)
-
-                        setListSaved( )
+                        if(listtSaved.size>0) {
+                            binding.barcrwalSavedNoData.visibility= GONE
+                            setListSaved()
+                        }
+                        else{
+                            binding.barcrwalSavedNoData.visibility= VISIBLE
+                        }
                         Log.d("TAG", "user_lost_itemsAPICAll: "+myData.data)
                     }
                 }
@@ -60,8 +66,9 @@ class BarCrawlSavedListActivity : BaseActivity() {
 
                 }
                 Status.ERROR->{
+                    binding.barcrwalSavedNoData.visibility= VISIBLE
                     customProgressDialog.dialog.dismiss()
-                   Utills.showSnackBarOnError(binding.saveBarMainLayout, it.message!!, this@BarCrawlSavedListActivity)
+                  // Utills.showSnackBarOnError(binding.saveBarMainLayout, it.message!!, this@BarCrawlSavedListActivity)
 
                 }
             }
@@ -132,6 +139,9 @@ class BarCrawlSavedListActivity : BaseActivity() {
                     sharedAdapter.notifyItemRemoved(posList)
                     sharedAdapter.notifyItemRangeChanged(posList, listSize)
                     MyApp.popErrorMsg("",it.message!!,this@BarCrawlSavedListActivity)
+                    if(listtSaved.size==0){
+                        binding.barcrwalSavedNoData.visibility= VISIBLE
+                    }
                 }
                 Status.LOADING->{
 

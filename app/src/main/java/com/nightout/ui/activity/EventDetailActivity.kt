@@ -62,7 +62,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
         }
         else if(v==binding.eventDetailBakBtn){
             var myIntent = Intent()
-            myIntent.putExtra("result",favStatus)
+            myIntent.putExtra("resultFav",favStatus)
             setResult(Activity.RESULT_OK,myIntent)
             finish()
 
@@ -294,7 +294,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun onBackPressed() {
         var myIntent = Intent()
-        myIntent.putExtra("result",favStatus)
+        myIntent.putExtra("resultFav",favStatus)
         setResult(Activity.RESULT_OK,myIntent)
         finish()
         super.onBackPressed()

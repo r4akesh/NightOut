@@ -29,7 +29,7 @@
                 android:layout_height="@dimen/_150sdp"
                 android:background="@null"
                 android:scaleType="fitXY"
-                android:src="@drawable/venusub_img1"
+                android:src="@drawable/no_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -211,7 +211,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/venusubitem_saveToBarvrawl"
+                        android:id="@+id/venusubitemSaveToBarvrawl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"

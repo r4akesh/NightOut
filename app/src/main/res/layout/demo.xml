@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--we are using merge as a parent layout for merging all our views-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
 
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
+<merge
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
-    <Button
-        android:id="@+id/my_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="onSlideViewButtonClick"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/my_view"
-        android:background="#a6e1aa"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
+    <!--below is the image view where we will
+        be displaying images in our stories-->
+    <ImageView
+        android:id="@+id/imagePreview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray"
+        android:contentDescription="@null"
+        tools:src="@drawable/app_icon" />
+    <ProgressBar
+        android:id="@+id/progress"
+            android:layout_gravity="center"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--on below line we are creating
+        linear layout for our views-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!--view to handle move to previous image-->
+        <View
+            android:id="@+id/reverse"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <!--view to move to the next image-->
+        <View
+            android:id="@+id/skip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+    <!--below widget is use to create indicator for our stories at top-->
+    <jp.shts.android.storiesprogressview.StoriesProgressView
+        android:id="@+id/storiesProgressView"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
+
+
+
+
+
+</merge>
 </layout>

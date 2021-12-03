@@ -114,6 +114,14 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         super.onClick(v)
 
         if(v==binding.storeDeatilAddVenuRel){
+            if (addBarCrawlStatus == "1") {
+                addBarCrawlStatus = "1"
+                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+
+            } else {
+                addBarCrawlStatus = "0"
+                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
+            }
             addRemoveBarCrawlAPICall()
         }
         else if (v == binding.storeDeatilFav) {
@@ -143,7 +151,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             }
         } else if (v == binding.storeDeatilBakBtn) {
             var myIntent = Intent()
-            myIntent.putExtra("result",favStatus)
+            myIntent.putExtra("resultFav",favStatus)
+            myIntent.putExtra("resultBarcrwal",addBarCrawlStatus)
             setResult(Activity.RESULT_OK,myIntent)
             finish()
 
@@ -904,7 +913,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
 
     private fun addRemoveBarCrawlAPICall() {
-        progressDialog.show(this@StoreDetailActvity, "")
+      //  progressDialog.show(this@StoreDetailActvity, "")
         var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
@@ -914,21 +923,21 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetailActvity, {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        progressDialog.dialog.dismiss()
+                       // progressDialog.dialog.dismiss()
                         it.data?.let { detailData ->
                             try {
-                                Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
-                                if (detailData.data.status == "1") {
-                                    addBarCrawlStatus = "0"
-                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
-
-                                } else {
-                                    addBarCrawlStatus = "1"
-                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
-                                }
-                                MyApp.ShowTost(this@StoreDetailActvity,detailData.message)
+//                                Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
+//                                if (detailData.data.status == "1") {
+//                                    addBarCrawlStatus = "0"
+//                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+//
+//                                } else {
+//                                    addBarCrawlStatus = "1"
+//                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
+//                                }
+                               // MyApp.ShowTost(this@StoreDetailActvity,detailData.message)
                             } catch (e: Exception) {
-                                MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@StoreDetailActvity)
+                               // MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@StoreDetailActvity)
                             }
                         }
                     }
@@ -936,8 +945,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
                     }
                     Status.ERROR -> {
-                        progressDialog.dialog.dismiss()
-                        Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetailActvity)
+                       // progressDialog.dialog.dismiss()
+                       // Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetailActvity)
                     }
                 }
             })
@@ -1102,7 +1111,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     override fun onBackPressed() {
         var myIntent = Intent()
-        myIntent.putExtra("result",favStatus)
+        myIntent.putExtra("resultFav",favStatus)
+        myIntent.putExtra("resultBarcrwal",addBarCrawlStatus)
         setResult(Activity.RESULT_OK,myIntent)
         super.onBackPressed()
     }

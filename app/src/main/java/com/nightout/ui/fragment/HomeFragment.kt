@@ -405,8 +405,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
         storyAdapter = StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-                   // showDialogImage(listStory,pos)
-                    Utills.showDialogImage(requireActivity(),PreferenceKeeper.instance.imgPathSave + listStory[pos].storydetail[0].image,listStory[pos].vendor_detail.name)
+                    startActivity(Intent(requireActivity(),Demo::class.java))
+                  //  Utills.showDialogImage(requireActivity(),PreferenceKeeper.instance.imgPathSave + listStory[pos].storydetail[0].image,listStory[pos].vendor_detail.name)
                 }
             })
 

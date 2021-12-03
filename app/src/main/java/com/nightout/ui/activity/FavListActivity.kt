@@ -88,8 +88,8 @@ class FavListActivity : BaseActivity() {
 
     val REQCODE_STOREDETAILACTIVITY = 1002
     var posSave=0 //for list update
-    private fun setList() {
 
+    private fun setList() {
         favVenuAdapter = FavVenuAdapter(this@FavListActivity,dataList,object:FavVenuAdapter.ClickListener{
             override fun onClick(pos: Int) {
                 posSave = pos
@@ -160,6 +160,9 @@ class FavListActivity : BaseActivity() {
                             dataList.removeAt(pos)
                             favVenuAdapter.notifyItemRemoved(pos)
                             favVenuAdapter.notifyItemRangeChanged(pos, listSize)
+                            if(dataList.size==0){
+                                binding.favVenuesNoDataConstrent.visibility=VISIBLE
+                            }
                         } catch (e: Exception) {
                         }
                     }

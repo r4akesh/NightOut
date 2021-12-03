@@ -68,10 +68,26 @@ class VenuSubAdapter(
             clickListener.onClickFav(position)
         }
 
+        if(arrayList[position].barcrawl == "1"){
+            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
+        }else{
+            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
+        }
+        viewHolder.binding.venusubitemSaveToBarvrawl.setOnClickListener {
+            if(arrayList[position].barcrawl.equals("1")){
+                arrayList[position].barcrawl = "0"
+                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
+            }else{
+                arrayList[position].barcrawl = "1"
+                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
+            }
+            clickListener.onClikSaveToBarcrewal(position)
+        }
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)
 
         }
+
     }
 
 
@@ -89,6 +105,7 @@ class VenuSubAdapter(
     interface ClickListener {
         fun onClick(pos: Int)
         fun onClickFav(pos: Int)
+        fun onClikSaveToBarcrewal(pos: Int)
 
 
     }

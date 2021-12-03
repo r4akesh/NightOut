@@ -3,6 +3,7 @@ package com.nightout.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
@@ -21,6 +22,7 @@ import com.nightout.databinding.VenulistingActivityBinding
 import com.nightout.model.*
 import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -33,6 +35,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var supportMapFragment: SupportMapFragment
     lateinit var venuListModel: CommonViewModel
     private var customProgressDialog = CustomProgressDialog()
+    lateinit var doAddBarCrawlModel : CommonViewModel
    // var storeType = ""
     var listStoreType = ArrayList<VenuModel>()
     lateinit var venuSubAdapter: VenuSubAdapter
@@ -40,6 +43,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var doFavViewModel : CommonViewModel
     var selectedStrType="1"
     val REQCODE_STOREDETAILACTIVITY = 1002
+    var addBarCrawlStatus="0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +51,12 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         setListStoreTypeHr()
         initView()
         setToolBar()
-
-
     }
 
     private fun initView() {
         doFavViewModel = CommonViewModel(this@VenuListActvity)
         venuListModel = CommonViewModel(this@VenuListActvity)
+        doAddBarCrawlModel = CommonViewModel(this@VenuListActvity)
         supportMapFragment = (supportFragmentManager.findFragmentById(R.id.venulistingMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@VenuListActvity)
         supportMapFragment.view?.visibility = GONE
@@ -117,7 +120,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 Status.SUCCESS -> {
                     customProgressDialog.dialog.hide()
                     venuDataList = ArrayList()
-                    setListVenu()
+                    setListVenu()//for empty the list
                     it.data?.let {
                         venuDataList=it.data
                         setListVenu()
@@ -165,7 +168,12 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     add_favouriteAPICALL(pos)
                 }
 
-            })
+            override fun onClikSaveToBarcrewal(pos: Int) {
+                addRemoveBarCrawlAPICall(pos)
+            }
+
+
+        })
 
         binding.venulistingRecyclersub.also {
             it.layoutManager = LinearLayoutManager(
@@ -180,11 +188,58 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode==Activity.RESULT_OK){
-            venuDataList[posSaveForUpdate].favrouite = data?.getStringExtra("result")!!
+            if(data?.getStringExtra("resultFav")!=null)
+            venuDataList[posSaveForUpdate].favrouite = data?.getStringExtra("resultFav")!!
+            else if (data?.getStringExtra("resultBarcrwal")!=null)
+            venuDataList[posSaveForUpdate].barcrawl = data?.getStringExtra("resultBarcrwal")!!
             venuSubAdapter.notifyItemChanged(posSaveForUpdate)
         }
     }
 
+    private fun addRemoveBarCrawlAPICall(pos: Int) {
+        addBarCrawlStatus = if(venuDataList[pos].barcrawl == "0") "0" else "1"
+       // progressDialog.show(this@VenuListActvity, "")
+        var map = HashMap<String, String>()
+        map["venue_id"] = venuDataList[pos].id
+        map["vendor_id"] = venuDataList[pos].vendor_detail.id
+        map["status"] =addBarCrawlStatus
+        map["store_type"] =venuDataList[pos].store_type
+
+        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@VenuListActvity, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                 //   progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                           /* Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
+                            if (detailData.data.status == "1") {
+                                addBarCrawlStatus = "0"
+                                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+
+                            } else {
+                                addBarCrawlStatus = "1"
+                                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
+                            }*/
+                           // MyApp.ShowTost(this@VenuListActvity,detailData.message)
+                        } catch (e: Exception) {
+                           // MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@VenuListActvity)
+                        }
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                   // progressDialog.dialog.dismiss()
+                   // Utills.showErrorToast(THIS!!,it.message!!)
+                  //  Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@VenuListActvity)
+                }
+            }
+        })
+
+    }
+    
+    
     private fun add_favouriteAPICALL(pos:Int) {
        // progressDialog.show(this@VenuListActvity, "")
 
@@ -231,6 +286,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(binding.venulistingToolBar.toolbarBack)
         setTouchNClick(binding.venulistingToolBar.toolbar3dot)
 
+        binding.venulistingToolBar.toolbarBell.visibility=GONE
 
         binding.venulistingToolBar.toolbarBack.setOnClickListener {
             finish()

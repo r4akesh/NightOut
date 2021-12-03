@@ -107,8 +107,12 @@ class BarcrawlListActivity : BaseActivity() {
                             listAllVenue.addAll(it.data?.data?.barcrawl!!)
                             if (listAllVenue.isNotEmpty()) {
                                 setAllVenuList()
+
+                            }else{
+                                binding.barcrwalVenueNoData.visibility= VISIBLE
                             }
                         } catch (e: Exception) {
+                            binding.barcrwalVenueNoData.visibility= VISIBLE
                         }
                     }
                     Status.LOADING -> {
@@ -123,6 +127,7 @@ class BarcrawlListActivity : BaseActivity() {
                             )
                         } catch (e: Exception) {
                         }
+                        binding.barcrwalVenueNoData.visibility= VISIBLE
                         Log.d("ok", "loginCall:ERROR ")
                     }
                 }

@@ -45,8 +45,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NightOut"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.Demo">
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

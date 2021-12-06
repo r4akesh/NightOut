@@ -135,7 +135,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             }
             add_favouriteAPICALL()
         } else if (v == binding.storeDeatilPreBookingBtn) {
-            startActivity(Intent(this@StoreDetailActvity, PreBookingActivity::class.java))
+            if (!venuID.isNullOrBlank()) {
+                startActivity(Intent(this@StoreDetailActvity, PreBookingActivity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID,venuID))
+            }
+
 
         } else if (v == binding.storeDeatilPlaceOrder) {
             startActivity(Intent(this@StoreDetailActvity, OrderDetailActivity::class.java))

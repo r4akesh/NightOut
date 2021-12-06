@@ -22,6 +22,8 @@ import android.util.Log
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
@@ -50,6 +52,11 @@ import kotlinx.android.synthetic.main.demo.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+import android.media.MediaPlayer
+import android.media.MediaPlayer.OnPreparedListener
+
+import android.widget.VideoView
+import java.net.URI
 
 
 class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
@@ -59,11 +66,12 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
     //private val resources = intArrayOf( R.drawable.venues1,    R.drawable.venues2,    R.drawable.venues3,    R.drawable.venues4,    )
 
     private val imagesList = mutableListOf( "https://www.fillmurray.com/640/360",
-        "https://loremflickr.com/640/360",
-        "https://www.placecage.com/640/360", "https://placekitten.com/640/360",
-        "https://www.fillmurray.com/640/360",
-        "https://loremflickr.com/640/360",
-        "https://www.placecage.com/640/360", "https://placekitten.com/640/360")
+        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "https://loremflickr.com/640/360", "https://www.placecage.com/640/360", "https://placekitten.com/640/360",
+    "https://nightout.ezxdemo.com/storage/uploads/store_media//1cOx5wH5VMCHnjsUuzL9lnRxCDcnOGwvHrht4YfJ.jpgooo",
+    "https://nightout.ezxdemo.com/storage/uploads/store_media//rY9JpCqmAQTlxkqpEssz808AaxA3hQ9F88GrGBHs.jpg",
+    "https://nightout.ezxdemo.com/storage/uploads/store_media//iz3XVb7QiNfRsZ4yha42vTgjegFt3DQ035SQVNWg.jpg",
+    "https://nightout.ezxdemo.com/storage/uploads/store_media//8rKCEmiu5n0Fm3riTmG4l5O9JYinmJraL5YiPEvK.jpg")
 
     var pressTime = 0L
     var limit = 500L
@@ -79,12 +87,13 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = DataBindingUtil.setContentView(this@Demo, com.nightout.R.layout.demo)
+        binding = DataBindingUtil.setContentView(this@Demo, R.layout.demo)
 
         binding.storiesProgressView.setStoriesCount(imagesList.size);
-        binding.storiesProgressView.setStoryDuration(3000L);
+        binding.storiesProgressView.setStoryDuration(10000L);
         binding.storiesProgressView.setStoriesListener(this);
          binding.storiesProgressView.startStories(counter)
+
         setImageNormal(THIS!!,binding.imagePreview,imagesList[counter])
 
         binding.reverse.setOnTouchListener(onTouchListener);
@@ -93,12 +102,17 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
         binding.skip.setOnClickListener(this)
     }
     fun setImageNormal(context: Context?, imageView: ImageView?, url: String?) {
-        binding.storiesProgressView.destroy()
+        binding.imagePreview.visibility= VISIBLE
+        binding.videoView.visibility= GONE
         binding.progress.visibility= VISIBLE
-      //  binding.storiesProgressView!!.pause()
+        Handler(Looper.getMainLooper()).post(Runnable {
+            if (binding.storiesProgressView != null)
+                binding.storiesProgressView.pause()
+        })
+
         Glide.with(THIS!!)
             .load(url)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.no_image)
             .listener(object : RequestListener<Drawable?> {
                 override fun onResourceReady(
                     resource: Drawable?,
@@ -108,7 +122,8 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
                     isFirstResource: Boolean
                 ): Boolean {
                     binding.progress.visibility= GONE
-                   binding.storiesProgressView.startStories(counter)
+                    binding.storiesProgressView.resume()
+                    Log.d("TAG", "onResourceReady: ")
                     return false
                 }
 
@@ -118,12 +133,82 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
                     target: com.bumptech.glide.request.target.Target<Drawable?>?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    Log.d("TAG", "onLoadFailed: ")
                     binding.progress.visibility= GONE
+                   // binding.storiesProgressView.skip()
+
                    return false
                 }
             })
             .into(imageView!!)
     }
+
+
+    fun setVideo(context: Context?, videoview: VideoView?, url: String?)  {
+        binding.videoView.visibility= VISIBLE
+        binding.imagePreview.visibility= GONE
+        Handler(Looper.getMainLooper()).post(Runnable {
+            if (binding.storiesProgressView != null)
+                binding.storiesProgressView.pause()
+        })
+        Log.d("TAG", "setVideo111: ")
+        try {
+            videoview?.setOnPreparedListener { mediaPlayer ->
+                mediaPlayer.setOnInfoListener(MediaPlayer.OnInfoListener { mediaPlayer, i, i1 ->
+                    Log.d("TAG", "onInfo: =============>>>>>>>>>>>>>>>>>>>$i")
+                    when (i) {
+                        MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START -> {
+                            binding.progress.setVisibility(GONE)
+                            storiesProgressView.resume()
+                            return@OnInfoListener true
+                        }
+                        MediaPlayer.MEDIA_INFO_BUFFERING_START -> {
+                            binding.progress.setVisibility(VISIBLE)
+                            Handler(Looper.getMainLooper()).post(Runnable {
+                                if (binding.storiesProgressView != null)
+                                    binding.storiesProgressView.pause()
+                            })
+                            return@OnInfoListener true
+                        }
+                        MediaPlayer.MEDIA_INFO_BUFFERING_END -> {
+                            binding.progress.setVisibility(VISIBLE)
+                            Handler(Looper.getMainLooper()).post(Runnable {
+                                if (binding.storiesProgressView != null)
+                                    binding.storiesProgressView.pause()
+                            })
+                            return@OnInfoListener true
+                        }
+                        MediaPlayer.MEDIA_ERROR_TIMED_OUT -> {
+                            binding.progress.setVisibility(VISIBLE)
+                            Handler(Looper.getMainLooper()).post(Runnable {
+                                if (binding.storiesProgressView != null)
+                                    binding.storiesProgressView.pause()
+                            })
+                            return@OnInfoListener true
+                        }
+                        MediaPlayer.MEDIA_INFO_AUDIO_NOT_PLAYING -> {
+                            binding.progress.setVisibility(VISIBLE)
+                            Handler(Looper.getMainLooper()).post(Runnable {
+                                if (binding.storiesProgressView != null)
+                                    binding.storiesProgressView.pause()
+                            })
+                            return@OnInfoListener true
+                        }
+                    }
+                    false
+                })
+                videoview.setVideoURI(Uri.parse(url))
+                videoview.start()
+                Log.d("TAG", "setVideo: "+url)
+                binding.progress.setVisibility(GONE)
+                binding.storiesProgressView.setStoryDuration(mediaPlayer.duration.toLong())
+                binding.storiesProgressView.startStories(counter)
+            }
+        } catch (e: Exception) {
+            Log.d("TAG", "setVideo2222: "+e)
+        }
+    }
+
 
     override fun onClick(v: View?) {
         super.onClick(v)
@@ -166,17 +251,24 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
         false
     }
     override fun onNext() {
+        var cnt =++counter
+        Log.d("TAG", "{$cnt ----$counter}")
+       if(cnt==1){
+           setVideo(THIS!!,binding.videoView,imagesList[cnt])
+       }else{
+           setImageNormal(THIS!!,binding.imagePreview,imagesList[cnt])
+       }
 
-        setImageNormal(THIS!!,binding.imagePreview,imagesList[++counter])
-        //binding.imagePreview.setImageResource(resources[++counter]);
+
+
     }
 
     override fun onPrev() {
         if ((counter - 1) < 0) return;
 
-        // on below line we are setting image to image view
+
         setImageNormal(THIS!!,binding.imagePreview,imagesList[--counter])
-      //  binding.imagePreview.setImageResource(resources[--counter]);
+
     }
 
     override fun onComplete() {

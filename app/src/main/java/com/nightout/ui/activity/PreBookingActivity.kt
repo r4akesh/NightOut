@@ -11,18 +11,19 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.PrebookingActivityBinding
 import com.nightout.model.SubFoodModel
 import devs.mulham.horizontalcalendar.HorizontalCalendar
-import devs.mulham.horizontalcalendar.model.CalendarEvent
-import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import java.util.*
-import android.widget.DatePicker
 
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.widget.TimePicker
 
 import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
+import com.nightout.adapter.PackageAdapter
+import com.nightout.model.VenuDetailModel
+import com.nightout.utils.AppConstant
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
+import kotlin.collections.ArrayList
 
 
 //calendra link-https://github.com/Mulham-Raee/Horizontal-Calendar
@@ -30,13 +31,84 @@ class PreBookingActivity : BaseActivity() {
     var intialValuePeople: Int = 4
     lateinit var binding: PrebookingActivityBinding
     lateinit var horizontalCalendar : HorizontalCalendar
+    lateinit var subAdapter: PackageAdapter
+    private val progressDialog = CustomProgressDialog()
+    var venuID = ""
+    lateinit var userVenueDetailViewModel: CommonViewModel
+    lateinit var venuePkgList: ArrayList<VenuDetailModel.PkgModel>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding =
-            DataBindingUtil.setContentView(this@PreBookingActivity, R.layout.prebooking_activity)
+        binding = DataBindingUtil.setContentView(this@PreBookingActivity, R.layout.prebooking_activity)
         initView()
-        setListPkg()
+
         setCalendra()
+
+        user_venue_detailAPICALL()
+    }
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        if(v==binding.toolbarBack){
+            finish()
+        }
+        else if (v == binding.preBookingPlus) {
+            intialValuePeople = intialValuePeople + 1
+            binding.preBookingPeopleValue.setText("" + intialValuePeople)
+        }
+
+        else if (v == binding.preBookingMinus) {
+
+            if (intialValuePeople > 0) {
+                intialValuePeople = intialValuePeople - 1
+                binding.preBookingPeopleValue.setText("" + intialValuePeople)
+            }
+        }
+        else if(v==binding.toolbarCelendra){
+            showDatePicker()
+        }
+        else if(v==binding.preBookingTimePicker){
+            showTimePicker()
+        }
+        else if(v==binding.preBookingSpclPkg){
+            binding.preBookingSpclPkg.setBackgroundResource(R.drawable.box_bgyello_left)
+            binding.preBookingBarMenu.setBackgroundResource(0)
+            binding.preBookingSpclPkg.setTextColor(resources.getColor(R.color.black))
+            binding.preBookingBarMenu.setTextColor(resources.getColor(R.color.text_gray3))
+        }
+        else if(v==binding.preBookingBarMenu){
+            binding.preBookingBarMenu.setBackgroundResource(R.drawable.box_bgyello_right)
+            binding.preBookingSpclPkg.setBackgroundResource(0)
+            binding.preBookingBarMenu.setTextColor(resources.getColor(R.color.black))
+            binding.preBookingSpclPkg.setTextColor(resources.getColor(R.color.text_gray3))
+        }
+    }
+
+
+    private fun user_venue_detailAPICALL() {
+        progressDialog.show(this@PreBookingActivity, "")
+        var map = HashMap<String, String>()
+       // map["id"] = venuID!!
+        map["id"] = "217"
+
+        userVenueDetailViewModel.userVenueDetail(map).observe(this@PreBookingActivity, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        venuePkgList= ArrayList()
+                          venuePkgList = detailData.data.packageProducts.products
+                        setListPkg()
+                       // setData()
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                }
+            }
+        })
     }
 
     private fun setCalendra() {
@@ -78,9 +150,9 @@ class PreBookingActivity : BaseActivity() {
 
     }
 
-    lateinit var subAdapter: DrinksSubAdapter
+
     private fun setListPkg() {
-        var listDrinks = ArrayList<SubFoodModel>()
+       /* var listDrinks = ArrayList<SubFoodModel>()
         listDrinks.add(
             SubFoodModel(
                 "Drinks Package 1",
@@ -89,69 +161,16 @@ class PreBookingActivity : BaseActivity() {
                 "Free : 4 Tequilas Shots",
                 false
             )
-        )
-        listDrinks.add(
-            SubFoodModel(
-                "Drinks Package 1",
-                "1 Bottle of Prosecco & x 4 Glasses",
-                0,
-                "Free : 4 Tequilas Shots",
-                false
-            )
-        )
-        listDrinks.add(
-            SubFoodModel(
-                "Drinks Package 1",
-                "1 Bottle of Prosecco & x 4 Glasses",
-                0,
-                "Free : 4 Tequilas Shots",
-                false
-            )
-        )
-        listDrinks.add(
-            SubFoodModel(
-                "Drinks Package 1",
-                "1 Bottle of Prosecco & x 4 Glasses",
-                0,
-                "Free : 4 Tequilas Shots",
-                false
-            )
-        )
-        listDrinks.add(
-            SubFoodModel(
-                "Drinks Package 1",
-                "1 Bottle of Prosecco & x 4 Glasses",
-                0,
-                "Free : 4 Tequilas Shots",
-                false
-            )
-        )
-        listDrinks.add(
-            SubFoodModel(
-                "Drinks Package 1",
-                "1 Bottle of Prosecco & x 4 Glasses",
-                0,
-                "Free : 4 Tequilas Shots",
-                false
-            )
-        )
-        listDrinks.add(
-            SubFoodModel(
-                "Drinks Package 8",
-                "1 Bottle of Prosecco & x 4 Glasses",
-                0,
-                "Free : 4 Tequilas Shots",
-                false
-            )
-        )
+        )*/
+
 
         subAdapter =
-            DrinksSubAdapter(
+            PackageAdapter(
                 this@PreBookingActivity,
-                listDrinks,
-                object : DrinksSubAdapter.ClickListener {
+                venuePkgList,
+                object : PackageAdapter.ClickListener {
                     override fun onClickChk(subPos: Int) {
-                        listDrinks[subPos].isChekd = !listDrinks[subPos].isChekd
+                        venuePkgList[subPos].isChekd = !venuePkgList[subPos].isChekd
 
                         subAdapter.notifyDataSetChanged()
                     }
@@ -166,37 +185,18 @@ class PreBookingActivity : BaseActivity() {
     }
 
     private fun initView() {
+        venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
         setTouchNClick(binding.preBookingPlus)
         setTouchNClick(binding.preBookingMinus)
         setTouchNClick(binding.toolbarBack)
         setTouchNClick(binding.toolbarCelendra)
         setTouchNClick(binding.preBookingTimePicker)
+        setTouchNClick(binding.preBookingBarMenu)
+        setTouchNClick(binding.preBookingSpclPkg)
+        userVenueDetailViewModel = CommonViewModel(this)
     }
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        if(v==binding.toolbarBack){
-            finish()
-        }
-        else if (v == binding.preBookingPlus) {
-            intialValuePeople = intialValuePeople + 1
-            binding.preBookingPeopleValue.setText("" + intialValuePeople)
-        }
 
-        else if (v == binding.preBookingMinus) {
-
-            if (intialValuePeople > 0) {
-                intialValuePeople = intialValuePeople - 1
-                binding.preBookingPeopleValue.setText("" + intialValuePeople)
-            }
-        }
-        else if(v==binding.toolbarCelendra){
-            showDatePicker()
-        }
-        else if(v==binding.preBookingTimePicker){
-            showTimePicker()
-        }
-    }
 
     private fun showTimePicker() {
         // Get Current Time

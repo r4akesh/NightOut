@@ -2,6 +2,7 @@ package com.nightout.handlers
 
 import android.content.Intent
 import android.os.SystemClock
+import android.provider.Settings
 import android.util.Log
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
@@ -24,7 +25,7 @@ open class LoginHandler(val activity: LoginActivity) {
             var mobNo = loginViewModel.PhNo!!
             mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
            map["phonenumber"] = mobNo
-            map["device_id"] = "dhfkjdfh"
+            map["device_id"] = Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)
             map["device_type"] = "1"
             if (SystemClock.elapsedRealtime() - lastClickTime < 1000){//prevent double tap
                 return

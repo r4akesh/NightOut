@@ -2,6 +2,7 @@ package com.nightout.handlers
 
 
 import android.content.Intent
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import com.nightout.model.LoginModel
@@ -30,7 +31,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
             mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
             map["otp"] = regViewModel.otp!!
             map["phonenumber"] = mobNo
-            map["device_id"] = "dhfkjdfh"
+            map["device_id"] = Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)
             map["device_type"] = "1"
             map["email"] = email
             otpCall(map, activity)
@@ -81,7 +82,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
           var mobNo = mobNo
           mobNo = mobNo.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").trim()
           map["phonenumber"] = mobNo
-          map["device_id"] = "dhfkjdfh"
+          map["device_id"] = Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)
           map["device_type"] = "1"
           regViewModel.otpResend(map).observe(activity, {
               when (it.status) {

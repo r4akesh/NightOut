@@ -124,4 +124,7 @@ interface APIInterface {
 
     @POST("delete_bar_crawl")
     fun delete_bar_crawlAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("logout")
+    fun logoutAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 }

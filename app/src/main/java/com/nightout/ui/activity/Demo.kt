@@ -60,7 +60,7 @@ import java.net.URI
 
 
 class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
-
+    //https://githubmemory.com/repo/ravishankarsingh1996/StoriesProgressView
     lateinit var binding : DemoBinding
 
     //private val resources = intArrayOf( R.drawable.venues1,    R.drawable.venues2,    R.drawable.venues3,    R.drawable.venues4,    )

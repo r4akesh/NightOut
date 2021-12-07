@@ -3,11 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/border_prebookoing.xml" value="0.35520833333333335" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/box_bgyello_right.xml" value="0.33240740740740743" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/gredient_bg.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/ripple_effect.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/rounded_dark_blue.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/rounded_green.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/rounded_white_edittext.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/shape_bg_incoming_bubble.xml" value="0.35520833333333335" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/demoooo.xml" value="0.3546875" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/drink_item.xml" value="0.3171875" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/drink_subitem.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/listparticipate_actvity.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/login_activity.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/prebooking_activity.xml" value="0.3234375" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_barmenu_subitem.xml" value="0.33" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_pakge.xml" value="0.3546875" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/storedetail_activity.xml" value="0.2640625" />
       </map>
     </option>
   </component>

@@ -2,6 +2,7 @@ package com.nightout.handlers
 
 
 import android.content.Intent
+import android.provider.Settings
 import android.util.Log
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
@@ -27,7 +28,7 @@ open class RegisterHandler(val activity: RegisterActivity) {
             map["last_name"] = regViewModel.lName!!
             map["email"] = regViewModel.emailId!!
             map["phonenumber"] = mobNo
-            map["device_id"] = "dhfkjdfh"
+            map["device_id"] = Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)
             map["device_type"] = "1"
             regCall(map, activity)
         }

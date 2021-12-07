@@ -229,5 +229,8 @@
     <string name="disble_permison_contact">You have disabled a contacts permission</string>
     <string name="Nocontactfounddevice">No contact found in your device</string>
     <string name="Select_Venues">Select Venues</string>
+    <string name="Drinks">Drinks</string>
+    <string name="Snacks">Snacks</string>
+    <string name="Price">Price</string>
 
 </resources>

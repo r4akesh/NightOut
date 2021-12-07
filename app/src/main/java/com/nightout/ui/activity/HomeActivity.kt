@@ -6,6 +6,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.View.*
 import android.widget.ImageView
@@ -30,10 +32,9 @@ import com.nightout.ui.activity.CMS.FAQActivity
 import com.nightout.ui.activity.CMS.TermsNCondActivity
 import com.nightout.ui.activity.LostItem.LostitemActivity
 import com.nightout.ui.fragment.*
-import com.nightout.utils.AppConstant
-import com.nightout.utils.DialogCustmYesNo
-import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Utills
+import com.nightout.utils.*
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import com.yarolegovich.slidingrootnav.SlidingRootNav
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder
 import de.hdodenhof.circleimageview.CircleImageView
@@ -71,6 +72,8 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
     var sideMenuCmsLinear: LinearLayout? = null
     var sidemenu_profile: CircleImageView? = null
     lateinit var homeFragment : HomeFragment
+    private var customProgressDialog = CustomProgressDialog()
+    lateinit var logoutViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +83,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         setHomeTab()
         showFragment(HomeFragment(this))
         inItView()
-
+        Log.d("TAG", "onCreate: "+Settings.Secure.getString(this@HomeActivity?.contentResolver, Settings.Secure.ANDROID_ID))
 
     }
 
@@ -376,16 +379,42 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
         DialogCustmYesNo.getInstance().createDialog(this@HomeActivity,resources.getString(R.string.app_name),"Are you sure you want to logout?",object:
             DialogCustmYesNo.Dialogclick{
             override fun onYES() {
-                // logoutAPICall()
-                PreferenceKeeper.instance.isUserLogin=false
-                startActivity(Intent(this@HomeActivity,LoginActivity::class.java))
-                finish()
+                  logoutAPICall()
+
             }
 
             override fun onNO() {
                 //do nothing
             }
 
+        })
+    }
+
+    private fun logoutAPICall() {
+        var map = HashMap<String,String>()
+        map["device_id"] = Settings.Secure.getString(this@HomeActivity?.contentResolver, Settings.Secure.ANDROID_ID)
+        customProgressDialog.show(this@HomeActivity, "")
+        logoutViewModel.logoutUser(map).observe(this@HomeActivity,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    it.data?.let {myData->
+                        PreferenceKeeper.instance.isUserLogin=false
+                        startActivity(Intent(this@HomeActivity,LoginActivity::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+
+                        finish()
+                    }
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+
+
+                }
+            }
         })
     }
 
@@ -411,6 +440,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
 
 
     private fun inItView() {
+        logoutViewModel = CommonViewModel(this@HomeActivity)
         sideMenuCmsArrowImg = findViewById(R.id.sideMenuCmsArrowImg)
         sideMenuCmsLinear = findViewById(R.id.sideMenuCmsLinear)
         sideMenuAbout = findViewById(R.id.sideMenuAbout)

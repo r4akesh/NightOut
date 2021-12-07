@@ -190,4 +190,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         getSavedViewModel = webServiceRepository.savedBarCrwalList(map)
         return getSavedViewModel
     }
+    fun logoutUser(map: HashMap<String, String>): LiveData<ApiSampleResource<BaseModel>> {
+        baseModel = webServiceRepository.logoutUser(map)
+        return baseModel
+    }
 }

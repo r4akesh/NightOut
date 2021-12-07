@@ -268,14 +268,51 @@
                             android:background="@color/primary_box_clr"
                             app:layout_constraintTop_toBottomOf="@+id/preBookingBarMenu" />
 
+                        <LinearLayout
+                            android:id="@+id/preBookingLnrMenu"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/preBookingLine"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/preBookingDrinksBtn"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:text="@string/Drinks"
+                                android:padding="@dimen/_10sdp"
+                                android:gravity="center"
+                                android:textColor="@color/text_yello"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/preBookingFoodsBtn"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:text="@string/Foods"
+                                android:gravity="center"
+                                android:padding="@dimen/_10sdp"
+                                android:textColor="@color/text_gray3"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/preBookingSnacksBtn"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:text="@string/Snacks"
+                                android:padding="@dimen/_10sdp"
+                                android:gravity="center"
+                                android:textColor="@color/text_gray3"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/preBookingSpclPkgRecyle"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/preBookingLine"
+                            app:layout_constraintTop_toBottomOf="@+id/preBookingLnrMenu"
                              />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -334,7 +371,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/preBookingTablePrice" />
 
                         <TextView
-                            android:id="@+id/preBookingFoodValue"
+                            android:id="@+id/preBookingFoodPriceValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10ssp"

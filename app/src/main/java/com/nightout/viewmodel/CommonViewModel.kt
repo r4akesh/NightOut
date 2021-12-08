@@ -194,4 +194,9 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         baseModel = webServiceRepository.logoutUser(map)
         return baseModel
     }
+
+    fun preBook(jsonObject: JSONObject): LiveData<ApiSampleResource<BaseModel>> {
+        baseModel = webServiceRepository.preeBook(jsonObject)
+        return baseModel
+    }
 }

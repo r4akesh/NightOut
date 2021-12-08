@@ -321,6 +321,14 @@ class MyApp : Application() {
             connected = info != null && info.isConnected && info.isAvailable
             return connected
         }
+        fun getUrlExtention(uri:String):String{
+            if (uri.contains(".")) {
+                return   uri.substring(uri.lastIndexOf("."))
+
+            }else{
+                return ""
+            }
+        }
 
         /*    @JvmStatic
         fun showAlrtDialg(context: Context?, msg: String?) {

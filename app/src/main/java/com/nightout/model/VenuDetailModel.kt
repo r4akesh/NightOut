@@ -168,6 +168,7 @@ data class VenuDetailModel(
     data class Product(
         var isChekd: Boolean,
         var quantityLocal: Int = 0,
+        var totPriceLocal: Double = 0.0,
         val category_id: String,
         val created_at: String,
         val description: String,
@@ -204,6 +205,7 @@ data class VenuDetailModel(
 
     data class ProductX(
         var quantityLocal: Int = 0,
+        var totPriceLocal: Double = 0.0,
         var isChekd:Boolean,
         val category_id: String,
         val created_at: String,
@@ -227,6 +229,8 @@ data class VenuDetailModel(
 
     data class PkgModel(
         var isChekd: Boolean,
+        var quantityLocal: Int,
+        var totPriceLocal: Double = 0.0,
         val category_id: String,
         val created_at: String,
         val description: String,
@@ -264,6 +268,7 @@ data class VenuDetailModel(
     data class ProductXXX(
         var quantityLocal: Int = 0,
         var isChekd: Boolean,
+        var totPriceLocal: Double = 0.0,
         val category_id: String,
         val created_at: String,
         val description: String,

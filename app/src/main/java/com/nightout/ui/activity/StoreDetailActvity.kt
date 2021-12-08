@@ -137,7 +137,10 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         } else if (v == binding.storeDeatilPreBookingBtn) {
             if (!venuID.isNullOrBlank()) {
                 startActivity(Intent(this@StoreDetailActvity, PreBookingActivity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID,venuID))
+                    .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID,venuID)
+                    .putExtra(AppConstant.INTENT_EXTRAS.VENU_NAME,dt.store_name)
+
+                )
             }
 
 

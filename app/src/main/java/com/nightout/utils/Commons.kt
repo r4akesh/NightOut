@@ -157,7 +157,7 @@ object Commons {
     }
 
     fun strToTimemills(dt: String?): Long {
-        val sdf = SimpleDateFormat("MMM dd, yyyyy", Locale.US)
+        val sdf = SimpleDateFormat("dd-MM-yyyyy", Locale.US)
         var date: Date? = null
         try {
             date = sdf.parse(dt)

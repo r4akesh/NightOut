@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.CongrtulationActivityBinding
+import com.nightout.utils.AppConstant
 import nl.dionsegijn.konfetti.emitters.StreamEmitter
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -19,7 +20,8 @@ class CongrtulationActvity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@CongrtulationActvity, R.layout.congrtulation_activity)
         initView()
         setAnimation()
-
+        var congtresMsg=intent.getStringExtra(AppConstant.INTENT_EXTRAS.CONGRETS_MSG)
+        binding.congrtulationActvityOrder.text=congtresMsg
     }
 
     private fun setAnimation() {
@@ -43,11 +45,11 @@ class CongrtulationActvity : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
         if(v==binding.congrtulationActvityFeedback){
-           // startActivity(Intent(this@CongrtulationActvity,RatingActvity::class.java))
-            val i = Intent(this, HomeActivity::class.java)
-// set the new task and clear flags
-            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(i)
+//            val i = Intent(this, HomeActivity::class.java)
+//            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(i)
+            finish()
+            overridePendingTransition(0,0)
         }
     }
 }

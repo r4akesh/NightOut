@@ -127,4 +127,7 @@ interface APIInterface {
 
     @POST("logout")
     fun logoutAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("pre_booking")
+    fun pre_bookingAPI(@Body params: RequestBody): Call<ResponseBody>
 }

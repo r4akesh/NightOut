@@ -33,6 +33,7 @@ class AppConstant {
         const val MOBILENO = "MOBILENO"
 
         const val VENU_ID = "VENU_ID"
+        const val VENU_NAME = "VENU_NAME"
         const val StoreType = "StoreType"
 
         const val VIDEO_URL = "VIDEO_URL"
@@ -50,6 +51,8 @@ class AppConstant {
         const val FAVROUITE_VALUE = "favrouite"
         const val BarcrwalID = "BarcrwalID"
         const val BarcrwalList = "BarcrwalList"
+        const val CONGRETS_MSG = "CONGRETS_MSG"
+        const val STORY_LIST = "STORY_LIST"
 
 
     }

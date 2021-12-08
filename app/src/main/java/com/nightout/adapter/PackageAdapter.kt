@@ -36,12 +36,11 @@ class PackageAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-
         viewHolder.binding.drinkSubItemTitle.text = arrayList[position].title
         viewHolder.binding.drinkSubItemSubTitle.text = ""+arrayList[position].description
         viewHolder.binding.drinkSubItemImgText.text = context.resources.getString(R.string.currency_sumbol) +""+arrayList[position].price
         viewHolder.binding.drinkSubItemPrice.text = ""+arrayList[position].free
+        viewHolder.binding.drinkSubItemQtyVlue.setText(""+arrayList[position].quantityLocal)
 
 
         if (arrayList[position].isChekd) {
@@ -50,8 +49,18 @@ class PackageAdapter(
             viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.unchk_box)
         }
 
-        viewHolder.binding.drinkSubItemChk.setOnClickListener {
+
+
+       /* viewHolder.binding.drinkSubItemChk.setOnClickListener {
             clickListener.onClickChk(position)
+
+        }*/
+        viewHolder.binding.drinkSubItemMinusBtn.setOnClickListener {
+            clickListener.onClickMinus(position)
+
+        }
+        viewHolder.binding.drinkSubItemPlusBtn.setOnClickListener {
+            clickListener.onClickPlus(position)
 
         }
     }
@@ -70,6 +79,8 @@ class PackageAdapter(
 
     interface ClickListener {
         fun onClickChk(pos: Int)
+        fun onClickPlus(pos: Int)
+        fun onClickMinus(pos: Int)
 
 
     }

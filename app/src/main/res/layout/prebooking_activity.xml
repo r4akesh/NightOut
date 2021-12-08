@@ -59,26 +59,26 @@
             <ImageView
                 android:id="@+id/imgToolBarMap"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10ssp"
-                app:layout_constraintStart_toStartOf="@+id/toolbar_title"
                 android:src="@drawable/map_toolbar54"
                 app:layout_constraintStart_toEndOf="@+id/toolbarBack"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_title"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintStart_toStartOf="@+id/toolbar_title"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_title" />
 
             <TextView
-                android:id="@+id/toolbar_subTitle"
+                android:id="@+id/toolbarSubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:fontFamily="@font/proximanova_reg"
                 android:gravity="center_vertical"
-                android:text="Vanity Night Club"
-
+                android:text="subTitle"
+                android:singleLine="true"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/_10ssp"
-                app:layout_constraintStart_toEndOf="@+id/imgToolBarMap"
                 app:layout_constraintBottom_toBottomOf="@+id/imgToolBarMap"
+                app:layout_constraintStart_toEndOf="@+id/imgToolBarMap"
                 app:layout_constraintTop_toTopOf="@+id/imgToolBarMap" />
 
             <ImageView
@@ -102,8 +102,7 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_subTitle"
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/toolbarSubTitle" />
 
 
             <androidx.core.widget.NestedScrollView
@@ -118,12 +117,11 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginStart="@dimen/_5ssp"
                     android:layout_marginTop="@dimen/_15ssp"
-                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:layout_marginEnd="@dimen/_5ssp"
                     android:layout_marginBottom="@dimen/_10ssp"
-                   android:paddingBottom="@dimen/_30sdp"
-                   >
+                    android:paddingBottom="@dimen/_30sdp">
 
 
                     <TextView
@@ -165,8 +163,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+
                         android:background="@drawable/box_botomsheet"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/preBookingTimePicker">
@@ -203,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/proximanova_reg"
                             android:gravity="center"
-                            android:text="4"
+                            android:text="2"
 
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp"
@@ -223,6 +222,55 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <CheckedTextView
+                        android:id="@+id/preBookingbookWholeVenus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableStart="@drawable/unchk_box"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:text="Book the Whole Venue"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/constrentAddPeople" />
+
+                    <TextView
+                        android:id="@+id/preBookingSpclReq"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="Any Special Requirement"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/preBookingbookWholeVenus" />
+
+                    <EditText
+                        android:id="@+id/preBookingSpclReqEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:gravity="top"
+                        android:hint="Description..."
+                        android:padding="@dimen/_5ssp"
+                        android:textColorHint="@color/white_second"
+                        android:text=""
+                        android:fontFamily="@font/proximanova_reg"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:background="@drawable/box_botomsheet"
+                        android:textColor="@color/white"
+
+
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/preBookingSpclReq" />
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constrentSpclPkg"
@@ -234,7 +282,7 @@
                         android:background="@drawable/border_prebookoing"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constrentAddPeople">
+                        app:layout_constraintTop_toBottomOf="@+id/preBookingSpclReqEdit">
 
                         <TextView
                             android:id="@+id/preBookingSpclPkg"
@@ -271,38 +319,40 @@
                         <LinearLayout
                             android:id="@+id/preBookingLnrMenu"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:visibility="gone"
-                            app:layout_constraintTop_toBottomOf="@+id/preBookingLine"
-                            android:layout_height="wrap_content">
+                            app:layout_constraintTop_toBottomOf="@+id/preBookingLine">
 
                             <TextView
                                 android:id="@+id/preBookingDrinksBtn"
                                 android:layout_width="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/Drinks"
-                                android:padding="@dimen/_10sdp"
                                 android:gravity="center"
-                                android:textColor="@color/text_yello"
-                                android:layout_height="wrap_content"/>
+                                android:padding="@dimen/_10sdp"
+                                android:text="@string/Drinks"
+                                android:textColor="@color/text_yello" />
+
                             <TextView
                                 android:id="@+id/preBookingFoodsBtn"
                                 android:layout_width="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/Foods"
                                 android:gravity="center"
                                 android:padding="@dimen/_10sdp"
-                                android:textColor="@color/text_gray3"
-                                android:layout_height="wrap_content"/>
+                                android:text="@string/Foods"
+                                android:textColor="@color/text_gray3" />
+
                             <TextView
                                 android:id="@+id/preBookingSnacksBtn"
                                 android:layout_width="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/Snacks"
-                                android:padding="@dimen/_10sdp"
                                 android:gravity="center"
-                                android:textColor="@color/text_gray3"
-                                android:layout_height="wrap_content"/>
+                                android:padding="@dimen/_10sdp"
+                                android:text="@string/Snacks"
+                                android:textColor="@color/text_gray3" />
                         </LinearLayout>
 
 
@@ -312,8 +362,7 @@
                             android:layout_height="0dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/preBookingLnrMenu"
-                             />
+                            app:layout_constraintTop_toBottomOf="@+id/preBookingLnrMenu" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -344,7 +393,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10ssp"
-                            android:text="Table Price"
+                            android:text="Packages"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/preBookingOrderSumry" />
@@ -353,8 +402,8 @@
                             android:id="@+id/preBookingTablePriceValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10ssp"
-                            android:text="$25"
+
+                            android:text="£00.00"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/preBookingTablePrice"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -365,7 +414,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10ssp"
-                            android:text="Food"
+                            android:text="Foods"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/preBookingTablePrice" />
@@ -374,8 +423,8 @@
                             android:id="@+id/preBookingFoodPriceValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10ssp"
-                            android:text="$40"
+
+                            android:text="£00.00"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/preBookingFoods"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -394,17 +443,18 @@
 
                             />
 
+
                         <TextView
                             android:id="@+id/preBookingSnakesValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10ssp"
-                            android:text="$10"
+
+                            android:text="£00.00"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/preBookingSnakes"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/preBookingSnakes" />
-
+                            app:layout_constraintTop_toTopOf="@+id/preBookingSnakes"
+                            app:layout_constraintVertical_bias="1.0" />
 
                         <TextView
                             android:id="@+id/preBookingDrinks"
@@ -422,8 +472,8 @@
                             android:id="@+id/preBookingDrinksValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10ssp"
-                            android:text="$10"
+
+                            android:text="£00.00"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/preBookingDrinks"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -456,8 +506,8 @@
                             android:id="@+id/preBookingTotAmtValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10ssp"
-                            android:text="$100"
+
+                            android:text="£00.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_18ssp"
                             app:layout_constraintBottom_toBottomOf="@+id/preBookingTotAmt"
@@ -483,9 +533,9 @@
                 android:layout_marginBottom="@dimen/_10ssp"
                 android:background="@drawable/gredient_bg"
                 android:text="@string/Book_Now"
-                tools:visibility="gone"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

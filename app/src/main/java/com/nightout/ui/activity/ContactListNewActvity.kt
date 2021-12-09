@@ -57,8 +57,13 @@ class ContactListNewActvity : BaseActivity() {
             progressDialog.show(this@ContactListNewActvity, "")
             GlobalScope.launch (Dispatchers.Main){
                 contactsInfoList = getAllContacts()
-                if (contactsInfoList.size > 0)
-                    contact_listAPICAll()
+                if (contactsInfoList.size > 0) {
+                    if (isFROM_BarCrwalPathMapActvity){
+                        getAllContactsAPICAll()
+                    }else {
+                        contact_listAPICAll()
+                    }
+                }
                 else
                     MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
             }
@@ -74,6 +79,8 @@ class ContactListNewActvity : BaseActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
     }
+
+
 
     private fun setToolBar() {
         binding.emerngcyToolBar.toolbarTitle.text = resources.getString(R.string.Contact_List)
@@ -166,7 +173,60 @@ class ContactListNewActvity : BaseActivity() {
         binding.addContactDoneBtn.setOnClickListener(this)
 
     }
+    private fun getAllContactsAPICAll() {
+        // progressDialog.show(this@ContactListNewActvity, "")
+        val jsnObjMain = JSONObject()
+        val jarr = JSONArray()
+        for (i in 0 until contactsInfoList.size) {
+            val jsonObjects = JSONObject()
+            jsonObjects.put("name", contactsInfoList[i].name)
+            jsonObjects.put("phonenumber", contactsInfoList[i].phno)
+            jarr.put(jsonObjects)
+        }
+        jsnObjMain.put("contact_list", jarr)
+        try {
+            contactFillterViewModel.getContactAll(jsnObjMain)
+                .observe(this@ContactListNewActvity, {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            try {
+                                progressDialog.dialog.dismiss()
+                                listFilter.addAll(it.data?.data!!)
+                                if (!listFilter.isNullOrEmpty()) {
+                                    setListContact()
+                                    if(isFROM_BarCrwalPathMapActvity)
+                                        binding.addContactDoneBtn.text = "Share"
+                                    else
+                                        binding.addContactDoneBtn.text = "Add"
+                                    binding.addContactDoneBtn.visibility = VISIBLE
+                                    binding.contactListNoDataConstrent.visibility = GONE
+                                } else {
+                                    binding.contactListNoDataConstrent.visibility = VISIBLE
+                                    binding.addContactDoneBtn.visibility = VISIBLE
+                                }
+                            } catch (e: Exception) {
+                            }
+                        }
+                        Status.LOADING -> {
+                        }
+                        Status.ERROR -> {
+                            progressDialog.dialog.dismiss()
+                            try {
+                                binding.contactListNoDataConstrent.visibility = VISIBLE
+                                // Utills.showSnackBarOnError(binding.constrentEmToolbar, it.message!!, this@ContactListActvity)
+                                binding.addContactDoneBtn.visibility = GONE
+                            } catch (e: Exception) {
+                            }
 
+                        }
+                    }
+                })
+        } catch (e: Exception) {
+            Log.d("ok", "contact_listAPICAll: "+e)
+        }
+
+
+    }
     private fun contact_listAPICAll() {
        // progressDialog.show(this@ContactListNewActvity, "")
         val jsnObjMain = JSONObject()
@@ -335,8 +395,13 @@ class ContactListNewActvity : BaseActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     GlobalScope.launch (Dispatchers.Main){
                         contactsInfoList = getAllContacts()
-                        if (contactsInfoList.size > 0)
-                        contact_listAPICAll()
+                        if (contactsInfoList.size > 0){
+                            if (isFROM_BarCrwalPathMapActvity){
+                                getAllContactsAPICAll()
+                            }else {
+                                contact_listAPICAll()
+                            }
+                        }
                         else
                         MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
                     }

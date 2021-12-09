@@ -180,7 +180,7 @@
                             android:paddingEnd="@dimen/_10ssp"
                             android:paddingBottom="@dimen/_15ssp"
                             android:text="Add Person"
-                            android:textColor="@color/white"
+                            android:textColor="@color/white_second"
                             android:textColorHint="@color/text_hint3"
                             android:textSize="@dimen/_14ssp"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -196,7 +196,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/preBookingPeopleValue"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="wrap_content"
@@ -204,6 +204,7 @@
                             android:gravity="center"
                             android:text="2"
 
+                            android:background="@null"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -226,7 +227,9 @@
                         android:id="@+id/preBookingbookWholeVenus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5ssp"
+                        android:paddingBottom="@dimen/_5ssp"
                         android:drawableStart="@drawable/unchk_box"
                         android:drawablePadding="@dimen/_10sdp"
                         android:gravity="center_vertical"
@@ -242,9 +245,9 @@
                         android:id="@+id/preBookingSpclReq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:text="Any Special Requirement"
-                        android:textColor="@color/white"
+                        android:textColor="@color/white_second"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
                         android:fontFamily="@font/proximanova_reg"
@@ -255,7 +258,7 @@
                         android:id="@+id/preBookingSpclReqEdit"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_80sdp"
-                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:gravity="top"
                         android:hint="Description..."
                         android:padding="@dimen/_5ssp"

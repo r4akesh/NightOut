@@ -73,7 +73,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private var bounds: LatLngBounds? = null
     private var builder: LatLngBounds.Builder? = null
     var barcrwalId : String= ""
-
+    var isFromShareListActivity=false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,6 +114,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         supportMapFragment.getMapAsync(this@BarCrwalPathMap)
         mMarkerPoints = ArrayList()
         commonViewModel = CommonViewModel(this@BarCrwalPathMap)
+        isFromShareListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,false)
     }
 
     override fun onClick(v: View?) {
@@ -196,6 +197,12 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         builder.addFormDataPart("name", dgEtBarCrwal.text.toString())
         builder.addFormDataPart("venue_list",""+listOfId )
         builder.addFormDataPart("public_private", publicPrivetValue)
+
+        if(isFromShareListActivity){
+            builder.addFormDataPart("saved_shared", "2")
+        }else{
+            builder.addFormDataPart("saved_shared", "1")//
+        }
          builder.addFormDataPart("date", ""+Commons.strToTimemills3(dgDateBtn.text.toString()))
         if(barcrwalId.isNotBlank()) {
             builder.addFormDataPart("id", barcrwalId)
@@ -223,25 +230,45 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let {
-                        Log.d("ok", "success: ")
-                        var vv=it.data.id
-                        DialogCustmYesNo.getInstance().createDialog(this@BarCrwalPathMap,"Bar crawl created Successfully.","Do you want share the created bar crawl with Friends?",object:DialogCustmYesNo.Dialogclick{
-                            override fun onYES() {
-                                startActivity(Intent(this@BarCrwalPathMap, ContactListNewActvity::class.java)
-                                    .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,true)
-                                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,it.data.id))
-                             finish()
-                            }
+                        if(isFromShareListActivity){
+                            Utills.showSuccessToast(THIS!!,resources.getString(R.string.barcrwal_update_suceesfully))
+                            finish()
+                        }else {
 
-                            override fun onNO() {
-                                //startActivity(Intent(this@BarCrwalPathMap, BarCrawlSavedListActivity::class.java))
-                                finish()
-                            }
+                            Log.d("ok", "success: ")
+                            var vv = it.data.id
+                            DialogCustmYesNo.getInstance().createDialog(
+                                this@BarCrwalPathMap,
+                                "Bar crawl created Successfully.",
+                                "Do you want share the created bar crawl with Friends?",
+                                object : DialogCustmYesNo.Dialogclick {
+                                    override fun onYES() {
+                                        startActivity(
+                                            Intent(
+                                                this@BarCrwalPathMap,
+                                                ContactListNewActvity::class.java
+                                            )
+                                                .putExtra(
+                                                    AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,
+                                                    true
+                                                )
+                                                .putExtra(
+                                                    AppConstant.INTENT_EXTRAS.BarcrwalID,
+                                                    it.data.id
+                                                )
+                                        )
+                                        finish()
+                                    }
 
-                        })
+                                    override fun onNO() {
+                                        //startActivity(Intent(this@BarCrwalPathMap, BarCrawlSavedListActivity::class.java))
+                                        finish()
+                                    }
+
+                                })
 
 
-
+                        }
 
                     }
 

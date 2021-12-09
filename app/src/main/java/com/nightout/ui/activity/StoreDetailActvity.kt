@@ -61,6 +61,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     var venuID = ""
     var favStatus = "0"
     var addBarCrawlStatus = "0"
+    var storeType=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@StoreDetailActvity, R.layout.storedetail_activity)
@@ -115,11 +116,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
         if(v==binding.storeDeatilAddVenuRel){
             if (addBarCrawlStatus == "1") {
-                addBarCrawlStatus = "1"
+                addBarCrawlStatus = "0"
                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
 
             } else {
-                addBarCrawlStatus = "0"
+                addBarCrawlStatus = "1"
                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
             }
             addRemoveBarCrawlAPICall()
@@ -889,6 +890,12 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         val str1 = resources.getString(R.string.Direction)
         var settext = "<u>$str1 </u>"
         binding.storeDeatilDirection.setText(Html.fromHtml(settext), TextView.BufferType.SPANNABLE)
+        storeType = intent.getStringExtra(AppConstant.INTENT_EXTRAS.StoreType)!!
+        if(storeType=="4"){
+            binding.storeDeatilFacilityBtn.visibility = GONE
+            binding.storeDeatilPreBookingBtn.visibility = GONE
+            binding.storeDeatilAddVenuRel.visibility = GONE
+        }
 
     }
 
@@ -924,7 +931,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
-        map["status"] =addBarCrawlStatus
+        map["status"] =if(addBarCrawlStatus.equals("1")) "0" else "1"
         map["store_type"] =dt.store_type
 
         doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetailActvity, {
@@ -1119,7 +1126,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     override fun onBackPressed() {
         var myIntent = Intent()
         myIntent.putExtra("resultFav",favStatus)
-        myIntent.putExtra("resultBarcrwal",addBarCrawlStatus)
+        myIntent.putExtra("resultBarcrwal",if(addBarCrawlStatus.equals("1")) "0" else "1")
         setResult(Activity.RESULT_OK,myIntent)
         super.onBackPressed()
     }

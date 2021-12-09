@@ -275,6 +275,7 @@
                     <TextView
                         android:id="@+id/storeDeatilFacilityBtn"
                         android:layout_width="0dp"
+
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_11ssp"
@@ -320,6 +321,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/storeDeatilAddVenuRel"
                         android:layout_width="match_parent"
+
                         android:layout_height="wrap_content"
                         android:layout_marginStart="-10dp"
                         android:layout_marginTop="@dimen/_10ssp"
@@ -377,7 +379,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_110sdp"
 
-                        android:layout_marginTop="@dimen/_8ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
 
                         android:background="@null"
                         android:scaleType="fitXY"

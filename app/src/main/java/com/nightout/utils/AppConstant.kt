@@ -53,6 +53,7 @@ class AppConstant {
         const val BarcrwalList = "BarcrwalList"
         const val CONGRETS_MSG = "CONGRETS_MSG"
         const val STORY_LIST = "STORY_LIST"
+        const val ISFROM_ShareListActivity = "ISFROM_ShareListActivity"
 
 
     }

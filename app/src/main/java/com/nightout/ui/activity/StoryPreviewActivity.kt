@@ -108,7 +108,10 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
                     isFirstResource: Boolean
                 ): Boolean {
                     binding.progress.visibility= GONE
-                    binding.storiesProgressView.resume()
+                    Handler(Looper.getMainLooper()).post(Runnable {
+                        if (binding.storiesProgressView != null)
+                            binding.storiesProgressView.resume()
+                    })
                     Log.d("TAG", "onResourceReady: ")
                     return false
                 }
@@ -265,8 +268,10 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
     }
 
     override fun onComplete() {
-        overridePendingTransition(0,0)
+        binding.storiesProgressView.destroy()
         finish()
+        overridePendingTransition(0,0)
+
     }
 
     override fun onDestroy() {

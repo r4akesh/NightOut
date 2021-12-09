@@ -32,6 +32,7 @@ class BarcrawlListActivity : BaseActivity() {
     var listAllVenue = ArrayList<AllBarCrwalListResponse.Barcrawl>()
     var listClickPosSave = 0
       var barcrwalId: String = ""
+    var isFromShareListActivity=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BarcrawlListActivity, R.layout.barcrwallist_activity)
@@ -89,6 +90,7 @@ class BarcrawlListActivity : BaseActivity() {
                     Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFromShareListActivity)
                 )
                 finish()
             }
@@ -143,6 +145,8 @@ class BarcrawlListActivity : BaseActivity() {
         binding.barcrwalAddBtn.setOnClickListener(this)
         binding.barcrwalCloseBtn.setOnClickListener(this)
         getBarCrwalVieModel = CommonViewModel(this)
+        isFromShareListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,false)
+
     }
 
 

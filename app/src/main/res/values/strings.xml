@@ -232,5 +232,6 @@
     <string name="Drinks">Drinks</string>
     <string name="Snacks">Snacks</string>
     <string name="Price">Price</string>
+    <string name="barcrwal_update_suceesfully">Bar Crawl updated successfully</string>
 
 </resources>

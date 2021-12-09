@@ -110,7 +110,10 @@ class BarCrawlShredListActivity : BaseActivity() {
             // item.title
             if(item.title.equals("Edit")){
                  startActivity(Intent(this@BarCrawlShredListActivity,BarcrawlListActivity::class.java)
-                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtShared[pos].id))
+                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtShared[pos].bar_crawl.id)
+                     .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,true)
+
+                 )
             }else{
                 delete_bar_crawlAPICall(pos)
             }
@@ -123,6 +126,9 @@ class BarCrawlShredListActivity : BaseActivity() {
         customProgressDialog.show(this@BarCrawlShredListActivity, "")
         var map = HashMap<String,String>()
         map["id"] = listtShared[posList].id
+        map["saved_shared"] = "2"
+//        1- saved
+//        2-shared
 
         getSharedListViewModel.delSharedList(map).observe(this@BarCrawlShredListActivity,{
             when(it.status){

@@ -22,6 +22,9 @@ interface APIInterface {
     @POST("contact_list")
     fun contactListFilter(@Body params: RequestBody): Call<ResponseBody>
 
+    @POST("all_contact_list")
+    fun all_contact_listAPI(@Body params: RequestBody): Call<ResponseBody>
+
     @GET("emergency_contact_list")
     fun getEmergencyAPI(): Call<ResponseBody>
 
@@ -119,8 +122,8 @@ interface APIInterface {
     @GET("bar_crawl_invitation_list")
     fun bar_crawl_invitation_listAPI(): Call<ResponseBody>
 
-    @POST("user_bar_crawl_list")
-    fun getSavedBarCrawlList(@Body params: HashMap<String, String>): Call<ResponseBody>
+    @GET("user_bar_crawl_list")
+    fun getSavedBarCrawlList(): Call<ResponseBody>
 
     @POST("delete_bar_crawl")
     fun delete_bar_crawlAPI(@Body params: HashMap<String, String>): Call<ResponseBody>

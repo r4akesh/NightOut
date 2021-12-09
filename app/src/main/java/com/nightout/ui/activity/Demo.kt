@@ -46,7 +46,7 @@ import com.nightout.databinding.DemoBinding
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 
-import jp.shts.android.storiesprogressview.StoriesProgressView
+
 import kotlinx.android.synthetic.main.demo.*
 
 import java.util.*
@@ -56,6 +56,7 @@ import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
 
 import android.widget.VideoView
+import com.teresaholfeld.stories.StoriesProgressView
 import java.net.URI
 
 
@@ -66,12 +67,14 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
     //private val resources = intArrayOf( R.drawable.venues1,    R.drawable.venues2,    R.drawable.venues3,    R.drawable.venues4,    )
 
     private val imagesList = mutableListOf( "https://www.fillmurray.com/640/360",
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        "https://loremflickr.com/640/360", "https://www.placecage.com/640/360", "https://placekitten.com/640/360",
-    "https://nightout.ezxdemo.com/storage/uploads/store_media//1cOx5wH5VMCHnjsUuzL9lnRxCDcnOGwvHrht4YfJ.jpgooo",
+
+        "https://loremflickr.com/640/360", "https://www.placecage.com/640/360", "https://placekitten.com/640/360"
+        /* "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+   "https://nightout.ezxdemo.com/storage/uploads/store_media//1cOx5wH5VMCHnjsUuzL9lnRxCDcnOGwvHrht4YfJ.jpgooo",
     "https://nightout.ezxdemo.com/storage/uploads/store_media//rY9JpCqmAQTlxkqpEssz808AaxA3hQ9F88GrGBHs.jpg",
     "https://nightout.ezxdemo.com/storage/uploads/store_media//iz3XVb7QiNfRsZ4yha42vTgjegFt3DQ035SQVNWg.jpg",
-    "https://nightout.ezxdemo.com/storage/uploads/store_media//8rKCEmiu5n0Fm3riTmG4l5O9JYinmJraL5YiPEvK.jpg")
+    "https://nightout.ezxdemo.com/storage/uploads/store_media//8rKCEmiu5n0Fm3riTmG4l5O9JYinmJraL5YiPEvK.jpg"*/
+    )
 
     var pressTime = 0L
     var limit = 500L
@@ -89,15 +92,15 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this@Demo, R.layout.demo)
 
-        binding.storiesProgressView.setStoriesCount(imagesList.size);
-        binding.storiesProgressView.setStoryDuration(3000L);
-        binding.storiesProgressView.setStoriesListener(this);
+        binding.storiesProgressView.setStoriesCount(imagesList.size)
+        binding.storiesProgressView.setStoryDuration(5000L)
+        binding.storiesProgressView.setStoriesListener(this)
          binding.storiesProgressView.startStories(counter)
 
         setImageNormal(THIS!!,binding.imagePreview,imagesList[counter])
 
-        binding.reverse.setOnTouchListener(onTouchListener);
-        binding.skip.setOnTouchListener(onTouchListener);
+        binding.reverse.setOnTouchListener(onTouchListener)
+        binding.skip.setOnTouchListener(onTouchListener)
         binding.reverse.setOnClickListener(this)
         binding.skip.setOnClickListener(this)
     }
@@ -122,8 +125,12 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
                     isFirstResource: Boolean
                 ): Boolean {
                     binding.progress.visibility= GONE
-                    binding.storiesProgressView.resume()
-                    Log.d("TAG", "onResourceReady: ")
+                    Handler(Looper.getMainLooper()).post(Runnable {
+                        if (binding.storiesProgressView != null)
+                            binding.storiesProgressView.resume()
+                    })
+
+                    Log.e("TAG", "onResourceReady: ")
                     return false
                 }
 
@@ -133,7 +140,7 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
                     target: com.bumptech.glide.request.target.Target<Drawable?>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    Log.d("TAG", "onLoadFailed: ")
+                    Log.e("TAG", "onLoadFailed: ")
                     binding.progress.visibility= GONE
                    // binding.storiesProgressView.skip()
 
@@ -151,12 +158,12 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
             if (binding.storiesProgressView != null)
                 binding.storiesProgressView.pause()
         })
-        Log.d("TAG", "setVideo111: ")
+      //  Log.e("TAG", "setVideo111: ")
         videoview?.setVideoURI(Uri.parse(url))
         try {
             videoview?.setOnPreparedListener { mediaPlayer ->
                 mediaPlayer.setOnInfoListener(MediaPlayer.OnInfoListener { mediaPlayer, i, i1 ->
-                    Log.d("TAG", "onInfo: =============>>>>>>>>>>>>>>>>>>>$i")
+                    Log.e("TAG", "onInfo: =============>>>>>>>>>>>>>>>>>>>$i")
                     when (i) {
                         MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START -> {
                             binding.progress.setVisibility(GONE)
@@ -199,14 +206,14 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
                     false
                 })
                 videoview.start()
-                Log.d("TAG", "setVideo: "+url)
+                Log.e("TAG", "setVideo: "+url)
                 binding.progress.setVisibility(GONE)
               //  binding.storiesProgressView.setStoryDuration(mediaPlayer.duration.toLong())
                 // binding.storiesProgressView.setStoryDuration(30000)
                 binding.storiesProgressView.startStories(counter)
             }
         } catch (e: Exception) {
-            Log.d("TAG", "setVideo2222: "+e)
+            Log.e("TAG", "setVideo2222: "+e)
         }
     }
 
@@ -253,15 +260,15 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
     }
     override fun onNext() {
         var cnt =++counter
-        Log.d("TAG", "{$cnt ----$counter}")
-       if(cnt==1){
-           setVideo(THIS!!,binding.videoView,imagesList[cnt])
-       }else{
-           binding.videoView.stopPlayback();
-           setImageNormal(THIS!!,binding.imagePreview,imagesList[cnt])
-       }
+//        Log.e("TAG", "{$cnt ----$counter}")
+//       if(cnt==1){
+//           setVideo(THIS!!,binding.videoView,imagesList[cnt])
+//       }else{
+//           binding.videoView.stopPlayback();
+//           setImageNormal(THIS!!,binding.imagePreview,imagesList[cnt])
+//       }
 
-
+        setImageNormal(THIS!!,binding.imagePreview,imagesList[cnt])
 
     }
 
@@ -274,13 +281,31 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
     }
 
     override fun onComplete() {
-        overridePendingTransition(0,0)
-        finish()
+        try {
+            binding.storiesProgressView.destroy()
+            finish()
+        } catch (e: Exception) {
+            Log.e("TAG", "onDestroy: ")
+        }
+        Log.e("TAG", "onDestroy: ")
     }
 
     override fun onDestroy() {
-        binding.storiesProgressView.destroy();
+        try {
+            binding.storiesProgressView.destroy()
+        } catch (e: Exception) {
+            Log.e("TAG", "onDestroy: ")
+        }
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        try {
+            binding.storiesProgressView.destroy();
+        } catch (e: Exception) {
+            Log.e("TAG", "onBackPressed: ")
+        }
+        super.onBackPressed()
     }
 
 }

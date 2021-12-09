@@ -160,6 +160,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                                 .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                                 .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
                                 .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)
+                                .putExtra(AppConstant.INTENT_EXTRAS.StoreType, selectedStrType)
                             ,REQCODE_STOREDETAILACTIVITY)
                     }
                 }
@@ -190,7 +191,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode==Activity.RESULT_OK){
             if(data?.getStringExtra("resultFav")!=null)
             venuDataList[posSaveForUpdate].favrouite = data?.getStringExtra("resultFav")!!
-            else if (data?.getStringExtra("resultBarcrwal")!=null)
+             if (data?.getStringExtra("resultBarcrwal")!=null)
             venuDataList[posSaveForUpdate].barcrawl = data?.getStringExtra("resultBarcrwal")!!
             venuSubAdapter.notifyItemChanged(posSaveForUpdate)
         }

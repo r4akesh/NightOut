@@ -114,9 +114,18 @@ class PreBookingActivity : BaseActivity() {
         }
         else if(v==binding.preBookingbookWholeVenus){
             if(binding.preBookingbookWholeVenus.isChecked){
+                binding.preBookingPeopleValue.setFocusable(false)
+                binding.preBookingPeopleValue.setFocusableInTouchMode(false)
+                binding.preBookingPeopleValue.setClickable(false)
+
                 binding.preBookingbookWholeVenus.isChecked=false
                 binding.preBookingbookWholeVenus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.unchk_box,0,0,0)
             }else{
+
+                binding.preBookingPeopleValue.setFocusable(true)
+                binding.preBookingPeopleValue.setFocusableInTouchMode(true)
+                binding.preBookingPeopleValue.setClickable(true)
+
                 binding.preBookingbookWholeVenus.isChecked=true
                 binding.preBookingbookWholeVenus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.chk_box,0,0,0)
             }
@@ -138,6 +147,17 @@ class PreBookingActivity : BaseActivity() {
             var jarr = JSONArray()
             val jsnObjMain = JSONObject()
             var flag =false
+
+            for (i in 0 until venuePkgList.size){
+                if(venuePkgList[i].quantityLocal>0){
+                    val jsonObjects = JSONObject()
+                    jsonObjects.put("id", venuePkgList[i].id)
+                    jsonObjects.put("qty", "" + venuePkgList[i].quantityLocal)
+                    jarr.put(jsonObjects)
+                    flag=true
+                }
+            }
+
             for (i in 0 until drinksList.size) {
                 for (j in 0 until drinksList[i].products.size) {
                     if(drinksList[i].products[j].quantityLocal>0) {
@@ -175,8 +195,8 @@ class PreBookingActivity : BaseActivity() {
                 MyApp.popErrorMsg("","Please select any special package OR Bar Menu",THIS!!)
                 return
             }
-             jsnObjMain.put("venue_id",venuID)
-           // jsnObjMain.put("venue_id","217")
+            // jsnObjMain.put("venue_id",venuID)
+           jsnObjMain.put("venue_id","217")
             jsnObjMain.put("vendor_id",vendorId)
             jsnObjMain.put("date",selectedDateFinal)
             jsnObjMain.put("time",binding.preBookingTimePicker.text.toString())
@@ -219,8 +239,8 @@ class PreBookingActivity : BaseActivity() {
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@PreBookingActivity, "")
         var map = HashMap<String, String>()
-        map["id"] = venuID!!
-       // map["id"] = "217"
+      //  map["id"] = venuID!!
+        map["id"] = "217"
         userVenueDetailViewModel.userVenueDetail(map).observe(this@PreBookingActivity, {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -603,6 +623,11 @@ class PreBookingActivity : BaseActivity() {
         setTouchNClick(binding.preBookingbookWholeVenus)
         binding.preBookingbookWholeVenus.isChecked = false
         userVenueDetailViewModel = CommonViewModel(this)
+
+        binding.preBookingPeopleValue.setFocusable(false)
+        binding.preBookingPeopleValue.setFocusableInTouchMode(false)
+        binding.preBookingPeopleValue.setClickable(false)
+
     }
 
     private fun showTimePicker() {

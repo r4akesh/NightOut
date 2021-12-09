@@ -127,8 +127,11 @@ class BarCrawlSavedListActivity : BaseActivity() {
     }
     private fun delete_bar_crawlAPICall(posList:Int) {
         customProgressDialog.show(this@BarCrawlSavedListActivity, "")
+//        1- saved
+//        2-shared
         var map = HashMap<String,String>()
         map["id"] = listtSaved[posList].id
+        map["saved_shared"] = "1"
 
         getSavedListViewModel.delSharedList(map).observe(this@BarCrawlSavedListActivity,{
             when(it.status){

@@ -50,6 +50,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         contactListResponse = webServiceRepository.getContactFilter(jsonObject)
         return contactListResponse
     }
+    fun getContactAll(jsonObject: JSONObject): LiveData<ApiSampleResource<ContactFillterModel>> {
+        contactListResponse = webServiceRepository.getContactAll(jsonObject)
+        return contactListResponse
+    }
 
     fun getEmngcy(): LiveData<ApiSampleResource<GetEmergencyModel>> {
         getEmergencyModel = webServiceRepository.getEmergency()

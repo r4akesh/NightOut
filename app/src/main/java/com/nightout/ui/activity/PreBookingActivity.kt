@@ -195,8 +195,8 @@ class PreBookingActivity : BaseActivity() {
                 MyApp.popErrorMsg("","Please select any special package OR Bar Menu",THIS!!)
                 return
             }
-            // jsnObjMain.put("venue_id",venuID)
-           jsnObjMain.put("venue_id","217")
+             jsnObjMain.put("venue_id",venuID)
+          // jsnObjMain.put("venue_id","217")
             jsnObjMain.put("vendor_id",vendorId)
             jsnObjMain.put("date",selectedDateFinal)
             jsnObjMain.put("time",binding.preBookingTimePicker.text.toString())
@@ -239,8 +239,8 @@ class PreBookingActivity : BaseActivity() {
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@PreBookingActivity, "")
         var map = HashMap<String, String>()
-      //  map["id"] = venuID!!
-        map["id"] = "217"
+        map["id"] = venuID!!
+        //map["id"] = "217"
         userVenueDetailViewModel.userVenueDetail(map).observe(this@PreBookingActivity, {
             when (it.status) {
                 Status.SUCCESS -> {

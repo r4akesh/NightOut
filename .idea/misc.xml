@@ -12,17 +12,21 @@
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/rounded_green.xml" value="0.35520833333333335" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/rounded_white_edittext.xml" value="0.35520833333333335" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/shape_bg_incoming_bubble.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/barcrwallist_activity.xml" value="0.26510416666666664" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/congrtulation_activity.xml" value="0.2630208333333333" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/contactlist_actvity.xml" value="0.29583333333333334" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/demo.xml" value="0.28125" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/demoooo.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/drink_item.xml" value="0.3171875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/drink_subitem.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/listparticipate_actvity.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/login_activity.xml" value="0.3546875" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/menu_desc.xml" value="0.3390625" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/prebooking_activity.xml" value="0.3234375" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_barmenu_subitem.xml" value="0.33" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_pakge.xml" value="0.3546875" />
-        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/storedetail_activity.xml" value="0.2640625" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/shared_item.xml" value="0.31875" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/storedetail_activity.xml" value="0.33" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/storydetail_actvity.xml" value="0.3203125" />
       </map>
     </option>

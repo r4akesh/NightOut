@@ -39,7 +39,7 @@ class FacilityAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.facilityItemTitle.text=arrayList[position].title
+        viewHolder.binding.facilityItemTitle.text=arrayList[position].facility_detail.title
 
 
         if(arrayList[position].status.equals("1")){

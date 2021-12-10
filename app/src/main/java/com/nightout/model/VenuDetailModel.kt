@@ -24,7 +24,7 @@ data class VenuDetailModel(
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
-        val facilities: ArrayList<Facility>,
+        val venue_facility: ArrayList<Facility>,
         val favrouite: String,
         val foodProducts: FoodProducts,
         val food_certificate_image: String,
@@ -80,12 +80,23 @@ data class VenuDetailModel(
 
     data class Facility(
         val created_at: String,
+        val facility_detail: FacilityDetail,
+        val facility_id: String,
+        val id: String,
+        val status: String,
+        val updated_at: String,
+        val venue_id: String
+    ) : Serializable
+
+
+    data class FacilityDetail(
+        val created_at: String,
         val id: String,
         val slug: String,
         val status: String,
         val title: String,
         val updated_at: String
-    ) : Serializable
+    )
 
     data class FoodProducts(
         val categories: ArrayList<CategoryFoodMdl>

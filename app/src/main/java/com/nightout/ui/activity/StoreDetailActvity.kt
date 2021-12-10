@@ -117,11 +117,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         if(v==binding.storeDeatilAddVenuRel){
             if (addBarCrawlStatus == "1") {
                 addBarCrawlStatus = "0"
-                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
 
             } else {
                 addBarCrawlStatus = "1"
-                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
+                binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
             }
             addRemoveBarCrawlAPICall()
         }
@@ -165,20 +165,25 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             finish()
 
         } else if (v == binding.storeDeatilMenu) {
+            binding.storeDeatilConstrentMore.visibility= GONE
+                    binding.storeDeatilConstrentDrinks.visibility= VISIBLE
+
+
             binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))
-            binding.storeDeatilDiscount.setBackgroundResource(0)
-            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
+         //   binding.storeDeatilDiscount.setBackgroundResource(0)
+         //   binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
             binding.storeDeatilMore.setBackgroundResource(0)
             binding.storeDeatilMore.setTextColor(resources.getColor(R.color.white_second))
 
 
             binding.storeDeatilMenuDesc.visibility = VISIBLE
-            binding.storeDeatilDisDesc.visibility = GONE
+         //   binding.storeDeatilDisDesc.visibility = GONE
             binding.storeDeatilMoreDesc.visibility = GONE
 
 
-        } else if (v == binding.storeDeatilDiscount) {
+        }
+      /*  else if (v == binding.storeDeatilDiscount) {
             binding.storeDeatilMenu.setBackgroundResource(0)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
             binding.storeDeatilDiscount.setBackgroundResource(R.drawable.box_yelo)
@@ -231,17 +236,22 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilMenuDesc.visibility = GONE
             binding.storeDeatilDisDesc.visibility = VISIBLE
             binding.storeDeatilMoreDesc.visibility = GONE
-        } else if (v == binding.storeDeatilMore) {
+        } */
+
+        else if (v == binding.storeDeatilMore) {
+            binding.storeDeatilConstrentMore.visibility= VISIBLE
+            binding.storeDeatilConstrentDrinks.visibility= GONE
+
             binding.storeDeatilMenu.setBackgroundResource(0)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.white_second))
-            binding.storeDeatilDiscount.setBackgroundResource(0)
-            binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
+         //   binding.storeDeatilDiscount.setBackgroundResource(0)
+        //    binding.storeDeatilDiscount.setTextColor(resources.getColor(R.color.white_second))
             binding.storeDeatilMore.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMore.setTextColor(resources.getColor(R.color.black))
 
             binding.storeDeatilMoreDesc.visibility = VISIBLE
-            binding.storeDeatilDisDesc.visibility = GONE
-            binding.storeDeatilMenuDesc.visibility = GONE
+            //binding.storeDeatilDisDesc.visibility = GONE
+        //    binding.storeDeatilMenuDesc.visibility = GONE
         } else if (v == binding.storeDeatilSharLoc) {
             val latitude: Double = 26.906473
             val longitude: Double = 75.772804
@@ -309,10 +319,10 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             }
             binding.storeDeatilAddRemBarCrl.visibility = VISIBLE
             if(dt.barcrawl=="1"){
-                addBarCrawlStatus = "0"
+                addBarCrawlStatus = "1"
                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
             }else{
-                addBarCrawlStatus = "1"
+                addBarCrawlStatus = "0"
                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
             }
             //topImg
@@ -322,8 +332,19 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 .into(binding.storeDeatilLogo)
 
             //faciltyList
-            facilityList = dt.facilities
+            facilityList = dt.venue_facility
             showMapLoc(dt.store_lattitude, dt.store_longitude)
+            if(!dt.store_description.isNullOrBlank()) {
+                var htmlData = dt.store_description
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    binding.storeDeatilMenuDesc.setText(Html.fromHtml(htmlData,Html.FROM_HTML_MODE_LEGACY));
+                } else {
+                    binding.storeDeatilMenuDesc.setText(Html.fromHtml(htmlData));
+                }
+
+            }else{
+                binding.storeDeatilLinerMenuDesc.visibility=GONE
+            }
         } catch (e: Exception) {
             MyApp.popErrorMsg("StoreDetail",""+e.toString(),THIS!!)
         }
@@ -877,7 +898,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         doAddBarCrawlModel = CommonViewModel(this)
         setTouchNClick(binding.storeDeatilMenu)
         setTouchNClick(binding.storeDeatilAddVenuRel)
-        setTouchNClick(binding.storeDeatilDiscount)
+      //  setTouchNClick(binding.storeDeatilDiscount)
         setTouchNClick(binding.storeDeatilMore)
         setTouchNClick(binding.storeDeatilBakBtn)
         setTouchNClick(binding.storeDeatilFacilityBtn)
@@ -905,6 +926,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         progressDialog.show(this@StoreDetailActvity, "")
         var map = HashMap<String, String>()
         map["id"] = venuID!!
+       // map["id"] = "217"
 
         userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetailActvity, {
             when (it.status) {
@@ -931,7 +953,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         var map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
-        map["status"] =if(addBarCrawlStatus.equals("1")) "0" else "1"
+       // map["status"] =if(addBarCrawlStatus.equals("1")) "0" else "1"
+        map["status"] = addBarCrawlStatus
         map["store_type"] =dt.store_type
 
         doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetailActvity, {
@@ -1126,7 +1149,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     override fun onBackPressed() {
         var myIntent = Intent()
         myIntent.putExtra("resultFav",favStatus)
-        myIntent.putExtra("resultBarcrwal",if(addBarCrawlStatus.equals("1")) "0" else "1")
+       // myIntent.putExtra("resultBarcrwal",if(addBarCrawlStatus.equals("1")) "0" else "1")
+        myIntent.putExtra("resultBarcrwal", addBarCrawlStatus)
         setResult(Activity.RESULT_OK,myIntent)
         super.onBackPressed()
     }

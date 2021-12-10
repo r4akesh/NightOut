@@ -84,6 +84,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
           map["phonenumber"] = mobNo
           map["device_id"] = Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)
           map["device_type"] = "1"
+          map["email"] = email
           regViewModel.otpResend(map).observe(activity, {
               when (it.status) {
                   Status.SUCCESS -> {

@@ -52,6 +52,8 @@ class BarCrawlShredListActivity : BaseActivity() {
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {myData->
                         listtShared =  ArrayList()
+                        listtShared = myData.data as ArrayList<SharedBarcrwalRes.Data>
+                        if(listtShared.size>1)
                         listtShared = myData.data.reversed() as ArrayList<SharedBarcrwalRes.Data>
                         if(listtShared.size>0) {
                             binding.barcrwalSharedNoData.visibility = GONE

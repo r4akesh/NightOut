@@ -213,6 +213,7 @@
     <string name="Invited_BarCrawl">Invited Bar Crawl</string>
     <string name="areUSureUnFav">Are you sure you want to remove from favourite?</string>
     <string name="No_oneinyour_contact">No one in your contact list uses the App </string>
+    <string name="No_oneinyour_contact_share">No one in your contact list uses the App, You can share later from Saved List Screen  </string>
     <string name="Sharethelink">Share the link of App with your friend and Add them in Emergency Contact. </string>
     <string name="youHavntAddEmrgencyCotact">You haven\'t add emergency contact yet</string>
     <string name="youHavntAddFavStroe">You haven\'t saved any venues to favourite</string>

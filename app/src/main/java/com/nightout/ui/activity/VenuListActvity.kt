@@ -191,6 +191,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode==Activity.RESULT_OK){
             if(data?.getStringExtra("resultFav")!=null)
             venuDataList[posSaveForUpdate].favrouite = data?.getStringExtra("resultFav")!!
+            var vv=data?.getStringExtra("resultBarcrwal")
              if (data?.getStringExtra("resultBarcrwal")!=null)
             venuDataList[posSaveForUpdate].barcrawl = data?.getStringExtra("resultBarcrwal")!!
             venuSubAdapter.notifyItemChanged(posSaveForUpdate)

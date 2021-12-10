@@ -91,12 +91,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         //  setBottomSheet()
         initView()
-        Log.e("ok", "onCreateView: "+PreferenceKeeper.instance.fcmTokenSave)
+        Log.e("FCM", "onCreateView: "+PreferenceKeeper.instance.fcmTokenSave)
         if (NetworkHelper(requireActivity()).isNetworkConnected()) {
             binding.btmShhetInclue.bottomSheetNSrlView.visibility = GONE
             if(activity!=null && isAdded)
             dashboardAPICALL()
-            Log.d("TAG", "onCreateView: ")
+
             if(PreferenceKeeper.instance.isUserDeviceAPICall){
               //  Log.d("TAG", "onCreateView")
             }else{

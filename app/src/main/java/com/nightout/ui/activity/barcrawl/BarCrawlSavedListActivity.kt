@@ -15,10 +15,7 @@ import com.nightout.adapter.SavedAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarssavedActivityBinding
 import com.nightout.model.BarcrwalSavedRes
-import com.nightout.utils.AppConstant
-import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.MyApp
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import kotlinx.android.synthetic.main.image_view_item.*
@@ -40,6 +37,14 @@ class BarCrawlSavedListActivity : BaseActivity() {
         user_bar_crawl_listAPICall()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully){
+            //for update list after update the barcrwal
+            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=false
+            user_bar_crawl_listAPICall()
+        }
+    }
     private fun user_bar_crawl_listAPICall() {
         customProgressDialog.show(this@BarCrawlSavedListActivity, "")
         var map= HashMap<String,String>()
@@ -117,7 +122,11 @@ class BarCrawlSavedListActivity : BaseActivity() {
             // item.title
             if(item.title.equals("Edit")){
                 startActivity(Intent(this@BarCrawlSavedListActivity,BarcrawlListActivity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtSaved[pos].id))
+                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtSaved[pos].id)
+                    .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,true)
+                    .putExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model,listtSaved[pos])
+
+                )
             }else{
                  delete_bar_crawlAPICall(pos)
             }

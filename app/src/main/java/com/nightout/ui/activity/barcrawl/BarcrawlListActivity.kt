@@ -16,6 +16,7 @@ import com.nightout.adapter.VenuListBarCrawaAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrwallistActivityBinding
 import com.nightout.model.AllBarCrwalListResponse
+import com.nightout.model.BarcrwalSavedRes
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -33,21 +34,23 @@ class BarcrawlListActivity : BaseActivity() {
     var listClickPosSave = 0
       var barcrwalId: String = ""
     var isFromShareListActivity=false
+    var isFromSaveListActivity=false
+   lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BarcrawlListActivity, R.layout.barcrwallist_activity)
         initView()
         setToolBar()
-        setTopHrList()
+        setBottomHrList()
         barcrwalId = try {
             intent.getStringExtra(AppConstant.INTENT_EXTRAS.BarcrwalID)!!
         } catch (e: Exception) {
             ""
         }
-        if(barcrwalId.isNullOrBlank())
-            Log.d("TAG", "onCreate: blnk")
-        else
-            Log.d("TAG", "onCreate: not blnk")
+        isFromSaveListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,false)
+        if(isFromSaveListActivity){
+              venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
+        }
 
         bar_crawl_listAPICAll()
 
@@ -91,7 +94,7 @@ class BarcrawlListActivity : BaseActivity() {
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFromShareListActivity)
-                )
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity))
                 finish()
             }
         }
@@ -108,6 +111,27 @@ class BarcrawlListActivity : BaseActivity() {
                         try {
                             listAllVenue.addAll(it.data?.data?.barcrawl!!)
                             if (listAllVenue.isNotEmpty()) {
+                                /*if(isFromSaveListActivity) {
+                                    // set chk with old data
+                                    for (i in 0 until listAllVenue.size) {
+                                        for (j in 0 until venusSelectedOld.venue_list.size){
+                                            if(listAllVenue[i].venue_id.toString()==venusSelectedOld.venue_list[j].id){
+                                                listAllVenue[i].isSelected=true
+                                                listHr.add(listAllVenue[i])
+                                                break
+                                            }
+                                        }
+                                    }
+
+                                    if (listHr.size > 0) {
+                                        binding.barCrwlSelectedConstrant.visibility = VISIBLE
+                                        barcrwalSelectedAdapter.notifyDataSetChanged()
+                                        binding.barCrwlReyleBotm.smoothScrollToPosition(listHr.size - 1)
+                                    } else {
+                                        binding.barCrwlSelectedConstrant.visibility = GONE
+                                    }
+                                }*/
+
                                 setAllVenuList()
 
                             }else{
@@ -150,7 +174,7 @@ class BarcrawlListActivity : BaseActivity() {
     }
 
 
-    private fun setTopHrList() {
+    private fun setBottomHrList() {
         listHr = ArrayList()
         barcrwalSelectedAdapter = BarcrwalSelectedAdapter(
             this@BarcrawlListActivity,

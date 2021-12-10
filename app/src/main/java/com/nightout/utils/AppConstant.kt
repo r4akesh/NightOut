@@ -54,6 +54,8 @@ class AppConstant {
         const val CONGRETS_MSG = "CONGRETS_MSG"
         const val STORY_LIST = "STORY_LIST"
         const val ISFROM_ShareListActivity = "ISFROM_ShareListActivity"
+        const val ISFROM_SAVEDLIST_Activity = "ISFROM_SAVEDLIST_Activity"
+        const val SAVEDLIST_Model = "SAVEDLIST_Model"
 
 
     }

@@ -74,6 +74,8 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private var builder: LatLngBounds.Builder? = null
     var barcrwalId : String= ""
     var isFromShareListActivity=false
+    var isFromSaveListActivity=false
+    var publicPrivetValue="1"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +117,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         mMarkerPoints = ArrayList()
         commonViewModel = CommonViewModel(this@BarCrwalPathMap)
         isFromShareListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,false)
+        isFromSaveListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,false)
     }
 
     override fun onClick(v: View?) {
@@ -230,8 +233,9 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let {
-                        if(isFromShareListActivity){
+                        if(isFromShareListActivity || isFromSaveListActivity){
                             Utills.showSuccessToast(THIS!!,resources.getString(R.string.barcrwal_update_suceesfully))
+                            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
                             finish()
                         }else {
 
@@ -261,7 +265,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                                     }
 
                                     override fun onNO() {
-                                        //startActivity(Intent(this@BarCrwalPathMap, BarCrawlSavedListActivity::class.java))
+
                                         finish()
                                     }
 
@@ -285,7 +289,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         })
     }
 
-    var publicPrivetValue="1"
+
     private fun setSpin() {
 
                 var listSpin = ArrayList<String>()

@@ -446,16 +446,55 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilAddrs" />
 
+
+                    <LinearLayout
+                        android:id="@+id/storeDeatilLinerMenuDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilNearBy">
+
+                       <!-- <include
+                            android:id="@+id/storeDeatilMenuDesc"
+                            layout="@layout/menu_desc"
+                            android:visibility="visible" />-->
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/Description"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:textSize="@dimen/_12ssp"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_marginTop="@dimen/_5ssp"
+                            android:id="@+id/storeDeatilMenuDesc"
+                            android:layout_width="match_parent"
+                            android:textColor="@color/white"
+                            android:text="desc"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:textSize="@dimen/_12ssp"
+                            android:background="@android:color/transparent"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/storeDeatilAllBtn"
                         android:layout_width="match_parent"
 
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
+                        android:layout_marginTop="@dimen/_5ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
                         android:background="@drawable/box_primaryclr_drk"
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilNearBy">
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilLinerMenuDesc">
 
                         <TextView
                             android:id="@+id/storeDeatilMenu"
@@ -471,29 +510,9 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12ssp" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="@dimen/_10ssp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/bg_view_ver" />
 
-                        <TextView
-                            android:id="@+id/storeDeatilDiscount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/proximanova_reg"
-                            android:gravity="center"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/Discounts"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="@dimen/_10ssp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@color/bg_view_ver" />
+
 
                         <TextView
                             android:id="@+id/storeDeatilMore"
@@ -510,30 +529,27 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/storeDeatilLinerMenuDesc"
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/storeDeatilConstrentMore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5ssp"
-                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+                        android:visibility="gone"
+                        android:background="@drawable/border_primaryclr"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilAllBtn">
-
-                        <include
-                            android:id="@+id/storeDeatilMenuDesc"
-                            layout="@layout/menu_desc"
-                            android:visibility="visible" />
-
-                        <include
-                            android:id="@+id/storeDeatilDisDesc"
-                            layout="@layout/discount_desc"
-                            android:visibility="gone" />
-
                         <include
                             android:id="@+id/storeDeatilMoreDesc"
                             layout="@layout/more_desc"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
-                    </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/storeDeatilConstrentDrinks"
@@ -546,7 +562,7 @@
                         android:background="@drawable/border_primaryclr"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilLinerMenuDesc">
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilAllBtn">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/storeDeatilHorizintalRecycler"
@@ -591,7 +607,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginConstrent" />
+             />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

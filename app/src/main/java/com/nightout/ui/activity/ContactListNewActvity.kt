@@ -56,7 +56,7 @@ class ContactListNewActvity : BaseActivity() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             progressDialog.show(this@ContactListNewActvity, "")
             GlobalScope.launch (Dispatchers.Main){
-                contactsInfoList = getAllContacts()
+                contactsInfoList = getAllContactsFrmDevice()
                 if (contactsInfoList.size > 0) {
                     if (isFROM_BarCrwalPathMapActvity){
                         getAllContactsAPICAll()
@@ -64,8 +64,24 @@ class ContactListNewActvity : BaseActivity() {
                         contact_listAPICAll()
                     }
                 }
-                else
-                    MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
+                else {
+                    progressDialog.dialog.dismiss()
+                    DialogCustmYesNo.getInstance().createDialogOK(THIS!!,"", resources.getString(R.string.No_oneinyour_contact_share),object:DialogCustmYesNo.Dialogclick{
+                        override fun onYES() {
+                        finish()
+                        }
+
+                        override fun onNO() {
+
+                        }
+
+                    })
+                  /*  MyApp.popErrorMsg(
+                        "",
+                        resources.getString(R.string.Nocontactfounddevice),
+                        this@ContactListNewActvity
+                    )*/
+                }
             }
            /* Handler(Looper.getMainLooper()).post {
                 contactsInfoList = getAllContacts()
@@ -139,9 +155,9 @@ class ContactListNewActvity : BaseActivity() {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Log.d("ok", "bar_crawl_invitationAPICall: " + it.message)
-                            MyApp.ShowTost(this@ContactListNewActvity,it.message!!)
-                            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
+                            Log.d("ok", "bar_crawl_invitationAPICall: " + it.data?.message)
+                            MyApp.ShowTost(this@ContactListNewActvity,""+it.data?.message)
+                            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true //update list after share for both savedList and sharedList
                             finish()
                         } catch (e: Exception) {
                         }
@@ -338,7 +354,7 @@ class ContactListNewActvity : BaseActivity() {
     }
 
 
-    private fun getAllContacts(): ArrayList<ContactNoModel> {
+    private fun getAllContactsFrmDevice(): ArrayList<ContactNoModel> {
      //  progressDialog.show(this@ContactListNewActvity, "")
         var contactId: String? = null
         var displayName: String? = null
@@ -394,7 +410,7 @@ class ContactListNewActvity : BaseActivity() {
             REQUEST_READ_CONTACTS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     GlobalScope.launch (Dispatchers.Main){
-                        contactsInfoList = getAllContacts()
+                        contactsInfoList = getAllContactsFrmDevice()
                         if (contactsInfoList.size > 0){
                             if (isFROM_BarCrwalPathMapActvity){
                                 getAllContactsAPICAll()
@@ -402,8 +418,20 @@ class ContactListNewActvity : BaseActivity() {
                                 contact_listAPICAll()
                             }
                         }
-                        else
-                        MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
+                        else{
+                            progressDialog.dialog.dismiss()
+                            DialogCustmYesNo.getInstance().createDialogOK(THIS!!,"", resources.getString(R.string.No_oneinyour_contact_share),object:DialogCustmYesNo.Dialogclick{
+                                override fun onYES() {
+                                    finish()
+                                }
+
+                                override fun onNO() {
+
+                                }
+
+                            })
+                        }
+                       // MyApp.popErrorMsg("", resources.getString(R.string.Nocontactfounddevice), this@ContactListNewActvity)
                     }
 
                 } else {

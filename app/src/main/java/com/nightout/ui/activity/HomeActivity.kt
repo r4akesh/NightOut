@@ -96,6 +96,7 @@ class HomeActivity : BaseActivity(), OnMenuOpenListener {
             .withRootViewElevation(10) //Content view's elevation will be interpolated between 0 and 10dp. Default == 8.
             .withRootViewYTranslation(0) //
             .withMenuLayout(R.layout.drawer_layout) // Content view's translationY will be interpolated between 0 and 4. Default ==
+            .withContentClickableWhenMenuOpened(true)
             .inject()
         //  val sideMenuLayout = findViewById<LinearLayout>(R.id.sideMenuLayoutLL)
         //  sideMenuLayout.layoutParams.width = (Util.getScreenWidth(this) * 0.8).toInt()

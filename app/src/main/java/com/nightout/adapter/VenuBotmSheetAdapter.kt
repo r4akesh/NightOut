@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
@@ -65,9 +66,11 @@ class VenuBotmSheetAdapter(
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)
                 if(arrayList[position].favrouite.equals("1")){
+                    venuBottmShhetItemFavBtn.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bounce))
                     arrayList[position].favrouite = "0"
                     venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
                 }else{
+                    venuBottmShhetItemFavBtn.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bounce))
                     arrayList[position].favrouite = "1"
                     venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
                 }
@@ -116,12 +119,15 @@ class VenuBotmSheetAdapter(
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)
                 if(arrayList[position].favrouite.equals("1")){
+
                     arrayList[position].favrouite = "0"
                     venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_unselected72)
                 }else{
+
                     arrayList[position].favrouite = "1"
                     venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
                 }
+                venuBottmShhetItemFavBtn.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bounce))
             }
 
             itemView.setOnClickListener {

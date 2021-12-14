@@ -84,7 +84,7 @@ class EmergencyContactActivity : BaseActivity() {
             val intent = result.data
             // Handle the Intent
             emergency_contact_listAPICALL()//for again get update list
-            Utills.showSnackBarOnError(binding.emRootLayout, "Contact added successfully", this@EmergencyContactActivity)
+            Utills.showSuccessToast(this@EmergencyContactActivity, "Contact added successfully", )
         }
     }
 
@@ -185,10 +185,10 @@ class EmergencyContactActivity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.emRootLayout,
+                            Utills.showErrorToast(
+                                this@EmergencyContactActivity,
                                 it.message!!,
-                                this@EmergencyContactActivity
+
                             )
                         } catch (e: Exception) {
                         }

@@ -47,10 +47,10 @@ class TermsNCondActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.rootLayoutTerms,
+                    Utills.showErrorToast(
+                        this@TermsNCondActivity,
                         it.message!!,
-                        this@TermsNCondActivity
+
                     )
                 }
             }

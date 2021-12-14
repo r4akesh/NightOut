@@ -61,7 +61,7 @@ open class LoginHandler(val activity: LoginActivity) {
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     // progressBar.visibility = View.GONE
-                    Utills.showSnackBarOnError(activity.binding.loginActvityRoot, it.message!!, activity)
+                    Utills.showErrorToast(activity, it.message!!)
                 }
             }
         })

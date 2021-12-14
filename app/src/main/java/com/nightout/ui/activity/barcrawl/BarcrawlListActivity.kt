@@ -146,10 +146,10 @@ class BarcrawlListActivity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.barcrwalListMainLayout,
+                            Utills.showErrorToast(
+                                this@BarcrawlListActivity,
                                 it.message!!,
-                                this@BarcrawlListActivity
+
                             )
                         } catch (e: Exception) {
                         }

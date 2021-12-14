@@ -165,10 +165,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                     Status.LOADING -> { }
                     Status.ERROR -> {
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.fragmentHomeRootLayout,
+                            Utills.showErrorToast(
+                                requireActivity(),
                                 it.message!!,
-                                requireActivity()
+
                             )
                         } catch (e: Exception) {
                         }
@@ -220,10 +220,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         progressDialog.dialog.dismiss()
                         // progressBar.visibility = View.GONE
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.fragmentHomeRootLayout,
+                            Utills.showErrorToast(
+                                requireActivity(),
                                 it.message!!,
-                                requireActivity()
+
                             )
                         } catch (e: Exception) {
                         }
@@ -322,7 +322,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 }
                 Status.ERROR -> {
                    // progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(binding.fragmentHomeRootLayout, it.message!!, requireActivity())
+                    Utills.showErrorToast(requireActivity(), it.message!!, )
                 }
             }
         })

@@ -417,7 +417,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     Log.d("ok", "ERROR: ")
-                    Utills.showSnackBarOnError(activity.binding.etFName, it.message!!, activity)
+                    Utills.showErrorToast(activity, it.message!!)
                 }
             }
         })

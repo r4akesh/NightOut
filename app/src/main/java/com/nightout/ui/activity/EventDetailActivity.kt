@@ -10,6 +10,7 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -68,6 +69,14 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
 
         }
         else if(v==binding.eventDeatilFav){
+            if (favStatus == "1") {
+                favStatus = "0"
+                binding.eventDeatilFav.setImageResource(R.drawable.fav_unselected)
+            } else {
+                favStatus = "1"
+                binding.eventDeatilFav.setImageResource(R.drawable.fav_selected)
+            }
+            binding.eventDeatilFav.startAnimation(AnimationUtils.loadAnimation(THIS!!, R.anim.bounce))
             add_favouriteAPICALL()
         }
         else if(v==binding.eventDetailShareLoc){
@@ -129,10 +138,10 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.rootLayoutEventDetal,
-                        it.message!!,
-                        this@EventDetailActivity
+                    Utills.showErrorToast(
+                        this@EventDetailActivity ,
+                        it.message!!
+
                     )
                 }
             }
@@ -192,10 +201,10 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
 
             //  binding.storeDeatilAddrs.text = dt.store_address
             if (dt.favrouite == "1") {
-                favStatus = "0"
+                favStatus = "1"
                 binding.eventDeatilFav.setImageResource(R.drawable.fav_selected)
             } else {
-                favStatus = "1"
+                favStatus = "0"
                 binding.eventDeatilFav.setImageResource(R.drawable.fav_unselected)
             }
             //topImg
@@ -265,14 +274,14 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
                  //   progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
-                            Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
-                            if (detailData.data.status == "1") {
-                                favStatus = "0"
-                                binding.eventDeatilFav.setImageResource(R.drawable.fav_selected)
-                            } else {
-                                favStatus = "1"
-                                binding.eventDeatilFav.setImageResource(R.drawable.fav_unselected)
-                            }
+//                            Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
+//                            if (detailData.data.status == "1") {
+//                                favStatus = "0"
+//                                binding.eventDeatilFav.setImageResource(R.drawable.fav_selected)
+//                            } else {
+//                                favStatus = "1"
+//                                binding.eventDeatilFav.setImageResource(R.drawable.fav_unselected)
+//                            }
                         } catch (e: Exception) {
                         }
                     }

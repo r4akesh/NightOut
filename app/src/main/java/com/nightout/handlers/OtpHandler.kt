@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivity
+import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.utils.CustomProgressDialog
 
@@ -51,8 +52,8 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                            PreferenceKeeper.instance.bearerTokenSave = logModel.token
                            PreferenceKeeper.instance.loginResponse = logModel
                            PreferenceKeeper.instance.isUserLogin = true
-
-                          activity.startActivity(Intent(activity, HomeActivity::class.java))
+                            Utills.showSuccessToast(activity,it.message)
+                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))
                           activity.finish()
                       }
                    /* Utills.showSnackBarOnError(
@@ -66,7 +67,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(activity.binding.otpRootLyout, it.message!!, activity)
+                    Utills.showErrorToast(activity, it.message!!, )
                 }
             }
         })
@@ -92,10 +93,10 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                       it.data?.let {
 
                       }
-                      Utills.showSnackBarOnError(
-                          activity.binding.otpRootLyout,
+                      Utills.showSuccessToast(
+                          activity,
                           it.data?.message!!,
-                          activity
+
                       )
                   }
                   Status.LOADING -> {
@@ -104,7 +105,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                   }
                   Status.ERROR -> {
                       progressDialog.dialog.dismiss()
-                      Utills.showSnackBarOnError(activity.binding.otpRootLyout, it.message!!, activity)
+                      Utills.showErrorToast(activity, it.message!!)
                   }
               }
           })

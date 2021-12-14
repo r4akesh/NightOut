@@ -45,10 +45,10 @@ class NotificationActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.activityNotiMainLayout,
-                        it.message!!,
-                        this@NotificationActivity
+                    Utills.showErrorToast(
+                        this@NotificationActivity,
+                        it.message!!
+
                     )
                 }
             }

@@ -43,10 +43,10 @@ class FAQActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.rootFaq,
+                    Utills.showErrorToast(
+                        this@FAQActivity,
                         it.message!!,
-                        this@FAQActivity
+
                     )
                 }
             }

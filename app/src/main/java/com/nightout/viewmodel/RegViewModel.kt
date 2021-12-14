@@ -31,29 +31,29 @@ class RegViewModel(activity: Activity) : BaseObservable() {
         when {
             activity.binding.registerFName.text.toString().isNullOrBlank() -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.registerFName, activity.resources.getString(R.string.please_enter_fname), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_fname))
             }
 
             activity.binding.registerLName.text.toString().isNullOrBlank() -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.registerLName, activity.resources.getString(R.string.please_enter_lname), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_lname))
             }
             activity.binding.registerEmail.text.toString().isNullOrBlank() -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.registerLName, activity.resources.getString(R.string.please_enter_email), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_email))
             }
             !MyApp.isValidEmail(activity.binding.registerEmail.text.toString())  -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.registerLName, activity.resources.getString(R.string.please_enter_validemail), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_validemail))
             }
             activity.binding.registerPhNo.text.toString().isNullOrBlank() -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.registerLName, activity.resources.getString(R.string.please_enter_phno), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_phno))
             }
 
             activity.binding.registerPhNo.text.toString().length<14->{
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.registerPhNo, activity.resources.getString(R.string.please_enter_valid_phno), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_valid_phno))
             }
 
             else -> {

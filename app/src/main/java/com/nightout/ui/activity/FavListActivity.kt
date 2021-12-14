@@ -14,12 +14,10 @@ import com.nightout.adapter.FavVenuAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.FavlistActivityBinding
 import com.nightout.model.FavListModelRes
-import com.nightout.utils.AppConstant
-import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.DialogCustmYesNo
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 
 class FavListActivity : BaseActivity() {
     lateinit var binding : FavlistActivityBinding
@@ -65,10 +63,10 @@ class FavListActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.rootFavList,
+                    Utills.showErrorToast(
+                        this@FavListActivity,
                         it.message!!,
-                        this@FavListActivity
+
                     )
                 }
             }
@@ -115,8 +113,8 @@ class FavListActivity : BaseActivity() {
             }
 
             override fun onClickFav(pos: Int) {
-                showAlertUnFav(pos)
-
+               // showAlertUnFav(pos)
+                add_favouriteAPICALL(pos)
 
             }
 
@@ -143,7 +141,7 @@ class FavListActivity : BaseActivity() {
     }
 
     private fun add_favouriteAPICALL(pos:Int) {
-       // customProgressDialog.show(this@FavListActivity, "")
+        customProgressDialog.show(this@FavListActivity, "")
         var map = HashMap<String, String>()
         map["venue_id"] = dataList[pos].venue_id
         map["vendor_id"] = dataList[pos].venue_detail.user_id
@@ -153,7 +151,7 @@ class FavListActivity : BaseActivity() {
         commonViewModel.doFavItem(map).observe(this@FavListActivity, {
             when (it.status) {
                 Status.SUCCESS -> {
-                  //  customProgressDialog.dialog.dismiss()
+                    customProgressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
                             val listSize = dataList.size
@@ -163,6 +161,8 @@ class FavListActivity : BaseActivity() {
                             if(dataList.size==0){
                                 binding.favVenuesNoDataConstrent.visibility=VISIBLE
                             }
+                             Utills.showDefaultToast(THIS!!,"Venue removed from favourite")
+
                         } catch (e: Exception) {
                         }
                     }
@@ -171,7 +171,7 @@ class FavListActivity : BaseActivity() {
 
                 }
                 Status.ERROR -> {
-                 //   customProgressDialog.dialog.dismiss()
+                    customProgressDialog.dialog.dismiss()
                 }
             }
         })

@@ -41,10 +41,10 @@ class PanicHistoryActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.previousEmergencyListMainLayout,
-                        it.message!!,
-                        this@PanicHistoryActivity
+                    Utills.showErrorToast(
+                        this@PanicHistoryActivity,
+                        it.message!!
+
                     )
                 }
             }

@@ -29,11 +29,11 @@ class OtpViewModel(activity: Activity) : BaseObservable() {
         when {
             activity.binding.otpPinView.text.toString().isNullOrBlank() -> {
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.otpPinView, activity.resources.getString(R.string.please_enter_otp), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_otp))
             }
             activity.binding.otpPinView.text.toString().length<4->{
                 isFormValidated = false
-                Utills.showSnackBarOnError(activity.binding.otpPinView, activity.resources.getString(R.string.please_enter_complete_otp), activity)
+                Utills.showIconToast(activity, activity.resources.getString(R.string.please_enter_complete_otp))
             }
             else -> {
                 isFormValidated = true

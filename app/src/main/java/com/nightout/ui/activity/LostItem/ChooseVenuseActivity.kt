@@ -125,10 +125,10 @@ class ChooseVenuseActivity : BaseActivity() {
                 Status.ERROR -> {
                     customProgressDialog.dialog.dismiss()
                     try {
-                        Utills.showSnackBarOnError(
-                            binding.chooseVenuesToolbarConstrent,
+                        Utills.showErrorToast(
+                            this@ChooseVenuseActivity,
                             it.message!!,
-                            this@ChooseVenuseActivity
+
                         )
                     } catch (e: Exception) {
                     }
@@ -200,10 +200,10 @@ class ChooseVenuseActivity : BaseActivity() {
                 Status.ERROR -> {
                     customProgressDialog.dialog.dismiss()
                     try {
-                        Utills.showSnackBarOnError(
-                            binding.chooseVenuesToolbarConstrent,
+                        Utills.showErrorToast(
+                            this@ChooseVenuseActivity,
                             it.message!!,
-                            this@ChooseVenuseActivity
+
                         )
                     } catch (e: Exception) {
                     }

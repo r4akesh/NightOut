@@ -52,10 +52,10 @@ class AboutActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.rootLayoutAbout,
-                        it.message!!,
-                        this@AboutActivity
+                    Utills.showErrorToast(
+                        this@AboutActivity,
+                        it.message!!
+
                     )
                 }
             }

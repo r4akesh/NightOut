@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Handler
@@ -73,14 +74,14 @@ class Utills {
             return displayMetrics.widthPixels
         }
 
-         fun showSnackBarOnError(view: View, message: String, context: Context) {
-           /* val snackBar = Snackbar.make(
+        /* fun showSnackBarOnError(view: View, message: String, context: Context) {
+           *//* val snackBar = Snackbar.make(
                 view, message, Snackbar.LENGTH_LONG
             )
             snackBar.changeFont()
             snackBar.setBackgroundTint(ContextCompat.getColor(context, R.color.view_line_gray2))
             snackBar.setTextColor(ContextCompat.getColor(context, R.color.white))
-            snackBar.show()*/
+            snackBar.show()*//*
 
              val snackBarView = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
              snackBarView.changeFont()
@@ -92,7 +93,7 @@ class Utills {
              snackView.setBackgroundColor(ContextCompat.getColor(context, R.color.color_20213A))
              snackBarView.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
              snackBarView.show()
-        }
+        }*/
 
         fun showSnakBarCstm(view: View, message: String, context: Context){
 
@@ -306,6 +307,7 @@ class Utills {
             view.startAnimation(animate)
         }
 
+
         fun showErrorToast(ctx: Context, msg: String) {
             DynamicToast.makeError(ctx, msg, Toast.LENGTH_SHORT).show()
         }
@@ -317,6 +319,11 @@ class Utills {
         fun showWarningToast(ctx: Context, msg: String) {
             DynamicToast.makeWarning(ctx, msg, Toast.LENGTH_LONG).show()
         }
-
+        fun showDefaultToast(ctx: Context, msg: String) {
+            DynamicToast.make(ctx, msg).show();
+        }
+        fun showIconToast(ctx: Context, msg: String) {
+            DynamicToast.make(ctx, msg, R.drawable.).show();
+        }
     }
 }

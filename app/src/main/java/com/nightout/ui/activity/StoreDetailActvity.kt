@@ -43,9 +43,7 @@ import android.view.animation.ScaleAnimation
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
-
-
-
+import android.view.animation.AnimationUtils
 
 
 class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
@@ -134,6 +132,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 favStatus = "1"
                 binding.storeDeatilFav.setImageResource(R.drawable.fav_selected)
             }
+            binding.storeDeatilFav.startAnimation(AnimationUtils.loadAnimation(THIS!!, R.anim.bounce))
             add_favouriteAPICALL()
         } else if (v == binding.storeDeatilPreBookingBtn) {
             if (!venuID.isNullOrBlank()) {
@@ -1016,7 +1015,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                   //  progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetailActvity)
+                    Utills.showErrorToast(this@StoreDetailActvity, it.message!! )
                 }
             }
         })
@@ -1117,16 +1116,16 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.rootLayoutStorDetail,
-                                detailData.message!!,
-                                this@StoreDetailActvity
+                            Utills.showSuccessToast(
+                                this@StoreDetailActvity,
+                                detailData.message!!
+
                             )
                         } catch (e: Exception) {
-                            Utills.showSnackBarOnError(
-                                binding.rootLayoutStorDetail,
-                                e.toString(),
-                                this@StoreDetailActvity
+                            Utills.showErrorToast(
+                                this@StoreDetailActvity,
+                                e.toString()
+
                             )
                         }
                     }
@@ -1135,10 +1134,10 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.rootLayoutStorDetail,
-                        it.message!!,
-                        this@StoreDetailActvity
+                    Utills.showErrorToast(
+                        this@StoreDetailActvity,
+                        it.message!!
+
                     )
                 }
             }

@@ -145,10 +145,10 @@ class ContactListActvity : BaseActivity() {
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         try {
-                            Utills.showSnackBarOnError(
-                                binding.constrentEmToolbar,
-                                it.message!!,
-                                this@ContactListActvity
+                            Utills.showErrorToast(
+                                this@ContactListActvity,
+                                it.message!!
+
                             )
                         } catch (e: Exception) {
                         }

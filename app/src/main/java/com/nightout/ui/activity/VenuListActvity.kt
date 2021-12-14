@@ -132,10 +132,10 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     venuDataList = ArrayList()
                     setListVenu()
                     customProgressDialog.dialog.hide()
-                    Utills.showSnackBarOnError(
-                        binding.constrentToolbar,
-                        it.message!!,
-                        this@VenuListActvity
+                    Utills.showErrorToast(
+                        this@VenuListActvity,
+                        it.message!!
+
                     )
                 }
             }
@@ -278,7 +278,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 }
                 Status.ERROR -> {
                    // progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(binding.constrentToolbar, it.message!!, this@VenuListActvity)
+                    Utills.showErrorToast(this@VenuListActvity, it.message!!)
                 }
             }
         })

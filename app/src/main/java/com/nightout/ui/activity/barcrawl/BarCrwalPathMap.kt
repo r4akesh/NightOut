@@ -283,7 +283,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     Log.d("ok", "ERROR: ")
-                    Utills.showSnackBarOnError( binding.barCrwalMapMainLayout, it.message!!, this@BarCrwalPathMap)
+                    Utills.showErrorToast( this@BarCrwalPathMap,  it.message!!, )
                 }
             }
         })

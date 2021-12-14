@@ -5,10 +5,13 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -25,11 +28,17 @@ import com.nightout.interfaces.OnSideMenuSelectListener
 
 
 import com.nightout.model.SideMenuModel
+import com.nightout.ui.activity.CMS.AboutActivity
+import com.nightout.ui.activity.CMS.ContactUsActivity
+import com.nightout.ui.activity.CMS.FAQActivity
 import com.nightout.ui.activity.LostItem.LostitemActivity
-import com.nightout.ui.fragment.HomeFragment
-import com.nightout.utils.AppConstant
+import com.nightout.ui.fragment.*
+import com.nightout.utils.*
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 import kotlinx.android.synthetic.main.drawer_layout_new.*
 import kotlinx.android.synthetic.main.drawer_layout_new.view.*
+import kotlinx.android.synthetic.main.home_actvitynew.view.*
 
 class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListener {
     lateinit var binding: HomeActvitynewBinding
@@ -38,6 +47,9 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
     private var fragmentManager: FragmentManager? = null
     lateinit var homeFragment : HomeFragment
     lateinit var menuAdapter:SideMenuAdapter
+    var currentFragment: Fragment? = null
+    private var customProgressDialog = CustomProgressDialog()
+    lateinit var logoutViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +60,116 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         setHomeTab()
         fragmentManager = supportFragmentManager
         showFragment(HomeFragment(this))
+    }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        if(v==binding.bottomMyProfile){
+            binding.bottmHomeYello.visibility = GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
+
+            binding.bottomMyProfile.setDrawableColor(ContextCompat.getColor(this, R.color.text_yello))
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is ProfileFragment) {
+                showFragment(ProfileFragment(this))
+            }
+        }
+        else if(v==binding.bottomTransport){
+            binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this, R.color.text_yello))
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottmHomeYello.visibility = GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
+
+            binding.bottomMyProfile.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is TransportFragment) {
+                showFragment(TransportFragment(this))
+            }
+        }
+        else if(v==binding.bottomHomeRel){
+            setHomeTab()
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is HomeFragment) {
+                showFragment(HomeFragment(this))
+            }
+        }
+        else if(v==binding.bottomChat){
+            binding.bottmHomeYello.visibility = GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
+
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_yello))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomBarCrawl.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+            binding.bottomMyProfile.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is ChatFragment) {
+                showFragment(ChatFragment(this))
+            }
+        }
+        else if(v==binding.bottomBarCrawl){
+            binding.bottmHomeYello.visibility = GONE
+            binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
+
+            binding.bottomBarCrawl.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_yello
+                )
+            )
+            binding.bottomBarCrawl.setTextColor(ContextCompat.getColor(this, R.color.text_yello))
+
+            binding.bottomTransport.setDrawableColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_gray
+                )
+            )
+            binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomChat.setTextColor(ContextCompat.getColor(this, R.color.white))
+            binding.bottomMyProfile.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
+            binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
+            currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
+            if (currentFragment !is BarCrwalFragment) {
+                showFragment(BarCrwalFragment(this))
+            }
+        }
     }
 
     override fun onMenuSelect(menuTitle: String) {
@@ -92,8 +214,14 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
             resources.getString(R.string.Panic_Situation)->{
                 startActivity(Intent(THIS, PanicHistoryActivity::class.java))
             }
-            resources.getString(R.string.CMS_Pages)->{
-
+            resources.getString(R.string.About)->{
+                startActivity(Intent(THIS, AboutActivity::class.java))
+            }
+            resources.getString(R.string.FAQ)->{
+                startActivity(Intent(THIS, FAQActivity::class.java))
+            }
+            resources.getString(R.string.Contact_Us)->{
+                startActivity(Intent(THIS, ContactUsActivity::class.java))
             }
             resources.getString(R.string.Logout)->{
                 showAlertLogout()
@@ -101,6 +229,48 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         }
     }
 
+    private fun showAlertLogout() {
+        DialogCustmYesNo.getInstance().createDialog(THIS!!,resources.getString(R.string.app_name),"Are you sure you want to logout?",object:
+            DialogCustmYesNo.Dialogclick{
+            override fun onYES() {
+                logoutAPICall()
+
+            }
+
+            override fun onNO() {
+                //do nothing
+            }
+
+        })
+    }
+
+    private fun logoutAPICall() {
+        var map = HashMap<String,String>()
+        map["device_id"] = Settings.Secure.getString(THIS!!.contentResolver, Settings.Secure.ANDROID_ID)
+        customProgressDialog.show(THIS!!, "")
+        logoutViewModel.logoutUser(map).observe(THIS!!,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    it.data?.let {myData->
+                        PreferenceKeeper.instance.isUserLogin=false
+                        startActivity(Intent(THIS,LoginActivity::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+
+                        finish()
+                    }
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+
+
+                }
+            }
+        })
+    }
     private fun showFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
         transaction.replace(R.id.mainContainer, fragment).commit()
@@ -122,6 +292,18 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
 
             override fun onDrawerClosed(drawerView: View) {}
         })
+
+        logoutViewModel = CommonViewModel(THIS!!)
+        //setUserName
+        binding.homeActvityLayout.sidemenu_email.text = PreferenceKeeper.instance.loginResponse?.email
+        binding.homeActvityLayout.sidemenu_username.text = PreferenceKeeper.instance.loginResponse?.first_name+" "+PreferenceKeeper.instance.loginResponse?.last_name
+        Utills.setImage(THIS, binding.homeActvityLayout.sidemenu_profile,PreferenceKeeper.instance.loginResponse?.profile)
+
+        setTouchNClick(binding.bottomMyProfile)
+        setTouchNClick(binding.bottomTransport)
+        setTouchNClick(binding.bottomHomeRel)
+        setTouchNClick(binding.bottomChat)
+        setTouchNClick(binding.bottomBarCrawl)
     }
 
     private fun setHomeTab() {
@@ -171,8 +353,8 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
     @SuppressLint("WrongConstant")
     private fun openDrawer() {
         binding.homeActvityLayout.openDrawer(Gravity.START)
-        menuList.clear()
-        setUpMenus()
+      //  menuList.clear()
+      //  setUpMenus()
     }
 
     @SuppressLint("WrongConstant")
@@ -185,4 +367,19 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
     }
 
 
+    private var back_pressed_time: Long = 0
+    private val PERIOD: Long = 2000
+    @SuppressLint("WrongConstant")
+    override fun onBackPressed() {
+        if (back_pressed_time + PERIOD > System.currentTimeMillis())
+                finishAffinity()
+            else {
+                if(binding.homeActvityLayout.isDrawerOpen(Gravity.START)){
+                    closeDrawer()
+                } else {
+                    Utills.showWarningToast(THIS!!,getResources().getString(R.string.press_again))
+                    back_pressed_time = System.currentTimeMillis()
+                }
+            }
+    }
 }

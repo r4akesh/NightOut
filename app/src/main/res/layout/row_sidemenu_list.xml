@@ -1,23 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <TextView
-        android:id="@+id/sideMenuTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainRowSidemenu"
         android:layout_width="match_parent"
-        android:text="Title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="@dimen/_10sdp"
-        android:textColor="@color/white"
-        android:drawablePadding="@dimen/_10sdp"
-        android:drawableStart="@drawable/sidemenu_home3x"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+        <TextView
+            android:id="@+id/sideMenuTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/sidemenu_home3x"
+            android:drawablePadding="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:text="Title"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/subMenuContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/sideMenuTitle">
+
+
+            <TextView
+                android:id="@+id/aboutUSTV"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:drawableStart="@drawable/arrow_right_white"
+                android:drawablePadding="@dimen/_7sdp"
+                android:paddingTop="@dimen/_8ssp"
+                android:paddingBottom="@dimen/_8ssp"
+                android:text="@string/About"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/FAQTV"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:drawableStart="@drawable/arrow_right_white"
+                android:drawablePadding="@dimen/_7sdp"
+                android:paddingTop="@dimen/_8ssp"
+                android:paddingBottom="@dimen/_8ssp"
+                android:text="@string/faq"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/TermTv"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:drawableStart="@drawable/arrow_right_white"
+                android:drawablePadding="@dimen/_7sdp"
+                android:paddingTop="@dimen/_8ssp"
+                android:paddingBottom="@dimen/_8ssp"
+                android:text="@string/Trems_Condition"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ContactUsTV"
+                style="@style/textRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:drawableStart="@drawable/arrow_right_white"
+                android:drawablePadding="@dimen/_7sdp"
+                android:paddingTop="@dimen/_8ssp"
+                android:paddingBottom="@dimen/_8ssp"
+                android:text="@string/Contact_Us"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout></layout>

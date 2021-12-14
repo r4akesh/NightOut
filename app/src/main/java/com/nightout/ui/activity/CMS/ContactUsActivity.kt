@@ -45,32 +45,22 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
         if (binding.spinQuery.selectedItem.toString()
                 .equals(resources.getString(R.string.Select))
         ) {
-            Utills.showSnackBarOnError(
-                binding.contactUsName,
+            Utills.showIconToast(
+                this@ContactUsActivity,
                 resources.getString(R.string.query_spin_plz),
-                this@ContactUsActivity
+
             )
             return false
         } else if (binding.contactUsName.text.toString().isNullOrBlank()) {
-            Utills.showSnackBarOnError(
-                binding.contactUsName,
-                resources.getString(R.string.name_plz),
-                this@ContactUsActivity
-            )
+            Utills.showIconToast( this@ContactUsActivity, resources.getString(R.string.name_plz))
             return false
         } else if (binding.contactUsPhNo.text.toString().isNullOrBlank()) {
-            Utills.showSnackBarOnError(
-                binding.contactUsName,
-                resources.getString(R.string.phone_no_plz),
-                this@ContactUsActivity
-            )
+            Utills.showIconToast( this@ContactUsActivity, resources.getString(R.string.phone_no_plz))
             return false
         } else if (binding.contactUsDetail.text.toString().isNullOrBlank()) {
-            Utills.showSnackBarOnError(
-                binding.contactUsName,
-                resources.getString(R.string.detail_plz),
-                this@ContactUsActivity
-            )
+            Utills.showIconToast(
+                this@ContactUsActivity,
+                resources.getString(R.string.detail_plz))
             return false
         }
 
@@ -94,16 +84,16 @@ class ContactUsActivity : BaseActivity(), AdapterView.OnItemSelectedListener {
                     it.data?.let { detailData ->
                         try {
                             binding.contactUsDetail.setText("")
-                            Utills.showSnackBarOnError(binding.rootLayoutContactUs, detailData.message!!, this@ContactUsActivity)
+                            Utills.showSuccessToast( this@ContactUsActivity, detailData.message!!)
                         } catch (e: Exception) {
-                            Utills.showSnackBarOnError(binding.rootLayoutContactUs, e.toString(), this@ContactUsActivity)
+                            Utills.showErrorToast(  this@ContactUsActivity,e.toString())
                         }
                     }
                 }
                 Status.LOADING -> { }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(binding.rootLayoutContactUs, it.message!!, this@ContactUsActivity)
+                    Utills.showErrorToast( this@ContactUsActivity, it.message!!)
                 }
             }
         })

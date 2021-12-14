@@ -54,10 +54,10 @@ open class RegisterHandler(val activity: RegisterActivity) {
                         
 
                     }
-                    Utills.showSnackBarOnError(
-                        activity.binding.registerRootLayout,
+                    Utills.showSuccessToast(
+                        activity ,
                         it.data?.message!!,
-                        activity
+
                     )
                 }
                 Status.LOADING -> {
@@ -66,7 +66,7 @@ open class RegisterHandler(val activity: RegisterActivity) {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(activity.binding.registerPhNo, it.message!!, activity)
+                    Utills.showErrorToast(activity, it.message!!)
                 }
             }
         })

@@ -57,7 +57,7 @@ var isEdit= true //for mainten tost msg
             when(it.status){
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(binding.lostConstrentToolbar, it.data?.message!!, this@LostitemActivity)
+                    Utills.showSuccessToast(this@LostitemActivity, it.data?.message!! )
                     var listSize=lostList.size
                     lostList.removeAt(pos)
                     lostItemAdapter.notifyItemRemoved(pos)
@@ -180,9 +180,9 @@ var isEdit= true //for mainten tost msg
         if(result.resultCode==Activity.RESULT_OK){
             user_lost_itemsAPICAll()
             if(isEdit)
-                Utills.showSnackBarOnError(binding.lostConstrentToolbar, "You have updated item successfully", this@LostitemActivity)
+                Utills.showSuccessToast(this@LostitemActivity, "You have updated item successfully")
             else
-                Utills.showSnackBarOnError(binding.lostConstrentToolbar, "You have added item successfully", this@LostitemActivity)
+                Utills.showSuccessToast(this@LostitemActivity, "You have added item successfully")
         }
     }
 

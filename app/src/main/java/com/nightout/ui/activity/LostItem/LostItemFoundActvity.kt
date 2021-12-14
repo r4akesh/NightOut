@@ -92,10 +92,10 @@ class LostItemFoundActvity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
-                    Utills.showSnackBarOnError(
-                        binding.lostEditConstrentToolbar,
+                    Utills.showErrorToast(
+                        this@LostItemFoundActvity,
                         it.message!!,
-                        this@LostItemFoundActvity
+
                     )
                 }
             }

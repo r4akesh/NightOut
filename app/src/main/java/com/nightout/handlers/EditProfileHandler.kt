@@ -336,8 +336,12 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                         val source = ImageDecoder.createSource(activity.contentResolver, resultUri)
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
+                    if(bitmap!=null){
                     activity.binding.userProfile.setImageBitmap(bitmap)
-                    setBody(bitmap!!, "profile")
+                    setBody(bitmap!!, "profile")}
+                    else{
+                        MyApp.popErrorMsg("","bitmap is null",activity)
+                    }
                     //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
                     //  Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
                 } catch (e: Exception) {

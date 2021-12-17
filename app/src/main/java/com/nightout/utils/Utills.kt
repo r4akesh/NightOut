@@ -323,7 +323,7 @@ class Utills {
             DynamicToast.make(ctx, msg).show();
         }
         fun showIconToast(ctx: Context, msg: String) {
-            DynamicToast.make(ctx, msg, R.drawable.).show();
+            DynamicToast.make(ctx, msg, R.drawable.app_icon).show();
         }
     }
 }

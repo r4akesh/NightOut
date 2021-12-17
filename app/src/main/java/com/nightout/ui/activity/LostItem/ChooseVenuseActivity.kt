@@ -12,6 +12,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.tabs.TabLayout
 import com.nightout.R
 import com.nightout.adapter.*
 import com.nightout.base.BaseActivity
@@ -24,12 +25,13 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.*
 
 class ChooseVenuseActivity : BaseActivity() {
     lateinit var binding: ChossesvenuesActvityBinding
     private var customProgressDialog = CustomProgressDialog()
     lateinit var lostChooseVenues: CommonViewModel
-    lateinit var venueList: ArrayList<LostItemChooseVenuResponse.Data>
+    lateinit var venueList: ArrayList<LostItemChooseVenuResponse.AllVenue>
     var strID: StringBuilder = StringBuilder()
     lateinit var allRecordAdapter: VenuesAdapter
 
@@ -54,7 +56,7 @@ class ChooseVenuseActivity : BaseActivity() {
     }
 
     private fun isValidateData(): Boolean {
-       var flag = false
+      /* var flag = false
         strID = StringBuilder()
 
 
@@ -69,7 +71,7 @@ class ChooseVenuseActivity : BaseActivity() {
             MyApp.popErrorMsg("", resources.getString(R.string.Please_Select_Venues), THIS!!)
             return false
         }
-
+*/
         return true
     }
 
@@ -174,7 +176,7 @@ class ChooseVenuseActivity : BaseActivity() {
         binding.chooseVenuesToolbar.toolbarBell.visibility = View.GONE
     }
 
-
+    var responseItemList: MutableList<String>? = ArrayList()
     private fun lost_item_venuesAPICALL() {
         customProgressDialog.show(this@ChooseVenuseActivity, "")
         lostChooseVenues.lostChooseVenues().observe(this@ChooseVenuseActivity, {
@@ -184,10 +186,26 @@ class ChooseVenuseActivity : BaseActivity() {
                     it.data?.let { users ->
                         try {
 
-                            if (!it.data.data.isNullOrEmpty()) {
+                            if (it.data.data.all_venues.size>0) {
                                 venueList = ArrayList()
-                                venueList.addAll(users.data!!)
-                                setProductListWidSection()
+                                venueList.addAll(it.data.data.all_venues)
+                               // setTabs()
+
+
+                                    responseItemList?.add("invitation")
+                                    responseItemList?.add("bars")
+                                    responseItemList?.add("pubs")
+                                    responseItemList?.add("clubs")
+                                    responseItemList?.add("foods")
+
+                                for (aq in responseItemList!!.indices) {
+                                    binding.tabs!!.addTab(
+                                        binding.tabs!!.newTab().setText(responseItemList!![aq])
+                                    )
+                                    binding.tabs!!.tabGravity = TabLayout.GRAVITY_FILL
+
+                                }
+                                 setProductListWidSection()
                             }
                         } catch (e: Exception) {
                             MyApp.popErrorMsg("",resources.getString(R.string.No_data_found),THIS!!)
@@ -212,7 +230,40 @@ class ChooseVenuseActivity : BaseActivity() {
         })
     }
 
+    private fun setProductListWidSection() {
+        allRecordAdapter =
+            AllRecordVenuseAdapter(this@ChooseVenuseActivity, venueList, object : AllRecordVenuseAdapter.ClickListener {
+                override fun onClickNext(pos: Int) {
+//                startActivity(
+//                    Intent(this@ChooseVenuseActivity, VenuListActvity::class.java)
+//                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType,allRecordsList[pos].type ))
+                }
 
+                override fun onClickSub(subpos: Int, pos: Int) {
+//                    if (venueList[pos].sub_records[subpos].isChked)
+//                        dashList.all_records[pos].sub_records[subpos].isChked = false
+//                    else
+//                        dashList.all_records[pos].sub_records[subpos].isChked = true
+//                    allRecordAdapter.notifyItemChanged(pos)
+                }
+            })
+
+        linearLayoutManager =
+            LinearLayoutManager(this@ChooseVenuseActivity, LinearLayoutManager.VERTICAL, false)
+        binding.chooseVenuesRecyle.layoutManager = linearLayoutManager
+        binding.chooseVenuesRecyle.adapter = allRecordAdapter
+
+        setScrollListener()
+        bindWidgetsWithAnEvent()
+    }
+    private var linearLayoutManager: LinearLayoutManager? = null
+    private var checkCallBack = false // not using now
+    private var checkScroll = true
+    private var posSelected = 0
+    private var totalCount = 0// not using now
+    private var chkTabClicked = false
+
+/*
     private fun setProductListWidSection() {
         allRecordAdapter =
             VenuesAdapter(this@ChooseVenuseActivity, venueList, object :
@@ -236,7 +287,7 @@ class ChooseVenuseActivity : BaseActivity() {
 //        binding.chooseVenuesRecyle.adapter = allRecordAdapter
 
 
-    }
+    }*/
 
 
 }

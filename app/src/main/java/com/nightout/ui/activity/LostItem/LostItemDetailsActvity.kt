@@ -12,12 +12,15 @@ import android.provider.MediaStore
 import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
 import com.github.drjacky.imagepicker.ImagePicker
 import com.nightout.R
 import com.nightout.base.BaseActivity
@@ -304,7 +307,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
        else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                val bitmap: Bitmap?
+                var bitmap: Bitmap?
                 binding.lostItemImg.setImageBitmap(null)
                 var imageUrl = result.originalUri
                 resultUri = result.uri
@@ -321,7 +324,19 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
                         )
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
-                    binding.lostItemImg.setImageBitmap(bitmap)
+                    try {
+                        binding.lostItemImg.setImageBitmap(null)
+                        Glide.with(this@LostItemDetailsActvity)
+                            .asBitmap()
+                            .format(DecodeFormat.PREFER_RGB_565)
+                            .load(bitmap)
+                            .error(R.drawable.no_image)
+
+                            .into(binding.lostItemImg)
+                    } catch (e: Exception) {
+                        Log.d("crashImage", "onActivityResult: "+e)
+                    }
+
                     setBody(bitmap!!, "profile")
 
 

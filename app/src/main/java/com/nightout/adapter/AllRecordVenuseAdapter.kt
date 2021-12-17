@@ -14,12 +14,13 @@ import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.VenuTitleBotmsheetItemBinding
 import com.nightout.databinding.VenuTitleItemBinding
 import com.nightout.model.DashboardModel
+import com.nightout.model.LostItemChooseVenuResponse
 import com.nightout.utils.Utills
 
 
 class AllRecordVenuseAdapter(
     var context: Context,
-    var arrayList: ArrayList<DashboardModel.AllRecord>,
+    var arrayList: ArrayList<LostItemChooseVenuResponse.AllVenue>,
     var clickListener: ClickListener,
 ) : RecyclerView.Adapter<AllRecordVenuseAdapter.ViewHolder>() {
 
@@ -48,7 +49,7 @@ class AllRecordVenuseAdapter(
 
 
 
-  /*      var venuBotmSheetAdapter = VenuesAdapter(context, arrayList[position].sub_records, object : VenuesAdapter.ClickListener {
+   /*    var venuBotmSheetAdapter = VenuesAdapter(context, arrayList[position].sub_records, object : VenuesAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     clickListener.onClickSub(pos, position)
                 }
@@ -58,7 +59,7 @@ class AllRecordVenuseAdapter(
         viewHolder.binding.venuTitleBotmSeetSubRecyler.also {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             it.adapter = venuBotmSheetAdapter
-        }*/
+        } */
 
 
     }

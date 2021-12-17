@@ -5,14 +5,14 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-import com.nightout.adapter.VenuesAdapter
+
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.AllbarActvityBinding
 import com.nightout.model.VenuesModel
 
 class AllBarCrawalActivity : BaseActivity() {
     lateinit var binding : AllbarActvityBinding
-    lateinit var venuesAdapter: VenuesAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

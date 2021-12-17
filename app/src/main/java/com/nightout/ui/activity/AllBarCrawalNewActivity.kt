@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.AllBarCrawaAdapter
 import com.nightout.adapter.VenuAdapterAdapter
-import com.nightout.adapter.VenuesAdapter
+
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.AllbarcrawalGridItemBinding
 import com.nightout.databinding.AllbarcrawalNewactivityBinding

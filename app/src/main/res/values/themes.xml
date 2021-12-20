@@ -170,7 +170,7 @@
 
         <!--<item name="tabBackground">@drawable/selected_tab</item>-->
         <item name="fontFamily">@font/proximanova_reg</item>
-        <item name="tabSelectedTextColor">@color/white</item>
+       <!-- <item name="tabSelectedTextColor">@color/white</item>-->
     </style>
 
     <style name="MyCustomTextAppearanceTAB" parent="TextAppearance.Design.Tab">

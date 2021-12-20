@@ -19,7 +19,7 @@ import com.nightout.utils.Utills
 
 class VenuesAdapter(
     var context: Context,
-    var arrayList: ArrayList<LostItemChooseVenuResponse.Data>,
+    var arrayList: ArrayList<LostItemChooseVenuResponse.Record>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<VenuesAdapter.ViewHolder>() {

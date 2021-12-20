@@ -9,8 +9,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.tabs.TabLayout
 import com.nightout.R
@@ -31,9 +36,9 @@ class ChooseVenuseActivity : BaseActivity() {
     lateinit var binding: ChossesvenuesActvityBinding
     private var customProgressDialog = CustomProgressDialog()
     lateinit var lostChooseVenues: CommonViewModel
-    lateinit var venueList: ArrayList<LostItemChooseVenuResponse.AllVenue>
+    lateinit var venueList: ArrayList<LostItemChooseVenuResponse.AllRecord>
     var strID: StringBuilder = StringBuilder()
-    lateinit var allRecordAdapter: VenuesAdapter
+    lateinit var allRecordAdapter: AllRecordVenuseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,24 +191,17 @@ class ChooseVenuseActivity : BaseActivity() {
                     it.data?.let { users ->
                         try {
 
-                            if (it.data.data.all_venues.size>0) {
+                            if (it.data.data.all_records.size>0) {
                                 venueList = ArrayList()
-                                venueList.addAll(it.data.data.all_venues)
-                               // setTabs()
-
-
-                                    responseItemList?.add("invitation")
-                                    responseItemList?.add("bars")
-                                    responseItemList?.add("pubs")
-                                    responseItemList?.add("clubs")
-                                    responseItemList?.add("foods")
-
+                                venueList.addAll(it.data.data.all_records)
+                               // setTabs
+                                    for (i in 0 until venueList.size){
+                                        if(venueList[i].records.size>0)
+                                        responseItemList?.add(venueList[i].title)
+                                   }
                                 for (aq in responseItemList!!.indices) {
-                                    binding.tabs!!.addTab(
-                                        binding.tabs!!.newTab().setText(responseItemList!![aq])
-                                    )
+                                    binding.tabs!!.addTab(binding.tabs!!.newTab().setText(responseItemList!![aq]))
                                     binding.tabs!!.tabGravity = TabLayout.GRAVITY_FILL
-
                                 }
                                  setProductListWidSection()
                             }
@@ -231,22 +229,16 @@ class ChooseVenuseActivity : BaseActivity() {
     }
 
     private fun setProductListWidSection() {
-        allRecordAdapter =
-            AllRecordVenuseAdapter(this@ChooseVenuseActivity, venueList, object : AllRecordVenuseAdapter.ClickListener {
-                override fun onClickNext(pos: Int) {
-//                startActivity(
-//                    Intent(this@ChooseVenuseActivity, VenuListActvity::class.java)
-//                    .putExtra(AppConstant.INTENT_EXTRAS.StoreType,allRecordsList[pos].type ))
-                }
+        allRecordAdapter = AllRecordVenuseAdapter(this@ChooseVenuseActivity, venueList, object : AllRecordVenuseAdapter.ClickListener {
+            override fun onClickNext(pos: Int) {
 
-                override fun onClickSub(subpos: Int, pos: Int) {
-//                    if (venueList[pos].sub_records[subpos].isChked)
-//                        dashList.all_records[pos].sub_records[subpos].isChked = false
-//                    else
-//                        dashList.all_records[pos].sub_records[subpos].isChked = true
-//                    allRecordAdapter.notifyItemChanged(pos)
-                }
-            })
+            }
+
+            override fun onClickSub(pos: Int, subPos: Int) {
+
+            }
+
+        })
 
         linearLayoutManager =
             LinearLayoutManager(this@ChooseVenuseActivity, LinearLayoutManager.VERTICAL, false)
@@ -263,31 +255,134 @@ class ChooseVenuseActivity : BaseActivity() {
     private var totalCount = 0// not using now
     private var chkTabClicked = false
 
-/*
-    private fun setProductListWidSection() {
-        allRecordAdapter =
-            VenuesAdapter(this@ChooseVenuseActivity, venueList, object :
-                VenuesAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    venueList[pos].isChk=!venueList[pos].isChk
-                    allRecordAdapter.notifyItemChanged(pos)
+
+    private fun setScrollListener() {
+        checkScroll = true
+        binding?.chooseVenuesRecyle!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (chkTabClicked) {
+                    selectionBackground(posSelected, "onScrollStateChanged>>if")
+                    binding.tabs!!.setScrollPosition(posSelected, 0f, true)
                 }
+                if (newState == 0) {
+                    chkTabClicked = false
+                }
+            }
 
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!chkTabClicked) {
+                    val visiblePosition = linearLayoutManager!!.findFirstVisibleItemPosition()
+                    val firstCompletelyVisiblePosition =
+                        linearLayoutManager!!.findFirstCompletelyVisibleItemPosition()
+                    totalCount = linearLayoutManager!!.itemCount
+                    checkScroll = false
+                    if (visiblePosition > -1) {
+                        // if (!checkCallBack) {
+                        if (firstCompletelyVisiblePosition == -1) {
+                            selectionBackground(
+                                visiblePosition,
+                                "onScrolled>>if visiblePosition>>" + visiblePosition + " firstCompletelyVisiblePosition>>" + firstCompletelyVisiblePosition
+                            )
+                            binding.tabs!!.setScrollPosition(visiblePosition, 0f, true)
+                        } else {
+                            selectionBackground(
+                                firstCompletelyVisiblePosition,
+                                "onScrolled>>else visiblePosition>>" + visiblePosition + " firstCompletelyVisiblePosition>>" + firstCompletelyVisiblePosition
+                            )
+                            binding.tabs!!.setScrollPosition(
+                                firstCompletelyVisiblePosition,
+                                0f,
+                                true
+                            )
+                        }
+//                        } else {
+//                            selectionBackground(visiblePosition, "onScrolled>>else2 visiblePosition>>"+visiblePosition+" firstCompletelyVisiblePosition>>"+firstCompletelyVisiblePosition)
+//                            binding.tabs!!.setScrollPosition(visiblePosition, 0f, true)
+//                            if (firstCompletelyVisiblePosition == visiblePosition) {
+//                                checkCallBack = false
+//                            }
+//                        }
+                    }
+                }
+            }
+        })
+    }
 
-            })
-        (binding.chooseVenuesRecyle?.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false//stop blinking
-        binding.chooseVenuesRecyle.also {
-            it.layoutManager= LinearLayoutManager(this@ChooseVenuseActivity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = allRecordAdapter
+    fun bindWidgetsWithAnEvent() {
 
+        val smoothScroller: RecyclerView.SmoothScroller =
+            object : LinearSmoothScroller(this@ChooseVenuseActivity) {
+                override fun getVerticalSnapPreference(): Int {
+                    return SNAP_TO_START
+                }
+            }
+
+        binding.tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                checkCallBack = true
+                chkTabClicked = true
+                posSelected = tab.position
+                smoothScroller.setTargetPosition(tab.position);
+                linearLayoutManager!!.startSmoothScroll(smoothScroller);
+                binding.tabs!!.setSelectedTabIndicatorHeight((2 * resources.displayMetrics.density).toInt())
+                selectionBackground(posSelected, "addOnTabSelectedListener")
+                if (tab.position == totalCount - 1) {
+                    checkCallBack = false
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                checkCallBack = false
+                //  chkTabClicked=true
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                checkCallBack = true
+                //  chkTabClicked=true
+                posSelected = tab.position
+                //  selectionBackground(posSelected)
+                smoothScroller.setTargetPosition(tab.position);
+                linearLayoutManager!!.startSmoothScroll(smoothScroller);
+                binding.tabs!!.setSelectedTabIndicatorHeight((2 * resources.displayMetrics.density).toInt())
+                if (tab.position == totalCount - 1) {
+                    checkCallBack = false
+                }
+            }
+        })
+    }
+    private fun selectionBackground(position: Int, strMsg: String) {
+        for (i in responseItemList!!.indices) {
+            if (i == position) {
+                val tabLayout =
+                    (binding.tabs!!.getChildAt(0) as ViewGroup).getChildAt(position) as LinearLayout
+                val tabTextView = tabLayout.getChildAt(1) as TextView
+                if (tabTextView != null) {
+                    tabTextView.setTextColor(resources.getColor(R.color.text_yello))
+                    tabTextView.setPadding(32, 14, 32, 14)
+                    tabTextView.setBackgroundResource(R.drawable.border_yello)
+                }
+                val tab = (binding.tabs!!.getChildAt(0) as ViewGroup).getChildAt(position)
+                val p = tab.layoutParams as ViewGroup.MarginLayoutParams
+                p.setMargins(0, 0, 0, 0)
+                tab.requestLayout()
+                binding.tabs!!.isSmoothScrollingEnabled = true
+                binding.tabs!!.setScrollPosition(position, 0f, true)
+            } else {
+                val tabLayout =
+                    (binding.tabs!!.getChildAt(0) as ViewGroup).getChildAt(i) as LinearLayout
+                val tabTextView = tabLayout.getChildAt(1) as TextView
+                if (tabTextView != null) {
+                    tabTextView.setPadding(32, 14, 32, 14)
+                    tabTextView.setTextColor(resources.getColor(R.color.white))
+                    tabTextView.setBackgroundResource(R.drawable.border_primaryclr)
+                }
+                val tab = (binding.tabs!!.getChildAt(0) as ViewGroup).getChildAt(i)
+                val p = tab.layoutParams as ViewGroup.MarginLayoutParams
+                p.setMargins(0, 0, 0, 0)
+                tab.requestLayout()
+            }
         }
-//        var linearLayoutManager =
-//            LinearLayoutManager(this@ChooseVenuseActivity, LinearLayoutManager.VERTICAL, false)
-//        binding.chooseVenuesRecyle.layoutManager = linearLayoutManager
-//        binding.chooseVenuesRecyle.adapter = allRecordAdapter
-
-
-    }*/
-
-
+    }
 }

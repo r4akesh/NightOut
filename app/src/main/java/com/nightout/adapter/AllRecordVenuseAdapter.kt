@@ -20,7 +20,7 @@ import com.nightout.utils.Utills
 
 class AllRecordVenuseAdapter(
     var context: Context,
-    var arrayList: ArrayList<LostItemChooseVenuResponse.AllVenue>,
+    var arrayList: ArrayList<LostItemChooseVenuResponse.AllRecord>,
     var clickListener: ClickListener,
 ) : RecyclerView.Adapter<AllRecordVenuseAdapter.ViewHolder>() {
 
@@ -49,7 +49,7 @@ class AllRecordVenuseAdapter(
 
 
 
-   /*    var venuBotmSheetAdapter = VenuesAdapter(context, arrayList[position].sub_records, object : VenuesAdapter.ClickListener {
+       var venuBotmSheetAdapter = VenuesAdapter(context, arrayList[position].records, object : VenuesAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     clickListener.onClickSub(pos, position)
                 }
@@ -59,7 +59,7 @@ class AllRecordVenuseAdapter(
         viewHolder.binding.venuTitleBotmSeetSubRecyler.also {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             it.adapter = venuBotmSheetAdapter
-        } */
+        }
 
 
     }

@@ -20,6 +20,7 @@ data class LostItemChooseVenuResponse(
     )
 
     data class Record(
+        var isChk: Boolean,
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,

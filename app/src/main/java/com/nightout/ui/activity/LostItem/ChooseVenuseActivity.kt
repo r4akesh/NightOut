@@ -61,22 +61,22 @@ class ChooseVenuseActivity : BaseActivity() {
     }
 
     private fun isValidateData(): Boolean {
-      /* var flag = false
+        var flag = false
         strID = StringBuilder()
-
-
-            for (j in 0 until venueList.size) {
-                if (venueList[j].isChk) {
+        for (i in 0 until venueList.size) {
+            var subList = venueList[i].records
+            for (j in 0 until subList.size) {
+                if (subList[j].isChk) {
                     flag = true
-                    strID.append(venueList[j].id + ",")
+                    strID.append(subList[j].id + ",")
                 }
             }
-
+        }
         if (!flag) {
-            MyApp.popErrorMsg("", resources.getString(R.string.Please_Select_Venues), THIS!!)
+            MyApp.popErrorMsg("", "Please Select Venues !!", THIS!!)
             return false
         }
-*/
+
         return true
     }
 
@@ -202,6 +202,7 @@ class ChooseVenuseActivity : BaseActivity() {
                                 for (aq in responseItemList!!.indices) {
                                     binding.tabs!!.addTab(binding.tabs!!.newTab().setText(responseItemList!![aq]))
                                     binding.tabs!!.tabGravity = TabLayout.GRAVITY_FILL
+
                                 }
                                  setProductListWidSection()
                             }
@@ -234,8 +235,12 @@ class ChooseVenuseActivity : BaseActivity() {
 
             }
 
-            override fun onClickSub(pos: Int, subPos: Int) {
-
+            override fun onClickSub(subPOS: Int, Mainpos: Int) {
+//                if (venueList[Mainpos].records[subPOS].isChk)
+//                    venueList[Mainpos].records[subPOS].isChk = false
+//                else
+//                    venueList[Mainpos].records[subPOS].isChk = true
+//                allRecordAdapter.notifyItemChanged(Mainpos)
             }
 
         })
@@ -326,7 +331,7 @@ class ChooseVenuseActivity : BaseActivity() {
                 posSelected = tab.position
                 smoothScroller.setTargetPosition(tab.position);
                 linearLayoutManager!!.startSmoothScroll(smoothScroller);
-                binding.tabs!!.setSelectedTabIndicatorHeight((2 * resources.displayMetrics.density).toInt())
+              //  binding.tabs!!.setSelectedTabIndicatorHeight((2 * resources.displayMetrics.density).toInt())
                 selectionBackground(posSelected, "addOnTabSelectedListener")
                 if (tab.position == totalCount - 1) {
                     checkCallBack = false
@@ -345,7 +350,7 @@ class ChooseVenuseActivity : BaseActivity() {
                 //  selectionBackground(posSelected)
                 smoothScroller.setTargetPosition(tab.position);
                 linearLayoutManager!!.startSmoothScroll(smoothScroller);
-                binding.tabs!!.setSelectedTabIndicatorHeight((2 * resources.displayMetrics.density).toInt())
+              //  binding.tabs!!.setSelectedTabIndicatorHeight((2 * resources.displayMetrics.density).toInt())
                 if (tab.position == totalCount - 1) {
                     checkCallBack = false
                 }

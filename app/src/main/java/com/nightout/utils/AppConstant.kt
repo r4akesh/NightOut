@@ -56,6 +56,9 @@ class AppConstant {
         const val ISFROM_ShareListActivity = "ISFROM_ShareListActivity"
         const val ISFROM_SAVEDLIST_Activity = "ISFROM_SAVEDLIST_Activity"
         const val SAVEDLIST_Model = "SAVEDLIST_Model"
+        const val ADDRS = "ADDRS"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
 
 
     }

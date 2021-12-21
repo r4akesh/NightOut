@@ -24,10 +24,6 @@ class AllRecordVenuseAdapter(
     var clickListener: ClickListener,
 ) : RecyclerView.Adapter<AllRecordVenuseAdapter.ViewHolder>() {
 
-
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: VenuTitleItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -50,8 +46,14 @@ class AllRecordVenuseAdapter(
 
 
        var venuBotmSheetAdapter = VenuesAdapter(context, arrayList[position].records, object : VenuesAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    clickListener.onClickSub(pos, position)
+                override fun onClick(subPos: Int) {
+                    clickListener.onClickSub(subPos, position)
+                    if(arrayList[position].records[subPos].isChk){
+                        arrayList[position].records[subPos].isChk=false
+                    }else{
+                        arrayList[position].records[subPos].isChk=true
+                    }
+                    notifyDataSetChanged()
                 }
 
             })
@@ -66,10 +68,10 @@ class AllRecordVenuseAdapter(
 
 
     override fun getItemCount(): Int {
-      //  return if (null != arrayList) arrayList!!.size else 0
-        if(arrayList!=null && arrayList.size>=3)
-        return  3
-        else return arrayList.size
+         return if (null != arrayList) arrayList!!.size else 0
+//        if(arrayList!=null && arrayList.size>=3)
+//        return  3
+//        else return arrayList.size
     }
 
 
@@ -81,7 +83,7 @@ class AllRecordVenuseAdapter(
 
     interface ClickListener {
         fun onClickNext(pos: Int)
-        fun onClickSub(pos: Int, subPos: Int)
+        fun onClickSub(subpos: Int, Pos: Int)
 
 
     }

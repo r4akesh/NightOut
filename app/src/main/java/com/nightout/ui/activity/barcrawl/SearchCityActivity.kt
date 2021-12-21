@@ -1,5 +1,6 @@
 package com.nightout.ui.activity.barcrawl
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +27,9 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.SrchCityBinding
+import com.nightout.ui.activity.SearchLocationActivity
+import com.nightout.utils.AppConstant
+import com.nightout.utils.Commons
 import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 import java.util.*
@@ -34,6 +38,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: SrchCityBinding
     lateinit var gMap: GoogleMap
     var LAUNCH_GOOGLE_ADDRESS = 102
+    var REQCODE_SearchLocationActivity = 888
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         initView()
         Handler(Looper.getMainLooper()).postDelayed({
             Utills.slideUp(binding.barcrawlBtmConstrent)
-        },100)
+        }, 100)
 
 
     }
@@ -50,20 +55,25 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.barcralCity) {
-            Places.initialize(
-                this@SearchCityActivity,
-                resources.getString(R.string.google_place_picker_key)
+            startActivityForResult(
+                Intent(THIS!!, SearchLocationActivity::class.java),
+                REQCODE_SearchLocationActivity
             )
-            val fieldList =
-                Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList)
-                .build(this@SearchCityActivity)
-            startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
+
+//            Places.initialize(
+//                this@SearchCityActivity,
+//                resources.getString(R.string.google_place_picker_key)
+//            )
+//            val fieldList =
+//                Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
+//            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList)
+//                .build(this@SearchCityActivity)
+//            startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
         }
         if (v == binding.barcrawlNextBtn) {
-            if(binding.barcralCity.text.toString().isNullOrBlank()){
-                MyApp.popErrorMsg("","Please select city",THIS!!)
-            }else {
+            if (binding.barcralCity.text.toString().isNullOrBlank()) {
+                MyApp.popErrorMsg("", "Please select city", THIS!!)
+            } else {
                 startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java))
                 finish()
             }
@@ -94,20 +104,38 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentt: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentt)
-        try {
-            val place = Autocomplete.getPlaceFromIntent(intentt!!)
-            Log.d("location", "location: " + place.address)
-            binding.barcralCity.text = place.address
-            gMap!!.clear()
-            val latLng = LatLng(place.latLng!!.latitude, place.latLng!!.longitude)
-            val yourBitmap = getDrawable(R.drawable.ic_crnt_loc)!!.toBitmap(50, 55)//svg img
-            gMap!!.addMarker(
-                MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(yourBitmap))
-            )
-            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(17f).build()
-            gMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        } catch (e: Exception) {
+        if (requestCode == REQCODE_SearchLocationActivity && resultCode == Activity.RESULT_OK) {
+            try {
+                var addrs = intentt?.getStringExtra(AppConstant.INTENT_EXTRAS.ADDRS)
+                var lat = intentt?.getStringExtra(AppConstant.INTENT_EXTRAS.LATITUDE)
+                var lang = intentt?.getStringExtra(AppConstant.INTENT_EXTRAS.LONGITUDE)
+                binding.barcralCity.text = addrs
+                gMap!!.clear()
+                val latLng = LatLng(Commons.strToDouble(lat!!), Commons.strToDouble(lang!!))
+                val yourBitmap = getDrawable(R.drawable.ic_crnt_loc)!!.toBitmap(50, 55)//svg img
+                gMap!!.addMarker(
+                    MarkerOptions().position(latLng)
+                        .icon(BitmapDescriptorFactory.fromBitmap(yourBitmap))
+                )
+                val cameraPosition = CameraPosition.Builder().target(latLng).zoom(17f).build()
+                gMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            } catch (e: Exception) {
+            }
         }
+//        try {
+//            val place = Autocomplete.getPlaceFromIntent(intentt!!)
+//            Log.d("location", "location: " + place.address)
+//            binding.barcralCity.text = place.address
+//            gMap!!.clear()
+//            val latLng = LatLng(place.latLng!!.latitude, place.latLng!!.longitude)
+//            val yourBitmap = getDrawable(R.drawable.ic_crnt_loc)!!.toBitmap(50, 55)//svg img
+//            gMap!!.addMarker(
+//                MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(yourBitmap))
+//            )
+//            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(17f).build()
+//            gMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+//        } catch (e: Exception) {
+//        }
     }
 
 

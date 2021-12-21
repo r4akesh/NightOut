@@ -133,4 +133,8 @@ interface APIInterface {
 
     @POST("pre_booking")
     fun pre_bookingAPI(@Body params: RequestBody): Call<ResponseBody>
+
+
+    @GET("city_list")
+    fun city_listAPI(): Call<ResponseBody>
 }

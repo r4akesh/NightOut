@@ -3,6 +3,7 @@ package com.nightout.ui.activity.LostItem
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -18,6 +19,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
@@ -47,6 +50,10 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     var body: MultipartBody.Part? = null
     val requestCodeChooseVenuseActivity = 10001
     var itemID="0"
+    var RequestCodeCamera = 100
+    var RequestCodeGallery = 400
+    var imageUriNew : Uri ? = null
+    private val REQUEST_CAMERA_PERMISSION = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -221,13 +228,38 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
 
     override fun onOptionSelect(option: String) {
         if (option == "camera") {
-            selectSourceBottomSheetFragment.dismiss()
+          /*  selectSourceBottomSheetFragment.dismiss()
             cameraLauncher.launch(
                 ImagePicker.with(this@LostItemDetailsActvity)
                     .cameraOnly().createIntent()
-            )
-        } else {
+            )*/
             selectSourceBottomSheetFragment.dismiss()
+            val currentAPIVersion = Build.VERSION.SDK_INT
+            if (currentAPIVersion >= Build.VERSION_CODES.M) {
+                if (ActivityCompat.checkSelfPermission(
+                        THIS!!,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        THIS!!,
+                        arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        ),
+                        REQUEST_CAMERA_PERMISSION
+                    )
+                } else {
+                    selectCameraImage()
+
+                }
+            } else {
+                selectCameraImage()
+
+            }
+        } else {
+         /*   selectSourceBottomSheetFragment.dismiss()
             galleryLauncher.launch(
                 ImagePicker.with(this@LostItemDetailsActvity)
                     .galleryOnly()
@@ -239,10 +271,57 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
                         )
                     )
                     .createIntent()
-            )
+            )*/
+            selectSourceBottomSheetFragment.dismiss()
+            val currentAPIVersion = Build.VERSION.SDK_INT
+            if (currentAPIVersion >= Build.VERSION_CODES.M) {
+                arrayOf(
+                    if (ActivityCompat.checkSelfPermission(
+                            THIS!!,
+                            Manifest.permission.CAMERA
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        ActivityCompat.requestPermissions(
+                            THIS!!,
+                            arrayOf(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            ),
+                            2
+                        )
+                    } else {
+                     //   dialog.dismiss()
+                        val intent =
+                            Intent(
+                                Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                            )
+                        intent.type = "image/*"
+//                            intent.type = "*/*";
+                        intent.action = Intent.ACTION_PICK
+                        THIS!!.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+                    }
+                )
+
+            } else {
+               // dialog.dismiss()
+                val intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                intent.type = "image/*"
+//                    intent.type = "*/*";
+                intent.action = Intent.ACTION_PICK
+                startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+            }
         }
     }
+    private fun selectCameraImage() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            startActivityForResult(takePictureIntent, RequestCodeGallery)
+        }
 
+    }
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -279,6 +358,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     private fun startCropActivity(imageUri: Uri) {
         CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
             .setMultiTouchEnabled(true)
+            .setOutputCompressQuality(100)
             .setAspectRatio(1, 1)
             .start(this@LostItemDetailsActvity)
     }
@@ -326,13 +406,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
                     }
                     try {
                         binding.lostItemImg.setImageBitmap(null)
-                        Glide.with(this@LostItemDetailsActvity)
-                            .asBitmap()
-                            .format(DecodeFormat.PREFER_RGB_565)
-                            .load(bitmap)
-                            .error(R.drawable.no_image)
-
-                            .into(binding.lostItemImg)
+                        binding.lostItemImg.setImageBitmap(bitmap)
                     } catch (e: Exception) {
                         Log.d("crashImage", "onActivityResult: "+e)
                     }
@@ -354,6 +428,31 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
             setResult(Activity.RESULT_OK)
             finish()
             overridePendingTransition(0,0)
+        }
+       else if (requestCode == RequestCodeCamera && resultCode == RESULT_OK && data != null) {//Gallery
+            imageUriNew = data.data
+            startCropActivity(imageUriNew!!)
+
+            /* Glide.with(this)
+                 .asBitmap()
+                 .load(imageUri)
+                 .centerCrop()
+                 .into(binding.profilePic)
+             addProfile()*/
+        }
+        else if (requestCode == RequestCodeGallery && resultCode == RESULT_OK && data != null) { //camera
+            val extras: Bundle = data.extras!!
+            val imageBitmap = extras["data"] as Bitmap?
+            imageUriNew = Utills.getImageUri(THIS!!, imageBitmap!!)
+            Log.d("TAG", "iamgedsfas:: $imageUriNew")
+            startCropActivity(imageUriNew!!)
+            /* val image = imageUri
+             Glide.with(this)
+                 .asBitmap()
+                 .load(image)
+                 .centerCrop()
+                 .into(binding.profilePic)
+             addProfile()*/
         }
 
     }

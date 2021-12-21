@@ -36,19 +36,17 @@ class VenuesAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.binding.venuesItemTitle.text=arrayList[position].store_name
+        viewHolder.binding.venuesItemSubTitle.text=arrayList[position].store_address
+      //  viewHolder.binding.venuesItemDistence.text=arrayList[position].store_address
 
+        Utills.setImageNormal(context,  viewHolder.binding.venuesItemImage,arrayList[position].store_logo)
 
-//        viewHolder.binding.venuesItemTitle.text=arrayList[position].store_name
-//        viewHolder.binding.venuesItemSubTitle.text=arrayList[position].store_address
-//      //  viewHolder.binding.venuesItemDistence.text=arrayList[position].store_address
-//
-//        Utills.setImageNormal(context,  viewHolder.binding.venuesItemImage,arrayList[position].store_logo)
-//
-//        if(arrayList[position].isChk){
-//            viewHolder.binding.venuesItemChk.setImageResource(R.drawable.chk_box)
-//        }else{
-//            viewHolder.binding.venuesItemChk.setImageResource(R.drawable.unchk_box)
-//        }
+        if(arrayList[position].isChk){
+            viewHolder.binding.venuesItemChk.setImageResource(R.drawable.chk_box)
+        }else{
+            viewHolder.binding.venuesItemChk.setImageResource(R.drawable.unchk_box)
+        }
 
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)

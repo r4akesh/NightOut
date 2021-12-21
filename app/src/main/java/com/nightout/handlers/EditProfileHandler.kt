@@ -54,7 +54,7 @@ import java.util.*
 
 open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptionListener {
     private lateinit var editProfileViewModel: EditProfileViewModel
-    private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
+  //  private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
     private var imageUrl: Uri? = null
     private var filePath: File? = null
     private lateinit var reqFile: RequestBody
@@ -74,13 +74,13 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     }
 
 
-    fun onSelectImageOldCode() {
+/*    fun onSelectImageOldCode() {
         selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this)
         selectSourceBottomSheetFragment.show(
             activity.supportFragmentManager,
             "selectSourceBottomSheetFragment"
         )
-    }
+    }*/
     private val REQUEST_CAMERA_PERMISSION = 1
     var imageUri: Uri? = null
       fun onSelectImage() {
@@ -218,7 +218,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
 
     }
 
-
+/*
     override fun onOptionSelect(option: String) {
         if (option == "camera") {
             selectSourceBottomSheetFragment.dismiss()
@@ -241,7 +241,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                     .createIntent()
             )
         }
-    }
+    }*/
 
     private val cameraLauncher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -425,5 +425,9 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                 }
             }
         })
+    }
+
+    override fun onOptionSelect(option: String) {
+        TODO("Not yet implemented")
     }
 }

@@ -36,6 +36,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var userDeviceModel: LiveData<ApiSampleResource<BaseModel>>
 
     lateinit var lostItemChooseVenuResponse: LiveData<ApiSampleResource<LostItemChooseVenuResponse>>
+    lateinit var searchCityResponse: LiveData<ApiSampleResource<SearchCityResponse>>
     lateinit var notificationResponse: LiveData<ApiSampleResource<NotificationResponse>>
     lateinit var panicHistoryRes: LiveData<ApiSampleResource<PanicHistoryRes>>
     lateinit var createUpdateBarcrwalResponse: LiveData<ApiSampleResource<CreateUpdateBarcrwalResponse>>
@@ -150,6 +151,11 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun lostChooseVenues( ): LiveData<ApiSampleResource<LostItemChooseVenuResponse>> {
         lostItemChooseVenuResponse = webServiceRepository.lostChooseVenues()
         return lostItemChooseVenuResponse
+    }
+
+    fun searchCity( ): LiveData<ApiSampleResource<SearchCityResponse>> {
+        searchCityResponse = webServiceRepository.searchCity()
+        return searchCityResponse
     }
 
     fun notificationList( ): LiveData<ApiSampleResource<NotificationResponse>> {

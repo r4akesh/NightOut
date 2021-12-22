@@ -31,821 +31,245 @@
         <ScrollView
             android:id="@+id/oredrDetailScroll"
             android:layout_width="match_parent"
-          android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_10sdp"
             app:layout_constraintBottom_toTopOf="@+id/orderDetailPay"
-            app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar"
-            android:layout_height="0dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:id="@+id/constrentList"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar">
 
-            <TextView
-                android:id="@+id/orderDeatilTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:layout_marginTop="@dimen/_10ssp"
-                android:fontFamily="@font/proximanova_reg"
-                android:text="Vanity Night Club"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/orderDeatilAddrs"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrentList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="@dimen/_10ssp"
-                android:fontFamily="@font/proximanova_reg"
-                android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
-                android:textColor="@color/text_gray2"
-                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orderDeatilTitle" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/orderDeatilAddrs">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/orderDetailDrinks"
+                    android:id="@+id/orderDeatilTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_15ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
                     android:fontFamily="@font/proximanova_reg"
-                    android:text="Drinks"
+                    android:text="Vanity Night Club"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-
+                <TextView
+                    android:id="@+id/orderDeatilAddrs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginEnd="@dimen/_10ssp"
-                    android:background="@drawable/border_primaryclr_orderdetail"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
+                    android:textColor="@color/text_gray2"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/orderDeatilTitle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/orderDetailDrinks">
+                    app:layout_constraintTop_toBottomOf="@+id/orderDeatilAddrs">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/orderDetailRecyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_15ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:text="Table Number"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginEnd="@dimen/_10ssp"
+
+                        android:background="@drawable/box_botomsheet"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:padding="@dimen/_10ssp"
+                        android:text="32"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginTop="@dimen/_20ssp"
+                        android:fontFamily="@font/proximanova_bold"
+                        android:text="@string/Order_Summery"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
 
                     <LinearLayout
-
                         android:layout_width="match_parent"
-
-
                         android:layout_height="wrap_content">
 
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Item"
-                            android:textColor="@color/text_gray"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Amount"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
+                            android:layout_marginEnd="@dimen/_10ssp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Qty"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Price"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Total"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Belvedere"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="1"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="$35"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/proximanova_bold"
-                            android:gravity="center"
-                            android:text="$35"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:gravity="end"
+                            android:text="$235"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-
-                        android:layout_height="1dp"
-                        android:background="@color/primary_box_clr" />
-
                     <LinearLayout
-
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content">
 
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_marginBottom="@dimen/_7sdp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Finlandia"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="1"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="$66"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/proximanova_bold"
-                            android:gravity="center"
-                            android:text="$66"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Service Charges"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/orderDetailSnacks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_15ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Snacks"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_10ssp"
-                    android:layout_marginEnd="@dimen/_10ssp"
-                    android:background="@drawable/border_primaryclr_orderdetail"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/orderDetailDrinks">
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-
-
-                        android:layout_height="wrap_content">
-
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
+                            android:layout_marginEnd="@dimen/_10ssp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Item"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Qty"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Price"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Total"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Nuts"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="3"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="$10"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/proximanova_bold"
-                            android:gravity="center"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:gravity="end"
                             android:text="$30"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-
-                        android:layout_height="1dp"
-                        android:background="@color/primary_box_clr" />
-
                     <LinearLayout
-
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content">
 
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_marginBottom="@dimen/_7sdp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Grains"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="2"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="$12"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/proximanova_bold"
-                            android:gravity="center"
-                            android:text="$24"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Discount"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/orderDetailFood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_15ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Food"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_10ssp"
-                    android:layout_marginEnd="@dimen/_10ssp"
-                    android:background="@drawable/border_primaryclr_orderdetail"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/orderDetailDrinks">
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-
-
-                        android:layout_height="wrap_content">
-
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
+                            android:layout_marginEnd="@dimen/_10ssp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Item"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Qty"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Price"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Total"
-                            android:textColor="@color/text_gray"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="French fries"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="2"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="$30"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/proximanova_bold"
-                            android:gravity="center"
-                            android:text="$60"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:gravity="end"
+                            android:text="$5"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-
-                        android:layout_height="1dp"
-                        android:background="@color/primary_box_clr" />
-
                     <LinearLayout
-
                         android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_marginBottom="@dimen/_7sdp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Nachos"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_10ssp"
+                        android:paddingBottom="@dimen/_10ssp">
 
                         <TextView
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="1"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="$20"
-                            android:textColor="@color/white_second"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <View
-
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/primary_box_clr" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_7ssp"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
                             android:layout_weight="1"
                             android:fontFamily="@font/proximanova_bold"
-                            android:gravity="center"
-                            android:text="$20"
+                            android:text="Total Amount"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_18ssp" />
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10ssp"
+                            android:layout_marginTop="@dimen/_15ssp"
+                            android:layout_marginEnd="@dimen/_10ssp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/proximanova_bold"
+                            android:gravity="end"
+                            android:text="$235"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_18ssp" />
 
                     </LinearLayout>
                 </LinearLayout>
 
 
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_15ssp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Table Number"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:padding="@dimen/_10ssp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-
-                    android:fontFamily="@font/proximanova_bold"
-                    android:text="32"
-                    android:layout_marginEnd="@dimen/_10ssp"
-                    android:background="@drawable/box_botomsheet"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp" />
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_20ssp"
-                    android:fontFamily="@font/proximanova_bold"
-                    android:text="@string/Order_Summery"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="Amount"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="$235"
-                        android:layout_marginEnd="@dimen/_10ssp"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="Service Charges"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:layout_marginEnd="@dimen/_10ssp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="$30"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="Discount"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:layout_marginEnd="@dimen/_10ssp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_reg"
-                        android:text="$5"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:paddingBottom="@dimen/_10ssp"
-                    android:paddingTop="@dimen/_10ssp"
-                    android:layout_height="wrap_content">
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_bold"
-                        android:text="Total Amount"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_18ssp" />
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:layout_marginEnd="@dimen/_10ssp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
-                        android:layout_marginTop="@dimen/_15ssp"
-                        android:fontFamily="@font/proximanova_bold"
-                        android:text="$235"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_18ssp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/orderDetailPay"
             style="@style/buttonTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
-            android:gravity="start"
 
-            android:paddingStart="@dimen/_10ssp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="Pay $235"
-            android:paddingEnd="@dimen/_10ssp"
-            android:drawableEnd="@drawable/arrow_union"
-            android:id="@+id/orderDetailPay"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/gredient_bg"
-          app:layout_constraintBottom_toBottomOf="parent" />
+            android:drawableEnd="@drawable/arrow_union"
+            android:gravity="start"
+            android:paddingStart="@dimen/_10ssp"
+            android:paddingEnd="@dimen/_10ssp"
+            android:text="Pay $235"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

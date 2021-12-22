@@ -70,13 +70,16 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
 //                .build(this@SearchCityActivity)
 //            startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
         }
-        if (v == binding.barcrawlNextBtn) {
+        else if (v == binding.barcrawlNextBtn) {
             if (binding.barcralCity.text.toString().isNullOrBlank()) {
                 MyApp.popErrorMsg("", "Please select city", THIS!!)
             } else {
                 startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java))
                 finish()
             }
+        }
+        else if(v==binding.barcrawlBtmCrntLocImg){
+            //MyApp.popErrorMsg("","hi",THIS!!)
         }
     }
 
@@ -86,6 +89,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         supportMapFragment.getMapAsync(this@SearchCityActivity)
         binding.barcralCity.setOnClickListener(this@SearchCityActivity)
         binding.barcrawlNextBtn.setOnClickListener(this@SearchCityActivity)
+        binding.barcrawlBtmCrntLocImg.setOnClickListener(this@SearchCityActivity)
     }
 
     private fun setToolBar() {

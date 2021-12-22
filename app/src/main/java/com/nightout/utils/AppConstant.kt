@@ -59,6 +59,7 @@ class AppConstant {
         const val ADDRS = "ADDRS"
         const val LATITUDE = "LATITUDE"
         const val LONGITUDE = "LONGITUDE"
+        const val StoreDetailPoJO = "StoreDetailPoJO"
 
 
     }

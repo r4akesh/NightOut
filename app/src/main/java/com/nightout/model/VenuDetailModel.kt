@@ -96,7 +96,7 @@ data class VenuDetailModel(
         val status: String,
         val title: String,
         val updated_at: String
-    )
+    ):Serializable
 
     data class FoodProducts(
         val categories: ArrayList<CategoryFoodMdl>

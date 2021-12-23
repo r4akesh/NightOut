@@ -35,13 +35,11 @@ import android.text.Editable
 
 import android.text.TextWatcher
 import com.nightout.viewmodel.CommonViewModel
-import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.view.Gravity
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 
@@ -55,7 +53,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var mMap: GoogleMap
     var imageViewPagerAdapter: ImageViewPagerAdapter? = null
     private val progressDialog = CustomProgressDialog()
-    var facilityList = ArrayList<VenuDetailModel.Facility>()
+    var facilityList = ArrayList<VenuDetailModel.VenueFacility>()
     var venuID = ""
     var favStatus = "0"
     var addBarCrawlStatus = "0"
@@ -66,7 +64,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         initView()
 
         venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
-        if (!venuID.isNullOrBlank()) {
+        if (venuID.isNotBlank()) {
             user_venue_detailAPICALL()
         }
 
@@ -100,11 +98,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
              fade_in.fillAfter = true
              photo.startAnimation(fade_in)
                Handler(Looper.getMainLooper()).postDelayed({
-                   viewTransTop.visibility= VISIBLE
-
-             },490)
-
-                imagedialog.show()
+                   viewTransTop.visibility= VISIBLE },490)
+             imagedialog.show()
 
         }
     }
@@ -146,7 +141,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
         } else if (v == binding.storeDeatilPlaceOrder) {
             startActivity(Intent(this@StoreDetailActvity, OrderDetailActivity::class.java)
-                .putExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO,dt))
+                .putExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO,dt)
+            )
 
         } else if (v == binding.storeDeatilFacilityBtn) {
             if (facilityList != null && facilityList.size > 0)
@@ -334,7 +330,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             //faciltyList
             facilityList = dt.venue_facility
             showMapLoc(dt.store_lattitude, dt.store_longitude)
-            if(!dt.store_description.isNullOrBlank()) {
+            if(dt.store_description.isNotBlank()) {
                 var htmlData = dt.store_description
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     binding.storeDeatilMenuDesc.setText(Html.fromHtml(htmlData,Html.FROM_HTML_MODE_LEGACY));
@@ -376,31 +372,33 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     lateinit var storDetailFoodHorizontalAdapter: StorDetailFoodHorizontalAdapter
-    private fun setListHorizntalFood() {
-        var listFood = ArrayList<StorDetailFoodModel>()
-        listFood.add(StorDetailFoodModel("Drinks", true))
-        listFood.add(StorDetailFoodModel("Food", false))
-        listFood.add(StorDetailFoodModel("Snacks", false))
-        listFood.add(StorDetailFoodModel("Packages", false))
-
+    private fun setListHorizntalFood(allProducts: ArrayList<VenuDetailModel.AllProduct>) {
         storDetailFoodHorizontalAdapter = StorDetailFoodHorizontalAdapter(
             this@StoreDetailActvity,
-            listFood,
+            allProducts,
             object : StorDetailFoodHorizontalAdapter.ClickListener {
                 override fun onClick(pos: Int) {
 
-                    for (i in 0 until listFood.size) {
-                        listFood[i].isSelected = pos == i
+                    for (i in 0 until allProducts.size) {
+                        allProducts[i].isSelected = pos == i
                     }
                     storDetailFoodHorizontalAdapter.notifyDataSetChanged()
-                    if (pos == 0)
+                    if (pos == 0) {
+                        drinksList = dt.all_products[0].records
                         setListDrinks()
-                    else if (pos == 1)
+                    }
+                    else if (pos == 1) {
+                        drinksList = dt.all_products[1].records
                         setListFoods()
-                    else if (pos == 2)
+                    }
+                    else if (pos == 2) {
+                        drinksList = dt.all_products[2].records
                         setListSnacks()
-                    else if (pos == 3)
+                    }
+                    else if (pos == 3) {
+                        drinksList = dt.all_products[3].records
                         setListPkg()
+                    }
                 }
 
             })
@@ -922,15 +920,13 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
 
     lateinit var dt: VenuDetailModel.Data
-    lateinit var venuePkgList: ArrayList<VenuDetailModel.PkgModel>
-    lateinit var drinksList: ArrayList<VenuDetailModel.CategoryDrinksMdl>
-    lateinit var foodsList: ArrayList<VenuDetailModel.CategoryFoodMdl>
-    lateinit var snacksList: ArrayList<VenuDetailModel.SnacksModl>
-    lateinit var barMenuAdapter: DrinksMenuAdapter
-    lateinit var foodsMenuAdapter: FoodsMenuAdapter
-    lateinit var snacksMenuAdapter: SnacksMenuAdapter
-    lateinit var pakgAdapter: PackageAdapter
 
+    lateinit var barMenuAdapter: DrinksMenuAdapter
+  //  lateinit var foodsMenuAdapter: FoodsMenuAdapter
+   // lateinit var snacksMenuAdapter: SnacksMenuAdapter
+    lateinit var pakgAdapter: PackageAdapter
+    lateinit var drinksList : ArrayList<VenuDetailModel.Record>
+   // lateinit var foodsList : ArrayList<VenuDetailModel.Record>
 
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@StoreDetailActvity, "")
@@ -945,24 +941,12 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                     it.data?.let { detailData ->
                         dt = detailData.data
                         setData()
-                        setListHorizntalFood()
-                        venuePkgList = ArrayList()
+                        setListHorizntalFood(dt.all_products)
                         drinksList = ArrayList()
-                        foodsList = ArrayList()
-                        snacksList = ArrayList()
-                        if (detailData.data?.drinkProducts?.categories?.size > 0) {
-                            drinksList = detailData.data?.drinkProducts?.categories
-                            setListDrinks()
-                        }
-                          if (detailData.data?.foodProducts?.categories?.size > 0) {
-                            foodsList = detailData.data?.foodProducts?.categories
-                        }
-                          if (detailData.data?.snackProducts?.categories?.size > 0) {
-                            snacksList = detailData.data?.snackProducts?.categories
-                        }
-                          if(detailData.data?.packageProducts?.products.size>0){
-                            venuePkgList = detailData.data?.packageProducts?.products
-                        }
+                        drinksList = dt.all_products[0].records
+                       // foodsList = dt.all_products[1].records
+                        setListDrinks()
+
                     }
                 }
                 Status.LOADING -> {
@@ -1194,11 +1178,10 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                     barMenuAdapter.notifyDataSetChanged()
                 }
 
-                override fun onClickSub(pos: Int, subPos: Int) {
-                    drinksList[pos].products[subPos].isChekd =
-                        !drinksList[pos].products[subPos].isChekd
-                    barMenuAdapter.notifyDataSetChanged()
-                }
+//                override fun onClickSub(pos: Int, subPos: Int) {
+//                    drinksList[pos].products[subPos].isChekd = !drinksList[pos].products[subPos].isChekd
+//                    barMenuAdapter.notifyDataSetChanged()
+//                }
 
                 override fun onClickPluse(pos: Int, subPos: Int) {
                     try {
@@ -1254,34 +1237,34 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun setListFoods() {
-        foodsMenuAdapter = FoodsMenuAdapter(
+        barMenuAdapter = DrinksMenuAdapter(
             this@StoreDetailActvity,
-            foodsList,
-            object : FoodsMenuAdapter.ClickListener {
+            drinksList,
+            object : DrinksMenuAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-                    foodsList[pos].isSelected = !foodsList[pos].isSelected
-                    foodsMenuAdapter.notifyDataSetChanged()
+                    drinksList[pos].isSelected = !drinksList[pos].isSelected
+                    barMenuAdapter.notifyDataSetChanged()
                 }
 
-                override fun onClickSub(pos: Int, subPos: Int) {
-                    foodsList[pos].products[subPos].isChekd =
-                        !foodsList[pos].products[subPos].isChekd
-                    foodsMenuAdapter.notifyDataSetChanged()
-                }
+//                override fun onClickSub(pos: Int, subPos: Int) {
+//                    drinksList[pos].products[subPos].isChekd =
+//                        !drinksList[pos].products[subPos].isChekd
+//                    barMenuAdapter.notifyDataSetChanged()
+//                }
 
                 override fun onClickPluse(pos: Int, subPos: Int) {
                     try {
-                        var qty = foodsList[pos].products[subPos].quantityLocal + 1
-                        var aa = qty * Commons.strToDouble(foodsList[pos].products[subPos].price)
-                        var bb = aa*Commons.strToDouble(foodsList[pos].products[subPos].discount)
+                        var qty = drinksList[pos].products[subPos].quantityLocal + 1
+                        var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                        var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
                         var per = bb/100
                         var disValue= aa-per
-                        foodsList[pos].products[subPos].quantityLocal = qty
-                        foodsList[pos].products[subPos].totPriceLocal = disValue
-                        foodsMenuAdapter.notifyDataSetChanged()
+                        drinksList[pos].products[subPos].quantityLocal = qty
+                        drinksList[pos].products[subPos].totPriceLocal = disValue
+                        barMenuAdapter.notifyDataSetChanged()
                         var totCost = 0.0
-                        for(i in 0 until foodsList[pos].products.size){
-                            totCost= totCost+foodsList[pos].products[i].totPriceLocal
+                        for(i in 0 until drinksList[pos].products.size){
+                            totCost= totCost+drinksList[pos].products[i].totPriceLocal
                         }
 //                        binding.preBookingFoodPriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
 //                        doGrandTot()
@@ -1292,18 +1275,18 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
                 override fun onClickMinus(pos: Int, subPos: Int) {
                     try {
-                        if (foodsList[pos].products[subPos].quantityLocal > 0) {
-                            var qty = foodsList[pos].products[subPos].quantityLocal - 1
-                            var aa = qty * Commons.strToDouble(foodsList[pos].products[subPos].price)
-                            var bb = aa*Commons.strToDouble(foodsList[pos].products[subPos].discount)
+                        if (drinksList[pos].products[subPos].quantityLocal > 0) {
+                            var qty = drinksList[pos].products[subPos].quantityLocal - 1
+                            var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                            var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
                             var per = bb/100
                             var disValue= aa-per
-                            foodsList[pos].products[subPos].quantityLocal = qty
-                            foodsList[pos].products[subPos].totPriceLocal = disValue
-                            foodsMenuAdapter.notifyDataSetChanged()
+                            drinksList[pos].products[subPos].quantityLocal = qty
+                            drinksList[pos].products[subPos].totPriceLocal = disValue
+                            barMenuAdapter.notifyDataSetChanged()
                             var totCost = 0.0
-                            for(i in 0 until foodsList[pos].products.size){
-                                totCost= totCost+foodsList[pos].products[i].totPriceLocal
+                            for(i in 0 until drinksList[pos].products.size){
+                                totCost= totCost+drinksList[pos].products[i].totPriceLocal
                             }
 //                            binding.preBookingFoodPriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
 //                            doGrandTot()
@@ -1318,39 +1301,39 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
                 LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = foodsMenuAdapter
+            it.adapter = barMenuAdapter
         }
     }
 
     private fun setListSnacks() {
-        snacksMenuAdapter = SnacksMenuAdapter(
+        barMenuAdapter = DrinksMenuAdapter(
             this@StoreDetailActvity,
-            snacksList,
-            object : SnacksMenuAdapter.ClickListener {
+            drinksList,
+            object : DrinksMenuAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-                    snacksList[pos].isSelected = !snacksList[pos].isSelected
-                    snacksMenuAdapter.notifyDataSetChanged()
+                    drinksList[pos].isSelected = !drinksList[pos].isSelected
+                    barMenuAdapter.notifyDataSetChanged()
                 }
 
-                override fun onClickSub(pos: Int, subPos: Int) {
-                    snacksList[pos].products[subPos].isChekd =
-                        !snacksList[pos].products[subPos].isChekd
-                    snacksMenuAdapter.notifyDataSetChanged()
-                }
+//                override fun onClickSub(pos: Int, subPos: Int) {
+//                    drinksList[pos].products[subPos].isChekd =
+//                        !drinksList[pos].products[subPos].isChekd
+//                    barMenuAdapter.notifyDataSetChanged()
+//                }
 
                 override fun onClickPluse(pos: Int, subPos: Int) {
                     try {
-                        var qty = snacksList[pos].products[subPos].quantityLocal + 1
-                        var aa = qty * Commons.strToDouble(snacksList[pos].products[subPos].price)
-                        var bb = aa*Commons.strToDouble(snacksList[pos].products[subPos].discount)
+                        var qty = drinksList[pos].products[subPos].quantityLocal + 1
+                        var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                        var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
                         var per = bb/100
                         var disValue= aa-per
-                        snacksList[pos].products[subPos].quantityLocal = qty
-                        snacksList[pos].products[subPos].totPriceLocal = disValue
-                        snacksMenuAdapter.notifyDataSetChanged()
+                        drinksList[pos].products[subPos].quantityLocal = qty
+                        drinksList[pos].products[subPos].totPriceLocal = disValue
+                        barMenuAdapter.notifyDataSetChanged()
                         var totCost = 0.0
-                        for(i in 0 until snacksList[pos].products.size){
-                            totCost= totCost+snacksList[pos].products[i].totPriceLocal
+                        for(i in 0 until drinksList[pos].products.size){
+                            totCost= totCost+drinksList[pos].products[i].totPriceLocal
                         }
 //                        binding.preBookingSnakesValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
 //                        doGrandTot()
@@ -1361,18 +1344,18 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
                 override fun onClickMinus(pos: Int, subPos: Int) {
                     try {
-                        if (snacksList[pos].products[subPos].quantityLocal > 0) {
-                            var qty = snacksList[pos].products[subPos].quantityLocal - 1
-                            var aa = qty * Commons.strToDouble(snacksList[pos].products[subPos].price)
-                            var bb = aa*Commons.strToDouble(snacksList[pos].products[subPos].discount)
+                        if (drinksList[pos].products[subPos].quantityLocal > 0) {
+                            var qty = drinksList[pos].products[subPos].quantityLocal - 1
+                            var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                            var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
                             var per = bb/100
                             var disValue= aa-per
-                            snacksList[pos].products[subPos].quantityLocal = qty
-                            snacksList[pos].products[subPos].totPriceLocal = disValue
-                            snacksMenuAdapter.notifyDataSetChanged()
+                            drinksList[pos].products[subPos].quantityLocal = qty
+                            drinksList[pos].products[subPos].totPriceLocal = disValue
+                            barMenuAdapter.notifyDataSetChanged()
                             var totCost = 0.0
-                            for(i in 0 until snacksList[pos].products.size){
-                                totCost= totCost+snacksList[pos].products[i].totPriceLocal
+                            for(i in 0 until drinksList[pos].products.size){
+                                totCost= totCost+drinksList[pos].products[i].totPriceLocal
                             }
 //                            binding.preBookingSnakesValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
 //                            doGrandTot()
@@ -1387,30 +1370,30 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         binding.storeDeatilDrinksRecycler.also {
             it.layoutManager =
                 LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = snacksMenuAdapter
+            it.adapter = barMenuAdapter
         }
     }
 
     private fun setListPkg() {
-        pakgAdapter = PackageAdapter(this@StoreDetailActvity, venuePkgList, object : PackageAdapter.ClickListener {
+        pakgAdapter = PackageAdapter(this@StoreDetailActvity, drinksList, object : PackageAdapter.ClickListener {
             override fun onClickChk(subPos: Int) {
-                venuePkgList[subPos].isChekd = !venuePkgList[subPos].isChekd
+                drinksList[subPos].isSelected = !drinksList[subPos].isSelected
                 pakgAdapter.notifyDataSetChanged()
             }
 
             override fun onClickPlus(pos: Int) {
                 try {
-                    var qty = venuePkgList[pos].quantityLocal + 1
-                    var aa = qty * Commons.strToDouble(venuePkgList[pos].price)
-                    var bb = aa*Commons.strToDouble(venuePkgList[pos].discount)
+                    var qty = drinksList[pos].quantityLocal + 1
+                    var aa = qty * Commons.strToDouble(drinksList[pos].price)
+                    var bb = aa*Commons.strToDouble(drinksList[pos].discount)
                     var per = bb/100
                     var disValue= aa-per
-                    venuePkgList[pos].quantityLocal = qty
-                    venuePkgList[pos].totPriceLocal = disValue
+                    drinksList[pos].quantityLocal = qty
+                    drinksList[pos].totPriceLocal = disValue
                     pakgAdapter.notifyDataSetChanged()
                     var totCost = 0.0
-                    for(i in 0 until venuePkgList.size){
-                        totCost= totCost+venuePkgList[i].totPriceLocal
+                    for(i in 0 until drinksList.size){
+                        totCost= totCost+drinksList[i].totPriceLocal
                     }
                     //binding.preBookingTablePriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
                     //GrandTotal
@@ -1423,18 +1406,18 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
             override fun onClickMinus(pos: Int) {
                 try {
-                    if (venuePkgList[pos].quantityLocal > 0) {
-                        var qty = venuePkgList[pos].quantityLocal - 1
-                        var aa = qty * Commons.strToDouble(venuePkgList[pos].price)
-                        var bb = aa * Commons.strToDouble(venuePkgList[pos].discount)
+                    if (drinksList[pos].quantityLocal > 0) {
+                        var qty = drinksList[pos].quantityLocal - 1
+                        var aa = qty * Commons.strToDouble(drinksList[pos].price)
+                        var bb = aa * Commons.strToDouble(drinksList[pos].discount)
                         var per = bb / 100
                         var disValue = aa - per
-                        venuePkgList[pos].quantityLocal = qty
-                        venuePkgList[pos].totPriceLocal = disValue
+                        drinksList[pos].quantityLocal = qty
+                        drinksList[pos].totPriceLocal = disValue
                         pakgAdapter.notifyDataSetChanged()
                         var totCost = 0.0
-                        for (i in 0 until venuePkgList.size) {
-                            totCost = totCost + venuePkgList[i].totPriceLocal
+                        for (i in 0 until drinksList.size) {
+                            totCost = totCost + drinksList[i].totPriceLocal
                         }
                        // binding.preBookingTablePriceValue.text =
                             resources.getString(R.string.currency_sumbol) + totCost.toString()

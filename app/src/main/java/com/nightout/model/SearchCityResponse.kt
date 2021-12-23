@@ -11,6 +11,9 @@ data class SearchCityResponse(
         val id: String,
         val slug: String,
         val status: String,
+        val city_lattitude: String,
+        val city_longitude: String,
+        val country: String,
         val title: String,
         val updated_at: String
     )

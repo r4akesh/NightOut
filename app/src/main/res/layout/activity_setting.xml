@@ -56,8 +56,9 @@
                         app:layout_constraintTop_toTopOf="@+id/notificationIcon" />
 
 
-                    <Switch
-                        android:layout_width="@dimen/_100sdp"
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchNotification"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
                         android:track="@drawable/custom_switch_bg"
@@ -65,7 +66,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/notificationIcon">
 
-                    </Switch>
+                    </com.google.android.material.switchmaterial.SwitchMaterial>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -100,16 +101,17 @@
                         app:layout_constraintTop_toTopOf="@+id/emailNotificationIcon" />
 
 
-                    <Switch
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:track="@drawable/custom_switch_bg"
+
                         app:layout_constraintBottom_toBottomOf="@id/emailNotificationIcon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/emailNotificationIcon">
 
-                    </Switch>
+                    </com.google.android.material.switchmaterial.SwitchMaterial>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

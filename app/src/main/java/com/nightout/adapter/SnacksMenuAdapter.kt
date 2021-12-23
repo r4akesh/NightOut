@@ -18,7 +18,7 @@ import com.nightout.model.VenuDetailModel
 
 class SnacksMenuAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.SnacksModl>,
+    var arrayList: ArrayList<VenuDetailModel.Record>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<SnacksMenuAdapter.ViewHolder>() {
@@ -39,7 +39,7 @@ class SnacksMenuAdapter(
         if(arrayList[position].isSelected){
             viewHolder.binding.drinkItemImageArrow.setImageResource(R.drawable.arrow_down_white)
             viewHolder.binding.drinkItemRecycleSub.visibility=VISIBLE
-            var subAdapter = SnacksMenuSubAdapter(context,arrayList[position].products,object : SnacksMenuSubAdapter.ClickListener{
+           /* var subAdapter = SnacksMenuSubAdapter(context,arrayList[position].products,object : SnacksMenuSubAdapter.ClickListener{
                 override fun onClickChk(subPos: Int) {
                     clickListener.onClickSub(position,subPos)
                 }
@@ -55,7 +55,7 @@ class SnacksMenuAdapter(
             viewHolder.binding.drinkItemRecycleSub.also {
                 it.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
                 it.adapter = subAdapter
-            }
+            }*/
         }else{
             viewHolder.binding.drinkItemRecycleSub.visibility=GONE
             viewHolder.binding.drinkItemImageArrow.setImageResource(R.drawable.arrow_right_white)

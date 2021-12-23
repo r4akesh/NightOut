@@ -83,7 +83,12 @@ class SearchLocationActivity : BaseActivity() {
     private fun setList(dataList: MutableList<SearchCityResponse.Data>) {
         searchCityAdapter=SearchCityAdapter(this@SearchLocationActivity,dataList,object:SearchCityAdapter.ClickListener{
             override fun onClick(pos: Int) {
-
+                var intentt= Intent()
+                intentt.putExtra(AppConstant.INTENT_EXTRAS.ADDRS,dataList[pos].title)//city
+                intentt.putExtra(AppConstant.INTENT_EXTRAS.LATITUDE,dataList[pos].city_lattitude)
+                intentt.putExtra(AppConstant.INTENT_EXTRAS.LONGITUDE,dataList[pos].city_longitude)
+                setResult(Activity.RESULT_OK,intentt)
+                finish()
             }
 
         })
@@ -130,8 +135,8 @@ class SearchLocationActivity : BaseActivity() {
           //  val latLng = LatLng(place.latLng!!.latitude, place.latLng!!.longitude)
             var intentt= Intent()
             intentt.putExtra(AppConstant.INTENT_EXTRAS.ADDRS,place.address)
-            intentt.putExtra(AppConstant.INTENT_EXTRAS.LATITUDE,place.address)
-            intentt.putExtra(AppConstant.INTENT_EXTRAS.LONGITUDE,place.address)
+            intentt.putExtra(AppConstant.INTENT_EXTRAS.LATITUDE,place.latLng?.latitude)
+            intentt.putExtra(AppConstant.INTENT_EXTRAS.LONGITUDE,place.latLng?.longitude)
             setResult(Activity.RESULT_OK,intentt)
             finish()
         } catch (e: Exception) {

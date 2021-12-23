@@ -41,10 +41,10 @@ class PreBookingActivity : BaseActivity() {
     var venuID = ""
       var vendorId = ""
     lateinit var userVenueDetailViewModel: CommonViewModel
-    lateinit var venuePkgList: ArrayList<VenuDetailModel.PkgModel>
-    lateinit var drinksList: ArrayList<VenuDetailModel.CategoryDrinksMdl>
-    lateinit var foodsList: ArrayList<VenuDetailModel.CategoryFoodMdl>
-    lateinit var snacksList: ArrayList<VenuDetailModel.SnacksModl>
+//    lateinit var venuePkgList: ArrayList<VenuDetailModel.PkgModel>
+//    lateinit var drinksList: ArrayList<VenuDetailModel.CategoryDrinksMdl>
+//    lateinit var foodsList: ArrayList<VenuDetailModel.CategoryFoodMdl>
+//    lateinit var snacksList: ArrayList<VenuDetailModel.SnacksModl>
     lateinit var barMenuAdapter: DrinksMenuAdapter
     lateinit var foodsMenuAdapter: FoodsMenuAdapter
     lateinit var snacksMenuAdapter: SnacksMenuAdapter
@@ -56,7 +56,7 @@ class PreBookingActivity : BaseActivity() {
         initView()
         binding.toolbarSubTitle.text= intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_NAME)
         setCalendra()
-        user_venue_detailAPICALL()
+       // user_venue_detailAPICALL()
 
     }
 
@@ -83,34 +83,34 @@ class PreBookingActivity : BaseActivity() {
             binding.preBookingSpclPkg.setTextColor(resources.getColor(R.color.black))
             binding.preBookingBarMenu.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingLnrMenu.visibility = GONE
-            setListPkg()
+           // setListPkg()
         } else if (v == binding.preBookingBarMenu) {
             binding.preBookingBarMenu.setBackgroundResource(R.drawable.box_bgyello_right)
             binding.preBookingSpclPkg.setBackgroundResource(0)
             binding.preBookingBarMenu.setTextColor(resources.getColor(R.color.black))
             binding.preBookingSpclPkg.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingLnrMenu.visibility = VISIBLE
-            setListDrinks()
+           // setListDrinks()
         } else if (v == binding.preBookingDrinksBtn) {
             binding.preBookingDrinksBtn.setTextColor(resources.getColor(R.color.text_yello))
             binding.preBookingFoodsBtn.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingSnacksBtn.setTextColor(resources.getColor(R.color.text_gray3))
 
-            setListDrinks()
+           // setListDrinks()
         } else if (v == binding.preBookingFoodsBtn) {
             binding.preBookingFoodsBtn.setTextColor(resources.getColor(R.color.text_yello))
             binding.preBookingDrinksBtn.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingSnacksBtn.setTextColor(resources.getColor(R.color.text_gray3))
-            setListFoods()
+            //setListFoods()
         } else if (v == binding.preBookingSnacksBtn) {
             binding.preBookingSnacksBtn.setTextColor(resources.getColor(R.color.text_yello))
             binding.preBookingFoodsBtn.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingDrinksBtn.setTextColor(resources.getColor(R.color.text_gray3))
-            setListSnacks()
+            //setListSnacks()
         }
         else if(v==binding.preBookingBokNow){
-            if(isValidateInput())
-            pre_bookingAPICall()
+           // if(isValidateInput())
+           // pre_bookingAPICall()
         }
         else if(v==binding.preBookingbookWholeVenus){
             if(binding.preBookingbookWholeVenus.isChecked){
@@ -142,146 +142,146 @@ class PreBookingActivity : BaseActivity() {
 
     }
 
-    private fun pre_bookingAPICall() {
-        try {
-            var jarr = JSONArray()
-            val jsnObjMain = JSONObject()
-            var flag =false
+    /*  private fun pre_bookingAPICall() {
+          try {
+              var jarr = JSONArray()
+              val jsnObjMain = JSONObject()
+              var flag =false
 
-            for (i in 0 until venuePkgList.size){
-                if(venuePkgList[i].quantityLocal>0){
-                    val jsonObjects = JSONObject()
-                    jsonObjects.put("id", venuePkgList[i].id)
-                    jsonObjects.put("qty", "" + venuePkgList[i].quantityLocal)
-                    jarr.put(jsonObjects)
-                    flag=true
-                }
-            }
+              for (i in 0 until venuePkgList.size){
+                  if(venuePkgList[i].quantityLocal>0){
+                      val jsonObjects = JSONObject()
+                      jsonObjects.put("id", venuePkgList[i].id)
+                      jsonObjects.put("qty", "" + venuePkgList[i].quantityLocal)
+                      jarr.put(jsonObjects)
+                      flag=true
+                  }
+              }
 
-            for (i in 0 until drinksList.size) {
-                for (j in 0 until drinksList[i].products.size) {
-                    if(drinksList[i].products[j].quantityLocal>0) {
-                        val jsonObjects = JSONObject()
-                        jsonObjects.put("id", drinksList[i].products[j].id)
-                        jsonObjects.put("qty", "" + drinksList[i].products[j].quantityLocal)
-                        jarr.put(jsonObjects)
-                        flag=true
-                    }
-                }
-            }
-            for (i in 0 until foodsList.size) {
-                for (j in 0 until foodsList[i].products.size) {
-                    if(foodsList[i].products[j].quantityLocal>0) {
-                        val jsonObjects = JSONObject()
-                        jsonObjects.put("id", foodsList[i].products[j].id)
-                        jsonObjects.put("qty", "" + foodsList[i].products[j].quantityLocal)
-                        jarr.put(jsonObjects)
-                        flag=true
-                    }
-                }
-            }
-            for (i in 0 until snacksList.size) {
-                for (j in 0 until snacksList[i].products.size) {
-                    if(snacksList[i].products[j].quantityLocal>0) {
-                        val jsonObjects = JSONObject()
-                        jsonObjects.put("id", snacksList[i].products[j].id)
-                        jsonObjects.put("qty", "" + snacksList[i].products[j].quantityLocal)
-                        jarr.put(jsonObjects)
-                        flag=true
-                    }
-                }
-            }
-            if(flag==false){
-                MyApp.popErrorMsg("","Please select any special package OR Bar Menu",THIS!!)
-                return
-            }
-             jsnObjMain.put("venue_id",venuID)
-          // jsnObjMain.put("venue_id","217")
-            jsnObjMain.put("vendor_id",vendorId)
-            jsnObjMain.put("date",selectedDateFinal)
-            jsnObjMain.put("time",binding.preBookingTimePicker.text.toString())
-            jsnObjMain.put("people",binding.preBookingPeopleValue.text.toString())
-            var isWholeValue = if(binding.preBookingbookWholeVenus.isChecked) "1" else "0"
-            jsnObjMain.put("whole_venue",isWholeValue)
-            jsnObjMain.put("description",binding.preBookingSpclReqEdit.text.toString())
-            var amt=binding.preBookingTotAmtValue.text.toString()
-            jsnObjMain.put("amount",amt.substring(1,amt.length))
-            jsnObjMain.put("pro_id_qty",jarr)
-            Log.d("TAG", "pre_bookingAPICall: "+jsnObjMain)
+              for (i in 0 until drinksList.size) {
+                  for (j in 0 until drinksList[i].products.size) {
+                      if(drinksList[i].products[j].quantityLocal>0) {
+                          val jsonObjects = JSONObject()
+                          jsonObjects.put("id", drinksList[i].products[j].id)
+                          jsonObjects.put("qty", "" + drinksList[i].products[j].quantityLocal)
+                          jarr.put(jsonObjects)
+                          flag=true
+                      }
+                  }
+              }
+              for (i in 0 until foodsList.size) {
+                  for (j in 0 until foodsList[i].products.size) {
+                      if(foodsList[i].products[j].quantityLocal>0) {
+                          val jsonObjects = JSONObject()
+                          jsonObjects.put("id", foodsList[i].products[j].id)
+                          jsonObjects.put("qty", "" + foodsList[i].products[j].quantityLocal)
+                          jarr.put(jsonObjects)
+                          flag=true
+                      }
+                  }
+              }
+              for (i in 0 until snacksList.size) {
+                  for (j in 0 until snacksList[i].products.size) {
+                      if(snacksList[i].products[j].quantityLocal>0) {
+                          val jsonObjects = JSONObject()
+                          jsonObjects.put("id", snacksList[i].products[j].id)
+                          jsonObjects.put("qty", "" + snacksList[i].products[j].quantityLocal)
+                          jarr.put(jsonObjects)
+                          flag=true
+                      }
+                  }
+              }
+              if(flag==false){
+                  MyApp.popErrorMsg("","Please select any special package OR Bar Menu",THIS!!)
+                  return
+              }
+               jsnObjMain.put("venue_id",venuID)
+            // jsnObjMain.put("venue_id","217")
+              jsnObjMain.put("vendor_id",vendorId)
+              jsnObjMain.put("date",selectedDateFinal)
+              jsnObjMain.put("time",binding.preBookingTimePicker.text.toString())
+              jsnObjMain.put("people",binding.preBookingPeopleValue.text.toString())
+              var isWholeValue = if(binding.preBookingbookWholeVenus.isChecked) "1" else "0"
+              jsnObjMain.put("whole_venue",isWholeValue)
+              jsnObjMain.put("description",binding.preBookingSpclReqEdit.text.toString())
+              var amt=binding.preBookingTotAmtValue.text.toString()
+              jsnObjMain.put("amount",amt.substring(1,amt.length))
+              jsnObjMain.put("pro_id_qty",jarr)
+              Log.d("TAG", "pre_bookingAPICall: "+jsnObjMain)
 
-            progressDialog.show(this@PreBookingActivity, "")
+              progressDialog.show(this@PreBookingActivity, "")
 
-            userVenueDetailViewModel.preBook(jsnObjMain).observe(this@PreBookingActivity, {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        progressDialog.dialog.dismiss()
-                        it.data?.let { detailData ->
-                        startActivity(Intent(THIS!!,CongrtulationActvity::class.java)
-                            .putExtra(AppConstant.INTENT_EXTRAS.CONGRETS_MSG,"Pre Booking is successfully completed"))
-                        finish()
-                        }
-                    }
-                    Status.LOADING -> {
+              userVenueDetailViewModel.preBook(jsnObjMain).observe(this@PreBookingActivity, {
+                  when (it.status) {
+                      Status.SUCCESS -> {
+                          progressDialog.dialog.dismiss()
+                          it.data?.let { detailData ->
+                          startActivity(Intent(THIS!!,CongrtulationActvity::class.java)
+                              .putExtra(AppConstant.INTENT_EXTRAS.CONGRETS_MSG,"Pre Booking is successfully completed"))
+                          finish()
+                          }
+                      }
+                      Status.LOADING -> {
 
-                    }
-                    Status.ERROR -> {
-                        progressDialog.dialog.dismiss()
-                    }
-                }
-            })
-        } catch (e: Exception) {
-            MyApp.popErrorMsg("API call erroe",""+e,THIS!!)
-        }
+                      }
+                      Status.ERROR -> {
+                          progressDialog.dialog.dismiss()
+                      }
+                  }
+              })
+          } catch (e: Exception) {
+              MyApp.popErrorMsg("API call erroe",""+e,THIS!!)
+          }
 
-    }
+      }
 
 
-    private fun user_venue_detailAPICALL() {
-        progressDialog.show(this@PreBookingActivity, "")
-        var map = HashMap<String, String>()
-        map["id"] = venuID!!
-        //map["id"] = "217"
-        userVenueDetailViewModel.userVenueDetail(map).observe(this@PreBookingActivity, {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    progressDialog.dialog.dismiss()
-                    it.data?.let { detailData ->
-                          vendorId=  detailData.data.vendor_detail.id
-                        venuePkgList = ArrayList()
-                        drinksList = ArrayList()
-                        foodsList = ArrayList()
-                        snacksList = ArrayList()
-                        venuePkgList = detailData.data.packageProducts.products
-                        if (venuePkgList?.size>0) {
-                            setListPkg()
-                        }else{
-                            Utills.showErrorToast(THIS!!,"Packages are not available now")
-                            finish()
-                        }
-                         if (detailData.data?.drinkProducts?.categories?.size > 0) {
-                            drinksList = detailData.data?.drinkProducts?.categories
-                        }
-                       else if (detailData.data?.foodProducts?.categories?.size > 0) {
-                            foodsList = detailData.data?.foodProducts?.categories
-                        }
-                       else if (detailData.data?.snackProducts?.categories?.size > 0) {
-                            snacksList = detailData.data?.snackProducts?.categories
-                        }
+      private fun user_venue_detailAPICALL() {
+          progressDialog.show(this@PreBookingActivity, "")
+          var map = HashMap<String, String>()
+          map["id"] = venuID!!
+          //map["id"] = "217"
+          userVenueDetailViewModel.userVenueDetail(map).observe(this@PreBookingActivity, {
+              when (it.status) {
+                  Status.SUCCESS -> {
+                      progressDialog.dialog.dismiss()
+                      it.data?.let { detailData ->
+                            vendorId=  detailData.data.vendor_detail.id
+                          venuePkgList = ArrayList()
+                          drinksList = ArrayList()
+                          foodsList = ArrayList()
+                          snacksList = ArrayList()
+                          venuePkgList = detailData.data.packageProducts.products
+                          if (venuePkgList?.size>0) {
+                              setListPkg()
+                          }else{
+                              Utills.showErrorToast(THIS!!,"Packages are not available now")
+                              finish()
+                          }
+                           if (detailData.data?.drinkProducts?.categories?.size > 0) {
+                              drinksList = detailData.data?.drinkProducts?.categories
+                          }
+                         else if (detailData.data?.foodProducts?.categories?.size > 0) {
+                              foodsList = detailData.data?.foodProducts?.categories
+                          }
+                         else if (detailData.data?.snackProducts?.categories?.size > 0) {
+                              snacksList = detailData.data?.snackProducts?.categories
+                          }
 
-                    }
-                }
-                Status.LOADING -> {
+                      }
+                  }
+                  Status.LOADING -> {
 
-                }
-                Status.ERROR -> {
-                    progressDialog.dialog.dismiss()
-                }
-            }
-        })
-    }
+                  }
+                  Status.ERROR -> {
+                      progressDialog.dialog.dismiss()
+                  }
+              }
+          })
+      }*/
 
     //var totFoodPrice = 0.0
-    private fun setListDrinks() {
+  /*  private fun setListDrinks() {
         barMenuAdapter = DrinksMenuAdapter(
             this@PreBookingActivity,
             drinksList,
@@ -549,7 +549,7 @@ class PreBookingActivity : BaseActivity() {
                 LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
             it.adapter = pakgAdapter
         }
-    }
+    }*/
 
     private fun doGrandTot() {
         try {

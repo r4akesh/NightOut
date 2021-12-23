@@ -42,6 +42,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var createUpdateBarcrwalResponse: LiveData<ApiSampleResource<CreateUpdateBarcrwalResponse>>
     lateinit var setEndLocModel: LiveData<ApiSampleResource<SetEndLocModel>>
     lateinit var barcrwalCreatedViewModel: LiveData<ApiSampleResource<BarcrwalCreatedRes>>
+    lateinit var notifEmilSettingViewModel: LiveData<ApiSampleResource<NotifEmilSettingRes>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -208,5 +209,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun preBook(jsonObject: JSONObject): LiveData<ApiSampleResource<BaseModel>> {
         baseModel = webServiceRepository.preeBook(jsonObject)
         return baseModel
+    }
+
+    fun emaiLSettings(map: HashMap<String, String>): LiveData<ApiSampleResource<NotifEmilSettingRes>> {
+        notifEmilSettingViewModel = webServiceRepository.emaiLSetting(map)
+        return notifEmilSettingViewModel
     }
 }

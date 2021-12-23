@@ -21,7 +21,7 @@ import com.nightout.utils.Utills
 
 class FoodsMenuSubAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.ProductX>,
+    var arrayList: ArrayList<VenuDetailModel.Product>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FoodsMenuSubAdapter.ViewHolder>() {
@@ -46,11 +46,11 @@ class FoodsMenuSubAdapter(
         Utills.setImageNormal(context,viewHolder.binding.drinkSubItemImg,arrayList[position].image)
         viewHolder.binding.drinkSubItemQtyVlue.setText(""+arrayList[position].quantityLocal)
         viewHolder.binding.drinkSubItemDiscunt.setText(""+arrayList[position].discount+"% off")
-        if (arrayList[position].isChekd) {
-            viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.chk_box)
-        } else {
-            viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.unchk_box)
-        }
+//        if (arrayList[position].isChekd) {
+//            viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.chk_box)
+//        } else {
+//            viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.unchk_box)
+//        }
         viewHolder.binding.drinkSubItemPlusBtn.setOnClickListener{
             clickListener.onClickPluse(position)
         }

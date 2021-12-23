@@ -18,7 +18,7 @@ import com.nightout.model.VenuDetailModel
 
 class DrinksMenuAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.CategoryDrinksMdl>,
+    var arrayList: ArrayList<VenuDetailModel.Record>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<DrinksMenuAdapter.ViewHolder>() {
@@ -40,9 +40,9 @@ class DrinksMenuAdapter(
             viewHolder.binding.drinkItemImageArrow.setImageResource(R.drawable.arrow_down_white)
             viewHolder.binding.drinkItemRecycleSub.visibility=VISIBLE
             var subAdapter = DrinksMenuSubAdapter(context,arrayList[position].products,object : DrinksMenuSubAdapter.ClickListener{
-                override fun onClickChk(subPos: Int) {
-                    clickListener.onClickSub(position,subPos)
-                }
+//                override fun onClickChk(subPos: Int) {
+//                    clickListener.onClickSub(position,subPos)
+//                }
 
                 override fun onClickPluse(subPos: Int) {
                     clickListener.onClickPluse(position,subPos)
@@ -82,7 +82,7 @@ class DrinksMenuAdapter(
 
     interface ClickListener {
         fun onClick(pos: Int)
-        fun onClickSub(pos: Int,subPos: Int)
+      //  fun onClickSub(pos: Int,subPos: Int)
         fun onClickPluse(pos: Int,subPos: Int)
         fun onClickMinus(pos: Int,subPos: Int)
 

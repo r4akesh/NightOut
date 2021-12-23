@@ -6,77 +6,69 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
+import com.nightout.adapter.OrdrDetailAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.OrderdetailAvctivityBinding
 import com.nightout.model.OrderDetailListModel
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.AppConstant
+import kotlinx.android.synthetic.main.allbar_actvity.*
 import kotlinx.android.synthetic.main.orderdetail_avctivity.view.*
 import kotlinx.android.synthetic.main.toolbar_common.view.*
 
 class OrderDetailActivity : BaseActivity() {
 
     lateinit var binding: OrderdetailAvctivityBinding
-    lateinit var venuePkgList: ArrayList<VenuDetailModel.PkgModel>
-    lateinit var drinksList: ArrayList<VenuDetailModel.CategoryDrinksMdl>
-    lateinit var foodsList: ArrayList<VenuDetailModel.CategoryFoodMdl>
-    lateinit var snacksList: ArrayList<VenuDetailModel.SnacksModl>
+   lateinit var  recordsList: ArrayList<VenuDetailModel.AllProduct>   erfsdjkfhdsuhf
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@OrderDetailActivity,R.layout.orderdetail_avctivity)
        setToolBar()
-        var detailStore= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
+         var detailStore= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
         Log.d("TAG", "onCreate: ")
         var isDrinkSelected=false
         var isFoodSelected=false
         var isSnaclSelected=false
         var isPkgSelected=false
         var listOrder = ArrayList<OrderDetailListModel>()
-        if(detailStore.drinkProducts.categories.size>0){
-           for (i in 0 until  detailStore.drinkProducts.categories.size){
-               if(detailStore.drinkProducts.categories[i].isSelected){
-                   isDrinkSelected=true
-                   break
-               }
+        recordsList = ArrayList()
+        if(detailStore.all_products.size>0){
+        //   for (i in 0 until  detailStore.all_products.size){
+           for (i in 0 until 3){//coz packege no include
+            //   if(detailStore.all_products[i].isSelected){
+                   for (j in 0 until detailStore.all_products[i].records.size){
+                       for (k in 0 until detailStore.all_products[i].records[j].products.size){
+                           if(detailStore.all_products[i].records[j].products[k].quantityLocal>0)
+                               recordsList.addAll(detailStore.all_products)
+                           break
+                       }
+
+                   }
+              // }
            }
         }
-        if(detailStore.foodProducts.categories.size>0){
-            for (i in 0 until  detailStore.foodProducts.categories.size){
-                if(detailStore.foodProducts.categories[i].isSelected){
-                    isFoodSelected=true
-                    break
-                }
-            }
-        }
-        if(detailStore.snackProducts.categories.size>0){
-            for (i in 0 until  detailStore.snackProducts.categories.size){
-                if(detailStore.snackProducts.categories[i].isSelected){
-                    isSnaclSelected=true
-                    break
-                }
-            }
-        }
-        if(detailStore.packageProducts.products.size>0){
-            for (i in 0 until  detailStore.packageProducts.products.size){
-                if(detailStore.packageProducts.products[i].isChekd){
-                    isPkgSelected=true
-                    break
-                }
-            }
-        }
-        if(isDrinkSelected) {
-            //listOrder.add(OrderDetailListModel("", detailStore.drinkProducts.categories))
-            var mdl : OrderDetailListModel.Product? = null
-            for (i in 0 until detailStore.drinkProducts.categories.size){
-                var vvMdl =detailStore.drinkProducts.categories[i].products[0].
-                mdl.isChekd = vvMdl.
-            }
-        }
-            listOrder.add(OrderDetailListModel("",detailStore.foodProducts.categories))
-        setList(detailStore.drinkProducts)
+        Log.d("TAG", "onCreate: "+recordsList)
 
+        setListOrder()
+
+
+    }
+
+    lateinit var ordrDetailAdapter: OrdrDetailAdapter
+    private fun setListOrder() {
+        ordrDetailAdapter = OrdrDetailAdapter(THIS!!,recordsList,object:OrdrDetailAdapter.ClickListener{
+            override fun onClick(pos: Int) {
+
+            }
+
+        })
+        binding.orderDetailRecyle.also {
+            it.layoutManager = LinearLayoutManager(THIS!!,LinearLayoutManager.VERTICAL,false)
+            it.adapter = ordrDetailAdapter
+        }
     }
 
     private fun setToolBar() {

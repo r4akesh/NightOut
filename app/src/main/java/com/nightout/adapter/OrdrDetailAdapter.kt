@@ -11,42 +11,31 @@ import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
+import com.nightout.databinding.AllbarcrawalGridItemBinding
 import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.FoodItemBinding
+import com.nightout.databinding.VenuTitleBotmsheetItemBinding
+import com.nightout.databinding.VenuesItemBinding
 import com.nightout.model.ChatModel
-import com.nightout.model.StorDetailFoodModel
 import com.nightout.model.VenuDetailModel
+import com.nightout.model.VenuesModel
 
 
-class StorDetailFoodHorizontalAdapter(
+class OrdrDetailAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.AllProduct>,
+    var arrayList: ArrayList<VenuDetailModel.Record>,
     var clickListener: ClickListener,
 ) :
-    RecyclerView.Adapter<StorDetailFoodHorizontalAdapter.ViewHolder>() {
+    RecyclerView.Adapter<OrdrDetailAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: FoodItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.food_item, parent, false
-        )
-
-
+        val binding: VenuTitleBotmsheetItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.venu_title_botmsheet_item, parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-
-        viewHolder.binding.foodItemTitle.text=arrayList[position].type
-        if(arrayList[position].isSelected){
-            viewHolder.binding.foodItemTitle.setTextColor(context.resources.getColor(R.color.text_yello))
-            viewHolder.binding.foodItemView.visibility= VISIBLE
-        }else{
-            viewHolder.binding.foodItemTitle.setTextColor(context.resources.getColor(R.color.text_gray))
-            viewHolder.binding.foodItemView.visibility= GONE
-        }
+        viewHolder.binding.venuTitleBotmShetTitle.text=arrayList[position].
+     //   viewHolder.binding.venuTitleBotmShetRightImage.visibility = GONE
 
 
         viewHolder.itemView.setOnClickListener {
@@ -61,9 +50,9 @@ class StorDetailFoodHorizontalAdapter(
     }
 
 
-    inner class ViewHolder(itemView: FoodItemBinding) :
+    inner class ViewHolder(itemView: VenuTitleBotmsheetItemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: FoodItemBinding = itemView
+        var binding: VenuTitleBotmsheetItemBinding = itemView
 
     }
 

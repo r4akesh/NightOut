@@ -21,7 +21,7 @@ import com.nightout.model.VenuDetailModel
 
 class PackageAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.PkgModel>,
+    var arrayList: ArrayList<VenuDetailModel.Record>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<PackageAdapter.ViewHolder>() {
@@ -43,7 +43,7 @@ class PackageAdapter(
         viewHolder.binding.drinkSubItemQtyVlue.setText(""+arrayList[position].quantityLocal)
 
 
-        if (arrayList[position].isChekd) {
+        if (arrayList[position].isSelected) {
             viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.chk_box)
         } else {
             viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.unchk_box)

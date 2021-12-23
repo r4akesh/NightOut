@@ -16,7 +16,7 @@ import com.nightout.utils.Utills
 
 class SnacksMenuSubAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.ProductXXX>,
+    var arrayList: ArrayList<VenuDetailModel.Record>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<SnacksMenuSubAdapter.ViewHolder>() {
@@ -42,7 +42,7 @@ class SnacksMenuSubAdapter(
         viewHolder.binding.drinkSubItemQtyVlue.setText(""+arrayList[position].quantityLocal)
         viewHolder.binding.drinkSubItemDiscunt.setText(""+arrayList[position].discount+"% off")
 
-        if (arrayList[position].isChekd) {
+        if (arrayList[position].isSelected) {
             viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.chk_box)
         } else {
             viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.unchk_box)

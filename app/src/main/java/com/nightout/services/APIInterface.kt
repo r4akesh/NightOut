@@ -137,4 +137,8 @@ interface APIInterface {
 
     @GET("city_list")
     fun city_listAPI(): Call<ResponseBody>
+
+
+    @POST("user_noti_email_status")
+    fun user_noti_email_statusAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 }

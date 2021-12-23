@@ -20,7 +20,7 @@ import com.nightout.model.VenuDetailModel
 
 class FacilityAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.Facility>,
+    var arrayList: ArrayList<VenuDetailModel.VenueFacility>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FacilityAdapter.ViewHolder>() {

@@ -9,24 +9,23 @@ data class VenuDetailModel(
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) : Serializable {
+):Serializable {
     data class Data(
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,
+        val all_products: ArrayList<AllProduct>,
         val barcrawl: String,
         val by_default: String,
+        val city: String,
         val close_time: String,
         val created_at: String,
         val dayInformations: ArrayList<DayInformation>,
         val dress_code: String,
-        val drinkProducts: DrinkProducts,
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
-        val venue_facility: ArrayList<Facility>,
         val favrouite: String,
-        val foodProducts: FoodProducts,
         val food_certificate_image: String,
         val food_certificate_number: String,
         val food_registration_image: String,
@@ -36,7 +35,6 @@ data class VenuDetailModel(
         val id: String,
         val open_close: String,
         val open_time: String,
-        val packageProducts: PackageProducts,
         val party_theme: String,
         val premises_license_image: String,
         val premises_license_number: String,
@@ -47,7 +45,6 @@ data class VenuDetailModel(
         val reject_reason: String,
         val sale_price: String,
         val slug: String,
-        val snackProducts: SnackProducts,
         val status: String,
         val store_address: String,
         val store_description: String,
@@ -65,57 +62,27 @@ data class VenuDetailModel(
         val user_id: String,
         val vendor_detail: VendorDetail,
         val venue_address: String,
+        val venue_facility: ArrayList<VenueFacility>,
         val venue_gallery: ArrayList<VenueGallery>
-    ) : Serializable
+    ):Serializable
+
+    data class AllProduct(
+        val records: ArrayList<Record>,
+        val type: String,
+        var isSelected:Boolean
+    ):Serializable
 
     data class DayInformation(
         val day: String,
         val info: ArrayList<Info>
-    ) : Serializable
-
-    data class DrinkProducts(
-
-        val categories: ArrayList<CategoryDrinksMdl>
-    ) : Serializable
-
-    data class Facility(
-        val created_at: String,
-        val facility_detail: FacilityDetail,
-        val facility_id: String,
-        val id: String,
-        val status: String,
-        val updated_at: String,
-        val venue_id: String
-    ) : Serializable
-
-
-    data class FacilityDetail(
-        val created_at: String,
-        val id: String,
-        val slug: String,
-        val status: String,
-        val title: String,
-        val updated_at: String
     ):Serializable
-
-    data class FoodProducts(
-        val categories: ArrayList<CategoryFoodMdl>
-    ) : Serializable
-
-    data class PackageProducts(
-        val products: ArrayList<PkgModel>
-    ) : Serializable
 
     data class Rating(
         val avg_rating: String,
         val percent: String,
         val review_title: String,
         val total_rating: String
-    ) : Serializable
-
-    data class SnackProducts(
-        val categories: ArrayList<SnacksModl>
-    ) : Serializable
+    ):Serializable
 
     data class VendorDetail(
         val address: String,
@@ -137,7 +104,17 @@ data class VenuDetailModel(
         val status: String,
         val updated_at: String,
         val userID: String
-    ) : Serializable
+    ):Serializable
+
+    data class VenueFacility(
+        val created_at: String,
+        val facility_detail: FacilityDetail,
+        val facility_id: String,
+        val id: String,
+        val status: String,
+        val updated_at: String,
+        val venue_id: String
+    ):Serializable
 
     data class VenueGallery(
         val created_at: String,
@@ -148,7 +125,59 @@ data class VenuDetailModel(
         val type: String,
         val updated_at: String,
         val venue_id: String
-    ) : Serializable
+    ):Serializable
+
+    data class Record(
+        var isSelected: Boolean,
+        var quantityLocal: Int=0,
+        var totPriceLocal: Double = 0.0,
+        val category: String,
+        val category_id: String,
+        val category_type: String,
+        val created_at: String,
+        val description: String,
+        val discount: String,
+        val free: String,
+        val id: String,
+        val image: String,
+        val ml: String,
+        val price: String,
+        val product_type: String,
+        val products: ArrayList<Product>,
+        val qty: String,
+        val sale_price: String,
+        val slug: String,
+        val status: String,
+        val title: String,
+        val updated_at: String,
+        val vendor_id: String,
+        val venue_id: String
+    ):Serializable
+
+    data class Product(
+      //  var isChekd: Boolean,
+        var quantityLocal: Int=0,
+        var totPriceLocal: Double = 0.0,
+
+        val category_id: String,
+        val created_at: String,
+        val description: String,
+        val discount: String,
+        val free: String,
+        val id: String,
+        val image: String,
+        val ml: String,
+        val price: String,
+        val product_type: String,
+        val qty: String,
+        val sale_price: String,
+        val slug: String,
+        val status: String,
+        val title: String,
+        val updated_at: String,
+        val vendor_id: String,
+        val venue_id: String
+    ):Serializable
 
     data class Info(
         val created_at: String,
@@ -160,143 +189,14 @@ data class VenuDetailModel(
         val updated_at: String,
         val vendor_id: String,
         val venue_id: String
-    ) : Serializable
+    ):Serializable
 
-    data class CategoryDrinksMdl(
-        var isSelected: Boolean,
-        val category: String,
-        val category_type: String,
+    data class FacilityDetail(
         val created_at: String,
-        val description: String,
         val id: String,
-        val image: String,
-        val products: ArrayList<Product>,
         val slug: String,
         val status: String,
+        val title: String,
         val updated_at: String
-    ) : Serializable
-
-    data class Product(
-        var isChekd: Boolean,
-        var quantityLocal: Int = 0,
-        var totPriceLocal: Double = 0.0,
-        val category_id: String,
-        val created_at: String,
-        val description: String,
-        val discount: String,
-        val free: String,
-        val id: String,
-        val image: String,
-        val ml: String,
-        val price: String,
-        val product_type: String,
-        val qty: String,
-        val sale_price: String,
-        val slug: String,
-        val status: String,
-        val title: String,
-        val updated_at: String,
-        val vendor_id: String,
-        val venue_id: String
-    ) : Serializable
-
-    data class CategoryFoodMdl(
-        var isSelected: Boolean,
-        val category: String,
-        val category_type: String,
-        val created_at: String,
-        val description: String,
-        val id: String,
-        val image: String,
-        val products: ArrayList<ProductX>,
-        val slug: String,
-        val status: String,
-        val updated_at: String
-    ) : Serializable
-
-    data class ProductX(
-        var quantityLocal: Int = 0,
-        var totPriceLocal: Double = 0.0,
-        var isChekd:Boolean,
-        val category_id: String,
-        val created_at: String,
-        val description: String,
-        val discount: String,
-        val free: String,
-        val id: String,
-        val image: String,
-        val ml: String,
-        val price: String,
-        val product_type: String,
-        val qty: String,
-        val sale_price: String,
-        val slug: String,
-        val status: String,
-        val title: String,
-        val updated_at: String,
-        val vendor_id: String,
-        val venue_id: String
-    ) : Serializable
-
-    data class PkgModel(
-        var isChekd: Boolean,
-        var quantityLocal: Int,
-        var totPriceLocal: Double = 0.0,
-        val category_id: String,
-        val created_at: String,
-        val description: String,
-        val discount: String,
-        val free: String,
-        val id: String,
-        val image: String,
-        val ml: String,
-        val price: String,
-        val product_type: String,
-        val qty: String,
-        val sale_price: String,
-        val slug: String,
-        val status: String,
-        val title: String,
-        val updated_at: String,
-        val vendor_id: String,
-        val venue_id: String
-    ) : Serializable
-
-    data class SnacksModl(
-        var isSelected: Boolean,
-        val category: String,
-        val category_type: String,
-        val created_at: String,
-        val description: String,
-        val id: String,
-        val image: String,
-        val products: ArrayList<ProductXXX>,
-        val slug: String,
-        val status: String,
-        val updated_at: String
-    ) : Serializable
-
-    data class ProductXXX(
-        var quantityLocal: Int = 0,
-        var isChekd: Boolean,
-        var totPriceLocal: Double = 0.0,
-        val category_id: String,
-        val created_at: String,
-        val description: String,
-        val discount: String,
-        val free: String,
-        val id: String,
-        val image: String,
-        val ml: String,
-        val price: String,
-        val product_type: String,
-        val qty: String,
-        val sale_price: String,
-        val slug: String,
-        val status: String,
-        val title: String,
-        val updated_at: String,
-        val vendor_id: String,
-        val venue_id: String
-    ) : Serializable
+    ):Serializable
 }

@@ -54,7 +54,7 @@ class DrinksMenuSubAdapter(
 
 
         viewHolder.binding.drinkSubItemChk.setOnClickListener {
-            clickListener.onClickChk(position)
+           // clickListener.onClickChk(position)
 
         }
     }
@@ -72,7 +72,7 @@ class DrinksMenuSubAdapter(
     }
 
     interface ClickListener {
-        fun onClickChk(pos: Int)
+       // fun onClickChk(pos: Int)
         fun onClickPluse(pos: Int)
         fun onClickMinus(pos: Int)
 

@@ -16,22 +16,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/proximanova_reg"
             android:text="Club"
-            android:padding="@dimen/_10ssp"
-            android:textSize="@dimen/_13ssp"
+
+            android:textSize="@dimen/_11ssp"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
 
-            android:id="@+id/venuTitleBotmShetRightImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10ssp"
-            android:src="@drawable/arrow_right_yello"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -39,8 +30,9 @@
             android:layout_width="match_parent"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
-
-            app:layout_constraintTop_toBottomOf="@+id/venuTitleBotmShetRightImage"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:background="@drawable/border_primaryclr"
+            app:layout_constraintTop_toBottomOf="@+id/venuTitleBotmShetTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content"/>

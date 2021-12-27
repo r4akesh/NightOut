@@ -3,6 +3,8 @@ package com.nightout.adapter
 import android.content.Context
 
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
@@ -16,7 +18,7 @@ import com.nightout.utils.Utills
 
 class DrinksMenuSubAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.Product>,
+    var arrayList: MutableList<VenuDetailModel.Product>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<DrinksMenuSubAdapter.ViewHolder>() {
@@ -38,7 +40,13 @@ class DrinksMenuSubAdapter(
         viewHolder.binding.drinkSubItemPrice.text = context.resources.getString(R.string.Price)+" : "+context.resources.getString(R.string.currency_sumbol)+arrayList[position].price
         Utills.setImageNormal(context,viewHolder.binding.drinkSubItemImg,arrayList[position].image)
         viewHolder.binding.drinkSubItemQtyVlue.setText(""+arrayList[position].quantityLocal)
-        viewHolder.binding.drinkSubItemDiscunt.setText(""+arrayList[position].discount+"% off")
+        if(arrayList[position].discount.equals("") || arrayList[position].discount.equals("0")){
+            viewHolder.binding.drinkSubItemDiscunt.visibility=GONE
+        }else{
+            viewHolder.binding.drinkSubItemDiscunt.visibility=VISIBLE
+            viewHolder.binding.drinkSubItemDiscunt.setText(""+arrayList[position].discount+"% off")
+        }
+
 //        if (arrayList[position].isChekd) {
 //            viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.chk_box)
 //        } else {

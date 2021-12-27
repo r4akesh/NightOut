@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -48,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10ssp"
-                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_2ssp"
                     android:fontFamily="@font/proximanova_reg"
                     android:text="Vanity Night Club"
                     android:textColor="@color/white"
@@ -66,7 +67,7 @@
                     android:fontFamily="@font/proximanova_reg"
                     android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
                     android:textColor="@color/text_gray2"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/_11ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/orderDeatilTitle" />
@@ -80,6 +81,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/orderDetailRecyle"
                         android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_height="wrap_content"/>
 
                     <TextView
@@ -94,18 +97,21 @@
                         android:textSize="@dimen/_14ssp" />
 
 
-                    <TextView
+                    <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
-
+                        android:inputType="number"
+                        android:maxLength="10"
                         android:background="@drawable/box_botomsheet"
                         android:fontFamily="@font/proximanova_bold"
                         android:padding="@dimen/_10ssp"
-                        android:text="32"
+                        android:singleLine="true"
+                       android:textColorHint="@color/gray"
+                        android:hint="Enter your table number..."
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_13ssp" />
+                        android:textSize="@dimen/_12ssp" />
 
                     <TextView
 
@@ -135,7 +141,7 @@
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
-
+                            android:id="@+id/orderDetailAmt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10ssp"
@@ -144,7 +150,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/proximanova_reg"
                             android:gravity="end"
-                            android:text="$235"
+                            android:text="00.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -152,6 +158,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
+
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -176,7 +183,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/proximanova_reg"
                             android:gravity="end"
-                            android:text="$30"
+                            android:text="00.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -184,6 +191,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -233,7 +242,7 @@
                             android:textSize="@dimen/_18ssp" />
 
                         <TextView
-
+                            android:id="@+id/orderDetailTotAmt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10ssp"
@@ -268,7 +277,7 @@
             android:gravity="start"
             android:paddingStart="@dimen/_10ssp"
             android:paddingEnd="@dimen/_10ssp"
-            android:text="Pay $235"
+            android:text="Pay $00"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

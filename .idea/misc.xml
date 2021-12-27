@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/border_prebookoing.xml" value="0.35520833333333335" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/border_primaryclr.xml" value="0.36614583333333334" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/bounce.xml" value="0.36512820512820515" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/box_bgyello_right.xml" value="0.33240740740740743" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/drawable/box_botomsheet.xml" value="0.37083333333333335" />
@@ -39,8 +40,10 @@
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/prebooking_activity.xml" value="0.3234375" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/raw_cityitem.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_barmenu_subitem.xml" value="0.33" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_orderdetailsub_item.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_pakge.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_sidemenu_list.xml" value="0.3333333333333333" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/roworderdetail_subitem.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/serchlocation_activity.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/shared_item.xml" value="0.31875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/srch_city.xml" value="0.33125" />

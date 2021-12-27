@@ -328,7 +328,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 .into(binding.storeDeatilLogo)
 
             //faciltyList
-            facilityList = dt.venue_facility
+            facilityList = dt.venue_facility as ArrayList
             showMapLoc(dt.store_lattitude, dt.store_longitude)
             if(dt.store_description.isNotBlank()) {
                 var htmlData = dt.store_description
@@ -372,7 +372,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     lateinit var storDetailFoodHorizontalAdapter: StorDetailFoodHorizontalAdapter
-    private fun setListHorizntalFood(allProducts: ArrayList<VenuDetailModel.AllProduct>) {
+    private fun setListHorizntalFood(allProducts: MutableList<VenuDetailModel.AllProduct>) {
         storDetailFoodHorizontalAdapter = StorDetailFoodHorizontalAdapter(
             this@StoreDetailActvity,
             allProducts,
@@ -619,271 +619,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     }
 
-    private fun setListSnakesDummy() {
-        var listDrinks = ArrayList<StoreDetailDrinksModel>()
-        var listSub = ArrayList<SubFoodModel>()
-        listSub.add(SubFoodModel("Sprouts", "1 Plate", R.drawable.snaks_img1, "Price : $10", false))
-        listSub.add(
-            SubFoodModel(
-                "Dim Sums",
-                "3 Plate",
-                R.drawable.chiness_img2,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Hot and Sour Soup",
-                "2 Plate",
-                R.drawable.chiness_img3,
-                "Price : $40",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Szechwan Chilli Chicken",
-                "5 Plate",
-                R.drawable.chiness_img1,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Spring Rolls",
-                "2 Plate",
-                R.drawable.snaks_img1,
-                "Price : $60",
-                false
-            )
-        )
-        listDrinks.add(StoreDetailDrinksModel("Non-Veg", false, listSub))
 
-
-        listSub = ArrayList<SubFoodModel>()
-        listSub.add(
-            SubFoodModel(
-                "Quick Noodles",
-                "1 Plate",
-                R.drawable.snaks_img1,
-                "Price : $10",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Dim Sums",
-                "3 Plate",
-                R.drawable.chiness_img2,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Hot and Sour Soup",
-                "2 Plate",
-                R.drawable.chiness_img3,
-                "Price : $40",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Szechwan Chilli Chicken",
-                "5 Plate",
-                R.drawable.snaks_img1,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Spring Rolls",
-                "2 Plate",
-                R.drawable.chiness_img2,
-                "Price : $60",
-                false
-            )
-        )
-        listDrinks.add(StoreDetailDrinksModel("Veg", false, listSub))
-
-
-
-        drinksAdapter =
-            DrinksAdapter(this@StoreDetailActvity, listDrinks, object : DrinksAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    listDrinks[pos].isSelected = !listDrinks[pos].isSelected
-                    drinksAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickSub(pos: Int, subPos: Int) {
-
-                    listDrinks[pos].list[subPos].isChekd = !listDrinks[pos].list[subPos].isChekd
-
-                    drinksAdapter.notifyDataSetChanged()
-                }
-
-
-            })
-
-        binding.storeDeatilDrinksRecycler.also {
-            it.layoutManager =
-                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = drinksAdapter
-        }
-    }
 
 
     lateinit var drinksAdapter: DrinksAdapter
-    private fun setListDrinksDummy() {
-        var listDrinks = ArrayList<StoreDetailDrinksModel>()
-        var listSub = ArrayList<SubFoodModel>()
-        listSub.add(
-            SubFoodModel(
-                "Grey Goose",
-                "1 Glass",
-                R.drawable.drink_img1,
-                "Price : $10",
-                false
-            )
-        )
-        listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(
-            SubFoodModel(
-                "Belvedere",
-                "2 Glass",
-                R.drawable.drink_img2,
-                "Price : $40",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Ketel One",
-                "5 Glass",
-                R.drawable.drink_img1,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Finlandia One",
-                "2 Glass",
-                R.drawable.drink_img2,
-                "Price : $60",
-                false
-            )
-        )
-        listDrinks.add(StoreDetailDrinksModel("Scotch", false, listSub))
 
-        listSub = ArrayList<SubFoodModel>()
-        listSub.add(
-            SubFoodModel(
-                "Grey Goose",
-                "1 Glass",
-                R.drawable.drink_img1,
-                "Price : $10",
-                false
-            )
-        )
-        listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(
-            SubFoodModel(
-                "Belvedere",
-                "2 Glass",
-                R.drawable.drink_img1,
-                "Price : $40",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Ketel One",
-                "5 Glass",
-                R.drawable.drink_img2,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Finlandia One",
-                "2 Glass",
-                R.drawable.drink_img1,
-                "Price : $60",
-                false
-            )
-        )
-        listDrinks.add(StoreDetailDrinksModel("Vodka", false, listSub))
-
-        listSub = ArrayList<SubFoodModel>()
-        listSub.add(
-            SubFoodModel(
-                "Grey Goose",
-                "1 Glass",
-                R.drawable.drink_img2,
-                "Price : $10",
-                false
-            )
-        )
-        listSub.add(SubFoodModel("Ciroc", "3 Glass", R.drawable.drink_img1, "Price : $20", false))
-        listSub.add(
-            SubFoodModel(
-                "Belvedere",
-                "2 Glass",
-                R.drawable.drink_img1,
-                "Price : $40",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Ketel One",
-                "5 Glass",
-                R.drawable.drink_img2,
-                "Price : $20",
-                false
-            )
-        )
-        listSub.add(
-            SubFoodModel(
-                "Finlandia One",
-                "2 Glass",
-                R.drawable.drink_img1,
-                "Price : $60",
-                false
-            )
-        )
-        listDrinks.add(StoreDetailDrinksModel("Rum", false, listSub))
-
-
-        drinksAdapter =
-            DrinksAdapter(this@StoreDetailActvity, listDrinks, object : DrinksAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    listDrinks[pos].isSelected = !listDrinks[pos].isSelected
-                    drinksAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickSub(pos: Int, subPos: Int) {
-
-                    listDrinks[pos].list[subPos].isChekd = !listDrinks[pos].list[subPos].isChekd
-
-                    drinksAdapter.notifyDataSetChanged()
-                }
-
-
-            })
-
-        binding.storeDeatilDrinksRecycler.also {
-            it.layoutManager =
-                LinearLayoutManager(this@StoreDetailActvity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = drinksAdapter
-        }
-    }
 
     private fun initView() {
         val supportMapFragment =
@@ -925,7 +665,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
   //  lateinit var foodsMenuAdapter: FoodsMenuAdapter
    // lateinit var snacksMenuAdapter: SnacksMenuAdapter
     lateinit var pakgAdapter: PackageAdapter
-    lateinit var drinksList : ArrayList<VenuDetailModel.Record>
+    lateinit var drinksList : MutableList<VenuDetailModel.Record>
    // lateinit var foodsList : ArrayList<VenuDetailModel.Record>
 
     private fun user_venue_detailAPICALL() {
@@ -1197,8 +937,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                         for(i in 0 until drinksList[pos].products.size){
                             totCost= totCost+drinksList[pos].products[i].totPriceLocal
                         }
-//                        binding.preBookingDrinksValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-//                        doGrandTot()
+
                     } catch (e: Exception) {
                         MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
                     }

@@ -14,13 +14,13 @@ data class VenuDetailModel(
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,
-        val all_products: ArrayList<AllProduct>,
+        val all_products: MutableList<AllProduct>,
         val barcrawl: String,
         val by_default: String,
         val city: String,
         val close_time: String,
         val created_at: String,
-        val dayInformations: ArrayList<DayInformation>,
+        val dayInformations: MutableList<DayInformation>,
         val dress_code: String,
         val event_date: String,
         val event_end_time: String,
@@ -62,19 +62,19 @@ data class VenuDetailModel(
         val user_id: String,
         val vendor_detail: VendorDetail,
         val venue_address: String,
-        val venue_facility: ArrayList<VenueFacility>,
-        val venue_gallery: ArrayList<VenueGallery>
+        val venue_facility: MutableList<VenueFacility>,
+        val venue_gallery: MutableList<VenueGallery>
     ):Serializable
 
     data class AllProduct(
-        val records: ArrayList<Record>,
+        val records: MutableList<Record>,
         val type: String,
         var isSelected:Boolean
     ):Serializable
 
     data class DayInformation(
         val day: String,
-        val info: ArrayList<Info>
+        val info: MutableList<Info>
     ):Serializable
 
     data class Rating(
@@ -158,25 +158,25 @@ data class VenuDetailModel(
       //  var isChekd: Boolean,
         var quantityLocal: Int=0,
         var totPriceLocal: Double = 0.0,
+        var category_id: String,
+        var discount: String,
+        var title: String,
+        var price: String,
 
-        val category_id: String,
-        val created_at: String,
-        val description: String,
-        val discount: String,
-        val free: String,
-        val id: String,
-        val image: String,
-        val ml: String,
-        val price: String,
-        val product_type: String,
-        val qty: String,
-        val sale_price: String,
-        val slug: String,
-        val status: String,
-        val title: String,
-        val updated_at: String,
-        val vendor_id: String,
-        val venue_id: String
+        var description: String,
+        var id: String,
+        var free: String,
+        var image: String,
+        var ml: String,
+        var product_type: String,
+        var qty: String,
+        var created_at: String,
+        var sale_price: String,
+        var slug: String,
+        var status: String,
+        var updated_at: String,
+        var vendor_id: String,
+        var venue_id: String
     ):Serializable
 
     data class Info(

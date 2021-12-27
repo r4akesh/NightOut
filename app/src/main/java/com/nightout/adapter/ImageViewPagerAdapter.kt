@@ -20,9 +20,9 @@ import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 
 
-class ImageViewPagerAdapter(private val context: Context, imageArray: ArrayList<VenuDetailModel.VenueGallery>) :
+class ImageViewPagerAdapter(private val context: Context, imageArray: MutableList<VenuDetailModel.VenueGallery>) :
     PagerAdapter() {
-    private var imageArray: ArrayList<VenuDetailModel.VenueGallery> = imageArray
+    private var imageArray: MutableList<VenuDetailModel.VenueGallery> = imageArray
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding: ImageViewItemBinding = DataBindingUtil.inflate(

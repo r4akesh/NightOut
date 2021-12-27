@@ -21,7 +21,7 @@ import com.nightout.model.VenuDetailModel
 
 class PackageAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.Record>,
+    var arrayList: MutableList<VenuDetailModel.Record>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<PackageAdapter.ViewHolder>() {

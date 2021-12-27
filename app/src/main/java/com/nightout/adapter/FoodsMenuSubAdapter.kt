@@ -21,7 +21,7 @@ import com.nightout.utils.Utills
 
 class FoodsMenuSubAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.Product>,
+    var arrayList: MutableList<VenuDetailModel.Product>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FoodsMenuSubAdapter.ViewHolder>() {

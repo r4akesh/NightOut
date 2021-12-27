@@ -11,6 +11,7 @@ import com.nightout.R
 import com.nightout.adapter.OrdrDetailAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.OrderdetailAvctivityBinding
+import com.nightout.model.LocalStreModel
 import com.nightout.model.OrderDetailListModel
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.AppConstant
@@ -21,74 +22,101 @@ import kotlinx.android.synthetic.main.toolbar_common.view.*
 class OrderDetailActivity : BaseActivity() {
 
     lateinit var binding: OrderdetailAvctivityBinding
-   lateinit var  recordsList: ArrayList<VenuDetailModel.AllProduct>   erfsdjkfhdsuhf
-
+    lateinit var recordsList: MutableList<VenuDetailModel.Record>
+    var mainList = ArrayList<LocalStreModel>()
+    var arList = ArrayList<VenuDetailModel.Product>()
+    lateinit var mdlPkg: VenuDetailModel.Product
+    lateinit var ordrDetailAdapter: OrdrDetailAdapter
+    var totPrice : Double = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@OrderDetailActivity,R.layout.orderdetail_avctivity)
-       setToolBar()
-         var detailStore= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
-        Log.d("TAG", "onCreate: ")
-        var isDrinkSelected=false
-        var isFoodSelected=false
-        var isSnaclSelected=false
-        var isPkgSelected=false
-        var listOrder = ArrayList<OrderDetailListModel>()
+        binding = DataBindingUtil.setContentView(this@OrderDetailActivity, R.layout.orderdetail_avctivity)
+        setToolBar()
+        var detailStore = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
+        binding.orderDeatilTitle.text= detailStore.store_name
+        binding.orderDeatilAddrs.text= detailStore.store_address
         recordsList = ArrayList()
-        if(detailStore.all_products.size>0){
-        //   for (i in 0 until  detailStore.all_products.size){
-           for (i in 0 until 3){//coz packege no include
-            //   if(detailStore.all_products[i].isSelected){
-                   for (j in 0 until detailStore.all_products[i].records.size){
-                       for (k in 0 until detailStore.all_products[i].records[j].products.size){
-                           if(detailStore.all_products[i].records[j].products[k].quantityLocal>0)
-                               recordsList.addAll(detailStore.all_products)
-                           break
-                       }
-
-                   }
-              // }
-           }
+        mainList = ArrayList()
+        if (detailStore.all_products.size > 0) {
+            for (i in 0 until 3) {//coz packege no include
+                for (j in 0 until detailStore.all_products[i].records.size) {
+                    arList = ArrayList()
+                    for (k in 0 until detailStore.all_products[i].records[j].products.size) {
+                        if (detailStore.all_products[i].records[j].products[k].quantityLocal > 0) {
+                            totPrice+=detailStore.all_products[i].records[j].products[k].totPriceLocal
+                            recordsList.addAll(detailStore.all_products[i].records)
+                            arList.add(detailStore.all_products[i].records[j].products[k])
+                        }
+                    }
+                    if (arList.size > 0) {
+                        var mdl = LocalStreModel(detailStore.all_products[i].records[j].category, arList)
+                        mainList.add(mdl)
+                    }
+                }
+            }
         }
-        Log.d("TAG", "onCreate: "+recordsList)
 
+         //for package
+        arList = ArrayList()
+        for (j in 0 until detailStore.all_products[3].records.size) {
+            if (detailStore.all_products[3].records[j].quantityLocal > 0) {
+                totPrice+=detailStore.all_products[3].records[j].totPriceLocal
+                mdlPkg = VenuDetailModel.Product(
+                  detailStore.all_products[3].records[j].quantityLocal,
+                  detailStore.all_products[3].records[j].totPriceLocal,
+                  detailStore.all_products[3].records[j].category_id,
+                  detailStore.all_products[3].records[j].discount,
+                  detailStore.all_products[3].records[j].title,
+                  detailStore.all_products[3].records[j].price,
+                    "","","","","","","","","","","","","",""
+                )
+                arList.add(mdlPkg)
+            }
+        }
+        if (arList.size > 0) {
+            var mdl = LocalStreModel("Package", arList)
+            mainList.add(mdl)
+        }
+        binding.orderDetailAmt.text= resources.getString(R.string.currency_sumbol) +totPrice.toString()
+        binding.orderDetailTotAmt.text= resources.getString(R.string.currency_sumbol) +totPrice.toString()
+        binding.orderDetailPay.text= "Pay "+resources.getString(R.string.currency_sumbol) +totPrice.toString()
+        Log.d("TAG", "onCreate: " + mainList)
         setListOrder()
-
-
     }
 
-    lateinit var ordrDetailAdapter: OrdrDetailAdapter
+
     private fun setListOrder() {
-        ordrDetailAdapter = OrdrDetailAdapter(THIS!!,recordsList,object:OrdrDetailAdapter.ClickListener{
-            override fun onClick(pos: Int) {
+        ordrDetailAdapter =
+            OrdrDetailAdapter(THIS!!, mainList, object : OrdrDetailAdapter.ClickListener {
+                override fun onClick(pos: Int) {
 
-            }
+                }
 
-        })
+            })
         binding.orderDetailRecyle.also {
-            it.layoutManager = LinearLayoutManager(THIS!!,LinearLayoutManager.VERTICAL,false)
+            it.layoutManager = LinearLayoutManager(THIS!!, LinearLayoutManager.VERTICAL, false)
             it.adapter = ordrDetailAdapter
         }
     }
 
     private fun setToolBar() {
         binding.constrentToolbar.toolbar_title.setText("Order Detail")
-        binding.constrentToolbar.toolbar_3dot.visibility=GONE
-        binding.constrentToolbar.toolbar_bell.visibility=GONE
+        binding.constrentToolbar.toolbar_3dot.visibility = GONE
+        binding.constrentToolbar.toolbar_bell.visibility = GONE
 
-        setTouchNClick(  binding.constrentToolbar.oredrDetailToolBar)
-        setTouchNClick( binding.orderDetailPay)
-         binding.constrentToolbar.oredrDetailToolBar.setOnClickListener {
-             finish()
-             overridePendingTransition(0,0)
-         }
+        setTouchNClick(binding.constrentToolbar.oredrDetailToolBar)
+        setTouchNClick(binding.orderDetailPay)
+        binding.constrentToolbar.oredrDetailToolBar.setOnClickListener {
+            finish()
+            overridePendingTransition(0, 0)
+        }
     }
 
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if(v==binding.orderDetailPay){
-            startActivity(Intent(this@OrderDetailActivity,MyCardsActivity::class.java))
+        if (v == binding.orderDetailPay) {
+           // startActivity(Intent(this@OrderDetailActivity, MyCardsActivity::class.java))
 
         }
     }

@@ -20,7 +20,7 @@ import com.nightout.model.VenuDetailModel
 
 class StorDetailFoodHorizontalAdapter(
     var context: Context,
-    var arrayList: ArrayList<VenuDetailModel.AllProduct>,
+    var arrayList: MutableList<VenuDetailModel.AllProduct>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<StorDetailFoodHorizontalAdapter.ViewHolder>() {

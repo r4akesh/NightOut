@@ -71,7 +71,7 @@
         </LinearLayout>
 
         <!--below widget is use to create indicator for our stories at top-->
-        <jp.shts.android.storiesprogressview.StoriesProgressView
+        <com.teresaholfeld.stories.StoriesProgressView
             android:id="@+id/storiesProgressView"
             android:layout_width="match_parent"
             android:layout_height="3dp"

@@ -41,23 +41,22 @@ class PreBookingActivity : BaseActivity() {
     var venuID = ""
       var vendorId = ""
     lateinit var userVenueDetailViewModel: CommonViewModel
-//    lateinit var venuePkgList: ArrayList<VenuDetailModel.PkgModel>
-//    lateinit var drinksList: ArrayList<VenuDetailModel.CategoryDrinksMdl>
-//    lateinit var foodsList: ArrayList<VenuDetailModel.CategoryFoodMdl>
-//    lateinit var snacksList: ArrayList<VenuDetailModel.SnacksModl>
-    lateinit var barMenuAdapter: DrinksMenuAdapter
-    lateinit var foodsMenuAdapter: FoodsMenuAdapter
-    lateinit var snacksMenuAdapter: SnacksMenuAdapter
-    var selectedDateFinal=""
 
+    var selectedDateFinal=""
+    lateinit var drinksList : MutableList<VenuDetailModel.Record>
+    lateinit var barMenuAdapter: DrinksMenuAdapter
+    lateinit var detailStore :VenuDetailModel.Data
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@PreBookingActivity, R.layout.prebooking_activity)
         initView()
         binding.toolbarSubTitle.text= intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_NAME)
         setCalendra()
-       // user_venue_detailAPICALL()
-
+          detailStore = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
+        vendorId = detailStore.vendor_detail.id
+        drinksList = ArrayList()
+        drinksList = detailStore.all_products[3].records//show pkg list first
+        setListPkg()
     }
 
     override fun onClick(v: View?) {
@@ -83,34 +82,38 @@ class PreBookingActivity : BaseActivity() {
             binding.preBookingSpclPkg.setTextColor(resources.getColor(R.color.black))
             binding.preBookingBarMenu.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingLnrMenu.visibility = GONE
-           // setListPkg()
+            drinksList = detailStore.all_products[3].records
+             setListPkg()
         } else if (v == binding.preBookingBarMenu) {
             binding.preBookingBarMenu.setBackgroundResource(R.drawable.box_bgyello_right)
             binding.preBookingSpclPkg.setBackgroundResource(0)
             binding.preBookingBarMenu.setTextColor(resources.getColor(R.color.black))
             binding.preBookingSpclPkg.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingLnrMenu.visibility = VISIBLE
-           // setListDrinks()
+            drinksList = detailStore.all_products[0].records
+             setListDrinks(0)
         } else if (v == binding.preBookingDrinksBtn) {
             binding.preBookingDrinksBtn.setTextColor(resources.getColor(R.color.text_yello))
             binding.preBookingFoodsBtn.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingSnacksBtn.setTextColor(resources.getColor(R.color.text_gray3))
-
-           // setListDrinks()
+            drinksList = detailStore.all_products[0].records
+            setListDrinks(0)
         } else if (v == binding.preBookingFoodsBtn) {
             binding.preBookingFoodsBtn.setTextColor(resources.getColor(R.color.text_yello))
             binding.preBookingDrinksBtn.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingSnacksBtn.setTextColor(resources.getColor(R.color.text_gray3))
-            //setListFoods()
+            drinksList = detailStore.all_products[1].records
+            setListDrinks(1)
         } else if (v == binding.preBookingSnacksBtn) {
             binding.preBookingSnacksBtn.setTextColor(resources.getColor(R.color.text_yello))
             binding.preBookingFoodsBtn.setTextColor(resources.getColor(R.color.text_gray3))
             binding.preBookingDrinksBtn.setTextColor(resources.getColor(R.color.text_gray3))
-            //setListSnacks()
+            drinksList = detailStore.all_products[2].records
+            setListDrinks(2)
         }
         else if(v==binding.preBookingBokNow){
-           // if(isValidateInput())
-           // pre_bookingAPICall()
+             if(isValidateInput())
+             pre_bookingAPICall()
         }
         else if(v==binding.preBookingbookWholeVenus){
             if(binding.preBookingbookWholeVenus.isChecked){
@@ -142,57 +145,45 @@ class PreBookingActivity : BaseActivity() {
 
     }
 
-    /*  private fun pre_bookingAPICall() {
+      private fun pre_bookingAPICall() {
           try {
               var jarr = JSONArray()
               val jsnObjMain = JSONObject()
               var flag =false
 
-              for (i in 0 until venuePkgList.size){
-                  if(venuePkgList[i].quantityLocal>0){
-                      val jsonObjects = JSONObject()
-                      jsonObjects.put("id", venuePkgList[i].id)
-                      jsonObjects.put("qty", "" + venuePkgList[i].quantityLocal)
-                      jarr.put(jsonObjects)
-                      flag=true
+
+              for (i in 0 until 3) {//coz packege no include
+                  for (j in 0 until detailStore.all_products[i].records.size) {
+                      for (k in 0 until detailStore.all_products[i].records[j].products.size) {
+                          if (detailStore.all_products[i].records[j].products[k].quantityLocal > 0) {
+                              val jsonObjects = JSONObject()
+                              jsonObjects.put("id", detailStore.all_products[i].records[j].products[k].id)
+                              jsonObjects.put("qty", "" + detailStore.all_products[i].records[j].products[k].quantityLocal)
+                              jarr.put(jsonObjects)
+                              flag=true
+                          }
+                      }
                   }
               }
 
-              for (i in 0 until drinksList.size) {
-                  for (j in 0 until drinksList[i].products.size) {
-                      if(drinksList[i].products[j].quantityLocal>0) {
-                          val jsonObjects = JSONObject()
-                          jsonObjects.put("id", drinksList[i].products[j].id)
-                          jsonObjects.put("qty", "" + drinksList[i].products[j].quantityLocal)
-                          jarr.put(jsonObjects)
-                          flag=true
-                      }
-                  }
-              }
-              for (i in 0 until foodsList.size) {
-                  for (j in 0 until foodsList[i].products.size) {
-                      if(foodsList[i].products[j].quantityLocal>0) {
-                          val jsonObjects = JSONObject()
-                          jsonObjects.put("id", foodsList[i].products[j].id)
-                          jsonObjects.put("qty", "" + foodsList[i].products[j].quantityLocal)
-                          jarr.put(jsonObjects)
-                          flag=true
-                      }
-                  }
-              }
-              for (i in 0 until snacksList.size) {
-                  for (j in 0 until snacksList[i].products.size) {
-                      if(snacksList[i].products[j].quantityLocal>0) {
-                          val jsonObjects = JSONObject()
-                          jsonObjects.put("id", snacksList[i].products[j].id)
-                          jsonObjects.put("qty", "" + snacksList[i].products[j].quantityLocal)
-                          jarr.put(jsonObjects)
-                          flag=true
-                      }
-                  }
-              }
+              for (j in 0 until detailStore.all_products[3].records.size) {
+                if (detailStore.all_products[3].records[j].quantityLocal > 0) {
+                    if(detailStore.all_products[3].records[j].quantityLocal>0){
+                        val jsonObjects = JSONObject()
+                        jsonObjects.put("id", detailStore.all_products[3].records[j].id)
+                        jsonObjects.put("qty", "" + detailStore.all_products[3].records[j].quantityLocal)
+                        jarr.put(jsonObjects)
+                        flag=true
+                    }
+                }
+            }
+
+
+
+
+
               if(flag==false){
-                  MyApp.popErrorMsg("","Please select any special package OR Bar Menu",THIS!!)
+                  MyApp.popErrorMsg("","Please select any special package or Bar Menu",THIS!!)
                   return
               }
                jsnObjMain.put("venue_id",venuID)
@@ -236,7 +227,7 @@ class PreBookingActivity : BaseActivity() {
       }
 
 
-      private fun user_venue_detailAPICALL() {
+     /* private fun user_venue_detailAPICALL() {
           progressDialog.show(this@PreBookingActivity, "")
           var map = HashMap<String, String>()
           map["id"] = venuID!!
@@ -278,278 +269,9 @@ class PreBookingActivity : BaseActivity() {
                   }
               }
           })
-      }*/
-
-    //var totFoodPrice = 0.0
-  /*  private fun setListDrinks() {
-        barMenuAdapter = DrinksMenuAdapter(
-            this@PreBookingActivity,
-            drinksList,
-            object : DrinksMenuAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    drinksList[pos].isSelected = !drinksList[pos].isSelected
-                    barMenuAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickSub(pos: Int, subPos: Int) {
-                    drinksList[pos].products[subPos].isChekd =
-                        !drinksList[pos].products[subPos].isChekd
-                    barMenuAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickPluse(pos: Int, subPos: Int) {
-                    try {
-                        var qty = drinksList[pos].products[subPos].quantityLocal + 1
-                        var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
-                        var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
-                        var per = bb/100
-                        var disValue= aa-per
-                        drinksList[pos].products[subPos].quantityLocal = qty
-                        drinksList[pos].products[subPos].totPriceLocal = disValue
-                        barMenuAdapter.notifyDataSetChanged()
-                        var totCost = 0.0
-                        for(i in 0 until drinksList[pos].products.size){
-                            totCost= totCost+drinksList[pos].products[i].totPriceLocal
-                        }
-                        binding.preBookingDrinksValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                        doGrandTot()
-                    } catch (e: Exception) {
-                        MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
-                    }
-                }
-
-                override fun onClickMinus(pos: Int, subPos: Int) {
-                    try {
-                        if (drinksList[pos].products[subPos].quantityLocal > 0) {
-                            var qty = drinksList[pos].products[subPos].quantityLocal - 1
-                            var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
-                            var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
-                            var per = bb/100
-                            var disValue= aa-per
-                            drinksList[pos].products[subPos].quantityLocal = qty
-                            drinksList[pos].products[subPos].totPriceLocal = disValue
-                            barMenuAdapter.notifyDataSetChanged()
-                            var totCost = 0.0
-                            for(i in 0 until drinksList[pos].products.size){
-                                totCost= totCost+drinksList[pos].products[i].totPriceLocal
-                            }
-                            binding.preBookingDrinksValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                            doGrandTot()
-                        }
-                    } catch (e: Exception) {
-                        MyApp.popErrorMsg("Error in decrease the quantity",""+e,THIS!!)
-                    }
-                }
-
-            })
-        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
-        binding.preBookingSpclPkgRecyle.also {
-            it.layoutManager =
-                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = barMenuAdapter
-        }
-    }
-
-    private fun setListFoods() {
-        foodsMenuAdapter = FoodsMenuAdapter(
-            this@PreBookingActivity,
-            foodsList,
-            object : FoodsMenuAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    foodsList[pos].isSelected = !foodsList[pos].isSelected
-                    foodsMenuAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickSub(pos: Int, subPos: Int) {
-                    foodsList[pos].products[subPos].isChekd =
-                        !foodsList[pos].products[subPos].isChekd
-                    foodsMenuAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickPluse(pos: Int, subPos: Int) {
-                    try {
-                        var qty = foodsList[pos].products[subPos].quantityLocal + 1
-                        var aa = qty * Commons.strToDouble(foodsList[pos].products[subPos].price)
-                        var bb = aa*Commons.strToDouble(foodsList[pos].products[subPos].discount)
-                        var per = bb/100
-                        var disValue= aa-per
-                        foodsList[pos].products[subPos].quantityLocal = qty
-                        foodsList[pos].products[subPos].totPriceLocal = disValue
-                        foodsMenuAdapter.notifyDataSetChanged()
-                        var totCost = 0.0
-                        for(i in 0 until foodsList[pos].products.size){
-                            totCost= totCost+foodsList[pos].products[i].totPriceLocal
-                        }
-                        binding.preBookingFoodPriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                        doGrandTot()
-                    } catch (e: Exception) {
-                        MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
-                    }
-                }
-
-                override fun onClickMinus(pos: Int, subPos: Int) {
-                    try {
-                        if (foodsList[pos].products[subPos].quantityLocal > 0) {
-                            var qty = foodsList[pos].products[subPos].quantityLocal - 1
-                            var aa = qty * Commons.strToDouble(foodsList[pos].products[subPos].price)
-                            var bb = aa*Commons.strToDouble(foodsList[pos].products[subPos].discount)
-                            var per = bb/100
-                            var disValue= aa-per
-                            foodsList[pos].products[subPos].quantityLocal = qty
-                            foodsList[pos].products[subPos].totPriceLocal = disValue
-                            foodsMenuAdapter.notifyDataSetChanged()
-                            var totCost = 0.0
-                            for(i in 0 until foodsList[pos].products.size){
-                                totCost= totCost+foodsList[pos].products[i].totPriceLocal
-                            }
-                            binding.preBookingFoodPriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                            doGrandTot()
-                        }
-                    } catch (e: Exception) {
-                        MyApp.popErrorMsg("Error in decrease the quantity",""+e,THIS!!)
-                    }
-                }
-
-            })
-        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
-        binding.preBookingSpclPkgRecyle.also {
-            it.layoutManager =
-                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = foodsMenuAdapter
-        }
-    }
-
-    private fun setListSnacks() {
-        snacksMenuAdapter = SnacksMenuAdapter(
-            this@PreBookingActivity,
-            snacksList,
-            object : SnacksMenuAdapter.ClickListener {
-                override fun onClick(pos: Int) {
-                    snacksList[pos].isSelected = !snacksList[pos].isSelected
-                    snacksMenuAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickSub(pos: Int, subPos: Int) {
-                    snacksList[pos].products[subPos].isChekd =
-                        !snacksList[pos].products[subPos].isChekd
-                    snacksMenuAdapter.notifyDataSetChanged()
-                }
-
-                override fun onClickPluse(pos: Int, subPos: Int) {
-                    try {
-                        var qty = snacksList[pos].products[subPos].quantityLocal + 1
-                        var aa = qty * Commons.strToDouble(snacksList[pos].products[subPos].price)
-                        var bb = aa*Commons.strToDouble(snacksList[pos].products[subPos].discount)
-                        var per = bb/100
-                        var disValue= aa-per
-                        snacksList[pos].products[subPos].quantityLocal = qty
-                        snacksList[pos].products[subPos].totPriceLocal = disValue
-                        snacksMenuAdapter.notifyDataSetChanged()
-                        var totCost = 0.0
-                        for(i in 0 until snacksList[pos].products.size){
-                            totCost= totCost+snacksList[pos].products[i].totPriceLocal
-                        }
-                        binding.preBookingSnakesValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                        doGrandTot()
-                    } catch (e: Exception) {
-                        MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
-                    }
-                }
-
-                override fun onClickMinus(pos: Int, subPos: Int) {
-                    try {
-                        if (snacksList[pos].products[subPos].quantityLocal > 0) {
-                            var qty = snacksList[pos].products[subPos].quantityLocal - 1
-                            var aa = qty * Commons.strToDouble(snacksList[pos].products[subPos].price)
-                            var bb = aa*Commons.strToDouble(snacksList[pos].products[subPos].discount)
-                            var per = bb/100
-                            var disValue= aa-per
-                            snacksList[pos].products[subPos].quantityLocal = qty
-                            snacksList[pos].products[subPos].totPriceLocal = disValue
-                            snacksMenuAdapter.notifyDataSetChanged()
-                            var totCost = 0.0
-                            for(i in 0 until snacksList[pos].products.size){
-                                totCost= totCost+snacksList[pos].products[i].totPriceLocal
-                            }
-                            binding.preBookingSnakesValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                            doGrandTot()
-                        }
-                    } catch (e: Exception) {
-                        MyApp.popErrorMsg("Error in decrease the quantity",""+e,THIS!!)
-                    }
-                }
-
-            })
-        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
-        binding.preBookingSpclPkgRecyle.also {
-            it.layoutManager =
-                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = snacksMenuAdapter
-        }
-    }
+      } */
 
 
-    private fun setListPkg() {
-        pakgAdapter = PackageAdapter(this@PreBookingActivity, venuePkgList, object : PackageAdapter.ClickListener {
-                override fun onClickChk(subPos: Int) {
-                    venuePkgList[subPos].isChekd = !venuePkgList[subPos].isChekd
-                    pakgAdapter.notifyDataSetChanged()
-                }
-
-            override fun onClickPlus(pos: Int) {
-                try {
-                    var qty = venuePkgList[pos].quantityLocal + 1
-                    var aa = qty * Commons.strToDouble(venuePkgList[pos].price)
-                    var bb = aa*Commons.strToDouble(venuePkgList[pos].discount)
-                    var per = bb/100
-                    var disValue= aa-per
-                    venuePkgList[pos].quantityLocal = qty
-                    venuePkgList[pos].totPriceLocal = disValue
-                    pakgAdapter.notifyDataSetChanged()
-                    var totCost = 0.0
-                    for(i in 0 until venuePkgList.size){
-                        totCost= totCost+venuePkgList[i].totPriceLocal
-                    }
-                    binding.preBookingTablePriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
-                    //GrandTotal
-                    doGrandTot()
-                } catch (e: Exception) {
-                    MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
-                }
-
-            }
-
-            override fun onClickMinus(pos: Int) {
-                try {
-                    if (venuePkgList[pos].quantityLocal > 0) {
-                        var qty = venuePkgList[pos].quantityLocal - 1
-                        var aa = qty * Commons.strToDouble(venuePkgList[pos].price)
-                        var bb = aa * Commons.strToDouble(venuePkgList[pos].discount)
-                        var per = bb / 100
-                        var disValue = aa - per
-                        venuePkgList[pos].quantityLocal = qty
-                        venuePkgList[pos].totPriceLocal = disValue
-                        pakgAdapter.notifyDataSetChanged()
-                        var totCost = 0.0
-                        for (i in 0 until venuePkgList.size) {
-                            totCost = totCost + venuePkgList[i].totPriceLocal
-                        }
-                        binding.preBookingTablePriceValue.text =
-                            resources.getString(R.string.currency_sumbol) + totCost.toString()
-                        doGrandTot()
-                    }
-                } catch (e: Exception) {
-                    MyApp.popErrorMsg("Error in decrease the quantity",""+e,THIS!!)
-                }
-            }
-        })
-        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
-        binding.preBookingSpclPkgRecyle.also {
-            it.layoutManager =
-                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
-            it.adapter = pakgAdapter
-        }
-    }*/
 
     private fun doGrandTot() {
         try {
@@ -668,5 +390,150 @@ class PreBookingActivity : BaseActivity() {
         calendr.add(Calendar.MONTH, 6)
         datePickerDialog.datePicker.maxDate = calendr.timeInMillis
         datePickerDialog.show()
+    }
+    private fun setListPkg() {
+        pakgAdapter = PackageAdapter(this@PreBookingActivity, drinksList, object : PackageAdapter.ClickListener {
+            override fun onClickChk(subPos: Int) {
+                drinksList[subPos].isSelected = !drinksList[subPos].isSelected
+                pakgAdapter.notifyDataSetChanged()
+            }
+
+            override fun onClickPlus(pos: Int) {
+                try {
+                    var qty = drinksList[pos].quantityLocal + 1
+                    var aa = qty * Commons.strToDouble(drinksList[pos].price)
+                    var bb = aa*Commons.strToDouble(drinksList[pos].discount)
+                    var per = bb/100
+                    var disValue= aa-per
+                    drinksList[pos].quantityLocal = qty
+                    drinksList[pos].totPriceLocal = disValue
+                    pakgAdapter.notifyDataSetChanged()
+                    var totCost = 0.0
+                    for(i in 0 until drinksList.size){
+                        totCost= totCost+drinksList[i].totPriceLocal
+                    }
+                     binding.preBookingTablePriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                    //GrandTotal
+                      doGrandTot()
+                } catch (e: Exception) {
+                    MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
+                }
+
+            }
+
+            override fun onClickMinus(pos: Int) {
+                try {
+                    if (drinksList[pos].quantityLocal > 0) {
+                        var qty = drinksList[pos].quantityLocal - 1
+                        var aa = qty * Commons.strToDouble(drinksList[pos].price)
+                        var bb = aa * Commons.strToDouble(drinksList[pos].discount)
+                        var per = bb / 100
+                        var disValue = aa - per
+                        drinksList[pos].quantityLocal = qty
+                        drinksList[pos].totPriceLocal = disValue
+                        pakgAdapter.notifyDataSetChanged()
+                        var totCost = 0.0
+                        for (i in 0 until drinksList.size) {
+                            totCost = totCost + drinksList[i].totPriceLocal
+                        }
+                         binding.preBookingTablePriceValue.text = resources.getString(R.string.currency_sumbol) + totCost.toString()
+                         doGrandTot()
+                    }
+                } catch (e: Exception) {
+                    MyApp.popErrorMsg("Error in decrease the quantity",""+e,THIS!!)
+                }
+            }
+        })
+        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
+        binding.preBookingSpclPkgRecyle.also {
+            it.layoutManager =
+                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
+            it.adapter = pakgAdapter
+        }
+    }
+
+    private fun setListDrinks(typeList:Int) {
+        barMenuAdapter = DrinksMenuAdapter(
+            this@PreBookingActivity,
+            drinksList,
+            object : DrinksMenuAdapter.ClickListener {
+                override fun onClick(pos: Int) {
+                    drinksList[pos].isSelected = !drinksList[pos].isSelected
+                    barMenuAdapter.notifyDataSetChanged()
+                }
+
+//                override fun onClickSub(pos: Int, subPos: Int) {
+//                    drinksList[pos].products[subPos].isChekd = !drinksList[pos].products[subPos].isChekd
+//                    barMenuAdapter.notifyDataSetChanged()
+//                }
+
+                override fun onClickPluse(pos: Int, subPos: Int) {
+                    try {
+                        var qty = drinksList[pos].products[subPos].quantityLocal + 1
+                        var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                        var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
+                        var per = bb/100
+                        var disValue= aa-per
+                        drinksList[pos].products[subPos].quantityLocal = qty
+                        drinksList[pos].products[subPos].totPriceLocal = disValue
+                        barMenuAdapter.notifyDataSetChanged()
+                        var totCost = 0.0
+                        for(i in 0 until drinksList[pos].products.size){
+                            totCost += drinksList[pos].products[i].totPriceLocal
+                        }
+                        if(typeList==0){
+                            binding.preBookingDrinksValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                        }
+                        else if(typeList==1){
+                            binding.preBookingFoodPriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                        }
+                        else if(typeList==2){
+                            binding.preBookingSnakesValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                        }
+
+                        doGrandTot()
+                    } catch (e: Exception) {
+                        MyApp.popErrorMsg("Error in increase the quantity",""+e,THIS!!)
+                    }
+                }
+
+                override fun onClickMinus(pos: Int, subPos: Int) {
+                    try {
+                        if (drinksList[pos].products[subPos].quantityLocal > 0) {
+                            var qty = drinksList[pos].products[subPos].quantityLocal - 1
+                            var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                            var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
+                            var per = bb/100
+                            var disValue= aa-per
+                            drinksList[pos].products[subPos].quantityLocal = qty
+                            drinksList[pos].products[subPos].totPriceLocal = disValue
+                            barMenuAdapter.notifyDataSetChanged()
+                            var totCost = 0.0
+                            for(i in 0 until drinksList[pos].products.size){
+                                totCost= totCost+drinksList[pos].products[i].totPriceLocal
+                            }
+                            if(typeList==0){
+                                binding.preBookingDrinksValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                            }
+                            else if(typeList==1){
+                                binding.preBookingFoodPriceValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                            }
+                            else if(typeList==2){
+                                binding.preBookingSnakesValue.text = resources.getString(R.string.currency_sumbol)+totCost.toString()
+                            }
+                            doGrandTot()
+                        }
+                    } catch (e: Exception) {
+                        MyApp.popErrorMsg("Error in decrease the quantity",""+e,THIS!!)
+                    }
+                }
+
+            })
+        binding.preBookingSpclPkgRecyle.isNestedScrollingEnabled = true
+        binding.preBookingSpclPkgRecyle.also {
+            it.layoutManager =
+                LinearLayoutManager(this@PreBookingActivity, LinearLayoutManager.VERTICAL, false)
+            it.adapter = barMenuAdapter
+        }
     }
 }

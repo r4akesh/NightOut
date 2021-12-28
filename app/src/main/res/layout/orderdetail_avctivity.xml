@@ -67,7 +67,7 @@
                     android:fontFamily="@font/proximanova_reg"
                     android:text="Address : 1 Fairclough St, Liverpool L1 1F Manchester M3 5LH, United Kingdom"
                     android:textColor="@color/text_gray2"
-                    android:textSize="@dimen/_11ssp"
+                    android:textSize="@dimen/_10ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/orderDeatilTitle" />
@@ -76,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_3sdp"
                     app:layout_constraintTop_toBottomOf="@+id/orderDeatilAddrs">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -105,10 +106,10 @@
                         android:inputType="number"
                         android:maxLength="10"
                         android:background="@drawable/box_botomsheet"
-                        android:fontFamily="@font/proximanova_bold"
+                        android:fontFamily="@font/proximanova_reg"
                         android:padding="@dimen/_10ssp"
                         android:singleLine="true"
-                       android:textColorHint="@color/gray"
+                       android:textColorHint="@color/text_gray"
                         android:hint="Enter your table number..."
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12ssp" />

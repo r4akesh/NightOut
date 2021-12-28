@@ -407,8 +407,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
         storyAdapter = StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {
                 override fun onClick(pos: Int) {
-//                    startActivity(Intent(requireActivity(),StoryPreviewActivity::class.java)
-//                        .putExtra(AppConstant.INTENT_EXTRAS.STORY_LIST,listStory[pos].storydetail))
+                    startActivity(Intent(requireActivity(),StoryPreviewActivity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.STORY_LIST,listStory[pos].storydetail))
                 }
             })
 

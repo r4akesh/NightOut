@@ -25,7 +25,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 
-import jp.shts.android.storiesprogressview.StoriesProgressView
+
 import kotlinx.android.synthetic.main.demo.*
 
 import java.util.*
@@ -38,6 +38,7 @@ import com.nightout.model.DashboardModel
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
+import com.teresaholfeld.stories.StoriesProgressView
 
 
 class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener{
@@ -71,14 +72,16 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
         binding = DataBindingUtil.setContentView(this@StoryPreviewActivity, R.layout.story_preview_actvity)
           liststory = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.STORY_LIST) as ArrayList<DashboardModel.Storydetail>
         binding.storiesProgressView.setStoriesCount(liststory.size);
-        binding.storiesProgressView.setStoryDuration(3000L);
+
         binding.storiesProgressView.setStoriesListener(this);
          binding.storiesProgressView.startStories(counter)
        // var vv=MyApp.getUrlExtention(liststory[++counter].image)
         if(MyApp.getUrlExtention(liststory[counter].image).equals(".jpg") || MyApp.getUrlExtention(liststory[counter].image).equals(".png")
             || MyApp.getUrlExtention(liststory[counter].image).equals(".JPEG")) {
+            binding.storiesProgressView.setStoryDuration(3000L)
             setImageNormal(THIS!!, binding.imagePreview, PreferenceKeeper.instance.imgPathSave+liststory[counter].image)
         }else{
+            binding.storiesProgressView.setStoryDuration(30000L);
             setVideo(THIS!!, binding.videoView,PreferenceKeeper.instance.imgPathSave+liststory[counter].image)
         }
 
@@ -124,8 +127,7 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
                 ): Boolean {
                     Log.d("TAG", "onLoadFailed: ")
                     binding.progress.visibility= GONE
-                   // binding.storiesProgressView.skip()
-
+                    MyApp.ShowTost(context!!,"The download was Unable to complete\nPlease try again later")
                    return false
                 }
             })
@@ -142,6 +144,7 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
         })
         Log.d("TAG", "setVideo111: ")
         videoview?.setVideoURI(Uri.parse(url))
+        //videoview?.setData
         try {
             videoview?.setOnPreparedListener { mediaPlayer ->
                 mediaPlayer.setOnInfoListener(MediaPlayer.OnInfoListener { mediaPlayer, i, i1 ->
@@ -191,11 +194,12 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
                 Log.d("TAG", "setVideo: "+url)
                 binding.progress.setVisibility(GONE)
               //  binding.storiesProgressView.setStoryDuration(mediaPlayer.duration.toLong())
-                // binding.storiesProgressView.setStoryDuration(30000)
+                 // binding.storiesProgressView.setStoryDuration(30000L)
                 binding.storiesProgressView.startStories(counter)
             }
         } catch (e: Exception) {
             Log.d("TAG", "setVideo2222: "+e)
+            MyApp.ShowTost(context!!,"The download was Unable to complete\nPlease try again later")
         }
     }
 
@@ -246,9 +250,11 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
 
         if(MyApp.getUrlExtention(liststory[cnt].image).equals(".jpg") || MyApp.getUrlExtention(liststory[cnt].image).equals(".png")
                || MyApp.getUrlExtention(liststory[cnt].image).equals(".JPEG")) {
-               binding.videoView.stopPlayback();
+               binding.videoView.stopPlayback()
+            binding.storiesProgressView.setStoryDuration(3000L)
                setImageNormal(THIS!!, binding.imagePreview, PreferenceKeeper.instance.imgPathSave+liststory[cnt].image)
            }else{
+            binding.storiesProgressView.setStoryDuration(30000L)
                setVideo(THIS!!, binding.videoView,PreferenceKeeper.instance.imgPathSave+liststory[cnt].image)
            }
     }
@@ -258,9 +264,11 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
         var cnt =--counter
         if(MyApp.getUrlExtention(liststory[cnt].image).equals(".jpg") || MyApp.getUrlExtention(liststory[cnt].image).equals(".png")
             || MyApp.getUrlExtention(liststory[cnt].image).equals(".JPEG")) {
-            binding.videoView.stopPlayback();
+            binding.videoView.stopPlayback()
+            binding.storiesProgressView.setStoryDuration(3000L)
             setImageNormal(THIS!!, binding.imagePreview, PreferenceKeeper.instance.imgPathSave+liststory[cnt].image)
         }else{
+            binding.storiesProgressView.setStoryDuration(30000L)
             setVideo(THIS!!, binding.videoView,PreferenceKeeper.instance.imgPathSave+liststory[cnt].image)
         }
       //  setImageNormal(THIS!!,binding.imagePreview,imagesList[--counter])

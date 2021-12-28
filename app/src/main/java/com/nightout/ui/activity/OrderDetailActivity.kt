@@ -28,11 +28,13 @@ class OrderDetailActivity : BaseActivity() {
     lateinit var mdlPkg: VenuDetailModel.Product
     lateinit var ordrDetailAdapter: OrdrDetailAdapter
     var totPrice : Double = 0.0
+    var storeType =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@OrderDetailActivity, R.layout.orderdetail_avctivity)
         setToolBar()
         var detailStore = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
+        storeType = intent.getStringExtra(AppConstant.INTENT_EXTRAS.StoreType)!!
         binding.orderDeatilTitle.text= detailStore.store_name
         binding.orderDeatilAddrs.text= detailStore.store_address
         recordsList = ArrayList()
@@ -55,28 +57,30 @@ class OrderDetailActivity : BaseActivity() {
                 }
             }
         }
-
-         //for package
-        arList = ArrayList()
-        for (j in 0 until detailStore.all_products[3].records.size) {
-            if (detailStore.all_products[3].records[j].quantityLocal > 0) {
-                totPrice+=detailStore.all_products[3].records[j].totPriceLocal
-                mdlPkg = VenuDetailModel.Product(
-                  detailStore.all_products[3].records[j].quantityLocal,
-                  detailStore.all_products[3].records[j].totPriceLocal,
-                  detailStore.all_products[3].records[j].category_id,
-                  detailStore.all_products[3].records[j].discount,
-                  detailStore.all_products[3].records[j].title,
-                  detailStore.all_products[3].records[j].price,
-                    "","","","","","","","","","","","","",""
-                )
-                arList.add(mdlPkg)
+        if(storeType != "4"){
+            //for package
+            arList = ArrayList()
+            for (j in 0 until detailStore.all_products[3].records.size) {
+                if (detailStore.all_products[3].records[j].quantityLocal > 0) {
+                    totPrice+=detailStore.all_products[3].records[j].totPriceLocal
+                    mdlPkg = VenuDetailModel.Product(
+                        detailStore.all_products[3].records[j].quantityLocal,
+                        detailStore.all_products[3].records[j].totPriceLocal,
+                        detailStore.all_products[3].records[j].category_id,
+                        detailStore.all_products[3].records[j].discount,
+                        detailStore.all_products[3].records[j].title,
+                        detailStore.all_products[3].records[j].price,
+                        "","","","","","","","","","","","","",""
+                    )
+                    arList.add(mdlPkg)
+                }
+            }
+            if (arList.size > 0) {
+                var mdl = LocalStreModel("Package", arList)
+                mainList.add(mdl)
             }
         }
-        if (arList.size > 0) {
-            var mdl = LocalStreModel("Package", arList)
-            mainList.add(mdl)
-        }
+
         binding.orderDetailAmt.text= resources.getString(R.string.currency_sumbol) +totPrice.toString()
         binding.orderDetailTotAmt.text= resources.getString(R.string.currency_sumbol) +totPrice.toString()
         binding.orderDetailPay.text= "Pay "+resources.getString(R.string.currency_sumbol) +totPrice.toString()

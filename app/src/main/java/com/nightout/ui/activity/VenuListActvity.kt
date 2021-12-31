@@ -2,6 +2,7 @@ package com.nightout.ui.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
@@ -20,10 +21,7 @@ import com.nightout.adapter.VenuSubAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.VenulistingActivityBinding
 import com.nightout.model.*
-import com.nightout.utils.AppConstant
-import com.nightout.utils.CustomProgressDialog
-import com.nightout.utils.MyApp
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 
@@ -95,7 +93,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 for (i in 0 until listStoreType.size) {
                     listStoreType[i].isSelected = 3 == i
                 }
-                binding.venulistingToolBar.toolbarTitle.text = "Foods"
+                binding.venulistingToolBar.toolbarTitle.text = "Food"
                 venue_type_listAPICALL()
             }
             "5" -> {
@@ -171,6 +169,17 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
 
             override fun onClikSaveToBarcrewal(pos: Int) {
                 addRemoveBarCrawlAPICall(pos)
+            }
+
+            override fun onClikAddrs(pos: Int) {
+                try {
+                    val lat= Commons.strToDouble(venuDataList[pos].store_lattitude)
+                    val lang= Commons.strToDouble(venuDataList[pos].store_longitude)
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$lat,$lang"))
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    MyApp.popErrorMsg("","Address not valid",THIS!!)
+                }
             }
 
 
@@ -318,7 +327,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         listStoreType.add(VenuModel(1, "Bars", false, isApiCall = false))
         listStoreType.add(VenuModel(2, "Pubs", false, isApiCall = false))
         listStoreType.add(VenuModel(3, "Clubs", false, isApiCall = false))
-        listStoreType.add(VenuModel(4, "Foods", false, isApiCall = false))
+        listStoreType.add(VenuModel(4, "Food", false, isApiCall = false))
         listStoreType.add(VenuModel(5, "Events", false, isApiCall = false))
 
 

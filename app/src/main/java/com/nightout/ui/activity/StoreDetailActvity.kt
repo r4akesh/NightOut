@@ -76,16 +76,16 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
          binding.storeDeatilLogo.setOnClickListener {
 
             val imagedialog = Dialog(this@StoreDetailActvity)
-             val window: Window = imagedialog.getWindow()!!
+             val window: Window = imagedialog.window!!
              window.setGravity(Gravity.TOP)
-             val layoutParams: WindowManager.LayoutParams = imagedialog.getWindow()!!.getAttributes()
+             val layoutParams: WindowManager.LayoutParams = imagedialog.window!!.attributes
              layoutParams.y = 170//margin top
-             imagedialog.getWindow()!!.setAttributes(layoutParams);
+             imagedialog.window!!.attributes = layoutParams
 
-                imagedialog.setContentView( R.layout.imagedialog)
+             imagedialog.setContentView( R.layout.imagedialog)
              imagedialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-            var  photo    = imagedialog.findViewById(R.id.photoenlarge) as ImageView
-            var  viewTransTop    = imagedialog.findViewById(R.id.viewTransTop) as View
+            val photo    = imagedialog.findViewById(R.id.photoenlarge) as ImageView
+            val viewTransTop    = imagedialog.findViewById(R.id.viewTransTop) as View
 
 
 
@@ -166,7 +166,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 .putExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO,dt)
                 .putExtra(AppConstant.INTENT_EXTRAS.StoreType,storeType)
             )}else{
-                MyApp.popErrorMsg("","Please select venue",THIS!!)
+                MyApp.popErrorMsg("","Please select menu",THIS!!)
             }
 
         } else if (v == binding.storeDeatilFacilityBtn) {
@@ -322,8 +322,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilTitle.text = dt.store_name
             binding.storeDeatilRating.text = dt.rating.avg_rating
             binding.storeDeatilOpenTime.text = "Open at : " + dt.open_time + " To " + dt.close_time
-            binding.storeDeatilSubTitle.text =
-                "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
+            binding.storeDeatilSubTitle.text = "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
             binding.storeDeatilPhno.text = "+44 "+dt.store_number
             binding.storeDeatilEmail.text = dt.store_email
             binding.storeDeatilAddrs.text = dt.store_address
@@ -356,11 +355,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             facilityList = dt.venue_facility as ArrayList
             showMapLoc(dt.store_lattitude, dt.store_longitude)
             if(dt.store_description.isNotBlank()) {
-                var htmlData = dt.store_description
+                val htmlData = dt.store_description
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    binding.storeDeatilMenuDesc.setText(Html.fromHtml(htmlData,Html.FROM_HTML_MODE_LEGACY));
+                    binding.storeDeatilMenuDesc.text = Html.fromHtml(htmlData,Html.FROM_HTML_MODE_LEGACY)
                 } else {
-                    binding.storeDeatilMenuDesc.setText(Html.fromHtml(htmlData));
+                    binding.storeDeatilMenuDesc.text = Html.fromHtml(htmlData)
                 }
 
             }else{
@@ -393,7 +392,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap!!
         val success =
-            googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
+            googleMap.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
     }
 
     lateinit var storDetailFoodHorizontalAdapter: StorDetailFoodHorizontalAdapter
@@ -407,22 +406,24 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                     for (i in 0 until allProducts.size) {
                         allProducts[i].isSelected = pos == i
                     }
-                    storDetailFoodHorizontalAdapter.notifyDataSetChanged()
-                    if (pos == 0) {
-                        drinksList = dt.all_products[0].records
-                        setListDrinks()
-                    }
-                    else if (pos == 1) {
-                        drinksList = dt.all_products[1].records
-                        setListFoods()
-                    }
-                    else if (pos == 2) {
-                        drinksList = dt.all_products[2].records
-                        setListSnacks()
-                    }
-                    else if (pos == 3) {
-                        drinksList = dt.all_products[3].records
-                        setListPkg()
+                    with(storDetailFoodHorizontalAdapter) { notifyDataSetChanged() }
+                    when (pos) {
+                        0 -> {
+                            drinksList = dt.all_products[0].records
+                            setListDrinks()
+                        }
+                        1 -> {
+                            drinksList = dt.all_products[1].records
+                            setListFoods()
+                        }
+                        2 -> {
+                            drinksList = dt.all_products[2].records
+                            setListSnacks()
+                        }
+                        3 -> {
+                            drinksList = dt.all_products[3].records
+                            setListPkg()
+                        }
                     }
                 }
 
@@ -437,7 +438,6 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     }
 
-    lateinit var subAdapter: DrinksSubAdapter
     private fun initView() {
         val supportMapFragment =
             (supportFragmentManager.findFragmentById(R.id.storeDeatillocMap) as SupportMapFragment?)!!
@@ -483,9 +483,9 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@StoreDetailActvity, "")
-        var map = HashMap<String, String>()
-        //map["id"] = venuID!!
-        map["id"] = "217"
+        val map = HashMap<String, String>()
+      //  map["id"] = venuID
+         map["id"] = "217"
 
         userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetailActvity, {
             when (it.status) {
@@ -527,7 +527,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     private fun addRemoveBarCrawlAPICall() {
       //  progressDialog.show(this@StoreDetailActvity, "")
-        var map = HashMap<String, String>()
+        val map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
        // map["status"] =if(addBarCrawlStatus.equals("1")) "0" else "1"
@@ -538,7 +538,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 when (it.status) {
                     Status.SUCCESS -> {
                        // progressDialog.dialog.dismiss()
-                        it.data?.let { detailData ->
+                        it.data?.let {
                             try {
 //                                Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
 //                                if (detailData.data.status == "1") {
@@ -602,7 +602,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     private fun showPopUpFacilities() {
         val adDialog = Dialog(this@StoreDetailActvity, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         adDialog.setContentView(R.layout.facility_dialog)
         adDialog.setCancelable(false)
 
@@ -642,7 +642,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     private fun showQueryPopup() {
         val adDialog = Dialog(this@StoreDetailActvity, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
+        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         adDialog.setContentView(R.layout.query_dialog)
         adDialog.setCancelable(false)
 
@@ -657,7 +657,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                textCount.setText(""+s.toString().length+"/100")
+                textCount.text = ""+s.toString().length+"/100"
             }
         })
 
@@ -696,7 +696,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                         try {
                             Utills.showSuccessToast(
                                 this@StoreDetailActvity,
-                                detailData.message!!
+                                detailData.message
 
                             )
                         } catch (e: Exception) {
@@ -748,9 +748,9 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
                 override fun onClickPluse(pos: Int, subPos: Int) {
                     try {
-                        var qty = drinksList[pos].products[subPos].quantityLocal + 1
-                        var aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
-                        var bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
+                        val qty = drinksList[pos].products[subPos].quantityLocal + 1
+                        val aa = qty * Commons.strToDouble(drinksList[pos].products[subPos].price)
+                        val bb = aa*Commons.strToDouble(drinksList[pos].products[subPos].discount)
                         var per = bb/100
                         var disValue= aa-per
                         drinksList[pos].products[subPos].quantityLocal = qty

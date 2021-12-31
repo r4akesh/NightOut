@@ -87,6 +87,9 @@ class VenuSubAdapter(
             }
             clickListener.onClikSaveToBarcrewal(position)
         }
+        viewHolder.binding.venusubitemSubTitle.setOnClickListener {
+            clickListener.onClikAddrs(position)
+        }
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)
 
@@ -110,6 +113,7 @@ class VenuSubAdapter(
         fun onClick(pos: Int)
         fun onClickFav(pos: Int)
         fun onClikSaveToBarcrewal(pos: Int)
+        fun onClikAddrs(pos: Int)
 
 
     }

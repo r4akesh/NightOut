@@ -198,7 +198,7 @@
 
                         <EditText
                             android:id="@+id/preBookingPeopleValue"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/proximanova_reg"
                             android:gravity="center"
@@ -206,7 +206,7 @@
 
                             android:background="@null"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/_10ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/preBookingPlus"
                             app:layout_constraintTop_toTopOf="parent" />

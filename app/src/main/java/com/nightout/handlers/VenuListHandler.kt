@@ -2,9 +2,10 @@ package com.nightout.handlers
 
 import com.nightout.model.VenuModel
 import com.nightout.ui.activity.HomeActivity
+import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.utils.*
 
-open class VenuListHandler(val activity: HomeActivity) {
+open class VenuListHandler(val activity: HomeActivityNew) {
     private lateinit var sideMenuViewModl : VenuModel
   /*  fun onClickLogin(loginViewModel: LoginViewModel) {
         this.loginViewModel = loginViewModel

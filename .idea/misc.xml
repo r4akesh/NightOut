@@ -44,6 +44,7 @@
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_orderdetailsub_item.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_pakge.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/row_sidemenu_list.xml" value="0.3333333333333333" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/roworderdetail_item.xml" value="0.3015625" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/roworderdetail_subitem.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/serchlocation_activity.xml" value="0.35" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/shared_item.xml" value="0.31875" />
@@ -53,6 +54,7 @@
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/storydetail_actvity.xml" value="0.3203125" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/venu_title_botmsheet_item.xml" value="0.27708333333333335" />
         <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/venu_title_item.xml" value="0.253125" />
+        <entry key="..\:/OfcProjectCode/NightoutProject/NightOut/app/src/main/res/layout/venusub_item.xml" value="0.30052083333333335" />
       </map>
     </option>
   </component>

@@ -96,7 +96,7 @@ class TicketConfirmActvity : BaseActivity() {
     }
 
     private fun jumpToHome() {
-        val i = Intent(this, HomeActivity::class.java)
+        val i = Intent(this, HomeActivityNew::class.java)
         // set the new task and clear flags
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)

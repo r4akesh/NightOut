@@ -33,7 +33,7 @@ import kotlin.collections.ArrayList
 
 //calendra link-https://github.com/Mulham-Raee/Horizontal-Calendar
 class PreBookingActivity : BaseActivity() {
-    var intialValuePeople: Int = 4
+    var intialValuePeople: Int = 2
     lateinit var binding: PrebookingActivityBinding
     lateinit var horizontalCalendar: HorizontalCalendar
     lateinit var pakgAdapter: PackageAdapter
@@ -64,13 +64,13 @@ class PreBookingActivity : BaseActivity() {
         if (v == binding.toolbarBack) {
             finish()
         } else if (v == binding.preBookingPlus) {
-            intialValuePeople = intialValuePeople + 1
+            intialValuePeople += 1
             binding.preBookingPeopleValue.setText("" + intialValuePeople)
         } else if (v == binding.preBookingMinus) {
 
             if (intialValuePeople > 0) {
-                intialValuePeople = intialValuePeople - 1
-                binding.preBookingPeopleValue.setText("" + intialValuePeople)
+                intialValuePeople -= 1
+                binding.preBookingPeopleValue.setText("$intialValuePeople")
             }
         } else if (v == binding.toolbarCelendra) {
             showDatePicker()
@@ -125,9 +125,9 @@ class PreBookingActivity : BaseActivity() {
                 binding.preBookingbookWholeVenus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.unchk_box,0,0,0)
             }else{
 
-                binding.preBookingPeopleValue.setFocusable(true)
-                binding.preBookingPeopleValue.setFocusableInTouchMode(true)
-                binding.preBookingPeopleValue.setClickable(true)
+                binding.preBookingPeopleValue.isFocusable = true
+                binding.preBookingPeopleValue.isFocusableInTouchMode = true
+                binding.preBookingPeopleValue.isClickable = true
 
                 binding.preBookingbookWholeVenus.isChecked=true
                 binding.preBookingbookWholeVenus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.chk_box,0,0,0)
@@ -140,6 +140,11 @@ class PreBookingActivity : BaseActivity() {
             MyApp.popErrorMsg("","Please choose booking time",THIS!!)
             return false
         }
+        else if(!binding.preBookingbookWholeVenus.isChecked && binding.preBookingPeopleValue.text.toString() == "0"){
+            MyApp.popErrorMsg("","Please choose total number of person",THIS!!)
+            return false
+        }
+
 
         return true
 

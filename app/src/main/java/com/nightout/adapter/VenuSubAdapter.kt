@@ -18,7 +18,10 @@ import com.nightout.databinding.VenusubItemBinding
 
 import com.nightout.model.VenuListModel
 import com.nightout.model.VenuModel
+import com.nightout.utils.Commons
+import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
+import com.nightout.utils.Utills
 
 
 class VenuSubAdapter(
@@ -40,59 +43,67 @@ class VenuSubAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.venusubitemTitle.text=arrayList[position].store_name
-        viewHolder.binding.venusubitemSubTitle.text=arrayList[position].store_address
-        viewHolder.binding.venusubitemOpenclosetime.text="Close : "+arrayList[position].close_time
-        viewHolder.binding.venusubitemRating.text=arrayList[position].rating.avg_rating
+        try {
+            viewHolder.binding.venusubitemTitle.text=arrayList[position].store_name
+            viewHolder.binding.venusubitemSubTitle.text=arrayList[position].store_address
+            viewHolder.binding.venusubitemOpenclosetime.text="Close : "+arrayList[position].close_time
+            viewHolder.binding.venusubitemRating.text=arrayList[position].rating.avg_rating
 
-        Glide.with(context)
-            .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].store_logo)
-            .error(R.drawable.no_image)
-            .into(viewHolder.binding.venusubitemTopimg)
+            val latitude: Double = Commons.strToDouble(arrayList[position].store_lattitude)
+            val longitude: Double = Commons.strToDouble(arrayList[position].store_longitude)
+
+            viewHolder.binding.venusubitemKm.text= "${MyApp.getDestance(latitude,longitude,PreferenceKeeper.instance.currentLat!!,PreferenceKeeper.instance.currentLong!!)} Km away"
+
+            Glide.with(context)
+                .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].store_logo)
+                .error(R.drawable.no_image)
+                .into(viewHolder.binding.venusubitemTopimg)
 
 
 
-        if(arrayList[position].favrouite == "1"){
-            viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
-        }else{
-            viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
-        }
-
-        viewHolder.binding.venusubitemFav.setOnClickListener{
-            if(arrayList[position].favrouite.equals("1")){
-
-                arrayList[position].favrouite = "0"
-                viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
-            }else{
-
-                arrayList[position].favrouite = "1"
+            if(arrayList[position].favrouite == "1"){
                 viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
-            }
-            viewHolder.binding.venusubitemFav.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bounce))
-            clickListener.onClickFav(position)
-        }
-
-        if(arrayList[position].barcrawl == "1"){
-            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
-        }else{
-            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
-        }
-        viewHolder.binding.venusubitemSaveToBarvrawl.setOnClickListener {
-            if(arrayList[position].barcrawl.equals("1")){
-                arrayList[position].barcrawl = "0"
-                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
             }else{
-                arrayList[position].barcrawl = "1"
-                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
+                viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
             }
-            clickListener.onClikSaveToBarcrewal(position)
-        }
-        viewHolder.binding.venusubitemSubTitle.setOnClickListener {
-            clickListener.onClikAddrs(position)
-        }
-        viewHolder.itemView.setOnClickListener {
-            clickListener.onClick(position)
 
+            viewHolder.binding.venusubitemFav.setOnClickListener{
+                if(arrayList[position].favrouite.equals("1")){
+
+                    arrayList[position].favrouite = "0"
+                    viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_unselected)
+                }else{
+
+                    arrayList[position].favrouite = "1"
+                    viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
+                }
+                viewHolder.binding.venusubitemFav.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bounce))
+                clickListener.onClickFav(position)
+            }
+
+            if(arrayList[position].barcrawl == "1"){
+                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
+            }else{
+                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
+            }
+            viewHolder.binding.venusubitemSaveToBarvrawl.setOnClickListener {
+                if(arrayList[position].barcrawl.equals("1")){
+                    arrayList[position].barcrawl = "0"
+                    viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
+                }else{
+                    arrayList[position].barcrawl = "1"
+                    viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
+                }
+                clickListener.onClikSaveToBarcrewal(position)
+            }
+            viewHolder.binding.venusubitemSubTitle.setOnClickListener {
+                clickListener.onClikAddrs(position)
+            }
+            viewHolder.itemView.setOnClickListener {
+                clickListener.onClick(position)
+
+            }
+        } catch (e: Exception) {
         }
 
     }

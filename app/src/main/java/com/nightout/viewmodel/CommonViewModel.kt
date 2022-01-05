@@ -32,6 +32,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var sendQueryModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var bookEventMdl: LiveData<ApiSampleResource<BookEventMdlResponse>>
     lateinit var favListModelRes: LiveData<ApiSampleResource<FavListModelRes>>
+    lateinit var invitedBarCrwlViewMOdel: LiveData<ApiSampleResource<InvitedBarCrwlResponse>>
     lateinit var barCrwlListModel: LiveData<ApiSampleResource<AllBarCrwalListResponse>>
     lateinit var userDeviceModel: LiveData<ApiSampleResource<BaseModel>>
 
@@ -214,5 +215,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun emaiLSettings(map: HashMap<String, String>): LiveData<ApiSampleResource<NotifEmilSettingRes>> {
         notifEmilSettingViewModel = webServiceRepository.emaiLSetting(map)
         return notifEmilSettingViewModel
+    }
+
+    fun barCrwalInvitedList(): LiveData<ApiSampleResource<InvitedBarCrwlResponse>> {
+        invitedBarCrwlViewMOdel = webServiceRepository.invitedBarCrwalList()
+        return invitedBarCrwlViewMOdel
     }
 }

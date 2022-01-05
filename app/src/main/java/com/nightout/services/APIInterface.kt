@@ -141,4 +141,7 @@ interface APIInterface {
 
     @POST("user_noti_email_status")
     fun user_noti_email_statusAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @GET("bar_crawl_invited_list")
+    fun barcrawlinvitedlistAPI(): Call<ResponseBody>
 }

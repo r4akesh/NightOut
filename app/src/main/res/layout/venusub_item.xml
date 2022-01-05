@@ -94,17 +94,33 @@
 
             <TextView
                 android:id="@+id/venusubitem_title"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10ssp"
                 android:layout_marginTop="@dimen/_5ssp"
                 android:fontFamily="@font/proximanova_reg"
                 android:singleLine="true"
                 android:text="title"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintEnd_toStartOf="@+id/venusubitemKm"
                 android:textColor="@color/white_thred"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/venusubitem_topimg" />
+
+
+            <TextView
+                android:id="@+id/venusubitemKm"
+                android:layout_width="wrap_content"
+                android:text="KM"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:textColor="@color/white_thred"
+                app:layout_constraintTop_toBottomOf="@+id/venusubitem_topimg"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_5ssp"
+                android:fontFamily="@font/proximanova_reg"
+                android:singleLine="true"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/venusubitem_subTitle"

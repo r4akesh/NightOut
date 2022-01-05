@@ -67,6 +67,29 @@
 
             android:layout_height="0dp" />
 
+        <TextView
+            android:id="@+id/searchLocationEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+            android:layout_marginStart="@dimen/_10ssp"
+            android:background="@drawable/box_serch"
+            android:drawableStart="@drawable/search_ic"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:hint="@string/search_here"
+            android:padding="@dimen/_10ssp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            android:textColorHint="@color/text_hint2"
+            android:textCursorDrawable="@drawable/cursor_white"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -1,6 +1,5 @@
 package com.nightout.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View.GONE
@@ -9,26 +8,60 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-import com.nightout.adapter.SharedAdapter
 import com.nightout.adapter.SharedSideMenuAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarshredActivityBinding
-import com.nightout.databinding.FragmentBarcrawlnewBinding
+import com.nightout.model.InvitedBarCrwlResponse
 import com.nightout.model.SharedModel
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.Utills
+import com.nightout.vendor.services.Status
+import com.nightout.viewmodel.CommonViewModel
 
 class SideMenuShredListActivity : BaseActivity() {
 
     lateinit var binding: BarshredActivityBinding
-
+    private var customProgressDialog = CustomProgressDialog()
+    private lateinit var commonViewModel: CommonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@SideMenuShredListActivity,R.layout.barshred_activity)
+        commonViewModel = CommonViewModel(THIS!!)
         setToolBar()
-        setListDummy()
+       // setListDummy()
+        barCrawlInvitedListAPICAll()
+    }
+
+    private fun barCrawlInvitedListAPICAll() {
+        customProgressDialog.show(this@SideMenuShredListActivity, "")
+        commonViewModel.barCrwalInvitedList().observe(this@SideMenuShredListActivity,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    it.data?.let {myData->
+                        setList(myData.data)
+
+
+
+                    }
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+                    Utills.showErrorToast(
+                        this@SideMenuShredListActivity,
+                        it.message!!,
+
+                        )
+                }
+            }
+        })
     }
 
     private fun setToolBar() {
-        binding.sharedBarCrawlToolBar.toolbarTitle.setText(resources.getString(R.string.Invited_BarCrawl))
+        binding.sharedBarCrawlToolBar.toolbarTitle.text = resources.getString(R.string.Invited_BarCrawl)
         setTouchNClick( binding.sharedBarCrawlToolBar.toolbarBack)
         binding.sharedBarCrawlToolBar.toolbarBack.setOnClickListener { finish() }
         binding.sharedBarCrawlToolBar.toolbarCreateGrop.visibility=GONE
@@ -38,18 +71,12 @@ class SideMenuShredListActivity : BaseActivity() {
     }
 
     lateinit var  sharedAdapter: SharedSideMenuAdapter
-    private fun setListDummy() {
-        var list = ArrayList<SharedModel>()
-        list.add(SharedModel("Vanity Night Club",R.drawable.shared_img1,""))
-        list.add(SharedModel("Vanity Night Club", R.drawable.shared_img2,""))
-        list.add(SharedModel("Vanity Night Club",R.drawable.shared_img3,""))
-        list.add(SharedModel("Vanity Night Club",R.drawable.shared_img1,""))
-        list.add(SharedModel("Vanity Night Club",R.drawable.shared_img2,""))
-        list.add(SharedModel("Vanity Night Club",R.drawable.shared_img3,""))
+    private fun setList(dataList: ArrayList<InvitedBarCrwlResponse.Data>) {
 
 
 
-        sharedAdapter = SharedSideMenuAdapter(this@SideMenuShredListActivity,list,object : SharedSideMenuAdapter.ClickListener{
+
+        sharedAdapter = SharedSideMenuAdapter(this@SideMenuShredListActivity,dataList,object : SharedSideMenuAdapter.ClickListener{
             override fun onClick3Dot(pos: Int, imgview : ImageView) {
 
             }

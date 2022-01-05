@@ -13,24 +13,22 @@
         android:layout_height="wrap_content"
          >
 
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/sharedItemCard"
-            android:layout_width="@dimen/_45sdp"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="50dp"
+            android:id="@+id/sharedItemImg"
+            android:layout_height="50dp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_height="@dimen/_45sdp"
-            app:cardBackgroundColor="@color/text_yello"
-            app:cardCornerRadius="@dimen/_4sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:srcCompat="@drawable/no_image"
 
-            <ImageView
-                android:id="@+id/sharedItemImg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/_1ssp"
-                android:src="@drawable/shared_img1" />
-        </androidx.cardview.widget.CardView>
+            app:strokeWidth="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:strokeColor="@color/text_yello"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            />
+
+
 
         <TextView
             android:id="@+id/sharedItemTitle"
@@ -41,8 +39,8 @@
             android:layout_marginStart="@dimen/_7sdp"
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toEndOf="@+id/sharedItemCard"
-            app:layout_constraintTop_toTopOf="@+id/sharedItemCard" />
+            app:layout_constraintStart_toEndOf="@+id/sharedItemImg"
+            app:layout_constraintTop_toTopOf="@+id/sharedItemImg" />
 
         <TextView
             android:id="@+id/sharedItemDate"
@@ -54,7 +52,7 @@
             android:text="25 June 2021"
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@+id/sharedItemCard"
+            app:layout_constraintStart_toEndOf="@+id/sharedItemImg"
             app:layout_constraintTop_toBottomOf="@+id/sharedItemTitle" />
 
 
@@ -68,6 +66,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_reg"
             android:text="08:30 pm"
+            android:visibility="invisible"
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toEndOf="@+id/sharedItemDate"
@@ -80,7 +79,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_7ssp"
-            app:layout_constraintTop_toBottomOf="@+id/sharedItemCard"
+            app:layout_constraintTop_toBottomOf="@+id/sharedItemImg"
             android:background="@color/view_line_clr"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"

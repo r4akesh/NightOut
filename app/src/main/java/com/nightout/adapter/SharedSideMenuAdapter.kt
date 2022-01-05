@@ -16,15 +16,13 @@ import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.FacilityItemBinding
 import com.nightout.databinding.SharedItemBinding
 import com.nightout.databinding.SharedSidemenuItemBinding
-import com.nightout.model.ChatModel
-import com.nightout.model.FacilityModel
-import com.nightout.model.SharedModel
-import com.nightout.model.VenuDetailModel
+import com.nightout.model.*
+import com.nightout.utils.Utills
 
 
 class SharedSideMenuAdapter(
     var context: Context,
-    var arrayList: ArrayList<SharedModel>,
+    var arrayList: ArrayList<InvitedBarCrwlResponse.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<SharedSideMenuAdapter.ViewHolder>() {
@@ -43,8 +41,12 @@ class SharedSideMenuAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.sharedItemImg.setImageResource(arrayList[position].imgProfile)
-
+        try {
+            viewHolder.binding.sharedItemDate.text = arrayList[position].bar_crawl.date
+            viewHolder.binding.sharedItemTitle.text = arrayList[position].bar_crawl.name
+            Utills.setImageNormal(context,viewHolder.binding.sharedItemImg,arrayList[position].bar_crawl.image)
+        } catch (e: Exception) {
+        }
 
 
     }

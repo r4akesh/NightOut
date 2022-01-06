@@ -89,8 +89,8 @@ interface APIInterface {
     @POST("add_remove_bar_crawl")
     fun addRemBrCrwlAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
-    @GET("bar_crawl_list")
-    fun bar_crawl_listAPI(): Call<ResponseBody>
+//    @GET("bar_crawl_list")
+//    fun bar_crawl_listAPI(): Call<ResponseBody>
 
     @POST("user_device")
     fun user_deviceAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
@@ -141,6 +141,9 @@ interface APIInterface {
 
     @POST("user_noti_email_status")
     fun user_noti_email_statusAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+    @POST("all_venue_list")
+    fun bar_crawl_listAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
     @GET("bar_crawl_invited_list")
     fun barcrawlinvitedlistAPI(): Call<ResponseBody>

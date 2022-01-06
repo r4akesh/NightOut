@@ -108,6 +108,14 @@ class VenuSubAdapter(
 
     }
 
+    fun filterList(filterllist: ArrayList<VenuListModel.Data>) {
+        // below line is to add our filtered
+        // list in our course array list.
+        arrayList = filterllist
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
         return if (null != arrayList) arrayList!!.size else 0

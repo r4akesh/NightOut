@@ -2,6 +2,7 @@ package com.nightout.ui.activity.barcrawl
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.widget.LinearLayout
@@ -24,6 +25,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.HashMap
+import com.google.gson.Gson
+import com.nightout.model.PathParseModel
+
 
 class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
     lateinit var binding : BarcrawlSavedmapactivityBinding
@@ -188,12 +192,22 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
             val http = HttpConnection()
             var data = http.readUrl(url)
             GlobalScope.launch {
-                val jObject: JSONObject
+                var jObject: JSONObject
                 var routes: List<List<HashMap<String, String>>>? = null
                 try {
                     jObject = JSONObject(data)
+                    try {
+                        var vvbb =  Gson().fromJson(data, PathParseModel::class.java)     hyfghgfh
+                        Log.d("TAG", "readTask: "+vvbb)
+
+                    } catch (e: Exception) {
+                        Log.d("TAG", "readTask: ")
+                    }
                     val parser = PathJSONParser()
                     routes = parser.parse(jObject)
+
+
+
 
                     //onPostExecute
                     var points: ArrayList<LatLng?>? = null

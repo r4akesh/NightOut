@@ -137,8 +137,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         barCrwlListModel = webServiceRepository.barCrwlList()
         return barCrwlListModel
     }*/
-    fun venuListBarCrwl(): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
-        barCrwlListModel = webServiceRepository.barCrwlVenuList()
+    fun venuListBarCrwl(map: HashMap<String, String>): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
+        barCrwlListModel = webServiceRepository.barCrwlVenuList(map)
         return barCrwlListModel
     }
     fun userDevice(map:HashMap<String,String>): LiveData<ApiSampleResource<BaseModel>> {

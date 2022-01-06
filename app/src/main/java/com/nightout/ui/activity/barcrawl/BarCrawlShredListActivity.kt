@@ -24,7 +24,7 @@ import java.lang.invoke.ConstantCallSite
 class BarCrawlShredListActivity : BaseActivity() {
 
     lateinit var binding: BarshredActivityBinding
-    private var customProgressDialog = CustomProgressDialog()
+    lateinit var customProgressDialog : CustomProgressDialog
     lateinit var getSharedListViewModel : CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,8 @@ class BarCrawlShredListActivity : BaseActivity() {
     }
     lateinit var listtShared : ArrayList<SharedBarcrwalRes.Data>
     private fun bar_crawl_invitation_listAPICall() {
-        customProgressDialog.show(this@BarCrawlShredListActivity, "")
+        customProgressDialog = CustomProgressDialog()
+         customProgressDialog.show(this@BarCrawlShredListActivity)
         getSharedListViewModel.getSharedList().observe(this@BarCrawlShredListActivity,{
             when(it.status){
                 Status.SUCCESS->{
@@ -57,6 +58,7 @@ class BarCrawlShredListActivity : BaseActivity() {
                         listtShared = myData.data.reversed() as ArrayList<SharedBarcrwalRes.Data>
                         if(listtShared.size>0) {
                             binding.barcrwalSharedNoData.visibility = GONE
+                        //    customProgressDialog.dialog.dismiss()
                             setListShared()
                         }
                         else
@@ -125,7 +127,7 @@ class BarCrawlShredListActivity : BaseActivity() {
     }
 
     private fun delete_bar_crawlAPICall(posList:Int) {
-        customProgressDialog.show(this@BarCrawlShredListActivity, "")
+        customProgressDialog.show(this@BarCrawlShredListActivity)
         var map = HashMap<String,String>()
         map["id"] = listtShared[posList].id
         map["saved_shared"] = "2"

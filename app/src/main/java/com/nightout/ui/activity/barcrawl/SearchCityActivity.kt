@@ -55,10 +55,8 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
     override fun onClick(v: View?) {
         super.onClick(v)
         if (v == binding.barcralCity) {
-            startActivityForResult(
-                Intent(THIS!!, SearchLocationActivity::class.java),
-                REQCODE_SearchLocationActivity
-            )
+            startActivityForResult(Intent(THIS!!, SearchLocationActivity::class.java
+                ), REQCODE_SearchLocationActivity)
 
 //            Places.initialize(
 //                this@SearchCityActivity,
@@ -74,7 +72,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
             if (binding.barcralCity.text.toString().isNullOrBlank()) {
                 MyApp.popErrorMsg("", "Please select city", THIS!!)
             } else {
-                startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java))
+                startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java).putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,binding.barcralCity.text.toString()))
                 finish()
             }
         }

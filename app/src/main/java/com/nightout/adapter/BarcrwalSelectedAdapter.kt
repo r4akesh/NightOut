@@ -24,7 +24,7 @@ import com.nightout.utils.PreferenceKeeper
 
 class BarcrwalSelectedAdapter(
     var context: Context,
-    var arrayList: ArrayList<AllBarCrwalListResponse.Barcrawl>,
+    var arrayList: ArrayList<AllBarCrwalListResponse.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<BarcrwalSelectedAdapter.ViewHolder>() {
@@ -41,9 +41,9 @@ class BarcrwalSelectedAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.commentItemTitle.text=arrayList[position].venue_detail.store_name
+        viewHolder.binding.commentItemTitle.text=arrayList[position].store_name
         Glide.with(context)
-            .load(PreferenceKeeper.instance.imgPathSave + arrayList[position].venue_detail.store_logo)
+            .load(PreferenceKeeper.instance.imgPathSave + arrayList[position].store_logo)
             .error(R.drawable.no_image)
             .into(viewHolder.binding.commentItemProfile)
 

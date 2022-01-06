@@ -51,7 +51,9 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
             Log.d("venuID", "onCreate: "+venuID)
            user_venue_detailAPICALL()
         }
-
+        if(intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity,false)){
+            binding.eventDetailBuyTkt.visibility= View.GONE
+        }
     }
 
 

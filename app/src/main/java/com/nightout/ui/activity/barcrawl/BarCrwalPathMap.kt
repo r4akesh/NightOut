@@ -64,7 +64,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private var mMonth: Int = 0
     private var mDay: Int = 0
     private val progressDialog = CustomProgressDialog()
-    var listBarcrwal = ArrayList<AllBarCrwalListResponse.Barcrawl>()
+    var listBarcrwal = ArrayList<AllBarCrwalListResponse.Data>()
     private lateinit var commonViewModel: CommonViewModel
 
     var mMarkerPoints: ArrayList<LatLng>? = null
@@ -94,7 +94,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
 
         listBarcrwal = ArrayList ()
-        listBarcrwal = intent.getSerializableExtra(AppConstant.PrefsName.SelectedBarcrwalList) as ArrayList<AllBarCrwalListResponse.Barcrawl>
+        listBarcrwal = intent.getSerializableExtra(AppConstant.PrefsName.SelectedBarcrwalList) as ArrayList<AllBarCrwalListResponse.Data>
         sizeOfList = listBarcrwal.size
         initView()
         setToolBar()
@@ -190,7 +190,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private fun create_update_bar_crawlAPICall() {
         var stringBuilder = StringBuilder()
         for (i in 0 until listBarcrwal.size){
-            stringBuilder.append(listBarcrwal[i].venue_id)
+            stringBuilder.append(listBarcrwal[i].id)
             stringBuilder.append(",")
 
         }
@@ -200,6 +200,9 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         builder.addFormDataPart("name", dgEtBarCrwal.text.toString())
         builder.addFormDataPart("venue_list",""+listOfId )
         builder.addFormDataPart("public_private", publicPrivetValue)
+        builder.addFormDataPart("city_lattitude", "3323332344")//dummy
+        builder.addFormDataPart("city_longitude", "3232323232")
+        builder.addFormDataPart("city", intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME).toString())
 
         if(isFromShareListActivity){
             builder.addFormDataPart("saved_shared", "2")
@@ -524,8 +527,8 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         if (googleMap != null) {
             builder = LatLngBounds.Builder()
             for (i in 0 until listBarcrwal.size) {
-                var lat = Commons.strToDouble(listBarcrwal[i].venue_detail.store_lattitude)
-                var lang = Commons.strToDouble(listBarcrwal[i].venue_detail.store_longitude)
+                var lat = Commons.strToDouble(listBarcrwal[i].store_lattitude)
+                var lang = Commons.strToDouble(listBarcrwal[i].store_longitude)
                 drawMarker(LatLng(lat, lang), "$i")
                // googleMap!!.addMarker(MarkerOptions().position(LatLng(lat, lang)).title("" + i + "st Point"))
             }
@@ -549,9 +552,9 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
     private fun mapsApiDirectionsUrl(): String {
         val origin =
-            "origin=" + listBarcrwal[indexOfList].venue_detail.store_lattitude + "," + listBarcrwal[indexOfList].venue_detail.store_longitude
+            "origin=" + listBarcrwal[indexOfList].store_lattitude + "," + listBarcrwal[indexOfList].store_longitude
         val dest =
-            "destination=" + listBarcrwal[indexOfList + 1].venue_detail.store_lattitude + "," + listBarcrwal[indexOfList + 1].venue_detail.store_longitude
+            "destination=" + listBarcrwal[indexOfList + 1].store_lattitude + "," + listBarcrwal[indexOfList + 1].store_longitude
         val sensor = "sensor=false"
         val key = "key=" + getString(R.string.google_maps_key)
         val parameters = "$origin&$dest&$key"

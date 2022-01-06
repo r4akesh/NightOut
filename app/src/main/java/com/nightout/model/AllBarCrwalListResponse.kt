@@ -3,131 +3,50 @@ package com.nightout.model
 import java.io.Serializable
 
 data class AllBarCrwalListResponse(
-    val `data`: Data,
+    val `data`: ArrayList<Data>,
     val image_path: String,
     val message: String,
     val response: String,
     val status_code: Int,
     val user_default_img: String
-):Serializable {
+) : Serializable{
 
     data class Data(
-        val barcrawl: ArrayList<Barcrawl>,
-        val barcrawl_options: ArrayList<BarcrawlOption>,
-        val favrtvenues: ArrayList<Favrtvenue>
-    ):Serializable
-
-    data class Barcrawl(
         var viewType : Int,
         var isSelected : Boolean,
-        val created_at: String,
-        val id: Int,
-        val status: Int,
-        val store_type: Int,
-        val updated_at: String,
-        val user_id: Int,
-        val vendor_id: Int,
-        val venue_detail: VenueDetail,
-        val venue_id: Int
-    ):Serializable
-
-    data class BarcrawlOption(
-        val created_at: String,
-        val id: Int,
-        val slug: String,
-        val status: Int,
-        val title: String,
-        val updated_at: String
-    ):Serializable
-
-    data class Favrtvenue(
-        val created_at: String,
-        val id: Int,
-        val status: Int,
-        val updated_at: String,
-        val user_id: Int,
-        val vendor_id: Int,
-        val venue_detail: VenueDetailX,
-        val venue_id: Int
-    ):Serializable
-
-    data class VenueDetail(
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,
-        val by_default: Int,
+        val barcrawl: String,
+        val by_default: String,
+        val city: String,
         val close_time: String,
         val created_at: String,
         val dress_code: String,
         val event_date: String,
         val event_end_time: String,
         val event_start_time: String,
+        val favrouite: String,
         val food_certificate_image: String,
         val food_certificate_number: String,
         val food_registration_image: String,
         val food_registration_number: String,
         val free_end_time: String,
         val free_start_time: String,
-        val id: Int,
-        val open_close: Int,
+        val id: String,
+        val open_close: String,
         val open_time: String,
         val party_theme: String,
         val premises_license_image: String,
         val premises_license_number: String,
-        val price: Any,
+        val price: String,
         val price_couple: String,
         val price_hour: String,
-        val reject_reason: Any,
-        val sale_price: Any,
-        val slug: String,
-        val status: Int,
-        val store_address: String,
-        val store_description: String,
-        val store_email: String,
-        val store_lattitude: String,
-        val store_logo: String,
-        val store_longitude: String,
-        val store_name: String,
-        val store_number: String,
-        val store_type: Int,
-        val tax_reference_image: String,
-        val tax_reference_number: String,
-        val ticket_qty: String,
-        val updated_at: String,
-        val user_id: Int,
-        val venue_address: String
-    ):Serializable
-
-    data class VenueDetailX(
-        val age_limit: String,
-        val alcohol_license_image: String,
-        val alcohol_license_number: String,
-        val by_default: Int,
-        val close_time: String,
-        val created_at: String,
-        val dress_code: String,
-        val event_date: String,
-        val event_end_time: Any,
-        val event_start_time: Any,
-        val food_certificate_image: String,
-        val food_certificate_number: String,
-        val food_registration_image: String,
-        val food_registration_number: String,
-        val free_end_time: String,
-        val free_start_time: String,
-        val id: Int,
-        val open_close: Int,
-        val open_time: String,
-        val party_theme: String,
-        val premises_license_image: String,
-        val premises_license_number: String,
-        val price: Any,
-        val price_couple: String,
-        val price_hour: Any,
+        val rating: Rating,
         val reject_reason: String,
-        val sale_price: Any,
+        val sale_price: String,
         val slug: String,
-        val status: Int,
+        val status: String,
         val store_address: String,
         val store_description: String,
         val store_email: String,
@@ -136,12 +55,31 @@ data class AllBarCrwalListResponse(
         val store_longitude: String,
         val store_name: String,
         val store_number: String,
-        val store_type: Int,
+        val store_type: String,
         val tax_reference_image: String,
         val tax_reference_number: String,
         val ticket_qty: String,
         val updated_at: String,
-        val user_id: Int,
-        val venue_address: Any
-    ):Serializable
+        val user_id: String,
+        val venue_address: String,
+        val venue_gallery: ArrayList<VenueGallery>
+    ): Serializable
+
+    data class Rating(
+        val avg_rating: String,
+        val percent: String,
+        val review_title: String,
+        val total_rating: String
+    ): Serializable
+
+    data class VenueGallery(
+        val created_at: String,
+        val id: String,
+        val image: String,
+        val status: String,
+        val thumbnail: String,
+        val type: String,
+        val updated_at: String,
+        val venue_id: String
+    ): Serializable
 }

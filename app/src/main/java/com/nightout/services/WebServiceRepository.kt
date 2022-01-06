@@ -1485,10 +1485,10 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
-    fun barCrwlVenuList(): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
+    fun barCrwlVenuList(map: HashMap<String, String>): LiveData<ApiSampleResource<AllBarCrwalListResponse>> {
         val venueListResponseModel = MutableLiveData<ApiSampleResource<AllBarCrwalListResponse>>()
         if (networkHelper.isNetworkConnected()) {
-            val responseBody: Call<ResponseBody> = apiInterfaceHeader.bar_crawl_listAPI( )
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.bar_crawl_listAPI(map)
             responseBody.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     when (response.code()) {

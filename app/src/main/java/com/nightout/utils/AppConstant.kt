@@ -60,6 +60,8 @@ class AppConstant {
         const val LATITUDE = "LATITUDE"
         const val LONGITUDE = "LONGITUDE"
         const val StoreDetailPoJO = "StoreDetailPoJO"
+        const val CITYNAME = "CITYNAME"
+        const val iSFROMESelectBarCrwlActivity = "iSFROMESelectBarCrwlActivity"
 
 
     }

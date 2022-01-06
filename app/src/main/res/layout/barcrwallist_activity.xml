@@ -240,13 +240,35 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/barcrwalSeeDeatil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/border_yello"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_3sdp"
+                        android:text="@string/SeeDetail"
+
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/barcrwalAddBtn"
+                        android:textColor="@color/text_yello"
+                        android:textSize="@dimen/_12ssp"
+                         />
+
                     <View
                         android:id="@+id/viewLine"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
                         android:layout_marginTop="@dimen/_5ssp"
                         android:background="@color/white"
-                        app:layout_constraintTop_toBottomOf="@+id/linerRating" />
+                        android:visibility="invisible"
+                        app:layout_constraintTop_toBottomOf="@+id/barcrwalSeeDeatil" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

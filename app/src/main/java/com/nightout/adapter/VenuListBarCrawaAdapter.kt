@@ -22,7 +22,7 @@ import java.text.DecimalFormat
 
 class VenuListBarCrawaAdapter(
     var context: Context,
-    var arrayList: ArrayList<AllBarCrwalListResponse.Barcrawl>,
+    var arrayList: ArrayList<AllBarCrwalListResponse.Data>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -42,11 +42,11 @@ class VenuListBarCrawaAdapter(
         fun bind(position: Int) {
             try {
                 val recyclerViewModel = arrayList[position]
-                venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
+                venuesItemTitle.text = recyclerViewModel.store_name
                 var crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
                 var crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
-                var eventLat = (recyclerViewModel.venue_detail.store_lattitude)
-                var eventLong = (recyclerViewModel.venue_detail.store_longitude)
+                var eventLat = (recyclerViewModel.store_lattitude)
+                var eventLong = (recyclerViewModel.store_longitude)
                 var vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
                 venuesItemDistence.text =""+ DecimalFormat("##.##").format(vv)+" miles"
 
@@ -56,7 +56,7 @@ class VenuListBarCrawaAdapter(
                     constrntLayoutMain.setBackgroundResource(0)
                 }
                 Glide.with(context)
-                    .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
+                    .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.store_logo)
                     .error(R.drawable.no_image)
                     .into(venuesItemImage)
             } catch (e: Exception) {
@@ -73,11 +73,11 @@ class VenuListBarCrawaAdapter(
         fun bind(position: Int) {
             try {
                 val recyclerViewModel = arrayList[position]
-                venuesItemTitle.text = recyclerViewModel.venue_detail.store_name
+                venuesItemTitle.text = recyclerViewModel.store_name
                 var crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
                 var crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
-                var eventLat = (recyclerViewModel.venue_detail.store_lattitude)
-                var eventLong = (recyclerViewModel.venue_detail.store_longitude)
+                var eventLat = (recyclerViewModel.store_lattitude)
+                var eventLong = (recyclerViewModel.store_longitude)
                 var vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
                 venuesItemDistence.text =""+ DecimalFormat("##.##").format(vv)+" miles"
                 var constrntLayoutMain: ConstraintLayout = itemView.findViewById(R.id.constrntLayoutMain)
@@ -87,7 +87,7 @@ class VenuListBarCrawaAdapter(
                     constrntLayoutMain.setBackgroundResource(0)
                 }
                 Glide.with(context)
-                    .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.venue_detail.store_logo)
+                    .load(PreferenceKeeper.instance.imgPathSave + recyclerViewModel.store_logo)
                     .error(R.drawable.no_image)
                     .into(venuesItemImage)
             } catch (e: Exception) {

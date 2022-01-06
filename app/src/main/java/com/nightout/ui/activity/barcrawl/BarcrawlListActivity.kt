@@ -17,6 +17,8 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrwallistActivityBinding
 import com.nightout.model.AllBarCrwalListResponse
 import com.nightout.model.BarcrwalSavedRes
+import com.nightout.ui.activity.EventDetailActivity
+import com.nightout.ui.activity.StoreDetailActvity
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -26,11 +28,11 @@ class BarcrawlListActivity : BaseActivity() {
 
     //  private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     lateinit var barcrwalSelectedAdapter: BarcrwalSelectedAdapter
-    lateinit var listHr: ArrayList<AllBarCrwalListResponse.Barcrawl>
+    lateinit var listHr: ArrayList<AllBarCrwalListResponse.Data>
     lateinit var venuListBarCrawaAdapter: VenuListBarCrawaAdapter
     private val progressDialog = CustomProgressDialog()
     lateinit var getBarCrwalVieModel: CommonViewModel
-    var listAllVenue = ArrayList<AllBarCrwalListResponse.Barcrawl>()
+    var listAllVenue = ArrayList<AllBarCrwalListResponse.Data>()
     var listClickPosSave = 0
       var barcrwalId: String = ""
     var isFromShareListActivity=false
@@ -94,43 +96,49 @@ class BarcrawlListActivity : BaseActivity() {
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFromShareListActivity)
-                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity))
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity)
+                        .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME, intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)))
                 finish()
+            }
+        }
+
+        else if(v==binding.barcrwalSeeDeatil) {
+            var strType = listAllVenue[listClickPosSave].store_type
+            var sendStrType = "0"
+            if (strType.toLowerCase() == "event" || strType.toLowerCase() == "events") {
+                startActivity(Intent(THIS!!, EventDetailActivity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + listAllVenue[listClickPosSave].id)
+                        .putExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity, true))
+            } else {
+                if (strType.toLowerCase() == "food" || strType.toLowerCase() == "foods") {
+                    sendStrType = "4"
+                }
+                startActivity(Intent(THIS!!, StoreDetailActvity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, false)
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + listAllVenue[listClickPosSave].id)
+                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType, sendStrType)
+                        .putExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity, true)
+                )
             }
         }
     }
 
     private fun bar_crawl_listAPICAll() {
         progressDialog.show(this@BarcrawlListActivity, "")
+        var map = HashMap<String,String>()
+        map["city_lang"] ="342343"
+        map["city_long"] ="545634543"
+        map["city"] =intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)!!
         try {
-            getBarCrwalVieModel.venuListBarCrwl().observe(this@BarcrawlListActivity, {
+            getBarCrwalVieModel.venuListBarCrwl(map).observe(this@BarcrawlListActivity, {
                 when (it.status) {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
                         listAllVenue = ArrayList()
                         try {
-                            listAllVenue.addAll(it.data?.data?.barcrawl!!)
+                            listAllVenue.addAll(it.data?.data!!)
                             if (listAllVenue.isNotEmpty()) {
-                                /*if(isFromSaveListActivity) {
-                                    // set chk with old data
-                                    for (i in 0 until listAllVenue.size) {
-                                        for (j in 0 until venusSelectedOld.venue_list.size){
-                                            if(listAllVenue[i].venue_id.toString()==venusSelectedOld.venue_list[j].id){
-                                                listAllVenue[i].isSelected=true
-                                                listHr.add(listAllVenue[i])
-                                                break
-                                            }
-                                        }
-                                    }
 
-                                    if (listHr.size > 0) {
-                                        binding.barCrwlSelectedConstrant.visibility = VISIBLE
-                                        barcrwalSelectedAdapter.notifyDataSetChanged()
-                                        binding.barCrwlReyleBotm.smoothScrollToPosition(listHr.size - 1)
-                                    } else {
-                                        binding.barCrwlSelectedConstrant.visibility = GONE
-                                    }
-                                }*/
 
                                 setAllVenuList()
 
@@ -166,6 +174,7 @@ class BarcrawlListActivity : BaseActivity() {
 
     private fun initView() {
         binding.barCrwalNextBtn.setOnClickListener(this)
+        binding.barcrwalSeeDeatil.setOnClickListener(this)
         binding.barcrwalAddBtn.setOnClickListener(this)
         binding.barcrwalCloseBtn.setOnClickListener(this)
         getBarCrwalVieModel = CommonViewModel(this)
@@ -292,7 +301,7 @@ class BarcrawlListActivity : BaseActivity() {
 
     }
 
-    private fun setDetailVenue(barcrawlData: AllBarCrwalListResponse.Barcrawl) {
+    private fun setDetailVenue(barcrawlData: AllBarCrwalListResponse.Data) {
         if (barcrawlData.isSelected) {
             binding.barcrwalAddBtn.visibility = GONE
         } else {
@@ -300,12 +309,12 @@ class BarcrawlListActivity : BaseActivity() {
         }
         binding.barCrwalBtmDetail.visibility = VISIBLE
         Glide.with(this@BarcrawlListActivity)
-            .load(PreferenceKeeper.instance.imgPathSave + barcrawlData.venue_detail.store_logo)
+            .load(PreferenceKeeper.instance.imgPathSave + barcrawlData.store_logo)
             .error(R.drawable.no_image)
             .into(binding.barcrwalLogo)
-        binding.barcrwalTitle.text = barcrawlData.venue_detail.store_name
-        binding.barcrwalSubTitle.text = barcrawlData.venue_detail.store_address
-        binding.barcralListClostTime.text = "Close: " + barcrawlData.venue_detail.close_time
+        binding.barcrwalTitle.text = barcrawlData.store_name
+        binding.barcrwalSubTitle.text = barcrawlData.store_address
+        binding.barcralListClostTime.text = "Close: " + barcrawlData.close_time
 
 
     }

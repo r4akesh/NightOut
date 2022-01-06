@@ -67,6 +67,9 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         if (venuID.isNotBlank()) {
             user_venue_detailAPICALL()
         }
+        if(intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity,false)){
+            binding.storeDeatilPlaceOrder.visibility= GONE
+        }
 
        // setListDrinksDummy()//first time set
         // add_Remove_bar_crawlAPICAll()

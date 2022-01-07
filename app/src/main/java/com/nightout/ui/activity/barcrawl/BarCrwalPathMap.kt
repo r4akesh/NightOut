@@ -76,7 +76,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     var isFromShareListActivity=false
     var isFromSaveListActivity=false
     var publicPrivetValue="1"
-
+    var REQCODE_CreateBarCrwlSuccess = 999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -239,6 +239,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                         if(isFromShareListActivity || isFromSaveListActivity){
                             Utills.showSuccessToast(THIS!!,resources.getString(R.string.barcrwal_update_suceesfully))
                             PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
+
                             finish()
                         }else {
 
@@ -250,25 +251,16 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                                 "Do you want share the created bar crawl with Friends?",
                                 object : DialogCustmYesNo.Dialogclick {
                                     override fun onYES() {
-                                        startActivity(
-                                            Intent(
-                                                this@BarCrwalPathMap,
-                                                ContactListNewActvity::class.java
-                                            )
-                                                .putExtra(
-                                                    AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,
-                                                    true
-                                                )
-                                                .putExtra(
-                                                    AppConstant.INTENT_EXTRAS.BarcrwalID,
-                                                    it.data.id
-                                                )
-                                        )
-                                        finish()
+                                        startActivityForResult(
+                                            Intent(this@BarCrwalPathMap, ContactListNewActvity::class.java)
+                                                .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, true)
+                                                .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, it.data.id),REQCODE_CreateBarCrwlSuccess)
+
                                     }
 
                                     override fun onNO() {
-
+                                        //  var intentt = Intent()
+                                        setResult(Activity.RESULT_OK)
                                         finish()
                                     }
 
@@ -455,6 +447,10 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                    // Utills.showSnackBarFromTop(userImgBarcrwal, "catch-> $e", this@BarCrwalPathMap)
                 }
             }
+        }
+        else if(requestCode == REQCODE_CreateBarCrwlSuccess && resultCode== Activity.RESULT_OK){
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 

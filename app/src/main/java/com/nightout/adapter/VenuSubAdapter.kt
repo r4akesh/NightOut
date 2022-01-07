@@ -59,7 +59,11 @@ class VenuSubAdapter(
                 .error(R.drawable.no_image)
                 .into(viewHolder.binding.venusubitemTopimg)
 
-
+            if(arrayList[position].store_type.toLowerCase() == "food" || arrayList[position].store_type.toLowerCase() == "event"){
+                viewHolder.binding.venusubitemSaveToBarvrawl.visibility=GONE
+            }else{
+                viewHolder.binding.venusubitemSaveToBarvrawl.visibility= VISIBLE
+            }
 
             if(arrayList[position].favrouite == "1"){
                 viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)

@@ -329,19 +329,14 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     }
 
     private fun getAddrsFrmLatlang(latitude: Double, longitude: Double) {
-
         try {
-            if(requireActivity()!=null) {
+            var homeFragment = HomeFragment()
+            if(requireActivity()!=null && homeFragment.activity!=null) {
                 geocoder = Geocoder(requireActivity(), Locale.getDefault())
-                addresses = geocoder!!.getFromLocation(
-                    latitude,
-                    longitude,
-                    1
-                ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                val addrs = addresses?.get(0)
-                    ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                addresses = geocoder!!.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                val addrs = addresses?.get(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                 Log.d("ok", "addrs: " + addrs)
-                binding.headerHome.headerAddrs.setText(addrs)
+                binding.headerHome.headerAddrs.text = addrs
                 PreferenceKeeper.instance.currentAddrs = addrs
                 PreferenceKeeper.instance.currentLat = latitude.toString()
                 PreferenceKeeper.instance.currentLong = longitude.toString()
@@ -458,7 +453,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 //  lngTextView.text = location.longitude.toString()
                 Log.d("ok", "onLocationResult: "+location.latitude.toString())
                 stopLocationUpdate()
-                getAddrsFrmLatlang(location.latitude, location.longitude)
+                if(PreferenceKeeper.instance.currentAddrs!!.isBlank()) {
+                    getAddrsFrmLatlang(location.latitude, location.longitude)
+                }
                 val shopLatlang = LatLng(location.latitude, location.longitude)
                 val marker = MarkerOptions().position(shopLatlang)
                 marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.addrs_home))

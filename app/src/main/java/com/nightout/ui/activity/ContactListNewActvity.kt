@@ -100,10 +100,21 @@ class ContactListNewActvity : BaseActivity() {
 
     private fun setToolBar() {
         binding.emerngcyToolBar.toolbarTitle.text = resources.getString(R.string.Contact_List)
-        binding.emerngcyToolBar.toolbarBack.setOnClickListener { finish() }
+        binding.emerngcyToolBar.toolbarBack.setOnClickListener {
+            if(isFROM_BarCrwalPathMapActvity){
+                setResult(Activity.RESULT_OK)
+            }
+            finish() }
         binding.emerngcyToolBar.toolbar3dot.visibility = View.GONE
         binding.emerngcyToolBar.toolbarBell.visibility = View.GONE
 
+    }
+
+    override fun onBackPressed() {
+        if(isFROM_BarCrwalPathMapActvity){
+            setResult(Activity.RESULT_OK)
+        }
+        super.onBackPressed()
     }
 
     override fun onClick(v: View?) {
@@ -158,6 +169,7 @@ class ContactListNewActvity : BaseActivity() {
                             Log.d("ok", "bar_crawl_invitationAPICall: " + it.data?.message)
                             MyApp.ShowTost(this@ContactListNewActvity,""+it.data?.message)
                             PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true //update list after share for both savedList and sharedList
+                            setResult(Activity.RESULT_OK)
                             finish()
                         } catch (e: Exception) {
                         }

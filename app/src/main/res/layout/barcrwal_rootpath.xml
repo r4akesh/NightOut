@@ -32,13 +32,16 @@
 
             <TextView
                 android:id="@+id/textSource"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:maxLines="2"
                 android:fontFamily="@font/proximanova_reg"
                 android:text="Point A to Point B (Drive 3 KM)"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/imgSource"
                 app:layout_constraintStart_toEndOf="@+id/imgSource"
                 app:layout_constraintTop_toTopOf="@+id/imgSource" />

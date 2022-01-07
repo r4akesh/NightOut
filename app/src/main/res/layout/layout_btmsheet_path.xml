@@ -36,6 +36,52 @@
                     android:background="@drawable/box_btn_bg_white2" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/white_thred"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/drivingText"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:text="Driving"
+                        android:textSize="@dimen/_11ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center"
+                        android:padding="@dimen/_7sdp"
+                        android:textColor="@color/text_yello"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/walkingText"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:text="Walking"
+                        android:textSize="@dimen/_11ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center"
+                        android:padding="@dimen/_7sdp"
+                        android:textColor="@color/view_line_clr"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/bicyclingText"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:text="Bicycling"
+                        android:textSize="@dimen/_11ssp"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:gravity="center"
+                        android:padding="@dimen/_7sdp"
+                        android:textColor="@color/view_line_clr"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bottomSheetRecyclerRoot"
                     android:layout_width="match_parent"

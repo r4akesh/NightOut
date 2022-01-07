@@ -49,7 +49,7 @@ class PackageAdapter(
             viewHolder.binding.drinkSubItemChk.setImageResource(R.drawable.unchk_box)
         }
 
-
+        viewHolder.binding.drinkSubItemImgDis.setText(arrayList[position].discount+"% off")
 
        /* viewHolder.binding.drinkSubItemChk.setOnClickListener {
             clickListener.onClickChk(position)

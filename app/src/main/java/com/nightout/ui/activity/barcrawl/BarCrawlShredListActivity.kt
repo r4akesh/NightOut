@@ -54,8 +54,8 @@ class BarCrawlShredListActivity : BaseActivity() {
                     it.data?.let {myData->
                         listtShared =  ArrayList()
                         listtShared = myData.data as ArrayList<SharedBarcrwalRes.Data>
-                        if(listtShared.size>1)
-                        listtShared = myData.data.reversed() as ArrayList<SharedBarcrwalRes.Data>
+                       // if(listtShared.size>1)
+                      //  listtShared = myData.data.reversed() as ArrayList<SharedBarcrwalRes.Data>
                         if(listtShared.size>0) {
                             binding.barcrwalSharedNoData.visibility = GONE
                         //    customProgressDialog.dialog.dismiss()
@@ -116,6 +116,8 @@ class BarCrawlShredListActivity : BaseActivity() {
                  startActivity(Intent(this@BarCrawlShredListActivity,BarcrawlListActivity::class.java)
                      .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtShared[pos].bar_crawl.id)
                      .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,true)
+                     .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,listtShared[pos].bar_crawl.city)
+
 
                  )
             }else{

@@ -48,8 +48,10 @@ class BarcrwalRootPathAdapter(
         //next value
         valueInt+=1
         var valueAlpha2 = valueInt.toChar()
-       var dist= MyApp.getDestance(Commons.strToDouble(arrayList[position].store_lattitude),Commons.strToDouble(arrayList[position].store_longitude),arrayList[position+1].store_lattitude,arrayList[position+1].store_longitude,)
-        viewHolder.binding.textSource.text= "Point $valueAlpha1 to Point $valueAlpha2 ($dist KM)"
+     ///  var dist= MyApp.getDestance(Commons.strToDouble(arrayList[position].store_lattitude),Commons.strToDouble(arrayList[position].store_longitude),arrayList[position+1].store_lattitude,arrayList[position+1].store_longitude,)
+        var dist=arrayList[position].distance
+        var dur=arrayList[position].durration
+        viewHolder.binding.textSource.text= "Point $valueAlpha1 to Point $valueAlpha2 ($dist) Duration : ($dur)"
         //viewHolder.binding.textDest.text=arrayList[position].subTitle
 
         if(position==arrayList.size-2) {

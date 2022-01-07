@@ -123,6 +123,10 @@ class PreBookingActivity : BaseActivity() {
 
                 binding.preBookingbookWholeVenus.isChecked=false
                 binding.preBookingbookWholeVenus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.unchk_box,0,0,0)
+
+                binding.preBookingSpclReq.visibility= VISIBLE
+                binding.preBookingSpclReqEdit.visibility= VISIBLE
+
             }else{
 
                 binding.preBookingPeopleValue.isFocusable = true
@@ -131,6 +135,9 @@ class PreBookingActivity : BaseActivity() {
 
                 binding.preBookingbookWholeVenus.isChecked=true
                 binding.preBookingbookWholeVenus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.chk_box,0,0,0)
+
+                binding.preBookingSpclReq.visibility= GONE
+                binding.preBookingSpclReqEdit.visibility= GONE
             }
         }
     }
@@ -232,49 +239,7 @@ class PreBookingActivity : BaseActivity() {
       }
 
 
-     /* private fun user_venue_detailAPICALL() {
-          progressDialog.show(this@PreBookingActivity, "")
-          var map = HashMap<String, String>()
-          map["id"] = venuID!!
-          //map["id"] = "217"
-          userVenueDetailViewModel.userVenueDetail(map).observe(this@PreBookingActivity, {
-              when (it.status) {
-                  Status.SUCCESS -> {
-                      progressDialog.dialog.dismiss()
-                      it.data?.let { detailData ->
-                            vendorId=  detailData.data.vendor_detail.id
-                          venuePkgList = ArrayList()
-                          drinksList = ArrayList()
-                          foodsList = ArrayList()
-                          snacksList = ArrayList()
-                          venuePkgList = detailData.data.packageProducts.products
-                          if (venuePkgList?.size>0) {
-                              setListPkg()
-                          }else{
-                              Utills.showErrorToast(THIS!!,"Packages are not available now")
-                              finish()
-                          }
-                           if (detailData.data?.drinkProducts?.categories?.size > 0) {
-                              drinksList = detailData.data?.drinkProducts?.categories
-                          }
-                         else if (detailData.data?.foodProducts?.categories?.size > 0) {
-                              foodsList = detailData.data?.foodProducts?.categories
-                          }
-                         else if (detailData.data?.snackProducts?.categories?.size > 0) {
-                              snacksList = detailData.data?.snackProducts?.categories
-                          }
 
-                      }
-                  }
-                  Status.LOADING -> {
-
-                  }
-                  Status.ERROR -> {
-                      progressDialog.dialog.dismiss()
-                  }
-              }
-          })
-      } */
 
 
 

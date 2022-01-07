@@ -22,24 +22,48 @@
             <ImageView
                 android:id="@+id/drinkSubItemImg"
                 android:layout_width="match_parent"
-                android:layout_margin="@dimen/_1ssp"
                 android:layout_height="match_parent"
-               android:scaleType="fitXY"
-
+                android:layout_margin="@dimen/_1ssp"
                 android:background="@null"
+
+                android:scaleType="fitXY"
                 android:src="@drawable/no_image" />
 
-            <TextView
-                android:id="@+id/drinkSubItemImgText"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:textColor="@color/white"
-                android:text="$80"
-                android:gravity="center"
-                 android:layout_margin="@dimen/_1ssp"
-                android:fontFamily="@font/proximanova_bold"
-                android:textSize="@dimen/_13ssp"
-                android:background="@color/green_clr_light"
-                android:layout_height="match_parent"/>
+                android:layout_margin="@dimen/_1ssp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/drinkSubItemImgText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/green_clr_light"
+                    android:fontFamily="@font/proximanova_bold"
+
+                    android:gravity="top|center"
+                    android:singleLine="true"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:text="$80"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <TextView
+                    android:id="@+id/drinkSubItemImgDis"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/green_clr_light"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:gravity="top|center"
+                    android:singleLine="true"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:text="$80"
+                    android:textColor="@color/white_thred"
+                    android:textSize="@dimen/_9ssp" />
+
+            </LinearLayout>
+
 
         </androidx.cardview.widget.CardView>
 
@@ -88,19 +112,18 @@
         </RelativeLayout>
 
 
-
         <TextView
             android:id="@+id/drinkSubItemTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
 
+            android:layout_marginEnd="@dimen/_5ssp"
             android:fontFamily="@font/proximanova_reg"
+            android:singleLine="true"
             android:text="453467dgdfgdfgdfg"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
-            android:singleLine="true"
-            android:layout_marginEnd="@dimen/_5ssp"
             app:layout_constraintEnd_toStartOf="@+id/drinkSubItemRelPlsMins"
             app:layout_constraintStart_toEndOf="@+id/drinkSubItemImgCard"
             app:layout_constraintTop_toTopOf="@+id/drinkSubItemImgCard" />
@@ -137,9 +160,9 @@
             android:padding="@dimen/_10ssp"
 
             android:src="@drawable/unchk_box"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/drinkSubItemImgCard"
-            android:visibility="gone"
 
             />
 

@@ -25,6 +25,10 @@ data class SharedBarcrwalRes(
     ):Serializable
 
     data class BarCrawl(
+        val city_longitude: String,
+        val city_lattitude: String,
+
+        val city: String,
         val created_at: String,
         val date: String,
         val id: String,
@@ -61,6 +65,9 @@ data class SharedBarcrwalRes(
     ):Serializable
 
     data class Venue(
+
+
+
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,

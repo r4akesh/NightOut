@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 
 import androidx.databinding.DataBindingUtil
 
@@ -52,10 +53,22 @@ class FavVenuAdapter(
 
         viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
 
+        if(arrayList[position].venue_detail.store_type.toLowerCase() == "food" || arrayList[position].venue_detail.store_type.toLowerCase() == "event"){
+            viewHolder.binding.venusubitemSaveToBarvrawl.visibility=GONE
+        }else{
+            viewHolder.binding.venusubitemSaveToBarvrawl.visibility= VISIBLE
+        }
 
         viewHolder.binding.venusubitemFav.setOnClickListener{
+            viewHolder.binding.venusubitemFav.startAnimation(AnimationUtils.loadAnimation(context!!, R.anim.bounce))
             clickListener.onClickFav(position)
         }
+
+//        if(arrayList[position].venue_detail.bar == "1"){
+//            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
+//        }else{
+//            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
+//        }
 
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)

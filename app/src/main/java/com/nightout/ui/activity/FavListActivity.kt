@@ -97,7 +97,8 @@ class FavListActivity : BaseActivity() {
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                         .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
                         .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE,  "1")
-                        ,REQCODE_STOREDETAILACTIVITY)
+                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType,  dataList[pos].venue_detail.store_type)
+                       ,REQCODE_STOREDETAILACTIVITY)
 
 
                 }else {
@@ -106,6 +107,7 @@ class FavListActivity : BaseActivity() {
                             .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                             .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
                             .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, "1")
+                            .putExtra(AppConstant.INTENT_EXTRAS.StoreType, dataList[pos].venue_detail.store_type)
                         ,REQCODE_STOREDETAILACTIVITY)
 
 
@@ -114,6 +116,7 @@ class FavListActivity : BaseActivity() {
 
             override fun onClickFav(pos: Int) {
                // showAlertUnFav(pos)
+
                 add_favouriteAPICALL(pos)
 
             }
@@ -180,13 +183,16 @@ class FavListActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode== Activity.RESULT_OK){
-           var favValue = data?.getStringExtra("result")!!
-            if(favValue == "0") {
-                val listSize = dataList.size
-                dataList.removeAt(posSave)
-                favVenuAdapter.notifyItemRemoved(posSave)
-                favVenuAdapter.notifyItemRangeChanged(posSave, listSize)
+            try {
+                var favValue = data?.getStringExtra("result")!!
+                if(favValue == "0") {
+                    val listSize = dataList.size
+                    dataList.removeAt(posSave)
+                    favVenuAdapter.notifyItemRemoved(posSave)
+                    favVenuAdapter.notifyItemRangeChanged(posSave, listSize)
 
+                }
+            } catch (e: Exception) {
             }
         }
     }

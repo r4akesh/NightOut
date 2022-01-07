@@ -35,6 +35,15 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     lateinit var barCrwalList: BarcrwalSavedRes.Data
     var barCrwalId=""
+    var selectedMode="driving"
+    private var builder: LatLngBounds.Builder? = null
+    private var bounds: LatLngBounds? = null
+    var indexOfList = 0
+    var sizeOfList = 0
+//    case Driving = "driving" //driving
+//    case Walking = "walking"
+//    case Bicycling = "transit"//"bicycling"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BarCrawlSavedMapActivity,R.layout.barcrawl_savedmapactivity)
@@ -43,7 +52,7 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
         if(barCrwalList!=null){
             barCrwalId = barCrwalList.id
             if(barCrwalList.venue_list.isNotEmpty()){
-                setList(barCrwalList.venue_list)
+               // setList(barCrwalList.venue_list)
             }
         }
         setToolBar()
@@ -63,6 +72,37 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
                 .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,true)
                 .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,barCrwalId))
                 finish()
+        }
+        else if(binding.btmShhetInclue.drivingText==v){
+            googleMap.clear()
+            selectedMode="driving"
+            indexOfList = 0
+            addMarkers()
+            drawPath()
+            binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
+            binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+            binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+        }
+        else if(binding.btmShhetInclue.bicyclingText==v){
+            googleMap.clear()
+            selectedMode="transit"
+            indexOfList = 0
+            addMarkers()
+            drawPath()
+            binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
+            binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+            binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+        }
+        else if(binding.btmShhetInclue.walkingText==v){
+            googleMap.clear()
+            selectedMode="walking"
+            indexOfList = 0
+            addMarkers()
+            drawPath()
+            binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
+            binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+            binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+
         }
     }
 
@@ -109,7 +149,9 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
 
 
     private fun initView() {
-        //setTouchNClick(binding.barcrawlMapSave)
+         setTouchNClick(binding.btmShhetInclue.drivingText)
+         setTouchNClick(binding.btmShhetInclue.walkingText)
+         setTouchNClick(binding.btmShhetInclue.bicyclingText)
         val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.barcrawleSaveMapView) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@BarCrawlSavedMapActivity)
     }
@@ -121,10 +163,7 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
          binding.savedBarCrawlMapToolBar.toolbarBack.setOnClickListener { finish() }
          binding.savedBarCrawlMapToolBar.toolbarTitle.setText("Map View")
     }
-    private var builder: LatLngBounds.Builder? = null
-    private var bounds: LatLngBounds? = null
-    var indexOfList = 0
-    var sizeOfList = 0
+
 
     override fun onMapReady(po: GoogleMap?) {
         googleMap = po!!
@@ -177,13 +216,12 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
     }
 
     private fun mapsApiDirectionsUrl(): String {
-        val origin =
-            "origin=" + barCrwalList.venue_list[indexOfList].store_lattitude + "," +  barCrwalList.venue_list[indexOfList].store_longitude
-        val dest =
-            "destination=" +  barCrwalList.venue_list[indexOfList + 1].store_lattitude + "," +  barCrwalList.venue_list[indexOfList + 1].store_longitude
+        val origin = "origin=" + barCrwalList.venue_list[indexOfList].store_lattitude + "," +  barCrwalList.venue_list[indexOfList].store_longitude
+        val dest = "destination=" +  barCrwalList.venue_list[indexOfList + 1].store_lattitude + "," +  barCrwalList.venue_list[indexOfList + 1].store_longitude
         val sensor = "sensor=false"
         val key = "key=" + getString(R.string.google_maps_key)
-        val parameters = "$origin&$dest&$key"
+        var mode = "mode="+selectedMode
+        val parameters = "$origin&$dest&$mode&$key"
         return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
     }
 
@@ -191,24 +229,29 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
         GlobalScope.launch {
             val http = HttpConnection()
             var data = http.readUrl(url)
+            var durtion =""
+            var dist=""
             GlobalScope.launch {
                 var jObject: JSONObject
                 var routes: List<List<HashMap<String, String>>>? = null
+
                 try {
                     jObject = JSONObject(data)
                     try {
-                        var vvbb =  Gson().fromJson(data, PathParseModel::class.java)     hyfghgfh
-                        Log.d("TAG", "readTask: "+vvbb)
+                         var pathParseModel =  Gson().fromJson(data, PathParseModel::class.java)
+                        Log.d("TAG", "readTask: "+pathParseModel)
+                        dist=   pathParseModel.routes[0].legs[0].distance.text
+                        durtion=   pathParseModel.routes[0].legs[0].duration.text
+
 
                     } catch (e: Exception) {
                         Log.d("TAG", "readTask: ")
                     }
+
+
+
                     val parser = PathJSONParser()
                     routes = parser.parse(jObject)
-
-
-
-
                     //onPostExecute
                     var points: ArrayList<LatLng?>? = null
                     var polyLineOptions: PolylineOptions? = null
@@ -218,7 +261,6 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
                         polyLineOptions = PolylineOptions()
                         val path = routes[i]
                         for (j in path.indices) {
-
                             val point = path[j]
                             val lat = point["lat"]!!.toDouble()
                             val lng = point["lng"]!!.toDouble()
@@ -233,9 +275,16 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
                     runOnUiThread {
                         if (polyLineOptions != null) {
                             googleMap!!.addPolyline(polyLineOptions)
+                            barCrwalList.venue_list[indexOfList].durration=durtion
+                            barCrwalList.venue_list[indexOfList].distance=dist
                             if (indexOfList < barCrwalList.venue_list.size - 2) {
                                 indexOfList++
                                 drawPath()
+                            }
+                            else{
+                                if(barCrwalList.venue_list.isNotEmpty()){
+                                    setList(barCrwalList.venue_list)
+                                }
                             }
                         } else{
                             MyApp.popErrorMsg("","Lat-Long not found!!",THIS!!)

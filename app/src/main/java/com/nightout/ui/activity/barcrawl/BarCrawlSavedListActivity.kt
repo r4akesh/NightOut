@@ -125,6 +125,7 @@ class BarCrawlSavedListActivity : BaseActivity() {
                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtSaved[pos].id)
                     .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,true)
                     .putExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model,listtSaved[pos])
+                    .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,listtSaved[pos].city)
 
                 )
             }else{
@@ -150,7 +151,7 @@ class BarCrawlSavedListActivity : BaseActivity() {
                     listtSaved.removeAt(posList)
                     sharedAdapter.notifyItemRemoved(posList)
                     sharedAdapter.notifyItemRangeChanged(posList, listSize)
-                    MyApp.popErrorMsg("",it.message!!,this@BarCrawlSavedListActivity)
+                  //  MyApp.popErrorMsg("",it.message!!,this@BarCrawlSavedListActivity)
                     if(listtSaved.size==0){
                         binding.barcrwalSavedNoData.visibility= VISIBLE
                     }

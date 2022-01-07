@@ -39,6 +39,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
     lateinit var gMap: GoogleMap
     var LAUNCH_GOOGLE_ADDRESS = 102
     var REQCODE_SearchLocationActivity = 888
+    var REQCODE_CreateBarCrwlSuccess = 999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,8 +73,9 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
             if (binding.barcralCity.text.toString().isNullOrBlank()) {
                 MyApp.popErrorMsg("", "Please select city", THIS!!)
             } else {
-                startActivity(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java).putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,binding.barcralCity.text.toString()))
-                finish()
+                startActivityForResult(Intent(this@SearchCityActivity, BarcrawlListActivity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,binding.barcralCity.text.toString()),REQCODE_CreateBarCrwlSuccess)
+
             }
         }
         else if(v==binding.barcrawlBtmCrntLocImg){
@@ -123,6 +125,11 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
                 gMap!!.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
             } catch (e: Exception) {
             }
+        }
+        else if(requestCode == REQCODE_CreateBarCrwlSuccess && resultCode == Activity.RESULT_OK){
+
+            finish()
+
         }
 //        try {
 //            val place = Autocomplete.getPlaceFromIntent(intentt!!)

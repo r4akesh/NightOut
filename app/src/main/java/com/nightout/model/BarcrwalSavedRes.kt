@@ -12,7 +12,10 @@ data class BarcrwalSavedRes(
 ):Serializable {
 
     data class Data(
+        val city_longitude: String,
+        val city_lattitude: String,
         val created_at: String,
+        val city: String,
         val date: String,
         val id: String,
         val image: String,
@@ -27,6 +30,10 @@ data class BarcrwalSavedRes(
     ):Serializable
 
     data class Venue(
+        var distance:  String,
+        var durration:  String,
+        var mode:  String,
+
         val age_limit: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,

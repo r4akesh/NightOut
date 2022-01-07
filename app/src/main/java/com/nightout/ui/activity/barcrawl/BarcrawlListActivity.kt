@@ -1,5 +1,6 @@
 package com.nightout.ui.activity.barcrawl
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,7 +26,7 @@ import com.nightout.viewmodel.CommonViewModel
 
 class BarcrawlListActivity : BaseActivity() {
     lateinit var binding: BarcrwallistActivityBinding
-
+    var REQCODE_CreateBarCrwlSuccess = 999
     //  private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     lateinit var barcrwalSelectedAdapter: BarcrwalSelectedAdapter
     lateinit var listHr: ArrayList<AllBarCrwalListResponse.Data>
@@ -91,14 +92,14 @@ class BarcrawlListActivity : BaseActivity() {
             if (listHr.size < 2) {
                 MyApp.popErrorMsg("", "Please select at least two venues.", THIS!!)
             } else {
-                startActivity(
+                startActivityForResult(
                     Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFromShareListActivity)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity)
-                        .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME, intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)))
-                finish()
+                        .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME, intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)),REQCODE_CreateBarCrwlSuccess)
+
             }
         }
 
@@ -120,6 +121,15 @@ class BarcrawlListActivity : BaseActivity() {
                         .putExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity, true)
                 )
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQCODE_CreateBarCrwlSuccess && resultCode == Activity.RESULT_OK){
+            setResult(Activity.RESULT_OK)
+            finish()
+
         }
     }
 

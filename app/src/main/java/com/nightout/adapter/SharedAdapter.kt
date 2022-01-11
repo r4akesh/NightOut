@@ -47,6 +47,10 @@ class SharedAdapter(
            var vDate= MyApp.dateZoneToDateFormat(arrayList[position].bar_crawl.created_at)
            var vTime= MyApp.dateZoneToTimeFormat(arrayList[position].bar_crawl.created_at)
 
+         //   var vDate = Commons.millsToDate(Commons.strToLong(arrayList[position].da))
+          //  viewHolder.binding.sharedItemDate.text = vDate
+
+
             viewHolder.binding.sharedItemDate.text = vDate
             viewHolder.binding.sharedItemTime.text = vTime
             Utills.setImageNormal(context, viewHolder.binding.sharedItemImg,arrayList[position].bar_crawl.image)

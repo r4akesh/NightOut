@@ -18,6 +18,7 @@ import com.nightout.databinding.FacilityItemBinding
 import com.nightout.databinding.SavedItemBinding
 import com.nightout.databinding.SharedItemBinding
 import com.nightout.model.*
+import com.nightout.utils.Commons
 import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 
@@ -44,8 +45,8 @@ class SavedAdapter(
         try {
             viewHolder.binding.sharedItemTitle.setText(arrayList[position].name)
             //plz show the date value instead of created_at
-            var vDate = MyApp.dateZoneToDateFormat(arrayList[position].created_at)
-            viewHolder.binding.sharedItemDate.setText(vDate)
+            var vDate = Commons.millsToDate(Commons.strToLong(arrayList[position].date))
+            viewHolder.binding.sharedItemDate.text = vDate
 
             Utills.setImageNormal(context, viewHolder.binding.sharedItemImg,arrayList[position].image)
             viewHolder.itemView.setOnClickListener {

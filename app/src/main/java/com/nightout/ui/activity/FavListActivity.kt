@@ -24,7 +24,7 @@ class FavListActivity : BaseActivity() {
     private var customProgressDialog = CustomProgressDialog()
     private lateinit var commonViewModel: CommonViewModel
     lateinit var favVenuAdapter: FavVenuAdapter
-
+    lateinit var doAddBarCrawlModel : CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,7 @@ class FavListActivity : BaseActivity() {
 
     private fun inItView() {
         commonViewModel = CommonViewModel(this@FavListActivity)
+        doAddBarCrawlModel = CommonViewModel(this@FavListActivity)
     }
    lateinit var dataList : ArrayList<FavListModelRes.Data>
     private fun favouriteListAPICall() {
@@ -121,12 +122,58 @@ class FavListActivity : BaseActivity() {
 
             }
 
+            override fun onClickSaveToBarcrwal(pos: Int) {
+                addRemoveBarCrawlAPICall(pos)
+            }
+
         })
 
         binding.favListRecycle.also{
             it.layoutManager = LinearLayoutManager(this@FavListActivity,LinearLayoutManager.VERTICAL,false)
             it.adapter = favVenuAdapter
         }
+
+    }
+    private fun addRemoveBarCrawlAPICall(pos: Int) {
+        //addBarCrawlStatus = if(venuDataList[pos].barcrawl == "0") "0" else "1"
+        // progressDialog.show(this@VenuListActvity, "")
+        var map = HashMap<String, String>()
+        map["venue_id"] = dataList[pos].id
+        map["vendor_id"] = dataList[pos].venue_detail.id
+        map["status"] =dataList[pos].venue_detail.barcrawl     fgdfgfd dsfgsdgddf
+        map["store_type"] =dataList[pos].venue_detail.store_type
+
+        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@FavListActivity, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    //   progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        try {
+                            /* Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
+                             if (detailData.data.status == "1") {
+                                 addBarCrawlStatus = "0"
+                                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
+
+                             } else {
+                                 addBarCrawlStatus = "1"
+                                 binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
+                             }*/
+                            // MyApp.ShowTost(this@VenuListActvity,detailData.message)
+                        } catch (e: Exception) {
+                            // MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@VenuListActvity)
+                        }
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    // progressDialog.dialog.dismiss()
+                    // Utills.showErrorToast(THIS!!,it.message!!)
+                    //  Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@VenuListActvity)
+                }
+            }
+        })
 
     }
 

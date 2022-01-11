@@ -62,6 +62,9 @@ class AppConstant {
         const val StoreDetailPoJO = "StoreDetailPoJO"
         const val CITYNAME = "CITYNAME"
         const val iSFROMESelectBarCrwlActivity = "iSFROMESelectBarCrwlActivity"
+        const val SharedList_MODEL = "SharedList_MODEL"
+
+
 
 
     }

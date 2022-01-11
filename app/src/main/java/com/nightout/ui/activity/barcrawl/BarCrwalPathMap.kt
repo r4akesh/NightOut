@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.CameraUpdate
 import com.nightout.model.BarCrwlListModel
+import com.nightout.model.BarcrwalSavedRes
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.ContactListNewActvity
 import com.nightout.vendor.services.Status
@@ -77,6 +78,8 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     var isFromSaveListActivity=false
     var publicPrivetValue="1"
     var REQCODE_CreateBarCrwlSuccess = 999
+    lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +121,11 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         commonViewModel = CommonViewModel(this@BarCrwalPathMap)
         isFromShareListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,false)
         isFromSaveListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,false)
+        if(isFromSaveListActivity){
+            venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
+
+            binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -150,6 +158,15 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
          dgSpin = adDialog.findViewById(R.id.dgSpin)
           userImgBarcrwal = adDialog.findViewById(R.id.userImgBarcrwal)
                 setSpin()
+        if(isFromSaveListActivity){
+            dgEtBarCrwal.setText(venusSelectedOld.name)
+            var dateMills=venusSelectedOld.date
+            dgDateBtn.setText(Commons.millsToDateStr2(Commons.strToLong(dateMills)))
+            //(1=>Public, 2=>Private)
+            if(venusSelectedOld.public_private.equals("2")){
+                dgSpin.setSelection(1)
+            }
+        }
         setTouchNClick(userImgBarcrwalRel)
         setTouchNClick(dgCloseBtn)
         setTouchNClick(dgDateBtn)
@@ -239,7 +256,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                         if(isFromShareListActivity || isFromSaveListActivity){
                             Utills.showSuccessToast(THIS!!,resources.getString(R.string.barcrwal_update_suceesfully))
                             PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
-
+                            setResult(Activity.RESULT_OK)
                             finish()
                         }else {
 
@@ -440,7 +457,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                     userImgBarcrwal.setImageBitmap(bitmap)
-                    setBody(bitmap!!, "profile")
+                    setBody(bitmap!!, "image")
 
                 } catch (e: Exception) {
                     e.printStackTrace()

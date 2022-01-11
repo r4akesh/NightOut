@@ -23,6 +23,7 @@ data class FavListModelRes(
 
     data class VenueDetail(
         val age_limit: String,
+        var  barcrawl: String,
         val alcohol_license_image: String,
         val alcohol_license_number: String,
         val by_default: String,

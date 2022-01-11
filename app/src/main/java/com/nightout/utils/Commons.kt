@@ -108,7 +108,7 @@ object Commons {
     }
 
     fun millsToDateStr2(dateInMillis: Long): String {
-        val formatter = SimpleDateFormat("MMM dd, yyyy")
+        val formatter = SimpleDateFormat("dd-MM-yyyy")
         return formatter.format(Date(dateInMillis))
     }
 

@@ -41,34 +41,75 @@ class FavVenuAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.venusubitemTitle.text=arrayList[position].venue_detail.store_name
-        viewHolder.binding.venusubitemSubTitle.text=arrayList[position].venue_detail.store_address
-        viewHolder.binding.venusubitemOpenclosetime.text="Open : "+arrayList[position].venue_detail.open_time+" "+"Close : "+arrayList[position].venue_detail.close_time
-        viewHolder.binding.venusubitemRating.text=arrayList[position].venue_detail.rating.avg_rating
+        viewHolder.binding.venusubitemTitle.text = arrayList[position].venue_detail.store_name
+        viewHolder.binding.venusubitemSubTitle.text = arrayList[position].venue_detail.store_address
+        viewHolder.binding.venusubitemOpenclosetime.text =
+            "Open : " + arrayList[position].venue_detail.open_time + " " + "Close : " + arrayList[position].venue_detail.close_time
+        viewHolder.binding.venusubitemRating.text =
+            arrayList[position].venue_detail.rating.avg_rating
 
         Glide.with(context)
-            .load(PreferenceKeeper.instance.imgPathSave+arrayList[position].venue_detail.store_logo)
+            .load(PreferenceKeeper.instance.imgPathSave + arrayList[position].venue_detail.store_logo)
             .error(R.drawable.no_image)
             .into(viewHolder.binding.venusubitemTopimg)
 
         viewHolder.binding.venusubitemFav.setImageResource(R.drawable.fav_selected)
 
-        if(arrayList[position].venue_detail.store_type.toLowerCase() == "food" || arrayList[position].venue_detail.store_type.toLowerCase() == "event"){
-            viewHolder.binding.venusubitemSaveToBarvrawl.visibility=GONE
-        }else{
-            viewHolder.binding.venusubitemSaveToBarvrawl.visibility= VISIBLE
+        if (arrayList[position].venue_detail.store_type.toLowerCase() == "food" || arrayList[position].venue_detail.store_type.toLowerCase() == "event") {
+            viewHolder.binding.venusubitemSaveToBarvrawl.visibility = GONE
+        } else {
+            viewHolder.binding.venusubitemSaveToBarvrawl.visibility = VISIBLE
         }
 
-        viewHolder.binding.venusubitemFav.setOnClickListener{
-            viewHolder.binding.venusubitemFav.startAnimation(AnimationUtils.loadAnimation(context!!, R.anim.bounce))
+        if (arrayList[position].venue_detail.barcrawl == "1") {
+            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                R.drawable.save_fav,
+                0,
+                0,
+                0
+            )
+        } else {
+            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                R.drawable.ic_unseleted_barcrwl,
+                0,
+                0,
+                0
+            )
+        }
+
+
+        viewHolder.binding.venusubitemFav.setOnClickListener {
+            viewHolder.binding.venusubitemFav.startAnimation(
+                AnimationUtils.loadAnimation(
+                    context!!,
+                    R.anim.bounce
+                )
+            )
             clickListener.onClickFav(position)
         }
 
-//        if(arrayList[position].venue_detail.bar == "1"){
-//            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.save_fav,0,0,0)
-//        }else{
-//            viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_unseleted_barcrwl,0,0,0)
-//        }
+        viewHolder.binding.venusubitemSaveToBarvrawl.setOnClickListener {
+            clickListener.onClickSaveToBarcrwal(position)
+            if (arrayList[position].venue_detail.barcrawl == "1") {
+                arrayList[position].venue_detail.barcrawl = "0"
+                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.ic_unseleted_barcrwl,
+                    0,
+                    0,
+                    0
+                )
+            } else {
+                arrayList[position].venue_detail.barcrawl = "1"
+                viewHolder.binding.venusubitemSaveToBarvrawl.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.save_fav,
+                    0,
+                    0,
+                    0
+                )
+            }
+        }
+
+
 
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)
@@ -91,6 +132,7 @@ class FavVenuAdapter(
     interface ClickListener {
         fun onClick(pos: Int)
         fun onClickFav(pos: Int)
+        fun onClickSaveToBarcrwal(pos: Int)
 
 
     }

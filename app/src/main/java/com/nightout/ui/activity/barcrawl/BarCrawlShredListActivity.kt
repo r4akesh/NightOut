@@ -115,6 +115,7 @@ class BarCrawlShredListActivity : BaseActivity() {
             if(item.title.equals("Edit")){
                  startActivity(Intent(this@BarCrawlShredListActivity,BarcrawlListActivity::class.java)
                      .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,listtShared[pos].bar_crawl.id)
+                     .putExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL,listtShared[pos])
                      .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,true)
                      .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,listtShared[pos].bar_crawl.city)
 

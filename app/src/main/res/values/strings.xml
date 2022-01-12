@@ -236,5 +236,6 @@
     <string name="barcrwal_update_suceesfully">Bar Crawl updated successfully</string>
     <string name="SeeDetail">See Detail</string>
     <string name="Update">Update</string>
+    <string name="BookedVenue">Booked Venue</string>
 
 </resources>

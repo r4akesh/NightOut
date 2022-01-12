@@ -32,6 +32,7 @@ import com.nightout.ui.activity.CMS.AboutActivity
 import com.nightout.ui.activity.CMS.ContactUsActivity
 import com.nightout.ui.activity.CMS.FAQActivity
 import com.nightout.ui.activity.LostItem.LostitemActivity
+import com.nightout.ui.activity.Prebooking.PrebookedListActivity
 import com.nightout.ui.fragment.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
@@ -190,6 +191,9 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
                 startActivity(Intent(THIS, VenuListActvity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"5"))//
             }
+            resources.getString(R.string.BookedVenue)->{
+                startActivity(Intent(THIS, PrebookedListActivity::class.java))//
+            }
 
             resources.getString(R.string.TrackNTrace)->{
                 startActivity(Intent(THIS, TrackTrace::class.java))
@@ -325,6 +329,7 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         menuList.add(SideMenuModel(R.drawable.sidemenu_venues,resources.getString(R.string.Venues),false))
         menuList.add(SideMenuModel(R.drawable.sidemenu_foods,resources.getString(R.string.Foods),false))
         menuList.add(SideMenuModel(R.drawable.sidemenu_event,resources.getString(R.string.Events),false))
+        menuList.add(SideMenuModel(R.drawable.sidemenu_event,resources.getString(R.string.BookedVenue),false))
         menuList.add(SideMenuModel(R.drawable.sidemenu_track,resources.getString(R.string.TrackNTrace),false))
         menuList.add(SideMenuModel(R.drawable.ic_favorite_sidemenu,resources.getString(R.string.Favourite),false))
         menuList.add(SideMenuModel(R.drawable.sidemenu_invited,resources.getString(R.string.Invited_BarCrawl),false))

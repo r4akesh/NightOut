@@ -44,6 +44,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var setEndLocModel: LiveData<ApiSampleResource<SetEndLocModel>>
     lateinit var barcrwalCreatedViewModel: LiveData<ApiSampleResource<BarcrwalCreatedRes>>
     lateinit var notifEmilSettingViewModel: LiveData<ApiSampleResource<NotifEmilSettingRes>>
+    lateinit var prebookedViewModel: LiveData<ApiSampleResource<PrebookedlistResponse>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -220,5 +221,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun barCrwalInvitedList(): LiveData<ApiSampleResource<InvitedBarCrwlResponse>> {
         invitedBarCrwlViewMOdel = webServiceRepository.invitedBarCrwalList()
         return invitedBarCrwlViewMOdel
+    }
+
+    fun prebookedList(): LiveData<ApiSampleResource<PrebookedlistResponse>> {
+        prebookedViewModel = webServiceRepository.preBookedList()
+        return prebookedViewModel
     }
 }

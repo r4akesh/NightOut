@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/preConstrentToolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/prebookedlistToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@+id/preConstrentToolbar">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/prebookProfile"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginStart="@dimen/_5ssp"
+                android:src="@drawable/no_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                app:strokeColor="@color/text_yello"
+                app:strokeWidth="@dimen/_1sdp" />
+
+            <TextView
+                android:id="@+id/prebookVenuName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="asdasd"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toEndOf="@+id/prebookProfile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/prebookDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="asdasd"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toEndOf="@+id/prebookProfile"
+                app:layout_constraintTop_toBottomOf="@+id/prebookVenuName" />
+
+            <TextView
+                android:id="@+id/prebookTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="asdasd"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toEndOf="@+id/prebookProfile"
+                app:layout_constraintTop_toBottomOf="@+id/prebookDate" />
+
+
+            <TextView
+                android:id="@+id/preBookPaidAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Paid Amount "
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prebookProfile" />
+
+            <TextView
+                android:id="@+id/preBookEntryPaidAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="100"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/preBookPaidAmount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/preBookPaidAmount" />
+
+            <View
+                android:id="@+id/prebookedView0"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/view_line_clr"
+                app:layout_constraintTop_toBottomOf="@+id/preBookPaidAmount" />
+
+            <TextView
+                android:id="@+id/preBookEntryTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Entry Time"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prebookedView0" />
+
+            <TextView
+                android:id="@+id/preBookEntryTimeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Entry Time"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/preBookEntryTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/preBookEntryTime" />
+
+            <View
+                android:id="@+id/prebookedView1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/view_line_clr"
+                app:layout_constraintTop_toBottomOf="@+id/preBookEntryTime" />
+
+
+            <TextView
+                android:id="@+id/preBookedTotPerson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Total Person"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prebookedView1" />
+
+            <TextView
+                android:id="@+id/preBookedTotPersonValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/preBookedTotPerson"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/preBookedTotPerson" />
+
+            <View
+                android:id="@+id/prebookedView2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/view_line_clr"
+                app:layout_constraintTop_toBottomOf="@+id/preBookedTotPerson" />
+
+            <TextView
+                android:id="@+id/preBookedReq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Special Requirement"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prebookedView2" />
+
+            <TextView
+                android:id="@+id/preBookedReqValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="Special Requirement"
+                android:textColor="@color/white_thred"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/preBookedReq" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+               android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/preBookedReqValue" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

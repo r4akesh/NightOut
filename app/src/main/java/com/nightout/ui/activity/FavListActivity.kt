@@ -140,7 +140,7 @@ class FavListActivity : BaseActivity() {
         var map = HashMap<String, String>()
         map["venue_id"] = dataList[pos].id
         map["vendor_id"] = dataList[pos].venue_detail.id
-        map["status"] =dataList[pos].venue_detail.barcrawl     fgdfgfd dsfgsdgddf
+        map["status"] =dataList[pos].venue_detail.barcrawl
         map["store_type"] =dataList[pos].venue_detail.store_type
 
         doAddBarCrawlModel.doAddBarCrawl(map).observe(this@FavListActivity, {

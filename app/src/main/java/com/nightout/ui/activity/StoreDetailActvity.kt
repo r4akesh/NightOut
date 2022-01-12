@@ -42,6 +42,7 @@ import android.view.animation.ScaleAnimation
 import android.view.Gravity
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
+import com.nightout.ui.activity.Prebooking.PreBookingActivity
 
 
 class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {

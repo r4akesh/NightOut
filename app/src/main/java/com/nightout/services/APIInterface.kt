@@ -147,4 +147,8 @@ interface APIInterface {
 
     @GET("bar_crawl_invited_list")
     fun barcrawlinvitedlistAPI(): Call<ResponseBody>
+
+    @GET("pre_booking_list")
+    fun pre_booking_listAPI(): Call<ResponseBody>
+
 }

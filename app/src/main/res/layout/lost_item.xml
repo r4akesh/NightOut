@@ -32,7 +32,7 @@
             android:fontFamily="@font/proximanova_reg"
             android:text="Watch"
             app:layout_constraintEnd_toStartOf="@+id/lostItem3Dot"
-            android:textColor="@color/white_thred"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@+id/lostItemProfile"
             app:layout_constraintTop_toTopOf="parent" />

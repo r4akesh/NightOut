@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.Prebooking
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -13,12 +13,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.DrinksMenuAdapter
-import com.nightout.adapter.FoodsMenuAdapter
 import com.nightout.adapter.PackageAdapter
-import com.nightout.adapter.SnacksMenuAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.PrebookingActivityBinding
 import com.nightout.model.VenuDetailModel
+import com.nightout.ui.activity.CongrtulationActvity
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -219,7 +218,7 @@ class PreBookingActivity : BaseActivity() {
                       Status.SUCCESS -> {
                           progressDialog.dialog.dismiss()
                           it.data?.let { detailData ->
-                          startActivity(Intent(THIS!!,CongrtulationActvity::class.java)
+                          startActivity(Intent(THIS!!, CongrtulationActvity::class.java)
                               .putExtra(AppConstant.INTENT_EXTRAS.CONGRETS_MSG,"Pre Booking is successfully completed"))
                           finish()
                           }
@@ -326,18 +325,31 @@ class PreBookingActivity : BaseActivity() {
         val c = Calendar.getInstance()
         var mHour = c[Calendar.HOUR_OF_DAY]
         var mMinute = c[Calendar.MINUTE]
+        var AM_PM="AM"
+        var hr=0
         val timePickerDialog = TimePickerDialog(
             this,
             { view, hourOfDay, minute ->
+                hr= hourOfDay
+                AM_PM = if(hourOfDay < 12) {
+                    if(hourOfDay==0){
+                        hr=12
+                    }
+                    "AM";
+                } else {
+                    if(hourOfDay!=12){
+                    hr= hourOfDay-12}
+                    "PM";
+                }
                 var min = minute.toString()
                 if (min.length == 1) {
                     min = "0$min"
                 }
-                binding.preBookingTimePicker.text = "$hourOfDay:$min"
+                binding.preBookingTimePicker.text = "$hr:$min $AM_PM"
             },
             mHour,
             mMinute,
-            true
+            false
         )
         timePickerDialog.show()
     }

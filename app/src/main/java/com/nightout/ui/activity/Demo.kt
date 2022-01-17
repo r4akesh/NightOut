@@ -56,11 +56,34 @@ import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
 
 import android.widget.VideoView
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
+import com.google.android.exoplayer2.extractor.ExtractorsFactory
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelector
+import com.google.android.exoplayer2.upstream.BandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.teresaholfeld.stories.StoriesProgressView
 import java.net.URI
+import android.widget.Toast
+
+import omari.hamza.storyview.callback.OnStoryChangedCallback
+
+import omari.hamza.storyview.callback.StoryClickListeners
+
+import omari.hamza.storyview.StoryView
+
+import omari.hamza.storyview.model.MyStory
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 
-class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
+class Demo : BaseActivity() {
     //https://githubmemory.com/repo/ravishankarsingh1996/StoriesProgressView
     lateinit var binding : DemoBinding
 
@@ -86,226 +109,77 @@ class Demo : BaseActivity(), StoriesProgressView.StoriesListener{
     // on below line we are creating a counter
     // for keeping count of our stories.
     private var counter = 0
-
+    var exoPlayer: SimpleExoPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this@Demo, R.layout.demo)
 
-        binding.storiesProgressView.setStoriesCount(imagesList.size)
-        binding.storiesProgressView.setStoryDuration(5000L)
-        binding.storiesProgressView.setStoriesListener(this)
-         binding.storiesProgressView.startStories(counter)
+        showStories()
 
-        setImageNormal(THIS!!,binding.imagePreview,imagesList[counter])
 
-        binding.reverse.setOnTouchListener(onTouchListener)
-        binding.skip.setOnTouchListener(onTouchListener)
-        binding.reverse.setOnClickListener(this)
-        binding.skip.setOnClickListener(this)
+
     }
-    fun setImageNormal(context: Context?, imageView: ImageView?, url: String?) {
-        binding.imagePreview.visibility= VISIBLE
-        binding.relVideoView.visibility= GONE
-        binding.progress.visibility= VISIBLE
-        Handler(Looper.getMainLooper()).post(Runnable {
-            if (binding.storiesProgressView != null)
-                binding.storiesProgressView.pause()
-        })
 
-        Glide.with(THIS!!)
-            .load(url)
-            .error(R.drawable.no_image)
-            .listener(object : RequestListener<Drawable?> {
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    binding.progress.visibility= GONE
-                    Handler(Looper.getMainLooper()).post(Runnable {
-                        if (binding.storiesProgressView != null)
-                            binding.storiesProgressView.resume()
-                    })
 
-                    Log.e("TAG", "onResourceReady: ")
-                    return false
+    fun showStories() {
+        val myStories: ArrayList<MyStory> = ArrayList()
+        val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
+        try {
+            val story1 = MyStory(
+                "https://media.pri.org/s3fs-public/styles/story_main/public/images/2019/09/092419-germany-climate.jpg?itok=P3FbPOp-",
+                simpleDateFormat.parse("20-10-2019 10:00:00")
+            )
+            myStories.add(story1)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        try {
+            val story2 = MyStory(
+                "http://i.imgur.com/0BfsmUd.jpg",
+                simpleDateFormat.parse("26-10-2019 15:00:00"),
+                "#TEAM_STANNIS"
+            )
+            myStories.add(story2)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val story3 = MyStory(
+            "https://mfiles.alphacoders.com/681/681242.jpg"
+        )
+        myStories.add(story3)
+        StoryView.Builder(supportFragmentManager)
+            .setStoriesList(myStories)
+            .setStoryDuration(5000)
+            .setTitleText("Hamza Al-Omari")
+            .setSubtitleText("Damascus")
+            .setStoryClickListeners(object : StoryClickListeners {
+                override fun onDescriptionClickListener(position: Int) {
+                    Toast.makeText(
+                        this@Demo,
+                        "Clicked: " + myStories[position].description,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Log.e("TAG", "onLoadFailed: ")
-                    binding.progress.visibility= GONE
-                   // binding.storiesProgressView.skip()
-
-                   return false
-                }
+                override fun onTitleIconClickListener(position: Int) {}
             })
-            .into(imageView!!)
-    }
-
-
-    fun setVideo(context: Context?, videoview: VideoView?, url: String?)  {
-        binding.relVideoView.visibility= VISIBLE
-        binding.imagePreview.visibility= GONE
-        Handler(Looper.getMainLooper()).post(Runnable {
-            if (binding.storiesProgressView != null)
-                binding.storiesProgressView.pause()
-        })
-      //  Log.e("TAG", "setVideo111: ")
-        videoview?.setVideoURI(Uri.parse(url))
-        try {
-            videoview?.setOnPreparedListener { mediaPlayer ->
-                mediaPlayer.setOnInfoListener(MediaPlayer.OnInfoListener { mediaPlayer, i, i1 ->
-                    Log.e("TAG", "onInfo: =============>>>>>>>>>>>>>>>>>>>$i")
-                    when (i) {
-                        MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START -> {
-                            binding.progress.setVisibility(GONE)
-                            storiesProgressView.resume()
-                            return@OnInfoListener true
-                        }
-                        MediaPlayer.MEDIA_INFO_BUFFERING_START -> {
-                            binding.progress.setVisibility(VISIBLE)
-                            Handler(Looper.getMainLooper()).post(Runnable {
-                                if (binding.storiesProgressView != null)
-                                    binding.storiesProgressView.pause()
-                            })
-                            return@OnInfoListener true
-                        }
-                        MediaPlayer.MEDIA_INFO_BUFFERING_END -> {
-                            binding.progress.setVisibility(VISIBLE)
-                            Handler(Looper.getMainLooper()).post(Runnable {
-                                if (binding.storiesProgressView != null)
-                                    binding.storiesProgressView.pause()
-                            })
-                            return@OnInfoListener true
-                        }
-                        MediaPlayer.MEDIA_ERROR_TIMED_OUT -> {
-                            binding.progress.setVisibility(VISIBLE)
-                            Handler(Looper.getMainLooper()).post(Runnable {
-                                if (binding.storiesProgressView != null)
-                                    binding.storiesProgressView.pause()
-                            })
-                            return@OnInfoListener true
-                        }
-                        MediaPlayer.MEDIA_INFO_AUDIO_NOT_PLAYING -> {
-                            binding.progress.setVisibility(VISIBLE)
-                            Handler(Looper.getMainLooper()).post(Runnable {
-                                if (binding.storiesProgressView != null)
-                                    binding.storiesProgressView.pause()
-                            })
-                            return@OnInfoListener true
-                        }
-                    }
-                    false
-                })
-                videoview.start()
-                Log.e("TAG", "setVideo: "+url)
-                binding.progress.setVisibility(GONE)
-              //  binding.storiesProgressView.setStoryDuration(mediaPlayer.duration.toLong())
-                // binding.storiesProgressView.setStoryDuration(30000)
-                binding.storiesProgressView.startStories(counter)
+            .setOnStoryChangedCallback { position ->
+                Toast.makeText(
+                    this@Demo,
+                    position.toString() + "",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        } catch (e: Exception) {
-            Log.e("TAG", "setVideo2222: "+e)
-        }
+            .setStartingIndex(0)
+            //.setRtl(true)
+            .build()
+            .show()
     }
 
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        if(v==binding.reverse){
-            binding.storiesProgressView.reverse();
-        }
-        else if(v==binding.skip){
-            binding.storiesProgressView.skip();
-        }
-    }
-
-    // on below line we are creating a new method for adding touch listener
-    @SuppressLint("ClickableViewAccessibility")
-    private val onTouchListener = OnTouchListener { v, event -> // inside on touch method we are
-        // getting action on below line.
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-
-                // on action down when we press our screen
-                // the story will pause for specific time.
-                pressTime = System.currentTimeMillis()
-
-                // on below line we are pausing our indicator.
-                binding.storiesProgressView!!.pause()
-                return@OnTouchListener false
-            }
-            MotionEvent.ACTION_UP -> {
-
-                // in action up case when user do not touches
-                // screen this method will skip to next image.
-                val now = System.currentTimeMillis()
-
-                // on below line we are resuming our progress bar for status.
-                binding.storiesProgressView!!.resume()
-
-                // on below line we are returning if the limit < now - presstime
-                return@OnTouchListener limit < now - pressTime
-            }
-        }
-        false
-    }
-    override fun onNext() {
-        var cnt =++counter
-//        Log.e("TAG", "{$cnt ----$counter}")
-//       if(cnt==1){
-//           setVideo(THIS!!,binding.videoView,imagesList[cnt])
-//       }else{
-//           binding.videoView.stopPlayback();
-//           setImageNormal(THIS!!,binding.imagePreview,imagesList[cnt])
-//       }
-
-        setImageNormal(THIS!!,binding.imagePreview,imagesList[cnt])
-
-    }
-
-    override fun onPrev() {
-        if ((counter - 1) < 0) return;
 
 
-        setImageNormal(THIS!!,binding.imagePreview,imagesList[--counter])
 
-    }
-
-    override fun onComplete() {
-        try {
-            binding.storiesProgressView.destroy()
-            finish()
-        } catch (e: Exception) {
-            Log.e("TAG", "onDestroy: ")
-        }
-        Log.e("TAG", "onDestroy: ")
-    }
-
-    override fun onDestroy() {
-        try {
-            binding.storiesProgressView.destroy()
-        } catch (e: Exception) {
-            Log.e("TAG", "onDestroy: ")
-        }
-        super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        try {
-            binding.storiesProgressView.destroy();
-        } catch (e: Exception) {
-            Log.e("TAG", "onBackPressed: ")
-        }
-        super.onBackPressed()
-    }
 
 }

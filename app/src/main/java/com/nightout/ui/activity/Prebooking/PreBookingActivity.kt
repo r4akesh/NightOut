@@ -197,8 +197,8 @@ class PreBookingActivity : BaseActivity() {
                   MyApp.popErrorMsg("","Please select any special package or Bar Menu",THIS!!)
                   return
               }
-               jsnObjMain.put("venue_id",venuID)
-            // jsnObjMain.put("venue_id","217")
+              // jsnObjMain.put("venue_id",venuID)
+              jsnObjMain.put("venue_id","217")
               jsnObjMain.put("vendor_id",vendorId)
               jsnObjMain.put("date",selectedDateFinal)
               jsnObjMain.put("time",binding.preBookingTimePicker.text.toString())

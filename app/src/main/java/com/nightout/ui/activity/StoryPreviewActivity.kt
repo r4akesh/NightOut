@@ -152,7 +152,7 @@ class StoryPreviewActivity : BaseActivity(), StoriesProgressView.StoriesListener
                     when (i) {
                         MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START -> {
                             binding.progress.setVisibility(GONE)
-                            storiesProgressView.resume()
+                            binding.storiesProgressView.resume()
                             return@OnInfoListener true
                         }
                         MediaPlayer.MEDIA_INFO_BUFFERING_START -> {

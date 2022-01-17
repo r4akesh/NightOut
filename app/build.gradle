@@ -139,4 +139,5 @@ dependencies {
 
     //implementation 'com.github.shts:StoriesProgressView:3.0.0'
    implementation 'com.github.teresaholfeld:Stories:1.1.4'
+    implementation 'com.github.OMARIHAMZA:StoryView:1.0.2-alpha'
 }

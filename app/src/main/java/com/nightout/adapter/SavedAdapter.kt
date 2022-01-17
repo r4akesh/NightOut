@@ -45,8 +45,8 @@ class SavedAdapter(
         try {
             viewHolder.binding.sharedItemTitle.setText(arrayList[position].name)
             //plz show the date value instead of created_at
-            var vDate = Commons.millsToDate(Commons.strToLong(arrayList[position].date))
-            viewHolder.binding.sharedItemDate.text = vDate
+          //  var vDate = Commons.millsToDate(Commons.strToLong(arrayList[position].date))
+            viewHolder.binding.sharedItemDate.text = arrayList[position].date
 
             Utills.setImageNormal(context, viewHolder.binding.sharedItemImg,arrayList[position].image)
             viewHolder.itemView.setOnClickListener {

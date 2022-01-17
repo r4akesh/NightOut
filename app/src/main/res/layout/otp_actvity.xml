@@ -112,7 +112,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_20ssp"
                     android:text="@={otpviewmodel.otp}"
-                    android:cursorVisible="false"
+                    android:cursorVisible="true"
                     android:inputType="number"
                     android:itemBackground="@color/white"
                     android:padding="@dimen/_10ssp"

@@ -8,7 +8,7 @@
     <string name="Hello">Hello, Welcome!</string>
     <string name="EnterCode">Enter Code</string>
     <string name="OTP">OTP</string>
-    <string name="didnot_get_pwd">Didn\'t get a text</string>
+    <string name="didnot_get_pwd">Didn\'t get a text?</string>
     <string name="SendAgain">Send Again</string>
     <string name="password">Password</string>
     <string name="forget_password">Forgot ID / Password?</string>
@@ -237,5 +237,6 @@
     <string name="SeeDetail">See Detail</string>
     <string name="Update">Update</string>
     <string name="BookedVenue">Booked Venue</string>
+    <string name="MyOrders">My Orders</string>
 
 </resources>

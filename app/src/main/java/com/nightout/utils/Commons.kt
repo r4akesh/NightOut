@@ -118,6 +118,10 @@ object Commons {
         val format = "MMM dd, yyyy"
         return SimpleDateFormat(format).format(cal.time)
     }
+    fun millsToDateFormat(dateInMillis: Long): String {
+        val formatter = SimpleDateFormat("dd MMM yyyy")
+        return formatter.format(Date(dateInMillis))
+    }
 
     /**
      * String to calander.

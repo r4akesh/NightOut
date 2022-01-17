@@ -63,6 +63,7 @@ class AppConstant {
         const val CITYNAME = "CITYNAME"
         const val iSFROMESelectBarCrwlActivity = "iSFROMESelectBarCrwlActivity"
         const val SharedList_MODEL = "SharedList_MODEL"
+        const val PreBookDetail = "PreBookDetail"
 
 
 

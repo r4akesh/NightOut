@@ -1,5 +1,6 @@
 package com.nightout.ui.activity.barcrawl
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -211,7 +212,9 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
             readTask(url)
             // googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lang), 13f))
         } else {
-            MyApp.popErrorMsg("", "URL blank !!", THIS!!)
+            if (! this@BarCrawlSavedMapActivity.isFinishing) {
+                MyApp.popErrorMsg("", "URL blank !!", THIS!!)
+            }
         }
     }
 
@@ -287,7 +290,9 @@ class BarCrawlSavedMapActivity : BaseActivity() ,OnMapReadyCallback{
                                 }
                             }
                         } else{
-                            MyApp.popErrorMsg("","Lat-Long not found!!",THIS!!)
+                            if (! this@BarCrawlSavedMapActivity.isFinishing) {
+                                MyApp.popErrorMsg("", "Lat-Long not found!!", THIS!!)
+                            }
                         }
                     }
 

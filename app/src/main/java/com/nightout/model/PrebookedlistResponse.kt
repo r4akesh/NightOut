@@ -9,8 +9,7 @@ data class PrebookedlistResponse(
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) :Serializable{
-
+) : Serializable {
     data class Data(
         val amount: String,
         val created_at: String,
@@ -23,12 +22,12 @@ data class PrebookedlistResponse(
         val time: String,
         val updated_at: String,
         val user_id: String,
-        val vendor_detail: String,
+        val vendor_detail: VendorDetail,
         val vendor_id: String,
         val venue_detail: VenueDetail,
         val venue_id: String,
         val whole_venue: String
-    ):Serializable
+    ) : Serializable
 
     data class PreBookingDetail(
         val created_at: String,
@@ -39,7 +38,29 @@ data class PrebookedlistResponse(
         val qty: String,
         val updated_at: String,
         val venue_id: String
-    ):Serializable
+    ) : Serializable
+
+    data class VendorDetail(
+        val address: String,
+        val created_at: String,
+        val deleted_at: String,
+        val device_id: String,
+        val device_type: String,
+        val email: String,
+        val email_verified_at: String,
+        val first_name: String,
+        val id: String,
+        val last_name: String,
+        val name: String,
+        val otp: String,
+        val otp_expire: String,
+        val phonenumber: String,
+        val profile: String,
+        val slug: String,
+        val status: String,
+        val updated_at: String,
+        val userID: String
+    ) : Serializable
 
     data class VenueDetail(
         val age_limit: String,
@@ -87,7 +108,7 @@ data class PrebookedlistResponse(
         val updated_at: String,
         val user_id: String,
         val venue_address: String
-    ):Serializable
+    ) : Serializable
 
     data class ProductDetail(
         val category_id: String,
@@ -108,5 +129,5 @@ data class PrebookedlistResponse(
         val updated_at: String,
         val vendor_id: String,
         val venue_id: String
-    ):Serializable
+    ) : Serializable
 }

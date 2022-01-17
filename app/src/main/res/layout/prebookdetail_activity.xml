@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <include
-                android:id="@+id/prebookedlistToolBar"
+                android:id="@+id/prebookeddetailToolBar"
                 layout="@layout/toolbar_common" />
 
 

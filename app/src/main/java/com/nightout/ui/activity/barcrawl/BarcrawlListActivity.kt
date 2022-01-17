@@ -40,13 +40,11 @@ class BarcrawlListActivity : BaseActivity() {
     var isFROM_ShareListActivity=false
     var isFromSaveListActivity=false
    lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
-//   lateinit  var venusSelectedOldShare : SharedBarcrwalRes.Data
+    lateinit  var venusSelectedOldShare : SharedBarcrwalRes.Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BarcrawlListActivity, R.layout.barcrwallist_activity)
-        venusSelectedOld = BarcrwalSavedRes.Data("","","","","","","","","","","","", "","",ArrayList())
-       // venusSelectedOldShare = SharedBarcrwalRes.Data(SharedBarcrwalRes.BarCrawl(),"","","","","","","","", ArrayList())
         initView()
         setToolBar()
         setBottomHrList()
@@ -60,9 +58,9 @@ class BarcrawlListActivity : BaseActivity() {
         if(isFromSaveListActivity){
               venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
         }
-//        else if(isFROM_ShareListActivity){
-//            venusSelectedOldShare= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
-//        }
+        else if(isFROM_ShareListActivity){
+            venusSelectedOldShare= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
+        }
 
         bar_crawl_listAPICAll()
 
@@ -76,11 +74,7 @@ class BarcrawlListActivity : BaseActivity() {
             if (listAllVenue[listClickPosSave].isSelected) {
                 //  binding.barcrwalAddBtn.visibility=GONE
             } else {
-                if (listAllVenue[listClickPosSave].isSelected) {
-                    listAllVenue[listClickPosSave].isSelected = false
-                } else {
-                    listAllVenue[listClickPosSave].isSelected = true
-                }
+                listAllVenue[listClickPosSave].isSelected = !listAllVenue[listClickPosSave].isSelected
                 venuListBarCrawaAdapter.notifyItemChanged(listClickPosSave)
 
                 //  binding.barcrwalAddBtn.visibility= VISIBLE
@@ -105,9 +99,10 @@ class BarcrawlListActivity : BaseActivity() {
                     Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
-
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFROM_ShareListActivity)
                         .putExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model, venusSelectedOld)
+                        .putExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL, venusSelectedOldShare)
 
                         .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME, intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)),REQCODE_CreateBarCrwlSuccess)
 
@@ -171,6 +166,17 @@ class BarcrawlListActivity : BaseActivity() {
                                        }
                                    }
                                 }
+                                else if(isFROM_ShareListActivity){
+                                    for (i in 0 until listAllVenue.size){
+                                        for(j in 0 until venusSelectedOldShare.venue_list.size ){
+                                            if(venusSelectedOldShare.venue_list[j].id==listAllVenue[i].id) {
+                                                listAllVenue[i].isSelected = true
+                                                listHr.add(listAllVenue[i])
+                                            }
+                                            // break
+                                        }
+                                    }
+                                }
 
                                 setAllVenuList()
                                 if(isFromSaveListActivity || isFROM_ShareListActivity) {
@@ -214,6 +220,10 @@ class BarcrawlListActivity : BaseActivity() {
     }
 
     private fun initView() {
+        venusSelectedOld = BarcrwalSavedRes.Data("","","","","","","","","","","","", "","",ArrayList())
+        venusSelectedOldShare = SharedBarcrwalRes.Data(SharedBarcrwalRes.BarCrawl("","","","","","","","","","","","","",""),
+            "","","","","","",SharedBarcrwalRes.UserDetail("","","","","","","","","","","","","","","","",
+                "","",""),"", ArrayList())
         binding.barCrwalNextBtn.setOnClickListener(this)
         binding.barcrwalSeeDeatil.setOnClickListener(this)
         binding.barcrwalAddBtn.setOnClickListener(this)

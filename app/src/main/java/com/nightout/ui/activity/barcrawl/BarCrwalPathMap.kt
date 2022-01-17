@@ -28,7 +28,6 @@ import com.google.android.gms.maps.model.*
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrwalmappathActvityBinding
-import com.nightout.model.AllBarCrwalListResponse
 import com.nightout.ui.activity.SharedMemeberActvity
 import com.nightout.utils.*
 import kotlinx.coroutines.*
@@ -42,9 +41,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.CameraUpdate
-import com.nightout.model.BarCrwlListModel
-import com.nightout.model.BarcrwalSavedRes
-import com.nightout.model.LoginModel
+import com.nightout.model.*
 import com.nightout.ui.activity.ContactListNewActvity
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -79,7 +76,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     var publicPrivetValue="1"
     var REQCODE_CreateBarCrwlSuccess = 999
     lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
-
+    lateinit  var venusSelectedOldShare : SharedBarcrwalRes.Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,7 +120,11 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         isFromSaveListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,false)
         if(isFromSaveListActivity){
             venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
+            binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
 
+        }
+        else if(isFromShareListActivity){
+            venusSelectedOldShare = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
             binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
         }
     }
@@ -161,9 +162,18 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         if(isFromSaveListActivity){
             dgEtBarCrwal.setText(venusSelectedOld.name)
             var dateMills=venusSelectedOld.date
-            dgDateBtn.setText(Commons.millsToDateStr2(Commons.strToLong(dateMills)))
+            dgDateBtn.setText(venusSelectedOld.date)
             //(1=>Public, 2=>Private)
-            if(venusSelectedOld.public_private.equals("2")){
+            if(venusSelectedOld.public_private == "2"){
+                dgSpin.setSelection(1)
+            }
+        }
+        else if(isFromShareListActivity){
+            dgEtBarCrwal.setText(venusSelectedOldShare.bar_crawl.name)
+           // var dateMills=venusSelectedOldShare.date
+            dgDateBtn.setText(venusSelectedOldShare.bar_crawl.date)
+            //(1=>Public, 2=>Private)
+            if(venusSelectedOldShare.bar_crawl.public_private == "2"){
                 dgSpin.setSelection(1)
             }
         }
@@ -226,7 +236,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         }else{
             builder.addFormDataPart("saved_shared", "1")//
         }
-         builder.addFormDataPart("date", ""+Commons.strToTimemills3(dgDateBtn.text.toString()))
+         builder.addFormDataPart("date", dgDateBtn.text.toString())
         if(barcrwalId.isNotBlank()) {
             builder.addFormDataPart("id", barcrwalId)
         }
@@ -507,7 +517,13 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
         val datePickerDialog = DatePickerDialog(
             this,
-            { view, year, monthOfYear, dayOfMonth -> dgDateBtn.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year) },
+            { view, year, monthOfYear, dayOfMonth ->
+                var dat=dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                 var mills=       Commons.strToTimemills(dat)
+                     var datFinal=           Commons.millsToDateFormat(mills)
+
+                dgDateBtn.text = datFinal
+            },
             mYear,
             mMonth,
             mDay

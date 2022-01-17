@@ -13,6 +13,7 @@ import com.nightout.adapter.PreBookedListAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.PrebookedlistActvityBinding
 import com.nightout.model.PrebookedlistResponse
+import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -60,7 +61,7 @@ class PrebookedListActivity : BaseActivity() {
             }
 
             override fun onClick(pos: Int) {
-                startActivity(Intent(THIS!!,PrebookedDetail::class.java))
+                startActivity(Intent(THIS!!,PrebookedDetail::class.java).putExtra(AppConstant.INTENT_EXTRAS.PreBookDetail,dataList[pos].pre_booking_detail))
             }
 
         })

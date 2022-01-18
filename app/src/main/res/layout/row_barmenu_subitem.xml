@@ -88,6 +88,7 @@
             app:layout_constraintTop_toBottomOf="@+id/drinkSubItemSubTitle" />
 
         <RelativeLayout
+            android:id="@+id/drinkSubItemRelplusMinus"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_10ssp"
@@ -128,6 +129,22 @@
                 android:paddingBottom="@dimen/_5ssp"
                 android:src="@drawable/ic_pluse" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/drinkSubItemQty"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:text="Qty:10"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/border_prebookoing"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:textColor="@color/text_yello"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/drinkSubItemDiscunt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/drinkSubItemChk"

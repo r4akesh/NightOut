@@ -30,17 +30,19 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintTop_toBottomOf="@+id/preConstrentToolbar">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/prebookProfile"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_marginStart="@dimen/_5ssp"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginStart="@dimen/_10ssp"
                 android:src="@drawable/no_image"
+
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
@@ -52,8 +54,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="asdasd"
+                android:fontFamily="@font/proximanova_reg"
+                android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintStart_toEndOf="@+id/prebookProfile"
@@ -66,7 +70,8 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="asdasd"
-                android:textColor="@color/white_thred"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_second"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toEndOf="@+id/prebookProfile"
                 app:layout_constraintTop_toBottomOf="@+id/prebookVenuName" />
@@ -78,7 +83,8 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="asdasd"
-                android:textColor="@color/white_thred"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_second"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toEndOf="@+id/prebookProfile"
                 app:layout_constraintTop_toBottomOf="@+id/prebookDate" />
@@ -88,9 +94,11 @@
                 android:id="@+id/preBookPaidAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:text="Paid Amount "
-                android:textColor="@color/white_thred"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_second"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/prebookProfile" />
@@ -99,11 +107,13 @@
                 android:id="@+id/preBookEntryPaidAmountValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="@font/proximanova_reg"
                 android:text="100"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_11ssp"
 
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+
+                android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/preBookPaidAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/preBookPaidAmount" />
@@ -112,6 +122,8 @@
                 android:id="@+id/prebookedView0"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/view_line_clr"
                 app:layout_constraintTop_toBottomOf="@+id/preBookPaidAmount" />
@@ -122,7 +134,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Entry Time"
-                android:textColor="@color/white_thred"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_second"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/prebookedView0" />
@@ -131,7 +145,8 @@
                 android:id="@+id/preBookEntryTimeValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="@font/proximanova_reg"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:text="Entry Time"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp"
@@ -144,7 +159,9 @@
                 android:id="@+id/prebookedView1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/view_line_clr"
                 app:layout_constraintTop_toBottomOf="@+id/preBookEntryTime" />
 
@@ -155,7 +172,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Total Person"
-                android:textColor="@color/white_thred"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/white_second"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/prebookedView1" />
@@ -164,7 +183,8 @@
                 android:id="@+id/preBookedTotPersonValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="@font/proximanova_reg"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:text="4"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp"
@@ -177,7 +197,9 @@
                 android:id="@+id/prebookedView2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/view_line_clr"
                 app:layout_constraintTop_toBottomOf="@+id/preBookedTotPerson" />
 
@@ -189,6 +211,8 @@
                 android:text="Special Requirement"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11ssp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/prebookedView2" />
 
@@ -197,19 +221,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
                 android:text="Special Requirement"
-                android:textColor="@color/white_thred"
+                android:textColor="@color/white_second"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/preBookedReq" />
+            <View
+                android:id="@+id/prebookedView3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/view_line_clr"
+                app:layout_constraintTop_toBottomOf="@+id/preBookedReqValue" />
+
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/preBookedRecycle"
                 android:layout_width="match_parent"
                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/preBookedReqValue" />
+                app:layout_constraintTop_toBottomOf="@+id/prebookedView3" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

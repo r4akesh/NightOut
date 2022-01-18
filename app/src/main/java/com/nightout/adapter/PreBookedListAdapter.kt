@@ -5,6 +5,7 @@ import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 
@@ -38,16 +39,19 @@ class PreBookedListAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.binding.lostItemTitle.text = arrayList[position].venue_detail.store_name
+        viewHolder.binding.lostItemSubTitle.text = arrayList[position].date
 
+        Utills.setImageNormal(
+            context,
+            viewHolder.binding.lostItemProfile,
+            arrayList[position].venue_detail.store_logo
+        )
 
-        viewHolder.binding.lostItemTitle.text=arrayList[position].venue_detail.store_name
-        viewHolder.binding.lostItemSubTitle.text=arrayList[position].date
-
-        Utills.setImageNormal(context, viewHolder.binding.lostItemProfile,arrayList[position].venue_detail.store_logo)
-
-            viewHolder.binding.lostItemStatus.setTextColor(context.resources.getColor(R.color.white_second))
-            viewHolder.binding.lostItemStatus.text =arrayList[position].time
-        viewHolder.binding.lostItem3Dot.visibility=GONE
+        viewHolder.binding.lostItemStatus.setTextColor(context.resources.getColor(R.color.white_second))
+        viewHolder.binding.lostItemStatus.text = arrayList[position].time
+        viewHolder.binding.lostItem3Dot.visibility = VISIBLE
+        viewHolder.binding.lostItem3Dot.setImageResource(R.drawable.close_redimg)
         viewHolder.itemView.setOnClickListener {
             Log.d("TAG", "onBindViewHolder: ")
             clickListener.onClick(position)

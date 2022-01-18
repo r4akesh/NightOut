@@ -2,8 +2,6 @@ package com.nightout.ui.activity.Prebooking
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.view.View.GONE
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
@@ -57,11 +55,11 @@ class PrebookedListActivity : BaseActivity() {
     private fun setList(dataList: ArrayList<PrebookedlistResponse.Data>) {
         preBookedListAdapter =PreBookedListAdapter(THIS!!,dataList,object:PreBookedListAdapter.ClickListener{
             override fun onClickSetting(pos: Int, lostItem3Dot: ImageView) {
-
+                        cancelAPICAll(dataList[pos].id)
             }
 
             override fun onClick(pos: Int) {
-                startActivity(Intent(THIS!!,PrebookedDetail::class.java).putExtra(AppConstant.INTENT_EXTRAS.PreBookDetail,dataList[pos].pre_booking_detail))
+                startActivity(Intent(THIS!!,PrebookedDetail::class.java).putExtra(AppConstant.INTENT_EXTRAS.PreBookDetail,dataList[pos]))
             }
 
         })
@@ -71,6 +69,30 @@ class PrebookedListActivity : BaseActivity() {
             it.adapter = preBookedListAdapter
         }
 
+    }
+
+    private fun cancelAPICAll(bookingID: String) {
+        var map = HashMap<String,String>()
+        map["id"] = bookingID
+        customProgressDialog.show(this@PrebookedListActivity, "")
+        prebooedViewModel.prebookedCancel(map).observe(this@PrebookedListActivity,{
+            when(it.status){
+                Status.SUCCESS->{
+                    customProgressDialog.dialog.dismiss()
+                    it.data?.let {myData->
+
+                    }
+                }
+                Status.LOADING->{
+
+                }
+                Status.ERROR->{
+                    customProgressDialog.dialog.dismiss()
+                    // Utills.showSnackBarOnError(binding.lostConstrentToolbar, it.message!!, this@LostitemActivity)
+
+                }
+            }
+        })
     }
 
     private fun setToolbar() {

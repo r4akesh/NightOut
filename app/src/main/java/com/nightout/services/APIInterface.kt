@@ -151,4 +151,7 @@ interface APIInterface {
     @GET("pre_booking_list")
     fun pre_booking_listAPI(): Call<ResponseBody>
 
+    @POST("pre_booking_cancel")
+    fun pre_booking_cancelAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
 }

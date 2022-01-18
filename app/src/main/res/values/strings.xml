@@ -238,5 +238,6 @@
     <string name="Update">Update</string>
     <string name="BookedVenue">Booked Venue</string>
     <string name="MyOrders">My Orders</string>
+    <string name="VenueDetail">Venue Detail</string>
 
 </resources>

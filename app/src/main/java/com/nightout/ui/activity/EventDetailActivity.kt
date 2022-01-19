@@ -179,13 +179,14 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
             }
             binding.eventDetailTitle.text = dt.store_name
             //   binding.storeDeatilRating.text = dt.rating.avg_rating
-            binding.eventDetailOpenTime.text = "Open at : " + dt.event_start_time + " To " + dt.event_end_time
+            binding.eventDetailOpenTime.text = "Start at : " + dt.event_start_time + " To " + dt.event_end_time
             //   binding.storeDeatilSubTitle.text = "Free Entry " + dt.free_start_time + " To " + dt.free_end_time
             binding.eventDetailPhno.text = "+44 "+dt.store_number
             binding.eventDetailEmail.text = dt.store_email
             binding.eventDetailDate.text = dt.event_date
             binding.eventDetailRating.text = resources.getString(R.string.currency_sumbol)+dt.sale_price
-            binding.eventDetailAge.text = dt.age_limit+" age limit"
+           // binding.eventDetailAge.text = dt.age_limit+" age limit"
+            binding.eventDetailAge.text = dt.age_limit
             binding.eventDetailMusic.text = dt.party_theme
             binding.eventDetailCocktail.text = dt.dress_code
             binding.eventDetaiAddrs.text = "Address :  ${dt.store_address}"

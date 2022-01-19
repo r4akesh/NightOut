@@ -455,6 +455,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 stopLocationUpdate()
                 if(PreferenceKeeper.instance.currentAddrs!!.isBlank()) {
                     getAddrsFrmLatlang(location.latitude, location.longitude)
+                }else{
+                    binding.headerHome.headerAddrs.text =  PreferenceKeeper.instance.currentAddrs
+
                 }
                 val shopLatlang = LatLng(location.latitude, location.longitude)
                 val marker = MarkerOptions().position(shopLatlang)

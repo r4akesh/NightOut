@@ -346,7 +346,8 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         setTouchNClick(binding.venulistingToolBar.toolbarBack)
         setTouchNClick(binding.venulistingToolBar.toolbar3dot)
         binding.searchLocationEditText.visibility= GONE
-         binding.venulistingToolBar.toolbarBell.visibility= GONE
+         //binding.venulistingToolBar.toolbarBell.visibility= GONE
+       //   binding.venulistingToolBar.toolbarBell.setImageResource(R.drawable.search_ic)
         binding.venulistingToolBar.toolbarBell.setImageResource(R.drawable.ic_search)
         binding.venulistingToolBar.toolbarBack.setOnClickListener {
             finish()
@@ -354,7 +355,11 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         }
 
         binding.venulistingToolBar.toolbarBell.setOnClickListener {
-            binding.searchLocationEditText.visibility= VISIBLE
+            if(binding.searchLocationEditText.visibility== VISIBLE){
+                binding.searchLocationEditText.visibility = GONE
+            }else{
+                binding.searchLocationEditText.visibility= VISIBLE
+            }
         }
 
 

@@ -4,8 +4,7 @@
     <data></data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/constrent_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,10 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@null"
-            android:paddingTop="@dimen/_10ssp"
-            android:paddingBottom="@dimen/_10ssp"
             android:paddingStart="@dimen/_15ssp"
+            android:paddingTop="@dimen/_10ssp"
             android:paddingEnd="@dimen/_10ssp"
+            android:paddingBottom="@dimen/_10ssp"
             android:src="@drawable/back_ic_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,8 +45,8 @@
             android:text="Menu"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toEndOf="@+id/toolbar_back"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintStart_toEndOf="@+id/toolbar_back"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
         <ImageView
@@ -58,8 +57,8 @@
             android:layout_marginEnd="@dimen/_10ssp"
             android:padding="@dimen/_10ssp"
             android:src="@drawable/maptop_ic"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
         <ImageView
@@ -70,8 +69,8 @@
             android:background="@null"
             android:padding="@dimen/_10ssp"
             android:src="@drawable/bell_witoutspace"
-            app:layout_constraintEnd_toStartOf="@+id/toolbar_3dot"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintEnd_toStartOf="@+id/toolbar_3dot"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
 
         <TextView
@@ -81,13 +80,13 @@
             android:layout_marginEnd="@dimen/_10ssp"
             android:background="@drawable/box_btn_bg_yello"
             android:fontFamily="@font/proximanova_reg"
-            android:visibility="gone"
-            android:paddingTop="@dimen/_3ssp"
             android:gravity="center"
+            android:paddingTop="@dimen/_3ssp"
             android:paddingBottom="@dimen/_3ssp"
             android:text="@string/Create"
             android:textColor="@color/black_pure"
             android:textSize="@dimen/_11ssp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/toolbar_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
@@ -95,16 +94,60 @@
         <TextView
             android:id="@+id/toolbarClearAll"
             android:layout_width="wrap_content"
-            android:text="Clear All"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/proximanova_reg"
+            android:padding="@dimen/_10ssp"
+            android:text="Clear All"
+            android:textColor="@color/clear_toolbar_clr"
             android:textSize="@dimen/_12ssp"
             android:visibility="gone"
-            android:padding="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_back"
-            android:textColor="@color/clear_toolbar_clr"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintStart_toEndOf="@+id/toolbar_back"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_back">
+
+            <EditText
+                android:id="@+id/searchLocationEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10ssp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:background="@drawable/box_serch"
+                android:drawableStart="@drawable/search_ic"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/proximanova_reg"
+                android:hint="@string/search_here"
+                android:padding="@dimen/_10ssp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColorHint="@color/text_hint2"
+                android:textCursorDrawable="@drawable/cursor_white"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintEnd_toStartOf="@+id/toolbarClose"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/toolbarClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/_10ssp"
+                android:padding="@dimen/_10ssp"
+                android:src="@drawable/close_77"
+               app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -611,8 +611,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         adDialog.setCancelable(false)
 
         val listRecyclerview: RecyclerView = adDialog.findViewById(R.id.dialog_recycler)
+        val dialog_logo: ImageView = adDialog.findViewById(R.id.dialog_logo)
         val dialog_close: ImageView = adDialog.findViewById(R.id.dialog_close)
         val dialog_QueryBtn: Button = adDialog.findViewById(R.id.dialog_QueryBtn)
+
+        Utills.setImageNormal(this@StoreDetailActvity,dialog_logo,dt.store_logo)
         setTouchNClick(dialog_close)
         //  var list = setListFacility()
         var facilityAdapter =

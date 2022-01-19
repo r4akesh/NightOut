@@ -35,7 +35,7 @@ class TicketConfirmActvity : BaseActivity() {
             binding.eventTime.text = "Start at :  ${pojoEvntDetl.event_start_time} To ${pojoEvntDetl.event_end_time}"
             binding.eventDate.text = pojoEvntDetl.event_date
             binding.eventAddrs.text = pojoEvntDetl.store_address
-            binding.eventPrice.text = "$" + intent.getStringExtra(AppConstant.INTENT_EXTRAS.TOTAL_AMT)
+            binding.eventPrice.text = resources.getString(R.string.currency_sumbol) + intent.getStringExtra(AppConstant.INTENT_EXTRAS.TOTAL_AMT)
             binding.eventUser.text = PreferenceKeeper.instance.loginResponse?.name
             binding.tickeOrderID.text = "Ticket ID : " + intent.getStringExtra(AppConstant.INTENT_EXTRAS.TICKET_NO)
             //  binding.transID.text =  "Transaction ID : "+intent.getStringExtra(AppConstant.INTENT_EXTRAS.TRANSACTION_ID)

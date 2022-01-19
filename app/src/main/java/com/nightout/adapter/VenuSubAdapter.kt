@@ -1,6 +1,7 @@
 package com.nightout.adapter
 
 import android.content.Context
+import android.graphics.Paint
 
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -46,6 +47,7 @@ class VenuSubAdapter(
         try {
             viewHolder.binding.venusubitemTitle.text=arrayList[position].store_name
             viewHolder.binding.venusubitemSubTitle.text=arrayList[position].store_address
+            viewHolder.binding.venusubitemSubTitle.setPaintFlags(viewHolder.binding.venusubitemSubTitle.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
             viewHolder.binding.venusubitemOpenclosetime.text="Close : "+arrayList[position].close_time
             viewHolder.binding.venusubitemRating.text=arrayList[position].rating.avg_rating
 

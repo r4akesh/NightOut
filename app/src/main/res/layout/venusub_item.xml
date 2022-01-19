@@ -131,6 +131,7 @@
                 android:fontFamily="@font/proximanova_light"
                 android:singleLine="true"
 
+
                 android:gravity="center_vertical"
                 android:drawableStart="@drawable/ic_map_loc"
                 android:text="1 Fairclough St, Liverpool1 "

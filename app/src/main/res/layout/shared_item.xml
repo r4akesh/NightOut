@@ -13,30 +13,41 @@
         android:layout_marginTop="@dimen/_7ssp"
         android:layout_height="wrap_content"
          >
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/sharedItemImg"
-            android:layout_width="@dimen/_45sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginStart="@dimen/_5ssp"
-            app:strokeColor="@color/text_yello"
-            app:strokeWidth="@dimen/_1sdp"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-            android:src="@drawable/no_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-       <!-- <androidx.cardview.widget.CardView
-            android:id="@+id/sharedItemCard"
-            android:layout_width="@dimen/_45sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_height="@dimen/_45sdp"
-            app:cardBackgroundColor="@color/text_yello"
-            app:cardCornerRadius="@dimen/_4sdp"
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sharedItemImgConstrent"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginStart="@dimen/_5ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+              <com.google.android.material.imageview.ShapeableImageView
+                  android:id="@+id/sharedItemImg"
+                  android:layout_width="@dimen/_45sdp"
+                  android:layout_height="@dimen/_45sdp"
 
-        </androidx.cardview.widget.CardView>-->
+                  app:strokeColor="@color/text_yello"
+                  app:strokeWidth="@dimen/_1sdp"
+                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                  android:src="@drawable/no_image"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />
+
+              <ImageView
+                  android:id="@+id/sharedItemPubPriImg"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+
+                  android:src="@drawable/ic_private"
+                  app:layout_constraintBottom_toBottomOf="@+id/sharedItemImgConstrent"
+                  app:layout_constraintEnd_toEndOf="parent" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
         <TextView
             android:id="@+id/sharedItemTitle"
@@ -47,8 +58,8 @@
             android:layout_marginStart="@dimen/_7sdp"
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toEndOf="@+id/sharedItemImg"
-            app:layout_constraintTop_toTopOf="@+id/sharedItemImg" />
+            app:layout_constraintStart_toEndOf="@+id/sharedItemImgConstrent"
+            app:layout_constraintTop_toTopOf="@+id/sharedItemImgConstrent" />
 
         <TextView
             android:id="@+id/sharedItemDate"
@@ -60,7 +71,7 @@
             android:text="25 June 2021"
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@+id/sharedItemImg"
+            app:layout_constraintStart_toEndOf="@+id/sharedItemImgConstrent"
             app:layout_constraintTop_toBottomOf="@+id/sharedItemTitle" />
 
 
@@ -91,15 +102,15 @@
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:src="@drawable/setting_threedot"
-            app:layout_constraintBottom_toBottomOf="@+id/sharedItemImg"
+            app:layout_constraintBottom_toBottomOf="@+id/sharedItemImgConstrent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/sharedItemImg" />
+            app:layout_constraintTop_toTopOf="@+id/sharedItemImgConstrent" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_7ssp"
-            app:layout_constraintTop_toBottomOf="@+id/sharedItemImg"
+            app:layout_constraintTop_toBottomOf="@+id/sharedItemImgConstrent"
             android:background="@color/view_line_clr"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"

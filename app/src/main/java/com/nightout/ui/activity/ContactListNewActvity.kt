@@ -51,6 +51,7 @@ class ContactListNewActvity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this@ContactListNewActvity, R.layout.contactlist_actvity)
         initView()
         setToolBar()
+        listFilter = ArrayList()
           isFROM_BarCrwalPathMapActvity = intent.getBooleanExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, false)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
@@ -202,6 +203,7 @@ class ContactListNewActvity : BaseActivity() {
 
     }
     private fun getAllContactsAPICAll() {
+        Log.e("ok", "getAllContactsAPICAll: ")
         // progressDialog.show(this@ContactListNewActvity, "")
         val jsnObjMain = JSONObject()
         val jarr = JSONArray()
@@ -218,9 +220,13 @@ class ContactListNewActvity : BaseActivity() {
                     when (it.status) {
                         Status.SUCCESS -> {
                             try {
-                                progressDialog.dialog.dismiss()
+                                try {
+                                    progressDialog.dialog.dismiss()
+                                } catch (e: Exception) {
+                                }
                                 listFilter.addAll(it.data?.data!!)
                                 if (!listFilter.isNullOrEmpty()) {
+                                    Log.e("ok", "getAllContactsAPICAll: if")
                                     setListContact()
                                     if(isFROM_BarCrwalPathMapActvity)
                                         binding.addContactDoneBtn.text = "Share"
@@ -229,10 +235,12 @@ class ContactListNewActvity : BaseActivity() {
                                     binding.addContactDoneBtn.visibility = VISIBLE
                                     binding.contactListNoDataConstrent.visibility = GONE
                                 } else {
+                                    Log.e("ok", "getAllContactsAPICAll: else")
                                     binding.contactListNoDataConstrent.visibility = VISIBLE
                                     binding.addContactDoneBtn.visibility = VISIBLE
                                 }
                             } catch (e: Exception) {
+                                Log.d("ok", "getAllContactsAPICAll: "+e.toString())
                             }
                         }
                         Status.LOADING -> {
@@ -346,9 +354,7 @@ class ContactListNewActvity : BaseActivity() {
     }
 
     private fun setListContact() {
-        contactListAdapter = ContactListAdapter(
-            this@ContactListNewActvity,
-            listFilter!!,
+        contactListAdapter = ContactListAdapter(this@ContactListNewActvity, listFilter!!,
             object : ContactListAdapter.ClickListener {
                 override fun onClickChk(pos: Int) {
                     listFilter!![pos].isChk = !listFilter[pos].isChk

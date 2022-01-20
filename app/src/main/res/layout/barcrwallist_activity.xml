@@ -307,6 +307,7 @@
                         android:src="@drawable/nodata_founf_img" />
 
                     <TextView
+                        android:id="@+id/textNodata"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"

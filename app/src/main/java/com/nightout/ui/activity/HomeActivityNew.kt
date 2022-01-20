@@ -258,6 +258,16 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {myData->
                         PreferenceKeeper.instance.isUserLogin=false
+                        PreferenceKeeper.instance.currentCity=""
+                        PreferenceKeeper.instance.currentLat=""
+                        PreferenceKeeper.instance.currentLong=""
+                        PreferenceKeeper.instance.currentAddrs=""
+                        PreferenceKeeper.instance.imgPathSave=""
+                        //PreferenceKeeper.instance.fcmTokenSave=""
+                       // PreferenceKeeper.instance.bearerTokenSave=""
+                        PreferenceKeeper.instance.isUserDeviceAPICall=false
+                        PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=false
+                        PreferenceKeeper.instance.isNotificationOpen=false
                         startActivity(Intent(THIS,LoginActivity::class.java)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
 

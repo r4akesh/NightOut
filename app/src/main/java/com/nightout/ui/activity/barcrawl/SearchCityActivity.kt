@@ -28,10 +28,7 @@ import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.SrchCityBinding
 import com.nightout.ui.activity.SearchLocationActivity
-import com.nightout.utils.AppConstant
-import com.nightout.utils.Commons
-import com.nightout.utils.MyApp
-import com.nightout.utils.Utills
+import com.nightout.utils.*
 import java.util.*
 
 class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
@@ -79,7 +76,12 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
             }
         }
         else if(v==binding.barcrawlBtmCrntLocImg){
-            //MyApp.popErrorMsg("","hi",THIS!!)
+            val shopLatlang = LatLng( Commons.strToDouble(PreferenceKeeper.instance.currentLat!!),Commons.strToDouble( PreferenceKeeper.instance.currentLong!!))
+            val marker = MarkerOptions().position(shopLatlang)
+            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_yello_ic))
+            gMap!!.addMarker(marker)
+            gMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(shopLatlang, 18f))
+            binding.barcralCity.text = PreferenceKeeper.instance.currentCity
         }
     }
 

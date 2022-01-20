@@ -43,6 +43,8 @@ import kotlin.collections.HashMap
 import androidx.recyclerview.widget.RecyclerView
 
 import com.nightout.viewmodel.CommonViewModel
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyToFrag {
@@ -181,9 +183,16 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     }
 
     private fun dashboardAPICALL() {
+        var str=""
+        var jarr = JSONArray()
+        jarr.put(str)
+        var jobj = JSONObject()
+        jobj.put("filter",jarr)
+
+
         progressDialog.show(requireActivity(), "")
         try {
-            homeViewModel.dashBoard().observe(requireActivity(), {
+            homeViewModel.dashBoard(jobj).observe(requireActivity(), {
                 when (it.status) {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
@@ -330,14 +339,17 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
     private fun getAddrsFrmLatlang(latitude: Double, longitude: Double) {
         try {
-            var homeFragment = HomeFragment()
-            if(requireActivity()!=null && homeFragment.activity!=null) {
+
+            if(requireActivity()!=null ) {
                 geocoder = Geocoder(requireActivity(), Locale.getDefault())
                 addresses = geocoder!!.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                 val addrs = addresses?.get(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                Log.d("ok", "addrs: " + addrs)
+                val city = addresses?.get(0)?.locality // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                Log.d("ok", "addrs: " + addresses?.get(0)?.locality)
+
                 binding.headerHome.headerAddrs.text = addrs
                 PreferenceKeeper.instance.currentAddrs = addrs
+                PreferenceKeeper.instance.currentCity = city
                 PreferenceKeeper.instance.currentLat = latitude.toString()
                 PreferenceKeeper.instance.currentLong = longitude.toString()
             }
@@ -461,7 +473,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 }
                 val shopLatlang = LatLng(location.latitude, location.longitude)
                 val marker = MarkerOptions().position(shopLatlang)
-                marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.addrs_home))
+                marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_yello_ic))
                 mMap!!.addMarker(marker)
                 mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(shopLatlang, 18f))
             }

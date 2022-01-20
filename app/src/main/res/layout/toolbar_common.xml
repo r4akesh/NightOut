@@ -53,10 +53,10 @@
             android:id="@+id/toolbar_3dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginEnd="@dimen/_10ssp"
             android:padding="@dimen/_10ssp"
             android:src="@drawable/maptop_ic"
+
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
@@ -65,10 +65,10 @@
             android:id="@+id/toolbar_bell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:background="@null"
             android:padding="@dimen/_10ssp"
             android:src="@drawable/bell_witoutspace"
+
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
             app:layout_constraintEnd_toStartOf="@+id/toolbar_3dot"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back" />
@@ -107,9 +107,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
+            android:visibility="gone"
+            android:id="@+id/toolbarSerchConstrent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_back"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/toolbar_back"
             app:layout_constraintTop_toTopOf="@+id/toolbar_back">
 
@@ -117,35 +119,35 @@
                 android:id="@+id/searchLocationEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10ssp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
 
                 android:background="@drawable/box_serch"
                 android:drawableStart="@drawable/search_ic"
+
                 android:drawablePadding="@dimen/_10sdp"
                 android:fontFamily="@font/proximanova_reg"
                 android:hint="@string/search_here"
                 android:padding="@dimen/_10ssp"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
                 android:textColorHint="@color/text_hint2"
                 android:textCursorDrawable="@drawable/cursor_white"
                 android:textSize="@dimen/_13ssp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/toolbarClose"
-                android:visibility="visible" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/toolbarClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="@dimen/_10ssp"
                 android:padding="@dimen/_10ssp"
                 android:src="@drawable/close_77"
-               app:layout_constraintEnd_toEndOf="parent" />
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

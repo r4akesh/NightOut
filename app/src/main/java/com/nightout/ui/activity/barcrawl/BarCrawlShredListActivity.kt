@@ -26,21 +26,27 @@ class BarCrawlShredListActivity : BaseActivity() {
     lateinit var binding: BarshredActivityBinding
     lateinit var customProgressDialog : CustomProgressDialog
     lateinit var getSharedListViewModel : CommonViewModel
-
+    var isFirstOpenScreen =true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BarCrawlShredListActivity,R.layout.barshred_activity)
         setToolBar()
         getSharedListViewModel = CommonViewModel(this@BarCrawlShredListActivity)
-        bar_crawl_invitation_listAPICall()
+
     }
 
     override fun onResume() {
         super.onResume()
-        if(PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully){
-            //for update list after update the barcrwal
-            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=false
+        if(isFirstOpenScreen){
+            isFirstOpenScreen=false
             bar_crawl_invitation_listAPICall()
+        }
+        else {
+            if(PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully){
+                //for update list after update the barcrwal
+                PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=false
+                bar_crawl_invitation_listAPICall()
+            }
         }
     }
     lateinit var listtShared : ArrayList<SharedBarcrwalRes.Data>
@@ -58,7 +64,7 @@ class BarCrawlShredListActivity : BaseActivity() {
                       //  listtShared = myData.data.reversed() as ArrayList<SharedBarcrwalRes.Data>
                         if(listtShared.size>0) {
                             binding.barcrwalSharedNoData.visibility = GONE
-                        //    customProgressDialog.dialog.dismiss()
+
                             setListShared()
                         }
                         else

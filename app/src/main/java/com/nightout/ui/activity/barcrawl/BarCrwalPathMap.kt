@@ -161,8 +161,10 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                 setSpin()
         if(isFromSaveListActivity){
             dgEtBarCrwal.setText(venusSelectedOld.name)
-            var dateMills=venusSelectedOld.date
-            dgDateBtn.setText(venusSelectedOld.date)
+            if(venusSelectedOld.date.isBlank())
+            dgDateBtn.text = resources.getString(R.string.Select_Date)
+            else
+            dgDateBtn.text = venusSelectedOld.date
             //(1=>Public, 2=>Private)
             if(venusSelectedOld.public_private == "2"){
                 dgSpin.setSelection(1)
@@ -170,8 +172,12 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         }
         else if(isFromShareListActivity){
             dgEtBarCrwal.setText(venusSelectedOldShare.bar_crawl.name)
-           // var dateMills=venusSelectedOldShare.date
-            dgDateBtn.setText(venusSelectedOldShare.bar_crawl.date)
+            if(venusSelectedOldShare.bar_crawl.date.isBlank()){
+                dgDateBtn.text = resources.getString(R.string.Select_Date)
+            }else{
+                dgDateBtn.text = venusSelectedOldShare.bar_crawl.date
+            }
+
             //(1=>Public, 2=>Private)
             if(venusSelectedOldShare.bar_crawl.public_private == "2"){
                 dgSpin.setSelection(1)
@@ -206,10 +212,10 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             MyApp.popErrorMsg("","Please enter Bar Crawl name",THIS!!)
             return false
         }
-        else if(dgDateBtn.text.equals(resources.getString(R.string.Select_Date))){
-            MyApp.popErrorMsg("","Please choose date",THIS!!)
-            return false
-        }
+//        else if(dgDateBtn.text.equals(resources.getString(R.string.Select_Date))){
+//            MyApp.popErrorMsg("","Please choose date",THIS!!)
+//            return false
+//        }
         return true
 
     }
@@ -236,6 +242,9 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         }else{
             builder.addFormDataPart("saved_shared", "1")//
         }
+        if(dgDateBtn.text.toString()==resources.getString(R.string.Select_Date))
+         builder.addFormDataPart("date", "")
+        else
          builder.addFormDataPart("date", dgDateBtn.text.toString())
         if(barcrwalId.isNotBlank()) {
             builder.addFormDataPart("id", barcrwalId)

@@ -26,7 +26,7 @@ class BarCrawlSavedListActivity : BaseActivity() {
     private var customProgressDialog = CustomProgressDialog()
     lateinit var getSavedListViewModel : CommonViewModel
      lateinit  var listtSaved : ArrayList<BarcrwalSavedRes.Data>
-
+    var isFirstOpenScreen =true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +34,16 @@ class BarCrawlSavedListActivity : BaseActivity() {
         getSavedListViewModel = CommonViewModel(this@BarCrawlSavedListActivity)
         setToolBar()
 
-        user_bar_crawl_listAPICall()
+
     }
 
     override fun onResume() {
         super.onResume()
-        if(PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully){
+        if(isFirstOpenScreen){
+            isFirstOpenScreen=false
+            user_bar_crawl_listAPICall()
+        }
+        else if(PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully){
             //for update list after update the barcrwal
             PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=false
             user_bar_crawl_listAPICall()

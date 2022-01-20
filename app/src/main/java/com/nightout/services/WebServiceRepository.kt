@@ -515,10 +515,11 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
-    fun dashBoard(): LiveData<ApiSampleResource<DashboardModel>> {
+    fun dashBoard(jbj:JSONObject): LiveData<ApiSampleResource<DashboardModel>> {
         val venueListResponseModel = MutableLiveData<ApiSampleResource<DashboardModel>>()
+        val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jbj.toString())
         if (networkHelper.isNetworkConnected()) {
-            val responseBody: Call<ResponseBody> = apiInterfaceHeader.dashboardAPI()
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.dashboardAPI(body)
             responseBody.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     when (response.code()) {

@@ -25,6 +25,10 @@ interface APIInterface {
     @POST("all_contact_list")
     fun all_contact_listAPI(@Body params: RequestBody): Call<ResponseBody>
 
+
+    @POST("dashboard")
+    fun dashboardAPI(@Body params: RequestBody): Call<ResponseBody>
+
     @GET("emergency_contact_list")
     fun getEmergencyAPI(): Call<ResponseBody>
 
@@ -44,8 +48,6 @@ interface APIInterface {
     fun otpResendAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
 
-    @GET("dashboard")
-    fun dashboardAPI(): Call<ResponseBody>
 
 
     @POST("user_venue_detail")

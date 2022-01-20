@@ -40,15 +40,13 @@ class SharedAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-
         try {
             viewHolder.binding.sharedItemTitle.text = arrayList[position].bar_crawl.name
-          // var vDate= MyApp.dateZoneToDateFormat(arrayList[position].bar_crawl.created_at)
-         //  var vTime= MyApp.dateZoneToTimeFormat(arrayList[position].bar_crawl.created_at)
-
-         //   var vDate = Commons.millsToDate(Commons.strToLong(arrayList[position].da))
-          //  viewHolder.binding.sharedItemDate.text = vDate
+            if(arrayList[position].bar_crawl.public_private=="1"){
+                viewHolder.binding.sharedItemPubPriImg.setImageResource(R.drawable.ic_public)
+            }else{
+                viewHolder.binding.sharedItemPubPriImg.setImageResource(R.drawable.ic_private)
+            }
 
 
             viewHolder.binding.sharedItemDate.text = arrayList[position].bar_crawl.date

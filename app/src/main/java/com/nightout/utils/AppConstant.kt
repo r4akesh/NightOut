@@ -23,6 +23,7 @@ class AppConstant {
         const val ISFROM_BarCrwalPathMapActvity = "ISFROM_BarCrwalPathMapActvity"
         const val ISNotificationOpen = "ISNotificationOpen"
         const val IsUpdatedBarcrwalSuccesfully = "IsUpdatedBarcrwalSuccesfully"
+        const val CITY_CURRENT = "CITY_CURRENT"
 
 
 

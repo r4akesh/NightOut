@@ -229,6 +229,8 @@ class BarcrawlListActivity : BaseActivity() {
         binding.barcrwalAddBtn.setOnClickListener(this)
         binding.barcrwalCloseBtn.setOnClickListener(this)
         getBarCrwalVieModel = CommonViewModel(this)
+
+        binding.textNodata.text= "There are no venues available in "+ intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)!!+" city"
     }
 
 

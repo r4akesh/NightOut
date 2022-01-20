@@ -54,7 +54,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         initView()
         setToolBar()
 
-        binding.searchLocationEditText.addTextChangedListener(object:TextWatcher{
+        binding.venulistingToolBar.searchLocationEditText.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -115,7 +115,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 binding.venulistingToolBar.toolbarTitle.text = "Bars"
                 venue_type_listAPICALL()
                 binding.venulistingToolBar.toolbarBell.visibility= GONE
-                binding.searchLocationEditText.visibility= GONE
+
             }
             "2" -> {
                 for (i in 0 until listStoreType.size) {
@@ -124,7 +124,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 binding.venulistingToolBar.toolbarTitle.text = "Pubs"
                 venue_type_listAPICALL()
                 binding.venulistingToolBar.toolbarBell.visibility= GONE
-                binding.searchLocationEditText.visibility= GONE
+
             }
             "3" -> {
                 for (i in 0 until listStoreType.size) {
@@ -133,7 +133,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 binding.venulistingToolBar.toolbarTitle.text = "Clubs"
                 venue_type_listAPICALL()
                 binding.venulistingToolBar.toolbarBell.visibility= GONE
-                binding.searchLocationEditText.visibility= GONE
+
             }
             "4" -> {
                 for (i in 0 until listStoreType.size) {
@@ -142,7 +142,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 binding.venulistingToolBar.toolbarTitle.text = "Food"
                 venue_type_listAPICALL()
                 binding.venulistingToolBar.toolbarBell.visibility= GONE
-                binding.searchLocationEditText.visibility= GONE
+
             }
             "5" -> {
                 for (i in 0 until listStoreType.size) {
@@ -150,7 +150,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 }
                 binding.venulistingToolBar.toolbarTitle.text = "Events"
                 venue_type_listAPICALL()
-                binding.searchLocationEditText.visibility= VISIBLE
+
             }
         }
 
@@ -257,12 +257,12 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun addRemoveBarCrawlAPICall(pos: Int) {
-        addBarCrawlStatus = if(venuDataList[pos].barcrawl == "0") "0" else "1"
+        addBarCrawlStatus = if(venuDataList[pos].barcrawl == "0") "1" else "0"
        // progressDialog.show(this@VenuListActvity, "")
         var map = HashMap<String, String>()
         map["venue_id"] = venuDataList[pos].id
         map["vendor_id"] = venuDataList[pos].vendor_detail.id
-        map["status"] =addBarCrawlStatus
+        map["status"] =venuDataList[pos].barcrawl
         map["store_type"] =venuDataList[pos].store_type
 
         doAddBarCrawlModel.doAddBarCrawl(map).observe(this@VenuListActvity, {
@@ -345,8 +345,8 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     private fun setToolBar() {
         setTouchNClick(binding.venulistingToolBar.toolbarBack)
         setTouchNClick(binding.venulistingToolBar.toolbar3dot)
-        binding.searchLocationEditText.visibility= GONE
-         //binding.venulistingToolBar.toolbarBell.visibility= GONE
+
+         binding.venulistingToolBar.toolbarBell.visibility= VISIBLE
        //   binding.venulistingToolBar.toolbarBell.setImageResource(R.drawable.search_ic)
         binding.venulistingToolBar.toolbarBell.setImageResource(R.drawable.ic_search)
         binding.venulistingToolBar.toolbarBack.setOnClickListener {
@@ -354,11 +354,22 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
           //  overridePendingTransition(0, 0)
         }
 
+        binding.venulistingToolBar.toolbarClose.setOnClickListener {
+                binding.venulistingToolBar.toolbarSerchConstrent.visibility=GONE
+                binding.venulistingToolBar.toolbarBell.visibility= VISIBLE
+                binding.venulistingToolBar.toolbar3dot.visibility= VISIBLE
+
+        }
+
         binding.venulistingToolBar.toolbarBell.setOnClickListener {
-            if(binding.searchLocationEditText.visibility== VISIBLE){
-                binding.searchLocationEditText.visibility = GONE
+            if(binding.venulistingToolBar.toolbarSerchConstrent.visibility== VISIBLE){
+                binding.venulistingToolBar.toolbarSerchConstrent.visibility = GONE
+                binding.venulistingToolBar.toolbar3dot.visibility = VISIBLE
+                binding.venulistingToolBar.toolbarBell.visibility = VISIBLE
             }else{
-                binding.searchLocationEditText.visibility= VISIBLE
+                binding.venulistingToolBar.toolbarSerchConstrent.visibility= VISIBLE
+                binding.venulistingToolBar.toolbar3dot.visibility = GONE
+                binding.venulistingToolBar.toolbarBell.visibility = GONE
             }
         }
 
@@ -400,13 +411,13 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     venuAdapterAdapter.notifyDataSetChanged()
                     selectedStrType=listStoreType[pos].id.toString()
                     venue_type_listAPICALL()
-                    if(pos==4){
+                  /*  if(pos==4){
                         binding.searchLocationEditText.visibility= VISIBLE
                      //   binding.venulistingToolBar.toolbarBell.visibility= VISIBLE
                     }else{
                         binding.searchLocationEditText.visibility= GONE
                      //   binding.venulistingToolBar.toolbarBell.visibility=GONE
-                    }
+                    }*/
 
                 }
 

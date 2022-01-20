@@ -52,6 +52,11 @@ class SavedAdapter(
             viewHolder.itemView.setOnClickListener {
                 clickListener.onClick(position)
             }
+            if(arrayList[position].public_private=="1"){
+                viewHolder.binding.sharedItemPubPriImg.setImageResource(R.drawable.ic_public)
+            }else{
+                viewHolder.binding.sharedItemPubPriImg.setImageResource(R.drawable.ic_private)
+            }
 
             viewHolder.binding.sharedItem3Dott.setOnClickListener {
                 clickListener.onClick3Dot(position, viewHolder.binding.sharedItem3Dott)

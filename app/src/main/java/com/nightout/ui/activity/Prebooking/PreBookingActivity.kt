@@ -200,7 +200,8 @@ class PreBookingActivity : BaseActivity() {
               // jsnObjMain.put("venue_id",venuID)
               jsnObjMain.put("venue_id","217")
               jsnObjMain.put("vendor_id",vendorId)
-              jsnObjMain.put("date",selectedDateFinal)
+              jsnObjMain.put("date",Commons.millsToDateStr2(Commons.strToLong(selectedDateFinal)))
+              //jsnObjMain.put("date","2022-12-22")
               jsnObjMain.put("time",binding.preBookingTimePicker.text.toString())
               jsnObjMain.put("people",binding.preBookingPeopleValue.text.toString())
               var isWholeValue = if(binding.preBookingbookWholeVenus.isChecked) "1" else "0"
@@ -281,7 +282,7 @@ class PreBookingActivity : BaseActivity() {
             .build()
 
         val yy =defaultSelectedDate?.get(Calendar.YEAR)
-        val mm =defaultSelectedDate?.get(Calendar.MONTH)
+        val mm = (defaultSelectedDate?.get(Calendar.MONTH))?.plus(1)//add 1
         val dd =defaultSelectedDate?.get(Calendar.DATE)
 
         selectedDateFinal= ""+Commons.strToTimemills("$dd-$mm-$yy")
@@ -289,7 +290,7 @@ class PreBookingActivity : BaseActivity() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 Log.d("DATE", "onDateSelected: "+date)
                 val yy =date?.get(Calendar.YEAR)
-                val mm =date?.get(Calendar.MONTH)
+                val mm = date?.get(Calendar.MONTH)?.plus(1)
                 val dd =date?.get(Calendar.DATE)
                   selectedDateFinal=""+Commons.strToTimemills("$dd-$mm-$yy")
             }

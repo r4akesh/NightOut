@@ -107,10 +107,7 @@ object Commons {
         return formatter.format(Date(dateInMillis))
     }
 
-    fun millsToDateStr2(dateInMillis: Long): String {
-        val formatter = SimpleDateFormat("dd-MM-yyyy")
-        return formatter.format(Date(dateInMillis))
-    }
+
 
     fun millsToDate(mills: Long): String {
         val cal = Calendar.getInstance(Locale.US)
@@ -118,6 +115,13 @@ object Commons {
         val format = "MMM dd, yyyy"
         return SimpleDateFormat(format).format(cal.time)
     }
+
+    fun millsToDateStr2(dateInMillis: Long): String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        return formatter.format(Date(dateInMillis))
+    }
+
+
     fun millsToDateFormat(dateInMillis: Long): String {
         val formatter = SimpleDateFormat("dd MMM yyyy")
         return formatter.format(Date(dateInMillis))

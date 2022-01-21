@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.FilterMainItemBinding
+import com.nightout.model.FillterRes
 import com.nightout.model.FoodStoreModel
 import com.nightout.model.StoreDetailDrinksModel
 import com.nightout.model.SubFoodModel
@@ -21,7 +22,7 @@ import com.nightout.model.SubFoodModel
 
 class FillterMainAdapter(
     var context: Context,
-    var arrayList: ArrayList<FoodStoreModel>,
+    var arrayList: ArrayList<FillterRes.FilterName>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FillterMainAdapter.ViewHolder>() {
@@ -39,7 +40,17 @@ class FillterMainAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.binding.filtermainTitel.text=arrayList[position].title
-        var subAdapter = FilterSubAdapter(context,arrayList[position].list,object : FilterSubAdapter.ClickListener{
+
+        if(arrayList[position].isSelected){
+            viewHolder.binding.filtermainArrow.setImageResource(R.drawable.arrow_down_white)
+            viewHolder.binding.filtermainRecycleSub.visibility= VISIBLE
+
+        }else{
+            viewHolder.binding.filtermainArrow.setImageResource(R.drawable.arrow_right_white)
+            viewHolder.binding.filtermainRecycleSub.visibility= GONE
+        }
+
+        var subAdapter = FilterSubAdapter(context,arrayList[position].filter_options,object : FilterSubAdapter.ClickListener{
                 override fun onClickChk(subPos: Int) {
                     clickListener.onClickSub(position,subPos)
                 }
@@ -52,6 +63,7 @@ class FillterMainAdapter(
 
 
         viewHolder.itemView.setOnClickListener {
+
             clickListener.onClick(position)
 
         }

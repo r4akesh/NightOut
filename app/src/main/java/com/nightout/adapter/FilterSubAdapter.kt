@@ -15,12 +15,13 @@ import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.DrinkSubitemBinding
 import com.nightout.databinding.FilterSubitemBinding
 import com.nightout.databinding.FoodSubitemBinding
+import com.nightout.model.FillterRes
 import com.nightout.model.SubFoodModel
 
 
 class FilterSubAdapter(
     var context: Context,
-    var arrayList: ArrayList<SubFoodModel>,
+    var arrayList: ArrayList<FillterRes.FilterOption>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<FilterSubAdapter.ViewHolder>() {
@@ -55,7 +56,7 @@ class FilterSubAdapter(
 //            viewHolder.binding.filterSubViewLine.visibility= VISIBLE
 //        }
 
-        viewHolder.binding.filterSubItemChk.setOnClickListener {
+        viewHolder.itemView.setOnClickListener {
             clickListener.onClickChk(position)
 
         }

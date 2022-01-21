@@ -5,19 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.ChatAdapter
 import com.nightout.databinding.FragmentChatBinding
-import com.nightout.databinding.FragmentHomeBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.ChatModel
 import com.nightout.ui.activity.ChatPersonalActvity
 import com.nightout.ui.activity.CreateGroupActvity
-import com.nightout.ui.activity.HomeActivity
 
 class ChatFragment() : Fragment() , View.OnClickListener {
 

@@ -93,6 +93,11 @@ class PreferenceKeeper private constructor(context: Context?) {
         set(cnt) {
             prefs!!.edit().putString(AppConstant.PrefsName.CITY_CURRENT, cnt).apply()
         }
+    var currentFilterValue: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.FilterValue, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.FilterValue, cnt).apply()
+        }
     companion object {
         private var keeper: PreferenceKeeper? = null
         private var context: Context? = null

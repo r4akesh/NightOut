@@ -17,12 +17,12 @@
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_5ssp"
-            app:strokeColor="@color/text_yello"
-            app:strokeWidth="@dimen/_1sdp"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
             android:src="@drawable/no_image"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+            app:strokeColor="@color/text_yello"
+            app:strokeWidth="@dimen/_1sdp" />
 
         <TextView
             android:id="@+id/lostItemTitle"
@@ -31,9 +31,9 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_reg"
             android:text="Watch"
-            app:layout_constraintEnd_toStartOf="@+id/lostItem3Dot"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/lostItem3Dot"
             app:layout_constraintStart_toEndOf="@+id/lostItemProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,12 +69,30 @@
         <ImageView
             android:id="@+id/lostItem3Dot"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/_10ssp"
             android:src="@drawable/setting_threedot"
-            app:layout_constraintTop_toTopOf="@+id/lostItemProfile"
             app:layout_constraintBottom_toBottomOf="@+id/lostItemProfile"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="@+id/lostItemProfile" />
+
+        <TextView
+            android:id="@+id/lostItemCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/box_btn_bg_yello"
+            android:paddingStart="@dimen/_5ssp"
+            android:paddingTop="@dimen/_2ssp"
+            android:paddingEnd="@dimen/_5ssp"
+            android:paddingBottom="@dimen/_2ssp"
+            android:text="Cancel"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="@font/proximanova_reg"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/lostItemProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/lostItemProfile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

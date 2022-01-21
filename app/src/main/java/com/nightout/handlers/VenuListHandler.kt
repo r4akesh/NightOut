@@ -1,7 +1,6 @@
 package com.nightout.handlers
 
 import com.nightout.model.VenuModel
-import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.utils.*
 

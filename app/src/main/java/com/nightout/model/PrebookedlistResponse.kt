@@ -18,7 +18,7 @@ data class PrebookedlistResponse(
         val id: String,
         val people: String,
         val pre_booking_detail: ArrayList<PreBookingDetail>,
-        val status: String,
+        var status: String,
         val time: String,
         val updated_at: String,
         val user_id: String,

@@ -26,6 +26,7 @@ class PrebookedListActivity : BaseActivity() {
        setToolbar()
         prebooedViewModel = CommonViewModel(THIS!!)
         pre_booking_listAPICALL()
+       // 1=>Pending, 2=>Completed, 3=>Cancelled
     }
 
     private fun pre_booking_listAPICALL() {
@@ -35,7 +36,9 @@ class PrebookedListActivity : BaseActivity() {
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {myData->
-                            setList(myData.data)
+                        dataList = ArrayList()
+                        dataList = myData.data
+                            setList()
                     }
                 }
                 Status.LOADING->{
@@ -51,11 +54,11 @@ class PrebookedListActivity : BaseActivity() {
     }
 
     lateinit var preBookedListAdapter: PreBookedListAdapter
-
-    private fun setList(dataList: ArrayList<PrebookedlistResponse.Data>) {
+    lateinit var dataList: ArrayList<PrebookedlistResponse.Data>
+    private fun setList( ) {
         preBookedListAdapter =PreBookedListAdapter(THIS!!,dataList,object:PreBookedListAdapter.ClickListener{
-            override fun onClickSetting(pos: Int, lostItem3Dot: ImageView) {
-                        cancelAPICAll(dataList[pos].id)
+            override fun onClickCancel(pos: Int, lostItem3Dot: ImageView) {
+                        cancelAPICAll(dataList[pos].id,pos)
             }
 
             override fun onClick(pos: Int) {
@@ -71,7 +74,7 @@ class PrebookedListActivity : BaseActivity() {
 
     }
 
-    private fun cancelAPICAll(bookingID: String) {
+    private fun cancelAPICAll(bookingID: String,pos:Int) {
         var map = HashMap<String,String>()
         map["id"] = bookingID
         customProgressDialog.show(this@PrebookedListActivity, "")
@@ -80,7 +83,8 @@ class PrebookedListActivity : BaseActivity() {
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {myData->
-
+                        dataList[pos].status ="3"
+                        preBookedListAdapter.notifyItemChanged(pos)
                     }
                 }
                 Status.LOADING->{

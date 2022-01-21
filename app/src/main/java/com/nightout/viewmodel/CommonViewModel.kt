@@ -47,6 +47,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var notifEmilSettingViewModel: LiveData<ApiSampleResource<NotifEmilSettingRes>>
     lateinit var prebookedViewModel: LiveData<ApiSampleResource<PrebookedlistResponse>>
     lateinit var prebookedCancelViewModel: LiveData<ApiSampleResource<PreBookCancelRes>>
+    lateinit var fillterResViewModel: LiveData<ApiSampleResource<FillterRes>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -233,4 +234,9 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         prebookedCancelViewModel = webServiceRepository.preBookedCancel(map)
         return prebookedCancelViewModel
     }
+    fun getFiterList(): LiveData<ApiSampleResource<FillterRes>> {
+        fillterResViewModel = webServiceRepository.filterList()
+        return fillterResViewModel
+    }
+
 }

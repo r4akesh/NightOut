@@ -28,7 +28,6 @@ import com.google.android.gms.maps.model.*
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrwalmappathActvityBinding
-import com.nightout.ui.activity.SharedMemeberActvity
 import com.nightout.utils.*
 import kotlinx.coroutines.*
 import org.json.JSONObject

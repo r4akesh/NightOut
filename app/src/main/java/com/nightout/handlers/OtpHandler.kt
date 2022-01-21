@@ -6,7 +6,6 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import com.nightout.model.LoginModel
-import com.nightout.ui.activity.HomeActivity
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.utils.CustomProgressDialog

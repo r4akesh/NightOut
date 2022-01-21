@@ -183,6 +183,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     }
 
     private fun dashboardAPICALL() {
+      /*  var str= if(PreferenceKeeper.instance.currentFilterValue?.isNotBlank()!!)
+         PreferenceKeeper.instance.currentFilterValue
+        else
+          ""*/
         var str=""
         var jarr = JSONArray()
         jarr.put(str)

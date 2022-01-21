@@ -34,7 +34,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
+            <ImageView
+                android:id="@+id/filtermainArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10ssp"
+                android:src="@drawable/arrow_right_white"
+                app:layout_constraintBottom_toBottomOf="@+id/filtermainTitel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/filtermainTitel" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

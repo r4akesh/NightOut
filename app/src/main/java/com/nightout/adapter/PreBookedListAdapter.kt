@@ -47,11 +47,31 @@ class PreBookedListAdapter(
             viewHolder.binding.lostItemProfile,
             arrayList[position].venue_detail.store_logo
         )
+        // 1=>Pending, 2=>Completed, 3=>Cancelled
+        when (arrayList[position].status) {
+            "1" -> {
+                viewHolder.binding.lostItemCancel.text = "Cancel"
+                viewHolder.binding.lostItemCancel.visibility= VISIBLE
+                viewHolder.binding.lostItemCancel.setBackgroundResource(R.drawable.box_btn_bg_yello)
+                viewHolder.binding.lostItemCancel.setTextColor(context.resources.getColor(R.color.black))
+            }
+            "2" -> {
+                viewHolder.binding.lostItemCancel.visibility= GONE
+            }
+            "3" -> {
+
+
+                viewHolder.binding.lostItemCancel.text = "Cancelled"
+                viewHolder.binding.lostItemCancel.visibility= VISIBLE
+                viewHolder.binding.lostItemCancel.setBackgroundResource(R.drawable.box_bookticket)
+                viewHolder.binding.lostItemCancel.setTextColor(context.resources.getColor(R.color.text_hint))
+            }
+        }
 
         viewHolder.binding.lostItemStatus.setTextColor(context.resources.getColor(R.color.white_second))
         viewHolder.binding.lostItemStatus.text = arrayList[position].time
-        viewHolder.binding.lostItem3Dot.visibility = VISIBLE
-        viewHolder.binding.lostItem3Dot.setImageResource(R.drawable.close_redimg)
+        viewHolder.binding.lostItem3Dot.visibility = GONE
+
         viewHolder.itemView.setOnClickListener {
             Log.d("TAG", "onBindViewHolder: ")
             clickListener.onClick(position)
@@ -59,9 +79,11 @@ class PreBookedListAdapter(
         }
 
 
-        viewHolder.binding.lostItem3Dot.setOnClickListener {
+        viewHolder.binding.lostItemCancel.setOnClickListener {
             Log.d("TAG", "onBindViewHolder: ")
-            clickListener.onClickSetting(position, viewHolder.binding.lostItem3Dot)
+            if(arrayList[position].status=="1") {
+                clickListener.onClickCancel(position, viewHolder.binding.lostItem3Dot)
+            }
 
         }
     }
@@ -79,7 +101,7 @@ class PreBookedListAdapter(
     }
 
     interface ClickListener {
-        fun onClickSetting(pos: Int, lostItem3Dot: ImageView)
+        fun onClickCancel(pos: Int, lostItem3Dot: ImageView)
         fun onClick(pos: Int)
 
 

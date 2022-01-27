@@ -156,6 +156,9 @@ interface APIInterface {
     @GET("filter_list")
     fun filter_listAPI(): Call<ResponseBody>
 
+    @GET("all_users")
+    fun all_usersAPI(): Call<ResponseBody>
+
     @POST("pre_booking_cancel")
     fun pre_booking_cancelAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 

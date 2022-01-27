@@ -25,6 +25,7 @@ class AppConstant {
         const val IsUpdatedBarcrwalSuccesfully = "IsUpdatedBarcrwalSuccesfully"
         const val CITY_CURRENT = "CITY_CURRENT"
         const val FilterValue = "FilterValue"
+        const val IsFillterApplyByUser = "IsFillterApplyByUser"
 
 
 

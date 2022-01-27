@@ -16,7 +16,7 @@ import com.nightout.model.GroupListModel
 class GroupInfoActvity : BaseActivity() {
     lateinit var groupChatImageAdapter : GroupChatImageAdapter
     lateinit var binding : GroupinfoActvityBinding
-    lateinit var groupListAdapter: GroupListAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class GroupInfoActvity : BaseActivity() {
     }
 
     private fun setFrendListDummy() {
-        var list = ArrayList<GroupListModel>()
+       /* var list = ArrayList<GroupListModel>()
         list.add(GroupListModel("Cameron Williamson", "Software Engineer", R.drawable.grp1, false))
         list.add(GroupListModel("Bessie Cooper", "Product Photographer", R.drawable.grp2, false))
         list.add(GroupListModel("Jane Cooper", "Interior Designer", R.drawable.grp3, true))
@@ -60,7 +60,7 @@ class GroupInfoActvity : BaseActivity() {
             it.layoutManager =
                 LinearLayoutManager(this@GroupInfoActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = groupListAdapter
-        }
+        }*/
     }
 
 

@@ -43,6 +43,7 @@ class VenuBotmSheetAdapter(
         var hsview: HorizontalScrollView = itemView.findViewById(R.id.hsview)
         var venuBottmShhetItem_right: ImageView = itemView.findViewById(R.id.venuBottmShhetItem_right)
         var venuBottmShhetItemFavBtn: ImageView = itemView.findViewById(R.id.venuBottmShhetItemFavBtn)
+        var venuBottmShhetItemPrimeBtn: ImageView = itemView.findViewById(R.id.venuBottmShhetItemPrimeBtn)
 
         fun bind(position: Int) {
             venuBottmShhetItem_title.text = arrayList[position].store_name
@@ -62,6 +63,11 @@ class VenuBotmSheetAdapter(
             }
             venuBottmShhetItem_right.setOnClickListener {
                 hsview.scrollTo(hsview.getScrollX() as Int + 80, hsview.getScrollY() as Int)
+            }
+            if(arrayList[position].is_prime == "1"){
+                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.chk_box)
+            }else{
+                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.unchk_box)
             }
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)
@@ -95,6 +101,7 @@ class VenuBotmSheetAdapter(
         var hsview: HorizontalScrollView = itemView.findViewById(R.id.hsview)
         var venuBottmShhetItem_right: ImageView = itemView.findViewById(R.id.venuBottmShhetItem_right)
         var venuBottmShhetItemFavBtn: ImageView = itemView.findViewById(R.id.venuBottmShhetItemFavBtn)
+        var venuBottmShhetItemPrimeBtn: ImageView = itemView.findViewById(R.id.venuBottmShhetItemPrimeBtn)
 
         fun bind(position: Int) {
             venuBottmShhetItem_title.text = arrayList[position].store_name
@@ -109,7 +116,11 @@ class VenuBotmSheetAdapter(
             venuBottmShhetItem_right.setOnClickListener {
                 hsview.scrollTo(hsview.getScrollX() as Int + 80, hsview.getScrollY() as Int)
             }
-
+            if(arrayList[position].is_prime == "1"){
+                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.chk_box)
+            }else{
+                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.unchk_box)
+            }
             if(arrayList[position].favrouite == "1"){
                 venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)
             }else{

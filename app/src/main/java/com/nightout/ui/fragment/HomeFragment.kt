@@ -83,6 +83,10 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             binding.headerHome.headerNotificationText.visibility=GONE
             PreferenceKeeper.instance.isNotificationOpen =false
         }
+        else if( PreferenceKeeper.instance.isFillterApplyByUser){
+            PreferenceKeeper.instance.isFillterApplyByUser=false
+            dashboardAPICALL()
+        }
     }
 
     override fun onCreateView(
@@ -183,11 +187,11 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     }
 
     private fun dashboardAPICALL() {
-      /*  var str= if(PreferenceKeeper.instance.currentFilterValue?.isNotBlank()!!)
+         var str= if(PreferenceKeeper.instance.currentFilterValue?.isNotBlank()!!)
          PreferenceKeeper.instance.currentFilterValue
         else
-          ""*/
-        var str=""
+          ""
+
         var jarr = JSONArray()
         jarr.put(str)
         var jobj = JSONObject()
@@ -204,6 +208,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         it.data?.let { users ->
                             try {
                                 setBottomSheet()
+                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),"")
+                                dashList.all_records = ArrayList()
+                                allRecordsList = ArrayList()
                                 //save imgPath
                                 dashList = users.data
                                 if(dashList.noti_count == "0"){

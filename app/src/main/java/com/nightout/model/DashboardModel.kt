@@ -13,9 +13,9 @@ data class DashboardModel(
 ) : Serializable {
 
     data class Data(
-        val all_records: ArrayList<AllRecord>,
-        val event_tickets: ArrayList<EventTicket>,
-        val stories: ArrayList<Story>,
+        var all_records: ArrayList<AllRecord>,
+        var event_tickets: ArrayList<EventTicket>,
+        var stories: ArrayList<Story>,
         val noti_count : String
     ) : Serializable
 
@@ -51,6 +51,7 @@ data class DashboardModel(
     ) : Serializable
 
     data class SubRecord(
+        val is_prime : String,
         val age_limit: String,
         var isChked: Boolean,
         val alcohol_license_image: String,

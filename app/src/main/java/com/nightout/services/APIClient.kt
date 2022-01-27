@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit
 
 
 object APIClient {
+    const val IMAGE_URL_WEB_SOCKET = "http://testapi.newdevpoint.in/"
+    const val BASE_URL_WEB_SOCKET = "ws://sschat-react.herokuapp.com/V1"
     const val BASE_URL = "https://nightout.ezxdemo.com/api/"
     fun makeRetrofitService(): APIInterface {
         return Retrofit.Builder()

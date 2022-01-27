@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.nightout.model.FSUsersModel
 import com.nightout.model.LoginModel
 
 /**
@@ -40,6 +42,12 @@ class PreferenceKeeper private constructor(context: Context?) {
                 .apply()
         }
 
+    var isFillterApplyByUser: Boolean
+        get() = prefs!!.getBoolean(AppConstant.PrefsName.IsFillterApplyByUser, false)
+        set(islogin) {
+            prefs!!.edit().putBoolean(AppConstant.PrefsName.IsFillterApplyByUser, islogin)
+                .apply()
+        }
     var isUpdatedBarcrwalSuccesfully: Boolean
         get() = prefs!!.getBoolean(AppConstant.PrefsName.IsUpdatedBarcrwalSuccesfully, false)
         set(islogin) {
@@ -98,9 +106,31 @@ class PreferenceKeeper private constructor(context: Context?) {
         set(cnt) {
             prefs!!.edit().putString(AppConstant.PrefsName.FilterValue, cnt).apply()
         }
+
+    fun getRegisterUser(context: Context?): FSUsersModel? {
+        if (registrationModel == null) {
+            refresh(context)
+        }
+        //        if (registrationModel == null) {
+//            registrationModel = new CurrentUserModel();
+//        }
+        return registrationModel
+    }
+    private fun refresh(context: Context?) {
+        context?.let {
+            val sp = context.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)
+            val userRow = sp.getString(PREF_LOGIN_DATA, null)
+            val gson = Gson()
+            val type = object : TypeToken<FSUsersModel?>() {}.type
+            registrationModel = gson.fromJson<FSUsersModel>(userRow, type)
+        }
+    }
     companion object {
         private var keeper: PreferenceKeeper? = null
         private var context: Context? = null
+        private const val PREF_LOGIN_DATA = "PREF_LOGIN_DATA"
+        private var registrationModel: FSUsersModel? = null
+        private const val USER_PREFS_NAME = "in.newdevpoint.ssnodejschat.pre.user"
         @JvmStatic
         val instance: PreferenceKeeper
             get() {

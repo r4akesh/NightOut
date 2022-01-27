@@ -239,5 +239,7 @@
     <string name="BookedVenue">Booked Venue</string>
     <string name="MyOrders">My Orders</string>
     <string name="VenueDetail">Venue Detail</string>
+    <string name="Select_All">Select All</string>
+    <string name="Unselect_All">Unselect All</string>
 
 </resources>

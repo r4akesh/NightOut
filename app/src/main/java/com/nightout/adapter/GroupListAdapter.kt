@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.GroupItemBinding
+import com.nightout.model.AllUserRes
 import com.nightout.model.ChatModel
+import com.nightout.model.GetLostItemListModel
 import com.nightout.model.GroupListModel
+import com.nightout.utils.Utills
 
 
 class GroupListAdapter(
     var context: Context,
-    var arrayList: ArrayList<GroupListModel>,
+    var arrayList: ArrayList<AllUserRes.Data>,
     var isVisibleChkBox : Boolean,
     var clickListener: ClickListener,
 ) :
@@ -39,10 +42,10 @@ class GroupListAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.grupItemTitle.text=arrayList[position].title
-        viewHolder.binding.grupItemSubTitle.text=arrayList[position].subTitle
+        viewHolder.binding.grupItemTitle.text=arrayList[position].name
+        viewHolder.binding.grupItemSubTitle.text=arrayList[position].userprofile.about_me
 
-        viewHolder.binding.grupItemProfile.setImageResource(arrayList[position].imgProfile)
+        Utills.setImageNormal(context, viewHolder.binding.grupItemProfile,arrayList[position].profile)
 
         if(isVisibleChkBox) {
             if (arrayList[position].isChk) {
@@ -54,8 +57,13 @@ class GroupListAdapter(
         else{
             viewHolder.binding.grupItemChk.visibility=GONE
         }
+        if(position==arrayList.size-1){
+            viewHolder.binding.grupItemViewLine.visibility= GONE
+        }else{
+            viewHolder.binding.grupItemViewLine.visibility= VISIBLE
+        }
 
-        viewHolder.binding.grupItemChk.setOnClickListener {
+        viewHolder.itemView.setOnClickListener {
             clickListener.onClickChk(position)
 
         }

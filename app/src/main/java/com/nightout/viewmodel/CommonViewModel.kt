@@ -48,6 +48,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var prebookedViewModel: LiveData<ApiSampleResource<PrebookedlistResponse>>
     lateinit var prebookedCancelViewModel: LiveData<ApiSampleResource<PreBookCancelRes>>
     lateinit var fillterResViewModel: LiveData<ApiSampleResource<FillterRes>>
+    lateinit var allUserResViewModel: LiveData<ApiSampleResource<AllUserRes>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -238,5 +239,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         fillterResViewModel = webServiceRepository.filterList()
         return fillterResViewModel
     }
-
+    fun getAllUserList(): LiveData<ApiSampleResource<AllUserRes>> {
+        allUserResViewModel = webServiceRepository.allUserList()
+        return allUserResViewModel
+    }
 }

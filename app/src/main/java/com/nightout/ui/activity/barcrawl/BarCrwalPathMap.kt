@@ -77,6 +77,20 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
     lateinit  var venusSelectedOldShare : SharedBarcrwalRes.Data
 
+    private val REQUEST_CAMERA_PERMISSION = 1
+    var imageUri: Uri? = null
+    var RequestCodeCamera = 100
+    var RequestCodeGallery = 200
+    //dialog
+    lateinit var   userImgBarcrwal:ImageView
+    lateinit var   dgSpin:Spinner
+    private var imageUrl: Uri? = null
+    private var filePath: File? = null
+    private lateinit var reqFile: RequestBody
+    var body: MultipartBody.Part? = null
+    lateinit var dgDateBtn: TextView
+    lateinit var dgEtBarCrwal: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BarCrwalPathMap, R.layout.barcrwalmappath_actvity)
@@ -135,14 +149,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         }
     }
 
-    lateinit var   userImgBarcrwal:ImageView
-    lateinit var   dgSpin:Spinner
-    private var imageUrl: Uri? = null
-    private var filePath: File? = null
-    private lateinit var reqFile: RequestBody
-    var body: MultipartBody.Part? = null
-    lateinit var dgDateBtn: TextView
-    lateinit var dgEtBarCrwal: EditText
+
     private fun showDialog() {
         val adDialog = Dialog(this@BarCrwalPathMap, R.style.MyDialogThemeBlack)
         adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
@@ -263,7 +270,6 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
          createBarCrewal(builder.build())
     }
 
-
     private fun createBarCrewal(requestBody: MultipartBody) {
         progressDialog.show(this@BarCrwalPathMap)
         commonViewModel.createBarCrwalWidImg(requestBody).observe(this@BarCrwalPathMap, {
@@ -319,10 +325,8 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         })
     }
 
-
     private fun setSpin() {
-
-                var listSpin = ArrayList<String>()
+        var listSpin = ArrayList<String>()
         listSpin.add("Public")
         listSpin.add("Private")
 
@@ -347,11 +351,6 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
 
     }
-
-    private val REQUEST_CAMERA_PERMISSION = 1
-    var imageUri: Uri? = null
-    var RequestCodeCamera = 100
-    var RequestCodeGallery = 200
 
     fun onSelectImage() {
         try {
@@ -514,6 +513,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             .setAspectRatio(1, 1)
             .start(this@BarCrwalPathMap)
     }
+
     private fun showDatePicker() {
         // Get Current Date
         // Get Current Date
@@ -548,8 +548,6 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
     }
 
-
-
     private fun drawPath() {
         val url = mapsApiDirectionsUrl()
         if (!url.isNullOrBlank()) {
@@ -578,6 +576,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         }
 
     }
+
     private fun drawMarker(point: LatLng, text: String) {
         var value: Int = text.toInt()+65
         val c = value.toChar()
@@ -597,7 +596,6 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         val parameters = "$origin&$dest&$key"
         return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
     }
-
 
     fun readTask(url: String) {
         GlobalScope.launch {

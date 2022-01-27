@@ -28,37 +28,59 @@ class FillterActvity : BaseActivity() {
     lateinit var fillterMainAdapter : FillterMainAdapter
     private var customProgressDialog = CustomProgressDialog()
     lateinit var filterViewModel: CommonViewModel
+    lateinit var selectedItem: ArrayList<String>
+    lateinit var selectedItemSaveList: List<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this@FillterActvity, R.layout.fillter_actvity)
+
+
         setTouchNClick(binding.filterActivityFilter)
         setTouchNClick( binding.filterActivityToolbar.toolbarClearAll)
+        selectedItem = ArrayList()
+        selectedItemSaveList =  ArrayList()
 //        binding.filterGroup.setOnCheckedChangeListener(ChipGroup.OnCheckedChangeListener { chipGroup, i ->
 //            Log.i("TAG", i.toString() + "")
 //        })
         setToolBar()
         filterViewModel =  CommonViewModel(this@FillterActvity)
+        var selectedItemSave: String? = PreferenceKeeper.instance.currentFilterValue
+        if(selectedItemSave?.isNotBlank() == true){
+
+            val list: MutableList<String> = ArrayList()
+            // var str: List<String> =selectedItemSave.split(",")
+
+              selectedItemSaveList = (selectedItemSave.split(","))
+            Log.d("TAG", "onCreate: "+selectedItemSaveList);
+        }
         filter_listAPICAll()
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if(v==binding.filterActivityFilter){
+        if(v==binding.filterActivityFilter) {
             var stringBuilder = StringBuilder()
-            if(dataList!=null && dataList.isNotEmpty()){
-                for (i in 0 until dataList.size){
-                    for (j in 0 until dataList[i].filter_options.size){
-                       if( dataList[i].filter_options[j].isChekd){
-                           stringBuilder.append(dataList[i].filter_options[j].id+",")
-                       }
-                    }
+            if (selectedItem.isNotEmpty() && selectedItem!=null) {
+                for (i in 0 until selectedItem.size) {
+                    stringBuilder.append(selectedItem[i])
+                    stringBuilder.append(",")
                 }
-                 PreferenceKeeper.instance.currentFilterValue = stringBuilder.substring(0,stringBuilder.length-1)
-                var vv=PreferenceKeeper.instance.currentFilterValue
-                var vv2=PreferenceKeeper.instance.currentFilterValue
             }
+            if(stringBuilder.isNotBlank()){
+            PreferenceKeeper.instance.currentFilterValue = stringBuilder.substring(0,stringBuilder.length-1)
+            var vv=PreferenceKeeper.instance.currentFilterValue
+            }
+            else{
+                PreferenceKeeper.instance.currentFilterValue=""
+            }
+            PreferenceKeeper.instance.isFillterApplyByUser =true
+            finish()
         }
+
+
+
+
         else if(v== binding.filterActivityToolbar.toolbarClearAll){
             try {
                 if(dataList!=null && dataList.isNotEmpty()){
@@ -68,8 +90,12 @@ class FillterActvity : BaseActivity() {
                         }
                     }
                     fillterMainAdapter.notifyDataSetChanged()
-                    PreferenceKeeper.instance.currentFilterValue = ""//data clear
+                    selectedItem = ArrayList<String>()
+
                 }
+                PreferenceKeeper.instance.currentFilterValue=""
+                PreferenceKeeper.instance.isFillterApplyByUser =true
+                MyApp.ShowTost(THIS!!,"All filter clear")
             } catch (e: Exception) {
             }
         }
@@ -84,6 +110,17 @@ class FillterActvity : BaseActivity() {
                     it.data?.let {myData->
                         dataList = ArrayList()
                         dataList = myData.data.filter_name
+                        if(selectedItemSaveList.size>0){
+                            for (i in 0 until selectedItemSaveList.size){
+                                for(j in 0 until dataList.size){
+                                    for (k in 0 until dataList[j].filter_options.size){
+                                        if(dataList[j].filter_options[k].id==selectedItemSaveList[i]){
+                                            dataList[j].filter_options[k].isChekd=true
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         seList()
                         Log.d("TAG", "user_lost_itemsAPICAll: "+myData.data)
                     }
@@ -118,12 +155,19 @@ class FillterActvity : BaseActivity() {
                 dataList[pos].isSelected = !dataList[pos].isSelected
                 fillterMainAdapter.notifyItemChanged(pos)
 
-              //  MyApp.ShowTost(this@FillterActvity,"hi")
+
             }
 
             override fun onClickSub(pos: Int, subPos: Int) {
                 dataList[pos].filter_options[subPos].isChekd =   !dataList[pos].filter_options[subPos].isChekd
                 fillterMainAdapter.notifyDataSetChanged()
+                if( dataList[pos].filter_options[subPos].isChekd){
+                    selectedItem.add( dataList[pos].filter_options[subPos].id)
+                }else{
+                    if(selectedItem.contains( dataList[pos].filter_options[subPos].id)){
+                        selectedItem.remove( dataList[pos].filter_options[subPos].id)
+                    }
+                }
             }
 
         })

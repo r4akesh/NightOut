@@ -44,6 +44,7 @@ class SplashActivity : BaseActivity() {
             overridePendingTransition(0,0)
             finish()
         }, 1500)
+      //  }, 5000)
     }
 
     fun showCrashDialog(report: String) {

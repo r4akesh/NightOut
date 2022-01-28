@@ -45,6 +45,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.viewmodel.CommonViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyToFrag {
@@ -149,7 +156,74 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 return
             }
             mMap!!.isMyLocationEnabled = false
+
         } catch (e: Exception) {
+        }
+    }
+    var mapMarker = HashMap<String, Double>()
+    private fun setUpMarker() {
+        try {
+            val builder = LatLngBounds.Builder()
+            var latitudeUpdated: Double
+            var longitudeUpdated: Double
+            for (i in 0 until dashList.all_records.size){
+                for (j in 0 until dashList.all_records[i].sub_records.size){
+                    var mLat=Commons.strToDouble(dashList.all_records[i].sub_records[j].store_lattitude)
+                    var mLang=Commons.strToDouble(dashList.all_records[i].sub_records[j].store_longitude)
+                    if(MyApp.isValidLatLng(mLat,mLang)&& mLat>0.0 && mLang>0.0){
+                        var key= ""+mLat+mLang
+                        var offset = 0.0
+                        if (mapMarker.containsKey(key)) {
+                            mapMarker[key]?.plus(0.00005)?.let { mapMarker.put(key, it) };//0.00045
+                            offset = mapMarker[key]!!;
+                        } else {
+                            mapMarker[key] = 0.0;
+                        }
+                        latitudeUpdated = offset+mLat
+                        longitudeUpdated = offset+mLang
+                        val positionAddrs = LatLng(latitudeUpdated, longitudeUpdated)
+                        val marker: Marker = mMap!!.addMarker(MarkerOptions().position(positionAddrs))
+                        marker.title =dashList.all_records[i].sub_records[j].store_name
+                        marker.snippet = dashList.all_records[i].sub_records[j].store_address
+                        
+                        when {
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.BAR -> {
+                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.PUB -> {
+                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.CLUB -> {
+                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.FOOD -> {
+                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.EVENT -> {
+                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
+                            }
+                        }
+                        builder.include(marker.position)
+                    }
+                }
+                try {
+                    val bounds = builder.build()
+                    val padding2 = 110
+                    val cu = CameraUpdateFactory.newLatLngBounds(MyApp.adjustBoundsForMaxZoomLevel(bounds), padding2)
+                    //googleMap.moveCamera(cu);
+                    mMap?.animateCamera(cu)
+                } catch (e: java.lang.Exception) {
+                    Log.e("Exception>>>", "" + e)
+                }
+                mMap?.setOnInfoWindowClickListener(OnInfoWindowClickListener { marker ->
+                     var v=   marker.id
+                     var v2=   marker.id
+//                    System.out.println("snipptet>>" + arList.get(marker.snippet.toInt()))
+//                    startActivity(Intent(THIS, MakeReservationStep3::class.java).putExtra(StaticData.SportCenter, arList.get(marker.snippet.toInt())))
+                })
+            }
+        } catch (e: Exception) {
+            Log.d("ok", "setUpMarker: "+e)
         }
     }
 
@@ -229,9 +303,20 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                     if(activity!=null) {
                                         allRecordsList.addAll(dashList.all_records)
                                         setListAllRecord()
+                                        var isSetMarkerCall=true
+                                        while (mMap!=null && isSetMarkerCall) {
+                                            if (dashList.all_records.isNotEmpty() && dashList.all_records.size > 0 ) {
+                                                setUpMarker()
+                                                isSetMarkerCall=false
+                                                Log.e("ok", "setUpMarker: call")
+
+
+                                            }
+                                        }
                                     }
                                 }
                             } catch (e: Exception) {
+
                             }
                         }
                     }
@@ -342,7 +427,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 }
                 Status.ERROR -> {
                    // progressDialog.dialog.dismiss()
-                    Utills.showErrorToast(requireActivity(), it.message!!, )
+                    Utills.showErrorToast(requireActivity(), it.message!!)
                 }
             }
         })
@@ -470,23 +555,21 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     private val locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
-            mMap!!.clear()
+          //  mMap!!.clear()
             for (location in locationResult.locations) {
-                //  latTextView.text = location.latitude.toString()
-                //  lngTextView.text = location.longitude.toString()
                 Log.d("ok", "onLocationResult: "+location.latitude.toString())
                 stopLocationUpdate()
-                if(PreferenceKeeper.instance.currentAddrs!!.isBlank()) {
+              if(PreferenceKeeper.instance.currentAddrs!!.isBlank()) {
                     getAddrsFrmLatlang(location.latitude, location.longitude)
                 }else{
                     binding.headerHome.headerAddrs.text =  PreferenceKeeper.instance.currentAddrs
 
                 }
-                val shopLatlang = LatLng(location.latitude, location.longitude)
-                val marker = MarkerOptions().position(shopLatlang)
-                marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_yello_ic))
-                mMap!!.addMarker(marker)
-                mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(shopLatlang, 18f))
+                /*      val shopLatlang = LatLng(location.latitude, location.longitude)
+                    val marker = MarkerOptions().position(shopLatlang)
+                    marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_yello_ic))
+                    mMap!!.addMarker(marker)
+                    mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(shopLatlang, 18f))*/
             }
 
         }

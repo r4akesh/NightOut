@@ -26,6 +26,11 @@ class AppConstant {
         const val CITY_CURRENT = "CITY_CURRENT"
         const val FilterValue = "FilterValue"
         const val IsFillterApplyByUser = "IsFillterApplyByUser"
+        const val BAR = "bar"
+        const val PUB = "pub"
+        const val CLUB = "club"
+        const val FOOD = "food"
+        const val EVENT = "event"
 
 
 

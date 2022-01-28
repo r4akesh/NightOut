@@ -46,6 +46,12 @@ import android.util.Log
 import com.nightout.R
 import java.lang.NumberFormatException
 import java.text.DecimalFormat
+import com.google.android.gms.maps.model.LatLngBounds
+
+import com.google.android.gms.maps.model.LatLng
+
+
+
 
 
 class MyApp : Application() {
@@ -441,6 +447,27 @@ return b;
         private fun rad2deg(rad: Double): Double {
             return rad * 180.0 / Math.PI
         }
+
+          fun adjustBoundsForMaxZoomLevel(bounds: LatLngBounds): LatLngBounds? {
+              // adjust zoom level (if 1 record found)
+            var bounds = bounds
+            var sw = bounds.southwest
+            var ne = bounds.northeast
+            val deltaLat = Math.abs(sw.latitude - ne.latitude)
+            val deltaLon = Math.abs(sw.longitude - ne.longitude)
+            val zoomN = 0.005 // minimum zoom coefficient
+            if (deltaLat < zoomN) {
+                sw = LatLng(sw.latitude - (zoomN - deltaLat / 2), sw.longitude)
+                ne = LatLng(ne.latitude + (zoomN - deltaLat / 2), ne.longitude)
+                bounds = LatLngBounds(sw, ne)
+            } else if (deltaLon < zoomN) {
+                sw = LatLng(sw.latitude, sw.longitude - (zoomN - deltaLon / 2))
+                ne = LatLng(ne.latitude, ne.longitude + (zoomN - deltaLon / 2))
+                bounds = LatLngBounds(sw, ne)
+            }
+            return bounds
+        }
+
      /*        @SuppressLint("SdCardPath")
         fun writeVenuesList(hMap: ArrayList<VenuListModel.Data>) {
             val path: String

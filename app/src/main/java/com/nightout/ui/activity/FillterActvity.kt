@@ -28,8 +28,9 @@ class FillterActvity : BaseActivity() {
     lateinit var fillterMainAdapter : FillterMainAdapter
     private var customProgressDialog = CustomProgressDialog()
     lateinit var filterViewModel: CommonViewModel
-    lateinit var selectedItem: ArrayList<String>
-    lateinit var selectedItemSaveList: List<String>
+     lateinit var selectedItem: ArrayList<String>
+   // lateinit var selectedItemSaveList: List<String>
+    val selectedArr = arrayOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +40,7 @@ class FillterActvity : BaseActivity() {
         setTouchNClick(binding.filterActivityFilter)
         setTouchNClick( binding.filterActivityToolbar.toolbarClearAll)
         selectedItem = ArrayList()
-        selectedItemSaveList =  ArrayList()
+
 //        binding.filterGroup.setOnCheckedChangeListener(ChipGroup.OnCheckedChangeListener { chipGroup, i ->
 //            Log.i("TAG", i.toString() + "")
 //        })
@@ -51,8 +52,13 @@ class FillterActvity : BaseActivity() {
             val list: MutableList<String> = ArrayList()
             // var str: List<String> =selectedItemSave.split(",")
 
-              selectedItemSaveList = (selectedItemSave.split(","))
-            Log.d("TAG", "onCreate: "+selectedItemSaveList);
+
+              var mList: List<String> = (selectedItemSave.split(","))
+            for (i in 0 until mList.size){
+                selectedItem.add(mList[i])
+            }
+
+            Log.d("TAG", "onCreate: "+selectedItem);
         }
         filter_listAPICAll()
     }
@@ -110,11 +116,11 @@ class FillterActvity : BaseActivity() {
                     it.data?.let {myData->
                         dataList = ArrayList()
                         dataList = myData.data.filter_name
-                        if(selectedItemSaveList.size>0){
-                            for (i in 0 until selectedItemSaveList.size){
+                        if(selectedItem.size>0){
+                            for (i in 0 until selectedItem.size){
                                 for(j in 0 until dataList.size){
                                     for (k in 0 until dataList[j].filter_options.size){
-                                        if(dataList[j].filter_options[k].id==selectedItemSaveList[i]){
+                                        if(dataList[j].filter_options[k].id==selectedItem[i]){
                                             dataList[j].filter_options[k].isChekd=true
                                         }
                                     }
@@ -154,8 +160,6 @@ class FillterActvity : BaseActivity() {
             override fun onClick(pos: Int) {
                 dataList[pos].isSelected = !dataList[pos].isSelected
                 fillterMainAdapter.notifyItemChanged(pos)
-
-
             }
 
             override fun onClickSub(pos: Int, subPos: Int) {

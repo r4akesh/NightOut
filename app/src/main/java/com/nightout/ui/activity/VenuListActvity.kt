@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -17,8 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.*
 import com.nightout.R
 import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.adapter.VenuSubAdapter
@@ -28,12 +28,22 @@ import com.nightout.model.*
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import com.google.android.gms.maps.model.CameraPosition
+
+import com.google.android.gms.maps.model.PolylineOptions
+
+
+
 
 
 class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: VenulistingActivityBinding
     lateinit var venuAdapterAdapter: VenuAdapterAdapter
     var isListShow = true
+   lateinit var googleMap: GoogleMap
     lateinit var supportMapFragment: SupportMapFragment
     lateinit var venuListModel: CommonViewModel
     private var customProgressDialog = CustomProgressDialog()
@@ -171,6 +181,8 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     it.data?.let {
                         venuDataList=it.data
                         setListVenu()
+                        if(!isListShow)
+                        setMarker()
                     }
                 }
                 Status.LOADING -> {
@@ -178,6 +190,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 Status.ERROR -> {
                     venuDataList = ArrayList()
                     setListVenu()
+                    googleMap.clear()
                     customProgressDialog.dialog.hide()
                     Utills.showErrorToast(
                         this@VenuListActvity,
@@ -187,6 +200,74 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 }
             }
         })
+    }
+    var mapMarker = HashMap<String, Double>()
+    private fun setMarker() {
+
+            googleMap.clear()
+
+
+
+        val builder = LatLngBounds.Builder()
+        var latitudeUpdated: Double
+        var longitudeUpdated: Double
+        for (i in 0 until venuDataList.size){
+            var mLat=Commons.strToDouble(venuDataList[i].store_lattitude)
+            var mLang=Commons.strToDouble(venuDataList[i].store_longitude)
+            if(MyApp.isValidLatLng(mLat,mLang)&& mLat>0.0 && mLang>0.0){
+                var key= ""+mLat+mLang
+                var offset = 0.0
+                if (mapMarker.containsKey(key)) {
+                    mapMarker[key]?.plus(0.00005)?.let { mapMarker.put(key, it) };//0.00045
+                    offset = mapMarker[key]!!;
+                } else {
+                    mapMarker[key] = 0.0;
+                }
+                latitudeUpdated = offset+mLat
+                longitudeUpdated = offset+mLang
+                val positionAddrs = LatLng(latitudeUpdated, longitudeUpdated)
+                val marker: Marker = googleMap!!.addMarker(MarkerOptions().position(positionAddrs))
+                marker.title =venuDataList[i].store_name
+                marker.snippet = venuDataList[i].store_address
+                when {
+                    venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.BAR -> {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
+                    }
+                    venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.PUB -> {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
+                    }
+                    venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.CLUB -> {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
+                    }
+                    venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.FOOD -> {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
+                    }
+                    venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.EVENT -> {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
+                    }
+                }
+                builder.include(marker.position)
+            }
+            try {
+                runOnUiThread(Runnable {
+                    val bounds = builder.build()
+                    val padding2 = 110
+                    val cu = CameraUpdateFactory.newLatLngBounds(MyApp.adjustBoundsForMaxZoomLevel(bounds), padding2)
+                    //googleMap.moveCamera(cu);
+                    googleMap?.animateCamera(cu)
+                })
+
+
+            } catch (e: java.lang.Exception) {
+                Log.e("Exception>>>", "" + e)
+            }
+            googleMap?.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener { marker ->
+                var v = marker.id
+                var v2 = marker.id
+//                    System.out.println("snipptet>>" + arList.get(marker.snippet.toInt()))
+//                    startActivity(Intent(THIS, MakeReservationStep3::class.java).putExtra(StaticData.SportCenter, arList.get(marker.snippet.toInt())))
+            })
+        }
     }
 
     var posSaveForUpdate=0
@@ -379,13 +460,22 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 isListShow = false
                 supportMapFragment.view?.visibility = VISIBLE
                 binding.venulistingToolBar.toolbar3dot.setImageResource(R.drawable.listtop_ic)
-
                 binding.venulistingRecyclersub.visibility = GONE
+
+
+                Handler(getMainLooper()).postDelayed(Runnable { // set market after completly visible map
+                    setMarker()
+                }, 1000)
+
+
+
+
             } else {
                 isListShow = true
                 binding.venulistingRecyclersub.visibility = VISIBLE
                 supportMapFragment.view?.visibility = GONE
                 binding.venulistingToolBar.toolbar3dot.setImageResource(R.drawable.maptop_ic)
+
             }
 
         }
@@ -431,9 +521,8 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
 
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        val success =
-            googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
-        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(55.3781, 3.4360)))
+    override fun onMapReady(gMap: GoogleMap) {
+        gMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
+        googleMap= gMap
     }
 }

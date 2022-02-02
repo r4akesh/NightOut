@@ -65,9 +65,9 @@ class VenuBotmSheetAdapter(
                 hsview.scrollTo(hsview.getScrollX() as Int + 80, hsview.getScrollY() as Int)
             }
             if(arrayList[position].is_prime == "1"){
-                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.chk_box)
+                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.ic_prime72)
             }else{
-                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.unchk_box)
+                venuBottmShhetItemPrimeBtn.setImageResource(0)
             }
             venuBottmShhetItemFavBtn.setOnClickListener {
                 clickListener.onClickFav(position)
@@ -117,9 +117,9 @@ class VenuBotmSheetAdapter(
                 hsview.scrollTo(hsview.getScrollX() as Int + 80, hsview.getScrollY() as Int)
             }
             if(arrayList[position].is_prime == "1"){
-                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.chk_box)
+                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.ic_prime72)
             }else{
-                venuBottmShhetItemPrimeBtn.setImageResource(R.drawable.unchk_box)
+                venuBottmShhetItemPrimeBtn.setImageResource(0)
             }
             if(arrayList[position].favrouite == "1"){
                 venuBottmShhetItemFavBtn.setImageResource(R.drawable.fav_selected72)

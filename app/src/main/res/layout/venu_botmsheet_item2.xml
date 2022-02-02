@@ -40,14 +40,19 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <ImageView
-                    android:id="@+id/venuBottmShhetItemPrimeBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_map_loc"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                    <ImageView
+                        android:id="@+id/venuBottmShhetItemPrimeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_prime72"
+                        />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -171,13 +176,13 @@
                             android:id="@+id/venusubitem_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/_10ssp"
                             android:background="@null"
                             android:drawableStart="@drawable/start_yellobg"
                             android:drawablePadding="@dimen/_5ssp"
                             android:fontFamily="@font/proximanova_bold"
+                            android:gravity="center_vertical"
                             android:text="3"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_13ssp" />

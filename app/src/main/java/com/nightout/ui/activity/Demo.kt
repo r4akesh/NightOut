@@ -72,13 +72,7 @@ import com.teresaholfeld.stories.StoriesProgressView
 import java.net.URI
 import android.widget.Toast
 
-import omari.hamza.storyview.callback.OnStoryChangedCallback
 
-import omari.hamza.storyview.callback.StoryClickListeners
-
-import omari.hamza.storyview.StoryView
-
-import omari.hamza.storyview.model.MyStory
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
@@ -115,13 +109,13 @@ class Demo : BaseActivity() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this@Demo, R.layout.demo)
 
-        showStories()
+       /* showStories()*/
 
 
 
     }
 
-
+/*
     fun showStories() {
         val myStories: ArrayList<MyStory> = ArrayList()
         val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
@@ -175,7 +169,7 @@ class Demo : BaseActivity() {
             //.setRtl(true)
             .build()
             .show()
-    }
+    }*/
 
 
 

@@ -145,7 +145,7 @@ var isEdit= true //for mainten tost msg
             it.adapter = lostItemAdapter
         }
     }
-    val startForResultLostItemFound= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+    val startForResultLostItemFound = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
             lostList[savePosForStatus].status="1"
             lostItemAdapter.notifyItemChanged(savePosForStatus)

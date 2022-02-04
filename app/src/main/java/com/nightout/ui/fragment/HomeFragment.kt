@@ -2,6 +2,7 @@ package com.nightout.ui.fragment
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -68,11 +69,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     lateinit var doFavViewModel : CommonViewModel
     var allRecordsList = ArrayList<DashboardModel.AllRecord>()
    // val REQCODE_VENULISTACTIVITY = 1009
+    val REQCODE_SearchLocationActivity = 1007
    lateinit var  fusedLocationProviderClient : FusedLocationProviderClient
     var geocoder: Geocoder? = null
     var addresses: List<Address>? = null
     private var mMap: GoogleMap? = null
-
+    var city=""
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 999
     }
@@ -138,7 +140,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             startActivity(Intent(requireContext(), FillterActvity::class.java))
 
         } else if (v == binding.headerHome.headerSearch) {
-            startActivity(Intent(requireContext(), SearchLocationActivity::class.java))
+            startActivityForResult(Intent(requireContext(), SearchLocationActivity::class.java),REQCODE_SearchLocationActivity)
             activity?.overridePendingTransition(0, 0)
         }
         else if(v==binding.headerHome.headerNotificationRel){
@@ -146,6 +148,18 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQCODE_SearchLocationActivity){
+            if(resultCode== Activity.RESULT_OK){
+                  city= data?.getStringExtra(AppConstant.INTENT_EXTRAS.ADDRS)!!
+                if("city" in city.toLowerCase())
+                    city = city.replace("city","")
+                dashboardAPICALL()
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -156,7 +170,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 return
             }
             mMap!!.isMyLocationEnabled = false
-
+            mMap!!.uiSettings.isMapToolbarEnabled=false
         } catch (e: Exception) {
         }
     }
@@ -270,6 +284,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         jarr.put(str)
         var jobj = JSONObject()
         jobj.put("filter",jarr)
+        jobj.put("city",city.trim())
 
 
         progressDialog.show(requireActivity(), "")
@@ -282,7 +297,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         it.data?.let { users ->
                             try {
                                 setBottomSheet()
-                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),"")
+                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),ArrayList(),"",)
                                 dashList.all_records = ArrayList()
                                 allRecordsList = ArrayList()
                                 //save imgPath
@@ -292,6 +307,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                 }else{
                                     binding.headerHome.headerNotificationText.visibility= VISIBLE
                                     binding.headerHome.headerNotificationText.text = dashList.noti_count
+                                    if( binding.headerHome.headerNotificationText.text.toString().isBlank()){
+                                        binding.headerHome.headerNotificationText.visibility=GONE
+                                    }
                                 }
                              //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
                                 PreferenceKeeper.instance.imgPathSave = "https://nightout.ezxdemo.com/storage/"
@@ -299,9 +317,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                     if(activity!=null)
                                     setListStory(users.data.stories)
                                 }
+                                Log.d("PK256", "dashboardAPICALL: "+dashList.all_records.size)
                                 if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
                                     if(activity!=null) {
                                         allRecordsList.addAll(dashList.all_records)
+                                        //save service charge
+                                        PreferenceKeeper.instance.SERVICE_CHARGE = dashList.service_charge[0].charge
                                         setListAllRecord()
                                         var isSetMarkerCall=true
                                         while (mMap!=null && isSetMarkerCall) {
@@ -314,9 +335,16 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                             }
                                         }
                                     }
+                                }else{
+                                    mMap?.clear()
+                                    allRecordsList = ArrayList()
+                                    setListAllRecord()
+                                    MyApp.ShowTost(requireActivity(),"Venues not available in $city")
                                 }
                             } catch (e: Exception) {
-
+                                mMap?.clear()
+                                allRecordsList = ArrayList()
+                                setListAllRecord()
                             }
                         }
                     }

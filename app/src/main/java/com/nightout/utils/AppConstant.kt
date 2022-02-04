@@ -31,6 +31,7 @@ class AppConstant {
         const val CLUB = "club"
         const val FOOD = "food"
         const val EVENT = "event"
+        const val SERVICECHARGE = "SERVICECHARGE"
 
 
 

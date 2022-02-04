@@ -15,6 +15,7 @@ import com.nightout.model.LocalStreModel
 import com.nightout.model.OrderDetailListModel
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.AppConstant
+import com.nightout.utils.PreferenceKeeper
 import kotlinx.android.synthetic.main.allbar_actvity.*
 import kotlinx.android.synthetic.main.orderdetail_avctivity.view.*
 import kotlinx.android.synthetic.main.toolbar_common.view.*
@@ -33,12 +34,20 @@ class OrderDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@OrderDetailActivity, R.layout.orderdetail_avctivity)
         setToolBar()
+
+
+        setData()
+
+    }
+
+    private fun setData() {
         var detailStore = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.StoreDetailPoJO) as VenuDetailModel.Data
         storeType = intent.getStringExtra(AppConstant.INTENT_EXTRAS.StoreType)!!
         binding.orderDeatilTitle.text= detailStore.store_name
         binding.orderDeatilAddrs.text= detailStore.store_address
         recordsList = ArrayList()
         mainList = ArrayList()
+
         if (detailStore.all_products.size > 0) {
             for (i in 0 until 3) {//coz packege no include
                 for (j in 0 until detailStore.all_products[i].records.size) {
@@ -84,7 +93,8 @@ class OrderDetailActivity : BaseActivity() {
         binding.orderDetailAmt.text= resources.getString(R.string.currency_sumbol) +totPrice.toString()
         binding.orderDetailTotAmt.text= resources.getString(R.string.currency_sumbol) +totPrice.toString()
         binding.orderDetailPay.text= "Pay "+resources.getString(R.string.currency_sumbol) +totPrice.toString()
-        Log.d("TAG", "onCreate: " + mainList)
+        binding.orderDetailServChrgeAmt.text=  resources.getString(R.string.currency_sumbol) +PreferenceKeeper.instance.SERVICE_CHARGE
+
         setListOrder()
     }
 

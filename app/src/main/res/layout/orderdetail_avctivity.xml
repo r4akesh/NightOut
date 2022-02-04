@@ -74,16 +74,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="@dimen/_3sdp"
+                    android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/orderDeatilAddrs">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/orderDetailRecyle"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_marginEnd="@dimen/_10sdp" />
 
                     <TextView
 
@@ -102,15 +102,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
-                        android:inputType="number"
-                        android:maxLength="10"
                         android:background="@drawable/box_botomsheet"
                         android:fontFamily="@font/proximanova_reg"
+                        android:hint="Enter your table number..."
+                        android:inputType="number"
+                        android:maxLength="10"
                         android:padding="@dimen/_10ssp"
                         android:singleLine="true"
-                       android:textColorHint="@color/text_gray"
-                        android:hint="Enter your table number..."
                         android:textColor="@color/white"
+                        android:textColorHint="@color/text_gray"
                         android:textSize="@dimen/_12ssp" />
 
                     <TextView
@@ -174,7 +174,6 @@
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
-
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10ssp"
@@ -183,6 +182,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/proximanova_reg"
                             android:gravity="end"
+                            android:id="@+id/orderDetailServChrgeAmt"
                             android:text="00.00"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
@@ -191,9 +191,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_height="wrap_content">
+                        tools:visibility="visible">
 
                         <TextView
 

@@ -122,28 +122,11 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             txtGallery.setOnClickListener { v: View? ->
                 val currentAPIVersion = Build.VERSION.SDK_INT
                 if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                    arrayOf(
-                        if (ActivityCompat.checkSelfPermission(
-                                activity,
-                                Manifest.permission.CAMERA
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            ActivityCompat.requestPermissions(
-                                activity,
-                                arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE
-                                ),
-                                2
-                            )
+                    arrayOf(if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 2)
                         } else {
                             dialog.dismiss()
-                            val intent =
-                                Intent(
-                                    Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                )
+                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                             intent.type = "image/*"
 //                            intent.type = "*/*";
                             intent.action = Intent.ACTION_PICK
@@ -153,8 +136,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
 
                 } else {
                     dialog.dismiss()
-                    val intent =
-                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     intent.type = "image/*"
 //                    intent.type = "*/*";
                     intent.action = Intent.ACTION_PICK

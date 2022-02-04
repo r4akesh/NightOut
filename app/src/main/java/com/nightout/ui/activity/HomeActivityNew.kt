@@ -398,4 +398,9 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
                 }
             }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
 }

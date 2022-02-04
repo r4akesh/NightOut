@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
@@ -93,23 +96,24 @@ class FavListActivity : BaseActivity() {
             override fun onClick(pos: Int) {
                 posSave = pos
                 if(dataList[pos].venue_detail.store_type == "5"){
-                   startActivityForResult(
-                        Intent(this@FavListActivity, EventDetailActivity::class.java)
+                    startForResultLostItemFound.launch(Intent(this@FavListActivity, EventDetailActivity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
                         .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
                         .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE,  "1")
-                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType,  dataList[pos].venue_detail.store_type)
-                       ,REQCODE_STOREDETAILACTIVITY)
+                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType,  dataList[pos].venue_detail.store_type))
+
+
 
 
                 }else {
-                    startActivityForResult(
-                        Intent(this@FavListActivity, StoreDetailActvity::class.java)
-                            .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
-                            .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
-                            .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, "1")
-                            .putExtra(AppConstant.INTENT_EXTRAS.StoreType, dataList[pos].venue_detail.store_type)
-                        ,REQCODE_STOREDETAILACTIVITY)
+                    startForResultLostItemFound.launch(Intent(this@FavListActivity, StoreDetailActvity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + dataList[pos].venue_detail.id)
+                        .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE,  "1")
+                        .putExtra(AppConstant.INTENT_EXTRAS.StoreType,  dataList[pos].venue_detail.store_type))
+
+
+
 
 
                 }
@@ -226,12 +230,10 @@ class FavListActivity : BaseActivity() {
             }
         })
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==REQCODE_STOREDETAILACTIVITY && resultCode== Activity.RESULT_OK){
+    val startForResultLostItemFound= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
             try {
-                var favValue = data?.getStringExtra("result")!!
+                var favValue = result.data?.getStringExtra("result")!!
                 if(favValue == "0") {
                     val listSize = dataList.size
                     dataList.removeAt(posSave)
@@ -243,4 +245,7 @@ class FavListActivity : BaseActivity() {
             }
         }
     }
+
+
+
 }

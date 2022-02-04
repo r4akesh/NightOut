@@ -463,7 +463,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 binding.venulistingRecyclersub.visibility = GONE
 
 
-                Handler(getMainLooper()).postDelayed(Runnable { // set market after completly visible map
+                Handler(getMainLooper()).postDelayed(Runnable { // set market after completely visible map
                     setMarker()
                 }, 1000)
 
@@ -524,5 +524,6 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
     override fun onMapReady(gMap: GoogleMap) {
         gMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
         googleMap= gMap
+        googleMap.uiSettings.isMapToolbarEnabled=false
     }
 }

@@ -107,6 +107,12 @@ class PreferenceKeeper private constructor(context: Context?) {
             prefs!!.edit().putString(AppConstant.PrefsName.FilterValue, cnt).apply()
         }
 
+    var SERVICE_CHARGE: String?
+        get() = prefs!!.getString(AppConstant.PrefsName.SERVICECHARGE, "")
+        set(cnt) {
+            prefs!!.edit().putString(AppConstant.PrefsName.SERVICECHARGE, cnt).apply()
+        }
+
     fun getRegisterUser(context: Context?): FSUsersModel? {
         if (registrationModel == null) {
             refresh(context)

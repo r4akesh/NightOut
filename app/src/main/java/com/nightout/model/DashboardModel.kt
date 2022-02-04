@@ -15,6 +15,7 @@ data class DashboardModel(
     data class Data(
         var all_records: ArrayList<AllRecord>,
         var event_tickets: ArrayList<EventTicket>,
+        var service_charge: ArrayList<ServiceCharge>,
         var stories: ArrayList<Story>,
         val noti_count : String
     ) : Serializable
@@ -24,6 +25,14 @@ data class DashboardModel(
         val title: String,
         val type: String
     ) : Serializable
+
+    data class ServiceCharge(
+        val id:String,
+        val user_id:String,
+        val charge:String,
+        val created_at:String,
+        val updated_at:String,
+    ):Serializable
 
     data class EventTicket(
         val amount: String,

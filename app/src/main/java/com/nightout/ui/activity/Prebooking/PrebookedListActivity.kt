@@ -3,6 +3,7 @@ package com.nightout.ui.activity.Prebooking
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,8 @@ class PrebookedListActivity : BaseActivity() {
                 }
                 Status.ERROR->{
                     customProgressDialog.dialog.dismiss()
+                    binding.prebookedListNoDataConstrent.visibility= VISIBLE
+                    binding.prebookedlistRecycle.visibility= GONE
                     // Utills.showSnackBarOnError(binding.lostConstrentToolbar, it.message!!, this@LostitemActivity)
 
                 }

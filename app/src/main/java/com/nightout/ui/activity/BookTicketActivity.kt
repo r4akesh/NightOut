@@ -42,7 +42,7 @@ class BookTicketActivity : BaseActivity()  {
                 peopleCount++
                 binding.preBookingPeopleValue.text = "$peopleCount"
                 totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
-                binding.bookticketPay.text = "Pay $ $totAmt"
+                binding.bookticketPay.text = "Pay "+resources.getString(R.string.currency_sumbol)+""+totAmt
             } catch (e: Exception) {
             }
         }
@@ -101,7 +101,7 @@ class BookTicketActivity : BaseActivity()  {
             binding.bookTicketTime.text = "Start at :  ${pojoEvntDetl.event_start_time} To ${pojoEvntDetl.event_end_time}"
             binding.bookTicketSAddrs.text = PreferenceKeeper.instance.currentAddrs
             binding.bookTicketDAddrs.text = pojoEvntDetl.store_address
-            binding.bookticketPay.text = "Pay $ ${pojoEvntDetl.sale_price}"
+            binding.bookticketPay.text = "Pay "+resources.getString(R.string.currency_sumbol)+pojoEvntDetl.sale_price
             val latitude: Double = Commons.strToDouble(pojoEvntDetl.store_lattitude)
             val longitude: Double = Commons.strToDouble(pojoEvntDetl.store_longitude)
            binding.bookTicketKM.text =  "${MyApp.getDestance(latitude,longitude,PreferenceKeeper.instance.currentLat!!,PreferenceKeeper.instance.currentLong!!)} Km away"

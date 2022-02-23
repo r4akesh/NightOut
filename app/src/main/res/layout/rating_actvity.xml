@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3ssp"
-            android:text="@string/Excellent"
+            android:text=""
 
             android:textColor="@color/white_thred"
             android:textSize="@dimen/_12ssp"
@@ -75,6 +75,7 @@
             android:id="@+id/ratingActvityConsterntRecyle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/gredient_btmshet_bg"
             android:padding="@dimen/_5sdp"
@@ -115,6 +116,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
+                android:id="@+id/ratingActvityReviewEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5ssp"

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -14,7 +15,9 @@ import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.view.View.*
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -287,6 +290,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         jobj.put("city",city.trim())
 
 
+
         progressDialog.show(requireActivity(), "")
         try {
             homeViewModel.dashBoard(jobj).observe(requireActivity(), {
@@ -297,7 +301,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         it.data?.let { users ->
                             try {
                                 setBottomSheet()
-                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),ArrayList(),"",)
+                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),ArrayList(),"","")
                                 dashList.all_records = ArrayList()
                                 allRecordsList = ArrayList()
                                 //save imgPath
@@ -311,13 +315,22 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                         binding.headerHome.headerNotificationText.visibility=GONE
                                     }
                                 }
-                             //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
+                                //reviewPopUp
+                                try {
+                                    if(dashList.venue_review_remaning.toInt()>0){
+                                        if(!DataManager.instance.isFirstShowPopupReview) {
+                                            showPopUpReview()
+                                            DataManager.instance.isFirstShowPopupReview=true
+                                        }
+                                     }
+                                } catch (e: Exception) {
+                                }
+                                //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
                                 PreferenceKeeper.instance.imgPathSave = "https://nightout.ezxdemo.com/storage/"
                                 if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
                                     if(activity!=null)
                                     setListStory(users.data.stories)
                                 }
-                                Log.d("PK256", "dashboardAPICALL: "+dashList.all_records.size)
                                 if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
                                     if(activity!=null) {
                                         allRecordsList.addAll(dashList.all_records)
@@ -366,6 +379,25 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             })
         } catch (e: Exception) {
         }
+    }
+
+    private fun showPopUpReview() {
+        val adDialog = Dialog(requireActivity(), R.style.MyDialogThemeBlack)
+        adDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
+        adDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        adDialog.setContentView(R.layout.dialog_review)
+        adDialog.setCancelable(false)
+          var dgCloseBtnTop: ImageView =  adDialog.findViewById(R.id.dgCloseBtnTop)
+          var dgOkBtn: TextView =  adDialog.findViewById(R.id.dgOkBtn)
+
+        dgCloseBtnTop.setOnClickListener {
+            adDialog.dismiss()
+        }
+        dgOkBtn.setOnClickListener {
+            startActivity(Intent(requireActivity(),RatingListActvity::class.java))
+        }
+
+        adDialog.show()
     }
 
     private fun setListAllRecord() {

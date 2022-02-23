@@ -191,6 +191,10 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
                 startActivity(Intent(THIS, VenuListActvity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.StoreType,"5"))//
             }
+            resources.getString(R.string.MyOrders)->{
+                startActivity(Intent(THIS, MyOrderActvitiy::class.java))
+            }
+
             resources.getString(R.string.BookedVenue)->{
                 startActivity(Intent(THIS, PrebookedListActivity::class.java))//
             }

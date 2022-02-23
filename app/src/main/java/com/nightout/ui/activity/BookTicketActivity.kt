@@ -2,6 +2,8 @@ package com.nightout.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -23,6 +25,7 @@ class BookTicketActivity : BaseActivity()  {
     var totAmt = 0.0
     private val progressDialog = CustomProgressDialog()
     lateinit var bookEventViewModel: CommonViewModel
+    var tktQty=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@BookTicketActivity,R.layout.bookticket_actviity)
@@ -30,6 +33,25 @@ class BookTicketActivity : BaseActivity()  {
         setToolBar()
         pojoEvntDetl= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO) as VenuDetailModel.Data
         setData()
+        binding.preBookingPeopleValue.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0!!.isNotBlank()) {
+                    var crntValue = p0.toString().toInt()
+                    if (crntValue <= tktQty) {
+                        binding.preBookingPeopleValue.setSelection( binding.preBookingPeopleValue.text.toString().length)
+                        peopleCount=crntValue
+                    } else {
+                        binding.preBookingPeopleValue.setText("")
+                        MyApp.popErrorMsg("", "You can add maximum $tktQty person", THIS!!)
+                    }
+                }
+            }
+
+        })
     }
 
     override fun onClick(v: View?) {
@@ -38,19 +60,23 @@ class BookTicketActivity : BaseActivity()  {
             book_event_ticketAPICALL()
         }
         else if(binding.preBookingPlus==v){
+            if(peopleCount<tktQty){
             try {
                 peopleCount++
-                binding.preBookingPeopleValue.text = "$peopleCount"
+                binding.preBookingPeopleValue.setText("$peopleCount")
                 totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
                 binding.bookticketPay.text = "Pay "+resources.getString(R.string.currency_sumbol)+""+totAmt
             } catch (e: Exception) {
+            }}
+            else{
+                MyApp.popErrorMsg("", "You can add maximum $tktQty person", THIS!!)
             }
         }
         else if(binding.preBookingMinus==v){
             if(peopleCount>1) {
                 try {
                     peopleCount--
-                    binding.preBookingPeopleValue.text = "$peopleCount"
+                    binding.preBookingPeopleValue.setText("$peopleCount")
                     totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
                     binding.bookticketPay.text = "Pay $ $totAmt"
                 } catch (e: Exception) {
@@ -94,7 +120,7 @@ class BookTicketActivity : BaseActivity()  {
     private fun setData() {
         try {
 
-
+            tktQty = pojoEvntDetl.ticket_qty.toInt()
             binding.bookTicketPrice.text = "Price : $${pojoEvntDetl.sale_price}"
             binding.bookTicketURBN.text = pojoEvntDetl.store_name
             binding.bookTicketDate.text = pojoEvntDetl.event_date

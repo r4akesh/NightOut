@@ -73,6 +73,8 @@ class AppConstant {
         const val iSFROMESelectBarCrwlActivity = "iSFROMESelectBarCrwlActivity"
         const val SharedList_MODEL = "SharedList_MODEL"
         const val PreBookDetail = "PreBookDetail"
+        const val RATING_POJO = "RATING_POJO"
+
 
 
 

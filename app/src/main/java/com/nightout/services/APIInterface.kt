@@ -162,4 +162,15 @@ interface APIInterface {
     @POST("pre_booking_cancel")
     fun pre_booking_cancelAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 
+    @POST("make_payment")
+    fun make_paymentAPI(@Body params: RequestBody): Call<ResponseBody>
+
+    @GET("venue_reviews_remaning")
+    fun venue_reviews_remaningAPI(): Call<ResponseBody>
+
+    @GET("orders")
+    fun ordersAPI(): Call<ResponseBody>
+
+    @POST("add_venue_review")
+    fun add_venue_reviewAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
 }

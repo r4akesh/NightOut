@@ -25,5 +25,6 @@ class DataManager {
             }
     }
     var lostItemDetailCstmModel = LostItemDetailCstmModel("","","","","","","")
+    var isFirstShowPopupReview=false
 
 }

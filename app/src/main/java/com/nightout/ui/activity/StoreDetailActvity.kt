@@ -488,8 +488,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@StoreDetailActvity, "")
         val map = HashMap<String, String>()
-      // map["id"] = venuID
-        map["id"] = "217"
+       map["id"] = venuID
+       // map["id"] = "217"
 
         userVenueDetailViewModel.userVenueDetail(map).observe(this@StoreDetailActvity, {
             when (it.status) {

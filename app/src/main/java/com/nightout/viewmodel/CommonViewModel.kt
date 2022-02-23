@@ -25,6 +25,8 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var addFavModel: LiveData<ApiSampleResource<AddFavModel>>
     lateinit var addRemBarCrwl: LiveData<ApiSampleResource<AddRemveBarCrawlModel>>
     lateinit var venuListModel: LiveData<ApiSampleResource<VenuListModel>>
+    lateinit var reviewListModel: LiveData<ApiSampleResource<ReviewListRes>>
+    lateinit var addReviewModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var submitLostItemModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var delItemModel: LiveData<ApiSampleResource<BaseModel>>
     lateinit var foundBaseModel: LiveData<ApiSampleResource<BaseModel>>
@@ -46,9 +48,11 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var barcrwalCreatedViewModel: LiveData<ApiSampleResource<BarcrwalCreatedRes>>
     lateinit var notifEmilSettingViewModel: LiveData<ApiSampleResource<NotifEmilSettingRes>>
     lateinit var prebookedViewModel: LiveData<ApiSampleResource<PrebookedlistResponse>>
+    lateinit var myOrderResViewModel: LiveData<ApiSampleResource<MyOrderRes>>
     lateinit var prebookedCancelViewModel: LiveData<ApiSampleResource<PreBookCancelRes>>
     lateinit var fillterResViewModel: LiveData<ApiSampleResource<FillterRes>>
     lateinit var allUserResViewModel: LiveData<ApiSampleResource<AllUserRes>>
+    lateinit var doPayment: LiveData<ApiSampleResource<BaseModel>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -79,6 +83,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         return dsahModel
     }
 
+    fun doPayment(jbj:JSONObject): LiveData<ApiSampleResource<BaseModel>> {
+        doPayment = webServiceRepository.doPayment(jbj)
+        return doPayment
+    }
     fun userVenueDetail(map: HashMap<String, String>): LiveData<ApiSampleResource<VenuDetailModel>> {
         venuDetailModel = webServiceRepository.userVenueDetail(map)
         return venuDetailModel
@@ -242,5 +250,18 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun getAllUserList(): LiveData<ApiSampleResource<AllUserRes>> {
         allUserResViewModel = webServiceRepository.allUserList()
         return allUserResViewModel
+    }
+    fun ratingList(): LiveData<ApiSampleResource<ReviewListRes>> {
+        reviewListModel = webServiceRepository.reviewList()
+        return reviewListModel
+    }
+
+    fun addRating(map : HashMap<String, String>): LiveData<ApiSampleResource<BaseModel>> {
+        addReviewModel = webServiceRepository.addReview(map)
+        return addReviewModel
+    }
+    fun orderList(): LiveData<ApiSampleResource<MyOrderRes>> {
+        myOrderResViewModel = webServiceRepository.myOrder()
+        return myOrderResViewModel
     }
 }

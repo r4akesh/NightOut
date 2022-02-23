@@ -241,5 +241,10 @@
     <string name="VenueDetail">Venue Detail</string>
     <string name="Select_All">Select All</string>
     <string name="Unselect_All">Unselect All</string>
+    <string name="Your_earlier_reviews">Your earlier reviews are waiting for you.</string>
+    <string name="OK">OK</string>
+    <string name="Rating">Rating</string>
+    <string name="Please_give_rating">Please give the rating</string>
+    <string name="Please_give_review">Please give the review</string>
 
 </resources>

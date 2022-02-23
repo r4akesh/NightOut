@@ -17,7 +17,8 @@ data class DashboardModel(
         var event_tickets: ArrayList<EventTicket>,
         var service_charge: ArrayList<ServiceCharge>,
         var stories: ArrayList<Story>,
-        val noti_count : String
+        val noti_count : String,
+        val venue_review_remaning   : String
     ) : Serializable
 
     data class AllRecord(

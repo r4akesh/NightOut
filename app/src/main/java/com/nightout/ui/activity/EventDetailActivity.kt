@@ -26,6 +26,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.EventdetailActvityBinding
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
+import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import java.text.DecimalFormat
@@ -170,6 +171,14 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
         try {
             binding.eventDetailScrollLayout.visibility=VISIBLE
             binding.eventDeatilFav.visibility=VISIBLE
+            if(dt.ticket_qty == ""){
+                binding.eventDetailBuyTkt.text = "Tickets are not available"
+                 binding.eventDetailBuyTkt.setTextColor(resources.getColor(R.color.red_clr))
+                binding.eventDetailBuyTkt.isClickable = false
+                binding.eventDetailBuyTkt.isEnabled = false
+            }else{
+                binding.eventDetailBuyTkt.text = resources.getString(R.string.Buy_Ticket)
+            }
             //setSlider
             try {
                 imageViewPagerAdapter = ImageViewPagerAdapter(this@EventDetailActivity, dt.venue_gallery)

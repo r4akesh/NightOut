@@ -1,23 +1,17 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.Review
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.View.GONE
-import android.widget.LinearLayout
-import android.widget.ProgressBar
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.nightout.R
-import com.nightout.adapter.CommentAdapter
 import com.nightout.base.BaseActivity
-import com.nightout.databinding.RatingActvityBinding
-import com.nightout.model.CommentModel
-import android.widget.Toast
 
-import android.widget.RatingBar
-import android.widget.RatingBar.OnRatingBarChangeListener
 import com.nightout.adapter.RatingListAdapter
 import com.nightout.databinding.RatinglistActvityBinding
 import com.nightout.model.ReviewListRes
@@ -31,6 +25,7 @@ class RatingListActvity : BaseActivity() {
     lateinit var binding : RatinglistActvityBinding
     lateinit var customProgressDialog: CustomProgressDialog
     lateinit var ratingListViewModel: CommonViewModel
+    lateinit var ratingList: ArrayList<ReviewListRes.Data>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@RatingListActvity,R.layout.ratinglist_actvity)
@@ -50,7 +45,9 @@ class RatingListActvity : BaseActivity() {
                 Status.SUCCESS -> {
                     customProgressDialog.dialog.hide()
                     it.data?.let {
-                        setList(it.data)
+                        ratingList = ArrayList()
+                        ratingList = it.data
+                        setList( )
                     }
                 }
                 Status.LOADING -> {
@@ -62,12 +59,13 @@ class RatingListActvity : BaseActivity() {
         })
     }
     lateinit var ratingListAdapter: RatingListAdapter
-
-    private fun setList(dataList: ArrayList<ReviewListRes.Data>) {
-        ratingListAdapter = RatingListAdapter(this@RatingListActvity,dataList,object:RatingListAdapter.ClickListener{
+    var posSaveForItemNotify=0
+    private fun setList( ) {
+        ratingListAdapter = RatingListAdapter(this@RatingListActvity,ratingList,object:RatingListAdapter.ClickListener{
             override fun onClick(pos: Int) {
-                    startActivity(Intent(this@RatingListActvity,RatingActvity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.RATING_POJO,dataList[pos]))
+                posSaveForItemNotify=pos
+                startForResultRating.launch(Intent(this@RatingListActvity,RatingActvity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.RATING_POJO,ratingList[pos]))
             }
 
         })
@@ -78,6 +76,19 @@ class RatingListActvity : BaseActivity() {
 
     }
 
+    val startForResultRating= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val listSize = ratingList.size
+            ratingList.removeAt(posSaveForItemNotify)
+            ratingListAdapter.notifyItemRemoved(posSaveForItemNotify)
+            ratingListAdapter.notifyItemRangeChanged(posSaveForItemNotify, listSize)
+            if(ratingList.size==0){
+                finish()
+                overridePendingTransition(0,0)
+            }
+        }
+    }
 
 
     private fun setToolBar() {

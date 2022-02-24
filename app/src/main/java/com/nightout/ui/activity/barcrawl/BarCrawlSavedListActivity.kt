@@ -100,7 +100,6 @@ class BarCrawlSavedListActivity : BaseActivity() {
     private fun setListSaved() {
         sharedAdapter = SavedAdapter(this@BarCrawlSavedListActivity,listtSaved,object : SavedAdapter.ClickListener{
             override fun onClick(pos: Int) {
-
                 startActivity(Intent(this@BarCrawlSavedListActivity, BarCrawlSavedMapActivity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalList,listtSaved[pos]))
             }
@@ -155,7 +154,7 @@ class BarCrawlSavedListActivity : BaseActivity() {
                     listtSaved.removeAt(posList)
                     sharedAdapter.notifyItemRemoved(posList)
                     sharedAdapter.notifyItemRangeChanged(posList, listSize)
-                  //  MyApp.popErrorMsg("",it.message!!,this@BarCrawlSavedListActivity)
+                     Utills.showDefaultToast(this@BarCrawlSavedListActivity,"Bar Crawl deleted successfully")
                     if(listtSaved.size==0){
                         binding.barcrwalSavedNoData.visibility= VISIBLE
                     }

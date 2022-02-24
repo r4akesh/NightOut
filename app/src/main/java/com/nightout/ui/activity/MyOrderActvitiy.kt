@@ -22,9 +22,18 @@ class MyOrderActvitiy : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@MyOrderActvitiy,R.layout.myorder_actvity)
+        setToolBar()
         customProgressDialog = CustomProgressDialog()
         myOrderViewModel = CommonViewModel(this@MyOrderActvitiy)
         myOrderAPICall()
+    }
+
+    private fun setToolBar() {
+        setTouchNClick(binding.myOrdersToolBar.toolbarBack)
+        binding.myOrdersToolBar.toolbarBack.setOnClickListener { finish() }
+        binding.myOrdersToolBar.toolbarTitle.text = "My Orders"
+        binding.myOrdersToolBar.toolbar3dot.visibility = View.GONE
+        binding.myOrdersToolBar.toolbarBell.visibility = View.GONE
     }
 
     private fun myOrderAPICall() {

@@ -402,7 +402,7 @@
             android:gravity="start"
             android:paddingStart="@dimen/_10ssp"
             android:paddingEnd="@dimen/_10ssp"
-            android:text="Pay $00"
+            android:text="Pay 00"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent" />
 

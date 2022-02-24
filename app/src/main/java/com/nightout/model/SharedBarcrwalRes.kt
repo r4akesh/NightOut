@@ -66,7 +66,9 @@ data class SharedBarcrwalRes(
 
     data class Venue(
 
-
+        var distance:  String,
+        var durration:  String,
+        var mode:  String,
 
         val age_limit: String,
         val alcohol_license_image: String,

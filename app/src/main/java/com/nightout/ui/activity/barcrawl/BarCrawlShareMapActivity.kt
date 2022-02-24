@@ -16,7 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.nightout.R
-import com.nightout.adapter.BarcrwalRootPathAdapter
+
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrawlSavedmapactivityBinding
 import com.nightout.model.BarcrwalSavedRes
@@ -27,18 +27,19 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.HashMap
 import com.google.gson.Gson
+import com.nightout.adapter.BarcrwalRootPathShareAdapter
 import com.nightout.model.PathParseModel
 import com.nightout.model.SharedBarcrwalRes
 
 
-class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
-    lateinit var binding: BarcrawlSavedmapactivityBinding
-    lateinit var googleMap: GoogleMap
+class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
+    lateinit var binding : BarcrawlSavedmapactivityBinding
+    lateinit var googleMap : GoogleMap
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
-    lateinit var barCrwalListSaved: BarcrwalSavedRes.Data
 
-    var barCrwalId = ""
-    var selectedMode = "driving"
+    lateinit var barCrwalListShare: SharedBarcrwalRes.Data
+    var barCrwalId=""
+    var selectedMode="driving"
     private var builder: LatLngBounds.Builder? = null
     private var bounds: LatLngBounds? = null
     var indexOfList = 0
@@ -51,51 +52,63 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@BarCrawlSavedMapActivity, R.layout.barcrawl_savedmapactivity)
-        binding.btmShhetInclue.bottomSheetShareBtn.setOnClickListener(this)
-        barCrwalListSaved = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.BarcrwalList) as BarcrwalSavedRes.Data
-        if (barCrwalListSaved != null) {
-            barCrwalId = barCrwalListSaved.id
-            if (barCrwalListSaved.venue_list.isNotEmpty()) {
-                // setList(barCrwalList.venue_list)
+        binding = DataBindingUtil.setContentView(this@BarCrawlShareMapActivity,R.layout.barcrawl_savedmapactivity)
+    //    binding.btmShhetInclue.bottomSheetShareBtn.setOnClickListener(this)
+        binding.btmShhetInclue.bottomSheetShareBtn.visibility = GONE
+
+            barCrwalListShare = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.BarcrwalList) as SharedBarcrwalRes.Data
+
+
+            if(barCrwalListShare!=null){
+                barCrwalId = barCrwalListShare.id
+                if(barCrwalListShare.venue_list.isNotEmpty()){
+                    // setList(barCrwalList.venue_list)
+                }
             }
-        }
+
+
+
         setToolBar()
         initView()
         setBottomSheet()
-        // share and  show path
+       // share and  show path
     }
+
+
+
 
 
     override fun onClick(v: View?) {
         super.onClick(v)
-        if (v == binding.btmShhetInclue.bottomSheetShareBtn) {
-            startActivity(
-                Intent(this@BarCrawlSavedMapActivity, ContactListNewActvity::class.java)
-                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barCrwalId)
-            )
-            finish()
-        } else if (binding.btmShhetInclue.drivingText == v) {
+       /* if(v==binding.btmShhetInclue.bottomSheetShareBtn){
+            startActivity(Intent(this@BarCrawlShareMapActivity, ContactListNewActvity::class.java)
+                .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,true)
+                .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID,barCrwalId))
+                finish()
+        }*/
+          if(binding.btmShhetInclue.drivingText==v){
             googleMap.clear()
-            selectedMode = "driving"
+            selectedMode="driving"
             indexOfList = 0
             addMarkers()
             drawPath()
             binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
             binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
             binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
-        } else if (binding.btmShhetInclue.bicyclingText == v) {
+        }
+        else if(binding.btmShhetInclue.bicyclingText==v){
             googleMap.clear()
-            selectedMode = "transit"
+            selectedMode="transit"
             indexOfList = 0
             addMarkers()
             drawPath()
             binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
             binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
             binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
-        } else if (binding.btmShhetInclue.walkingText == v) {
+        }
+        else if(binding.btmShhetInclue.walkingText==v){
             googleMap.clear()
-            selectedMode = "walking"
+            selectedMode="walking"
             indexOfList = 0
             addMarkers()
             drawPath()
@@ -106,23 +119,16 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
         }
     }
 
-    lateinit var barcrwalRootPathAdapter: BarcrwalRootPathAdapter
-    private fun setList(venueList: ArrayList<BarcrwalSavedRes.Venue>) {
-        barcrwalRootPathAdapter = BarcrwalRootPathAdapter(
-            this@BarCrawlSavedMapActivity,
-            venueList,
-            object : BarcrwalRootPathAdapter.ClickListener {
-                override fun onClick(pos: Int) {
+    lateinit var barcrwalRootPathAdapter: BarcrwalRootPathShareAdapter
+    private fun setList(venueList: ArrayList<SharedBarcrwalRes.Venue>) {
+        barcrwalRootPathAdapter = BarcrwalRootPathShareAdapter(this@BarCrawlShareMapActivity,venueList,object:BarcrwalRootPathShareAdapter.ClickListener{
+            override fun onClick(pos: Int) {
 
-                }
+            }
 
-            })
+        })
         binding.btmShhetInclue.bottomSheetRecyclerRoot.also {
-            it.layoutManager = LinearLayoutManager(
-                this@BarCrawlSavedMapActivity,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
+            it.layoutManager = LinearLayoutManager(this@BarCrawlShareMapActivity,LinearLayoutManager.VERTICAL,false)
             it.adapter = barcrwalRootPathAdapter
         }
     }
@@ -131,7 +137,7 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.btmShhetInclue.bottomSheet)
         //   bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        // bottomSheetBehavior.peekHeight = 150
+         // bottomSheetBehavior.peekHeight = 150
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         // bottomSheetBehavior.isHideable = false
         bottomSheetBehavior.isDraggable = true
@@ -154,29 +160,29 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
     }
 
 
+
     private fun initView() {
-        setTouchNClick(binding.btmShhetInclue.drivingText)
-        setTouchNClick(binding.btmShhetInclue.walkingText)
-        setTouchNClick(binding.btmShhetInclue.bicyclingText)
-        val supportMapFragment =
-            (supportFragmentManager.findFragmentById(R.id.barcrawleSaveMapView) as SupportMapFragment?)!!
-        supportMapFragment.getMapAsync(this@BarCrawlSavedMapActivity)
+         setTouchNClick(binding.btmShhetInclue.drivingText)
+         setTouchNClick(binding.btmShhetInclue.walkingText)
+         setTouchNClick(binding.btmShhetInclue.bicyclingText)
+        val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.barcrawleSaveMapView) as SupportMapFragment?)!!
+        supportMapFragment.getMapAsync(this@BarCrawlShareMapActivity)
     }
 
     private fun setToolBar() {
-        binding.savedBarCrawlMapToolBar.toolbar3dot.visibility = GONE
-        binding.savedBarCrawlMapToolBar.toolbarBell.visibility = GONE
+         binding.savedBarCrawlMapToolBar.toolbar3dot.visibility = GONE
+         binding.savedBarCrawlMapToolBar.toolbarBell.visibility = GONE
         setTouchNClick(binding.savedBarCrawlMapToolBar.toolbarBack)
-        binding.savedBarCrawlMapToolBar.toolbarBack.setOnClickListener { finish() }
-        binding.savedBarCrawlMapToolBar.toolbarTitle.setText("Map View")
+         binding.savedBarCrawlMapToolBar.toolbarBack.setOnClickListener { finish() }
+         binding.savedBarCrawlMapToolBar.toolbarTitle.setText("Map View")
     }
 
 
     override fun onMapReady(po: GoogleMap?) {
         googleMap = po!!
-        googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
-        if (barCrwalListSaved != null) {
-            if (barCrwalListSaved.venue_list.isNotEmpty()) {
+      googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
+        if(barCrwalListShare!=null) {
+            if (barCrwalListShare.venue_list.isNotEmpty()) {
                 addMarkers()
                 drawPath()
             }
@@ -188,9 +194,9 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
     private fun addMarkers() {
         if (googleMap != null) {
             builder = LatLngBounds.Builder()
-            for (i in 0 until barCrwalListSaved.venue_list.size) {
-                var lat = Commons.strToDouble(barCrwalListSaved.venue_list[i].store_lattitude)
-                var lang = Commons.strToDouble(barCrwalListSaved.venue_list[i].store_longitude)
+            for (i in 0 until barCrwalListShare.venue_list.size) {
+                var lat = Commons.strToDouble(barCrwalListShare.venue_list[i].store_lattitude)
+                var lang = Commons.strToDouble(barCrwalListShare.venue_list[i].store_longitude)
                 drawMarker(LatLng(lat, lang), "$i")
                 // googleMap!!.addMarker(MarkerOptions().position(LatLng(lat, lang)).title("" + i + "st Point"))
             }
@@ -198,18 +204,16 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             val height = resources.displayMetrics.heightPixels
             val padding = (width * 0.30).toInt() // offset from edges of the map 10% of screen
             bounds = builder!!.build()
-            val cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
+            val cu = CameraUpdateFactory.newLatLngBounds(bounds,width,height, padding)
             googleMap.animateCamera(cu)
         }
 
     }
-
     private fun drawMarker(point: LatLng, text: String) {
-        var value: Int = text.toInt() + 65
+        var value: Int = text.toInt()+65
         val c = value.toChar()
         val markerOptions = MarkerOptions()
-        markerOptions.position(point).title("Point $c")
-            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_ic))
+        markerOptions.position(point).title("Point $c").icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_ic))
         googleMap.addMarker(markerOptions)
         builder?.include(markerOptions.position)
     }
@@ -220,20 +224,18 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             readTask(url)
             // googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lang), 13f))
         } else {
-            if (!this@BarCrawlSavedMapActivity.isFinishing) {
+            if (! this@BarCrawlShareMapActivity.isFinishing) {
                 MyApp.popErrorMsg("", "URL blank !!", THIS!!)
             }
         }
     }
 
     private fun mapsApiDirectionsUrl(): String {
-        val origin =
-            "origin=" + barCrwalListSaved.venue_list[indexOfList].store_lattitude + "," + barCrwalListSaved.venue_list[indexOfList].store_longitude
-        val dest =
-            "destination=" + barCrwalListSaved.venue_list[indexOfList + 1].store_lattitude + "," + barCrwalListSaved.venue_list[indexOfList + 1].store_longitude
+        val origin = "origin=" + barCrwalListShare.venue_list[indexOfList].store_lattitude + "," +  barCrwalListShare.venue_list[indexOfList].store_longitude
+        val dest = "destination=" +  barCrwalListShare.venue_list[indexOfList + 1].store_lattitude + "," +  barCrwalListShare.venue_list[indexOfList + 1].store_longitude
         val sensor = "sensor=false"
         val key = "key=" + getString(R.string.google_maps_key)
-        var mode = "mode=" + selectedMode
+        var mode = "mode="+selectedMode
         val parameters = "$origin&$dest&$mode&$key"
         return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
     }
@@ -242,8 +244,8 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
         GlobalScope.launch {
             val http = HttpConnection()
             var data = http.readUrl(url)
-            var durtion = ""
-            var dist = ""
+            var durtion =""
+            var dist=""
             GlobalScope.launch {
                 var jObject: JSONObject
                 var routes: List<List<HashMap<String, String>>>? = null
@@ -251,15 +253,16 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
                 try {
                     jObject = JSONObject(data)
                     try {
-                        var pathParseModel = Gson().fromJson(data, PathParseModel::class.java)
-                        Log.d("TAG", "readTask: " + pathParseModel)
-                        dist = pathParseModel.routes[0].legs[0].distance.text
-                        durtion = pathParseModel.routes[0].legs[0].duration.text
+                         var pathParseModel =  Gson().fromJson(data, PathParseModel::class.java)
+                        Log.d("TAG", "readTask: "+pathParseModel)
+                        dist=   pathParseModel.routes[0].legs[0].distance.text
+                        durtion=   pathParseModel.routes[0].legs[0].duration.text
 
 
                     } catch (e: Exception) {
                         Log.d("TAG", "readTask: ")
                     }
+
 
 
                     val parser = PathJSONParser()
@@ -287,18 +290,19 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
                     runOnUiThread {
                         if (polyLineOptions != null) {
                             googleMap!!.addPolyline(polyLineOptions)
-                            barCrwalListSaved.venue_list[indexOfList].durration = durtion
-                            barCrwalListSaved.venue_list[indexOfList].distance = dist
-                            if (indexOfList < barCrwalListSaved.venue_list.size - 2) {
+                            barCrwalListShare.venue_list[indexOfList].durration=durtion
+                            barCrwalListShare.venue_list[indexOfList].distance=dist
+                            if (indexOfList < barCrwalListShare.venue_list.size - 2) {
                                 indexOfList++
                                 drawPath()
-                            } else {
-                                if (barCrwalListSaved.venue_list.isNotEmpty()) {
-                                    setList(barCrwalListSaved.venue_list)
+                            }
+                            else{
+                                if(barCrwalListShare.venue_list.isNotEmpty()){
+                                    setList(barCrwalListShare.venue_list)
                                 }
                             }
-                        } else {
-                            if (!this@BarCrawlSavedMapActivity.isFinishing) {
+                        } else{
+                            if (! this@BarCrawlShareMapActivity.isFinishing) {
                                 MyApp.popErrorMsg("", "Lat-Long not found!!", THIS!!)
                             }
                         }

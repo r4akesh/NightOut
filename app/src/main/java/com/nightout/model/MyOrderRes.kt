@@ -27,6 +27,7 @@ data class MyOrderRes(
     ):Serializable
 
     data class Transa(
+        var isSelected:Boolean=false,
         val amount: String,
         val created_at: String,
         val id: String,

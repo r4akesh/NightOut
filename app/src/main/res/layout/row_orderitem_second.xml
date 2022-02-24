@@ -1,57 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/myOrderScndImage"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_5ssp"
-        android:src="@drawable/no_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-        app:strokeColor="@color/text_yello"
-        app:strokeWidth="@dimen/_1sdp" />
-
-    <TextView
-        android:id="@+id/myOrderScndTitle"
-        android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white_thred"
-
-        app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/myOrderScndSubTitle"
-        android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white_thred"
-
-        app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
-        android:layout_height="wrap_content"/>
-
-
-    <ImageView
-        android:id="@+id/myOrderScndImageArrow"
-        android:layout_width="wrap_content"
-        android:padding="10dp"
-        android:src="@drawable/arrow_right_21"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/myOrderScndImage"
-        app:layout_constraintBottom_toBottomOf="@+id/myOrderScndImage"
-        android:layout_height="wrap_content"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myOrderFirstRecycle"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/myOrderScndImage"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/box_dialog_bg"
+        android:padding="7dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/myOrderConstrentArrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/myOrderScndImage"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+
+                android:src="@drawable/no_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                app:strokeColor="@color/text_yello"
+                app:strokeWidth="@dimen/_1sdp" />
+
+            <TextView
+                android:id="@+id/myOrderScndTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/myOrderScndImageArrow"
+                app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/myOrderScndSubTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/text_gray"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/myOrderScndImageArrow"
+                app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
+                app:layout_constraintTop_toBottomOf="@+id/myOrderScndTitle" />
+
+
+            <ImageView
+                android:id="@+id/myOrderScndImageArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/arrow_right_21"
+                app:layout_constraintBottom_toBottomOf="@+id/myOrderScndImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/myOrderScndImage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myOrderSecondRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_primaryclr"
+            app:layout_constraintTop_toBottomOf="@+id/myOrderConstrentArrow" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/myOrderconstrentService"
+            android:layout_height="wrap_content"
+            android:background="@drawable/box_blk"
+            android:padding="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/myOrderSecondRecycle">
+
+            <TextView
+                android:id="@+id/myOrderSecondService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Service Charge"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/myOrderSecondTotAmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Total Amount"
+                android:textColor="@color/white"
+
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/myOrderSecondService" />
+
+
+            <TextView
+                android:id="@+id/myOrderSecondServiceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Service Charge"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/myOrderSecondService"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/myOrderSecondService" />
+
+
+            <TextView
+                android:id="@+id/myOrderSecondTotAmtValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Service Charge"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/myOrderSecondTotAmt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/myOrderSecondTotAmt" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

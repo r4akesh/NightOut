@@ -16,6 +16,7 @@
             android:id="@+id/itemLinerHead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_2ssp"
             android:orientation="horizontal"
 
             >
@@ -75,6 +76,7 @@
             android:orientation="horizontal"
 
             android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
         >
 
             <TextView
@@ -149,7 +151,7 @@
 
         </LinearLayout>
         <View
-          android:layout_marginTop="@dimen/_7sdp"
+
             android:id="@+id/itemViewBtm"
             android:layout_width="match_parent"
             android:background="@color/text_gray"

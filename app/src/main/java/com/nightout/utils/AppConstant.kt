@@ -74,6 +74,8 @@ class AppConstant {
         const val SharedList_MODEL = "SharedList_MODEL"
         const val PreBookDetail = "PreBookDetail"
         const val RATING_POJO = "RATING_POJO"
+        const val isFromSelectPredefineCity = "isSelectPredefineCity"
+
 
 
 

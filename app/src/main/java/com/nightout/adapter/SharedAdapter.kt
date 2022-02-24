@@ -55,6 +55,9 @@ class SharedAdapter(
             viewHolder.binding.sharedItem3Dot.setOnClickListener {
                 clickListener.onClick3Dot(position, viewHolder.binding.sharedItem3Dot)
             }
+            viewHolder.itemView.setOnClickListener {
+                clickListener.onClick(position)
+            }
         } catch (e: Exception) {
 
         }
@@ -76,6 +79,7 @@ class SharedAdapter(
 
     interface ClickListener {
         fun onClick3Dot(pos: Int,img:ImageView)
+        fun onClick(pos: Int)
 
 
     }

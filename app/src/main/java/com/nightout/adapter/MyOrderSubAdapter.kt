@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
@@ -15,6 +16,7 @@ import com.nightout.databinding.*
 import com.nightout.model.ChatModel
 import com.nightout.model.MyOrderRes
 import com.nightout.model.VenuesModel
+import com.nightout.utils.Utills
 
 
 class MyOrderSubAdapter(
@@ -33,8 +35,36 @@ class MyOrderSubAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.binding.myOrderScndTitle.text=arrayList[position].venue_detail.store_name
         viewHolder.binding.myOrderScndSubTitle.text=arrayList[position].venue_detail.store_address
+        Utills.setImageNormal(context,viewHolder.binding.myOrderScndImage,arrayList[position].venue_detail.store_logo)
 
+        viewHolder.binding.myOrderSecondServiceValue.text = context.resources.getString(R.string.currency_sumbol)+arrayList[position].service_charge
+        viewHolder.binding.myOrderSecondTotAmtValue.text = context.resources.getString(R.string.currency_sumbol)+arrayList[position].amount
 
+        if(arrayList[position].isSelected){
+            viewHolder.binding.myOrderSecondRecycle.visibility = VISIBLE
+            viewHolder.binding.myOrderScndImageArrow.setImageResource(R.drawable.arrow_down_white)
+            viewHolder.binding.myOrderconstrentService.visibility= VISIBLE
+        }else{
+            viewHolder.binding.myOrderSecondRecycle.visibility = GONE
+            viewHolder.binding.myOrderScndImageArrow.setImageResource(R.drawable.arrow_right_21)
+            viewHolder.binding.myOrderconstrentService.visibility= GONE
+        }
+
+        viewHolder.binding.myOrderConstrentArrow.setOnClickListener{
+            arrayList[position].isSelected = !arrayList[position].isSelected
+            notifyItemChanged(position)
+        }
+
+        var myOrderSubChildAdapter =MyOrderSubChildAdapter(context,arrayList[position].order_list,object:MyOrderSubChildAdapter.ClickListener{
+            override fun onClick(pos: Int) {
+
+            }
+
+        })
+        viewHolder.binding.myOrderSecondRecycle.also {
+            it.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            it.adapter = myOrderSubChildAdapter
+        }
 
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)

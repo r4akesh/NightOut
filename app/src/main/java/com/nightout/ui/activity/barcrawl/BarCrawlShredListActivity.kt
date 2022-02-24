@@ -103,6 +103,12 @@ class BarCrawlShredListActivity : BaseActivity() {
                 openPopMenu(imgview,pos)
             }
 
+            override fun onClick(pos: Int) {
+                startActivity(Intent(this@BarCrawlShredListActivity, BarCrawlShareMapActivity::class.java)
+
+                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalList,listtShared[pos]))
+            }
+
         })
 
         binding.sharedRecycle.also {

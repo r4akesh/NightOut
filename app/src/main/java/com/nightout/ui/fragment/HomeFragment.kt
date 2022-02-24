@@ -54,8 +54,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
+import com.nightout.ui.activity.Review.RatingListActvity
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyToFrag {
@@ -394,7 +394,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             adDialog.dismiss()
         }
         dgOkBtn.setOnClickListener {
-            startActivity(Intent(requireActivity(),RatingListActvity::class.java))
+            adDialog.dismiss()
+            startActivity(Intent(requireActivity(), RatingListActvity::class.java))
         }
 
         adDialog.show()

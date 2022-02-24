@@ -1,21 +1,17 @@
-package com.nightout.ui.activity
+package com.nightout.ui.activity.Review
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
-import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.nightout.R
 import com.nightout.adapter.CommentAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.RatingActvityBinding
 import com.nightout.model.CommentModel
-import android.widget.Toast
 
-import android.widget.RatingBar
 import android.widget.RatingBar.OnRatingBarChangeListener
 import com.nightout.model.ReviewListRes
 import com.nightout.utils.AppConstant
@@ -107,6 +103,7 @@ class RatingActvity : BaseActivity() {
                     customProgressDialog.dialog.hide()
                     it.data?.let {
                         Utills.showDefaultToast(this@RatingActvity, "Thanks for the review")
+                        setResult(Activity.RESULT_OK)
                         finish()
                     }
                 }

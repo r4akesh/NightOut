@@ -2,6 +2,7 @@ package com.nightout.ui.activity.barcrawl
 
 import android.app.Activity
 import android.content.Intent
+import android.location.Address
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,6 +31,12 @@ import com.nightout.databinding.SrchCityBinding
 import com.nightout.ui.activity.SearchLocationActivity
 import com.nightout.utils.*
 import java.util.*
+import com.nightout.ui.activity.EditProfileActivity
+
+import android.location.Geocoder
+
+
+
 
 class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
     lateinit var binding: SrchCityBinding
@@ -112,10 +119,26 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         super.onActivityResult(requestCode, resultCode, intentt)
         if (requestCode == REQCODE_SearchLocationActivity && resultCode == Activity.RESULT_OK) {
             try {
+                var mIsFromSelectPredefineCity = intentt?.getBooleanExtra(AppConstant.INTENT_EXTRAS.isFromSelectPredefineCity,false)//city
                 var addrs = intentt?.getStringExtra(AppConstant.INTENT_EXTRAS.ADDRS)
                 var lat = intentt?.getStringExtra(AppConstant.INTENT_EXTRAS.LATITUDE)
                 var lang = intentt?.getStringExtra(AppConstant.INTENT_EXTRAS.LONGITUDE)
-                binding.barcralCity.text = addrs
+                if(mIsFromSelectPredefineCity == true){
+                    binding.barcralCity.text = addrs
+                }else{
+                    //getCity from lat-lang
+                    val geocoder = Geocoder(this@SearchCityActivity, Locale.getDefault())
+                    try {
+                        val addresses: List<Address> = geocoder.getFromLocation(lat!!.toDouble(), lang!!.toDouble(), 1)
+                        // val stateName: String = addresses[0].getAdminArea()
+                        val cityName: String = addresses[0].locality
+                        binding.barcralCity.text = cityName
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+
                 gMap!!.clear()
                 val latLng = LatLng(Commons.strToDouble(lat!!), Commons.strToDouble(lang!!))
                 val yourBitmap = getDrawable(R.drawable.ic_crnt_loc)!!.toBitmap(50, 55)//svg img

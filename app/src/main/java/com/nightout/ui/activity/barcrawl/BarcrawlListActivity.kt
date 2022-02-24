@@ -28,6 +28,7 @@ import com.nightout.viewmodel.CommonViewModel
 class BarcrawlListActivity : BaseActivity() {
     lateinit var binding: BarcrwallistActivityBinding
     var REQCODE_CreateBarCrwlSuccess = 999
+
     //  private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     lateinit var barcrwalSelectedAdapter: BarcrwalSelectedAdapter
     lateinit var listHr: ArrayList<AllBarCrwalListResponse.Data>
@@ -36,15 +37,18 @@ class BarcrawlListActivity : BaseActivity() {
     lateinit var getBarCrwalVieModel: CommonViewModel
     var listAllVenue = ArrayList<AllBarCrwalListResponse.Data>()
     var listClickPosSave = 0
-      var barcrwalId: String = ""
-    var isFROM_ShareListActivity=false
-    var isFromSaveListActivity=false
-   lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
-    lateinit  var venusSelectedOldShare : SharedBarcrwalRes.Data
+    var barcrwalId: String = ""
+    var isFROM_ShareListActivity = false
+    var isFromSaveListActivity = false
+    lateinit var venusSelectedOld: BarcrwalSavedRes.Data
+    lateinit var venusSelectedOldShare: SharedBarcrwalRes.Data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this@BarcrawlListActivity, R.layout.barcrwallist_activity)
+        binding = DataBindingUtil.setContentView(
+            this@BarcrawlListActivity,
+            R.layout.barcrwallist_activity
+        )
         initView()
         setToolBar()
         setBottomHrList()
@@ -53,13 +57,16 @@ class BarcrawlListActivity : BaseActivity() {
         } catch (e: Exception) {
             ""
         }
-        isFromSaveListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,false)
-        isFROM_ShareListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,false)
-        if(isFromSaveListActivity){
-              venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
-        }
-        else if(isFROM_ShareListActivity){
-            venusSelectedOldShare= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
+        isFromSaveListActivity =
+            intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, false)
+        isFROM_ShareListActivity =
+            intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, false)
+        if (isFromSaveListActivity) {
+            venusSelectedOld =
+                intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
+        } else if (isFROM_ShareListActivity) {
+            venusSelectedOldShare =
+                intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
         }
 
         bar_crawl_listAPICAll()
@@ -74,7 +81,8 @@ class BarcrawlListActivity : BaseActivity() {
             if (listAllVenue[listClickPosSave].isSelected) {
                 //  binding.barcrwalAddBtn.visibility=GONE
             } else {
-                listAllVenue[listClickPosSave].isSelected = !listAllVenue[listClickPosSave].isSelected
+                listAllVenue[listClickPosSave].isSelected =
+                    !listAllVenue[listClickPosSave].isSelected
                 venuListBarCrawaAdapter.notifyItemChanged(listClickPosSave)
 
                 //  binding.barcrwalAddBtn.visibility= VISIBLE
@@ -99,30 +107,47 @@ class BarcrawlListActivity : BaseActivity() {
                     Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
-                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity)
-                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFROM_ShareListActivity)
+                        .putExtra(
+                            AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,
+                            isFromSaveListActivity
+                        )
+                        .putExtra(
+                            AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,
+                            isFROM_ShareListActivity
+                        )
                         .putExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model, venusSelectedOld)
                         .putExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL, venusSelectedOldShare)
 
-                        .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME, intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)),REQCODE_CreateBarCrwlSuccess)
+                        .putExtra(
+                            AppConstant.INTENT_EXTRAS.CITYNAME,
+                            intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)
+                        ), REQCODE_CreateBarCrwlSuccess
+                )
 
             }
-        }
-
-        else if(v==binding.barcrwalSeeDeatil) {
+        } else if (v == binding.barcrwalSeeDeatil) {
             var strType = listAllVenue[listClickPosSave].store_type
             var sendStrType = "0"
             if (strType.toLowerCase() == "event" || strType.toLowerCase() == "events") {
-                startActivity(Intent(THIS!!, EventDetailActivity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + listAllVenue[listClickPosSave].id)
-                        .putExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity, true))
+                startActivity(
+                    Intent(THIS!!, EventDetailActivity::class.java)
+                        .putExtra(
+                            AppConstant.INTENT_EXTRAS.VENU_ID,
+                            "" + listAllVenue[listClickPosSave].id
+                        )
+                        .putExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity, true)
+                )
             } else {
                 if (strType.toLowerCase() == "food" || strType.toLowerCase() == "foods") {
                     sendStrType = "4"
                 }
-                startActivity(Intent(THIS!!, StoreDetailActvity::class.java)
+                startActivity(
+                    Intent(THIS!!, StoreDetailActvity::class.java)
                         .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, false)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + listAllVenue[listClickPosSave].id)
+                        .putExtra(
+                            AppConstant.INTENT_EXTRAS.VENU_ID,
+                            "" + listAllVenue[listClickPosSave].id
+                        )
                         .putExtra(AppConstant.INTENT_EXTRAS.StoreType, sendStrType)
                         .putExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity, true)
                 )
@@ -132,7 +157,7 @@ class BarcrawlListActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQCODE_CreateBarCrwlSuccess && resultCode == Activity.RESULT_OK){
+        if (requestCode == REQCODE_CreateBarCrwlSuccess && resultCode == Activity.RESULT_OK) {
             setResult(Activity.RESULT_OK)
             finish()
 
@@ -141,10 +166,14 @@ class BarcrawlListActivity : BaseActivity() {
 
     private fun bar_crawl_listAPICAll() {
         progressDialog.show(this@BarcrawlListActivity, "")
-        var map = HashMap<String,String>()
-        map["city_lang"] ="342343"
-        map["city_long"] ="545634543"
-        map["city"] =intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)!!
+        var map = HashMap<String, String>()
+        map["city_lang"] = "342343"
+        map["city_long"] = "545634543"
+        var cityName = intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)!!
+        var mCity=cityName
+        if (cityName.lowercase().contains("city"))
+          mCity = cityName.lowercase().replace("city", "")
+        map["city"] = mCity.trim()
         try {
             getBarCrwalVieModel.venuListBarCrwl(map).observe(this@BarcrawlListActivity, {
                 when (it.status) {
@@ -155,21 +184,20 @@ class BarcrawlListActivity : BaseActivity() {
                             listAllVenue.addAll(it.data?.data!!)
                             if (listAllVenue.isNotEmpty()) {
                                 // for show selected if comes from savedBarcrwal
-                                if(isFromSaveListActivity){
-                                   for (i in 0 until listAllVenue.size){
-                                       for(j in 0 until venusSelectedOld.venue_list.size ){
-                                           if(venusSelectedOld.venue_list[j].id==listAllVenue[i].id) {
-                                               listAllVenue[i].isSelected = true
-                                               listHr.add(listAllVenue[i])
-                                           }
-                                          // break
-                                       }
-                                   }
-                                }
-                                else if(isFROM_ShareListActivity){
-                                    for (i in 0 until listAllVenue.size){
-                                        for(j in 0 until venusSelectedOldShare.venue_list.size ){
-                                            if(venusSelectedOldShare.venue_list[j].id==listAllVenue[i].id) {
+                                if (isFromSaveListActivity) {
+                                    for (i in 0 until listAllVenue.size) {
+                                        for (j in 0 until venusSelectedOld.venue_list.size) {
+                                            if (venusSelectedOld.venue_list[j].id == listAllVenue[i].id) {
+                                                listAllVenue[i].isSelected = true
+                                                listHr.add(listAllVenue[i])
+                                            }
+                                            // break
+                                        }
+                                    }
+                                } else if (isFROM_ShareListActivity) {
+                                    for (i in 0 until listAllVenue.size) {
+                                        for (j in 0 until venusSelectedOldShare.venue_list.size) {
+                                            if (venusSelectedOldShare.venue_list[j].id == listAllVenue[i].id) {
                                                 listAllVenue[i].isSelected = true
                                                 listHr.add(listAllVenue[i])
                                             }
@@ -179,7 +207,7 @@ class BarcrawlListActivity : BaseActivity() {
                                 }
 
                                 setAllVenuList()
-                                if(isFromSaveListActivity || isFROM_ShareListActivity) {
+                                if (isFromSaveListActivity || isFROM_ShareListActivity) {
                                     if (listHr.size > 0) {
                                         binding.barCrwlSelectedConstrant.visibility = VISIBLE
                                         barcrwalSelectedAdapter.notifyDataSetChanged()
@@ -189,11 +217,11 @@ class BarcrawlListActivity : BaseActivity() {
                                     }
                                 }
 
-                            }else{
-                                binding.barcrwalVenueNoData.visibility= VISIBLE
+                            } else {
+                                binding.barcrwalVenueNoData.visibility = VISIBLE
                             }
                         } catch (e: Exception) {
-                            binding.barcrwalVenueNoData.visibility= VISIBLE
+                            binding.barcrwalVenueNoData.visibility = VISIBLE
                         }
                     }
                     Status.LOADING -> {
@@ -205,10 +233,10 @@ class BarcrawlListActivity : BaseActivity() {
                                 this@BarcrawlListActivity,
                                 it.message!!,
 
-                            )
+                                )
                         } catch (e: Exception) {
                         }
-                        binding.barcrwalVenueNoData.visibility= VISIBLE
+                        binding.barcrwalVenueNoData.visibility = VISIBLE
                         Log.d("ok", "loginCall:ERROR ")
                     }
                 }
@@ -220,17 +248,38 @@ class BarcrawlListActivity : BaseActivity() {
     }
 
     private fun initView() {
-        venusSelectedOld = BarcrwalSavedRes.Data("","","","","","","","","","","","", "","",ArrayList())
-        venusSelectedOldShare = SharedBarcrwalRes.Data(SharedBarcrwalRes.BarCrawl("","","","","","","","","","","","","",""),
-            "","","","","","",SharedBarcrwalRes.UserDetail("","","","","","","","","","","","","","","","",
-                "","",""),"", ArrayList())
+        venusSelectedOld = BarcrwalSavedRes.Data(
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ArrayList()
+        )
+        venusSelectedOldShare = SharedBarcrwalRes.Data(
+            SharedBarcrwalRes.BarCrawl("", "", "", "", "", "", "", "", "", "", "", "", "", ""),
+            "", "", "", "", "", "", SharedBarcrwalRes.UserDetail(
+                "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+                "", "", ""
+            ), "", ArrayList()
+        )
         binding.barCrwalNextBtn.setOnClickListener(this)
         binding.barcrwalSeeDeatil.setOnClickListener(this)
         binding.barcrwalAddBtn.setOnClickListener(this)
         binding.barcrwalCloseBtn.setOnClickListener(this)
         getBarCrwalVieModel = CommonViewModel(this)
 
-        binding.textNodata.text= "There are no venues available in "+ intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)!!+" city"
+        binding.textNodata.text =
+            "There are no venues available in " + intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)!! + " city"
     }
 
 

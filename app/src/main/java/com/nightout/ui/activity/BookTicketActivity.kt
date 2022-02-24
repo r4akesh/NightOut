@@ -78,7 +78,7 @@ class BookTicketActivity : BaseActivity()  {
                     peopleCount--
                     binding.preBookingPeopleValue.setText("$peopleCount")
                     totAmt =peopleCount*Commons.strToDouble(pojoEvntDetl.sale_price)
-                    binding.bookticketPay.text = "Pay $ $totAmt"
+                    binding.bookticketPay.text = "Pay "+resources.getString(R.string.currency_sumbol)+totAmt
                 } catch (e: Exception) {
                 }
             }

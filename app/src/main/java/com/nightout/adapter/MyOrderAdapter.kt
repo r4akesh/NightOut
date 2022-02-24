@@ -19,6 +19,8 @@ import com.nightout.databinding.VenuesItemBinding
 import com.nightout.model.ChatModel
 import com.nightout.model.MyOrderRes
 import com.nightout.model.VenuesModel
+import com.nightout.utils.Commons
+import com.nightout.utils.Utills
 
 
 class MyOrderAdapter(
@@ -35,7 +37,8 @@ class MyOrderAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.binding.myOrderFirstDate.text=arrayList[position].created_at
+
+        viewHolder.binding.myOrderFirstDate.text= Utills.dateZonetoDateFormat2(arrayList[position].created_at)
 
         var myOrderSubAdapter=  MyOrderSubAdapter(context,arrayList[position].transaList,object:MyOrderSubAdapter.ClickListener{
             override fun onClick(pos: Int) {

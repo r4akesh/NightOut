@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/myOrderScndImage"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_5ssp"
+        android:src="@drawable/no_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+        app:strokeColor="@color/text_yello"
+        app:strokeWidth="@dimen/_1sdp" />
+
+    <TextView
+        android:id="@+id/myOrderScndTitle"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white_thred"
+
+        app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/myOrderScndSubTitle"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white_thred"
+
+        app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
+        android:layout_height="wrap_content"/>
+
+
+    <ImageView
+        android:id="@+id/myOrderScndImageArrow"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:src="@drawable/arrow_right_21"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/myOrderScndImage"
+        app:layout_constraintBottom_toBottomOf="@+id/myOrderScndImage"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myOrderFirstRecycle"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/myOrderScndImage"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

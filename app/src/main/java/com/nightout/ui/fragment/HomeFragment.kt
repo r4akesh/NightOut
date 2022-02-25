@@ -56,6 +56,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.nightout.ui.activity.Review.RatingListActvity
+import com.nightout.ui.activity.barcrawl.BarCrwalPathMap
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyToFrag {
@@ -158,8 +159,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         if(requestCode == REQCODE_SearchLocationActivity){
             if(resultCode== Activity.RESULT_OK){
                   city= data?.getStringExtra(AppConstant.INTENT_EXTRAS.ADDRS)!!
-                if("city" in city.toLowerCase())
-                    city = city.replace("city","")
+                var mCity=city.lowercase()
+                if("city" in mCity)
+                    city = mCity.replace("city","")
                 dashboardAPICALL()
             }
         }
@@ -187,7 +189,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 for (j in 0 until dashList.all_records[i].sub_records.size){
                     var mLat=Commons.strToDouble(dashList.all_records[i].sub_records[j].store_lattitude)
                     var mLang=Commons.strToDouble(dashList.all_records[i].sub_records[j].store_longitude)
-                    if(MyApp.isValidLatLng(mLat,mLang)&& mLat>0.0 && mLang>0.0){
+                    if(MyApp.isValidLatLng(mLat,mLang)){
                         var key= ""+mLat+mLang
                         var offset = 0.0
                         if (mapMarker.containsKey(key)) {
@@ -229,7 +231,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                     val cu = CameraUpdateFactory.newLatLngBounds(MyApp.adjustBoundsForMaxZoomLevel(bounds), padding2)
                     //googleMap.moveCamera(cu);
                     mMap?.animateCamera(cu)
-                } catch (e: java.lang.Exception) {
+                } catch (e: Exception) {
                     Log.e("Exception>>>", "" + e)
                 }
                 mMap?.setOnInfoWindowClickListener(OnInfoWindowClickListener { marker ->
@@ -301,7 +303,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         it.data?.let { users ->
                             try {
                                 setBottomSheet()
-                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),ArrayList(),"","")
+                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),ArrayList(),ArrayList(),"","")
                                 dashList.all_records = ArrayList()
                                 allRecordsList = ArrayList()
                                 //save imgPath
@@ -327,10 +329,21 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                 }
                                 //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
                                 PreferenceKeeper.instance.imgPathSave = "https://nightout.ezxdemo.com/storage/"
+                                //setStory
                                 if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
                                     if(activity!=null)
                                     setListStory(users.data.stories)
+                                }else{
+                                    binding.btmShhetInclue.bottomSheetStory.visibility=GONE
                                 }
+                                //featuredBarCrawl
+                                if(dashList.feature_bar_crawl==null || dashList.feature_bar_crawl.size==0){
+                                    binding.btmShhetInclue.bottomSheetFeature.visibility=GONE
+                                }else{
+                                    setFeatureList(dashList.feature_bar_crawl)
+                                }
+
+
                                 if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
                                     if(activity!=null) {
                                         allRecordsList.addAll(dashList.all_records)
@@ -340,6 +353,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                         var isSetMarkerCall=true
                                         while (mMap!=null && isSetMarkerCall) {
                                             if (dashList.all_records.isNotEmpty() && dashList.all_records.size > 0 ) {
+                                                mMap?.clear()
                                                 setUpMarker()
                                                 isSetMarkerCall=false
                                                 Log.e("ok", "setUpMarker: call")
@@ -380,6 +394,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         } catch (e: Exception) {
         }
     }
+
+
 
     private fun showPopUpReview() {
         val adDialog = Dialog(requireActivity(), R.style.MyDialogThemeBlack)
@@ -510,7 +526,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 PreferenceKeeper.instance.currentLat = latitude.toString()
                 PreferenceKeeper.instance.currentLong = longitude.toString()
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -567,8 +583,29 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
     }
 
-    private fun setListStory(listStory: ArrayList<DashboardModel.Story>) {
+    lateinit var featureBarcrwlAdapter:FeatureBarcrwlAdapter
 
+    private fun setFeatureList(featureBarCrawlList: ArrayList<DashboardModel.FeatureBarCrawl>) {
+        featureBarcrwlAdapter =FeatureBarcrwlAdapter(requireActivity(),featureBarCrawlList,object:FeatureBarcrwlAdapter.ClickListener{
+            override fun onClick(pos: Int) {
+                startActivity(Intent(requireActivity(), BarCrwalPathMap::class.java)
+                  //  .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
+                    .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, featureBarCrawlList[pos].id)
+                    .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_FEATURED_BARCRWAL, true)
+                    .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME,featureBarCrawlList[pos].city)
+                    .putExtra(AppConstant.INTENT_EXTRAS.FEATURE_MODEL,featureBarCrawlList[pos])
+                    .putExtra(AppConstant.INTENT_EXTRAS.FEATURE_LIST,featureBarCrawlList[pos].venue_list)
+                )
+            }
+
+        })
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.also {
+            it.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+            it.adapter = featureBarcrwlAdapter
+        }
+    }
+
+    private fun setListStory(listStory: ArrayList<DashboardModel.Story>) {
         storyAdapter = StoryAdapter(requireActivity(), listStory, object : StoryAdapter.ClickListener {
                 override fun onClick(pos: Int) {
                     startActivity(Intent(requireActivity(),StoryPreviewActivity::class.java)

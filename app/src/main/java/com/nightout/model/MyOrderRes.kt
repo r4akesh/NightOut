@@ -42,6 +42,7 @@ data class MyOrderRes(
         val user_id: String,
         val vendor_id: String,
         val venue_detail: VenueDetail,
+        val table_number  : String,
         val venue_id: String
     ):Serializable
 

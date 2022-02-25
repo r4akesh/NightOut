@@ -79,10 +79,10 @@ class RatingActvity : BaseActivity() {
                 MyApp.popErrorMsg("", resources.getString(R.string.Please_give_rating), THIS!!)
                 return false
             }
-            binding.ratingActvityReviewEdit.text.toString().trim().isBlank() -> {
+           /* binding.ratingActvityReviewEdit.text.toString().trim().isBlank() -> {
                 MyApp.popErrorMsg("", resources.getString(R.string.Please_give_review), THIS!!)
                 return false
-            }
+            }*/
             else -> return true
         }
     }

@@ -34,7 +34,8 @@ class MyOrderSubAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.binding.myOrderScndTitle.text=arrayList[position].venue_detail.store_name
-        viewHolder.binding.myOrderScndSubTitle.text=arrayList[position].venue_detail.store_address
+        viewHolder.binding.myOrderScndSubTitle.text="Table# "+arrayList[position].table_number
+        viewHolder.binding.myOrderScndSubAddrs.text=arrayList[position].venue_detail.store_address
         Utills.setImageNormal(context,viewHolder.binding.myOrderScndImage,arrayList[position].venue_detail.store_logo)
 
         viewHolder.binding.myOrderSecondServiceValue.text = context.resources.getString(R.string.currency_sumbol)+arrayList[position].service_charge

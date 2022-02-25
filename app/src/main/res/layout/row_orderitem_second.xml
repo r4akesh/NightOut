@@ -47,14 +47,26 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginEnd="5dp"
-                android:textColor="@color/text_gray"
+                android:textColor="@color/white_second"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/myOrderScndImageArrow"
                 app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
                 app:layout_constraintTop_toBottomOf="@+id/myOrderScndTitle" />
 
+            <TextView
+                android:id="@+id/myOrderScndSubAddrs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/myOrderScndImageArrow"
+                app:layout_constraintStart_toEndOf="@+id/myOrderScndImage"
+                app:layout_constraintTop_toBottomOf="@+id/myOrderScndSubTitle" />
 
             <ImageView
                 android:id="@+id/myOrderScndImageArrow"

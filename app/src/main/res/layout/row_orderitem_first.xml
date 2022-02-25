@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/white_thred"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_height="wrap_content"/>
 

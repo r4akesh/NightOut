@@ -42,7 +42,7 @@ class FacilityAdapter(
         viewHolder.binding.facilityItemTitle.text=arrayList[position].facility_detail.title
 
 
-        if(arrayList[position].status.equals("1")){
+        if(arrayList[position].facility_detail.status.equals("1")){
             viewHolder.binding.facilityItemTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.right_white,0,0,0)
         }else{
             viewHolder.binding.facilityItemTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.cross_white,0,0,0)

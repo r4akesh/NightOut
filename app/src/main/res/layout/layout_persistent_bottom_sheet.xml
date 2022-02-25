@@ -7,7 +7,6 @@
     <data></data>
 
 
-
     <LinearLayout
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
@@ -34,42 +33,65 @@
                 android:background="@drawable/box_btn_bg_white2" />
 
             <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
                 android:id="@+id/bottomSheetNSrlView"
-                android:orientation="vertical"
-                android:fillViewport="true"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp">
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fillViewport="true"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/bottomSheetStory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:padding="@dimen/_10ssp"
+                        android:text="Stories"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/bottomSheetrecyclerstory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_10ssp" />
+                        android:layout_marginStart="@dimen/_5sdp" />
 
+                    <TextView
+                        android:id="@+id/bottomSheetFeature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/proximanova_reg"
+                        android:padding="@dimen/_10ssp"
+                        android:text="Feature Bar Crawl"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/bottomSheetrecyclerFeature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/bottomSheetRecyclerAll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                   <!-- <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/bottomSheet_recycleVenuList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusableInTouchMode="true"
-                        android:orientation="vertical"
-                        android:overScrollMode="never"
-                        android:scrollbars="none"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
--->
+                    <!-- <androidx.recyclerview.widget.RecyclerView
+                         android:id="@+id/bottomSheet_recycleVenuList"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:focusableInTouchMode="true"
+                         android:orientation="vertical"
+                         android:overScrollMode="never"
+                         android:scrollbars="none"
+                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+ -->
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>

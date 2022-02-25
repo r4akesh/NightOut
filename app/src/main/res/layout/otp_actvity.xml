@@ -9,6 +9,9 @@
             type="com.nightout.vendor.viewmodel.OtpViewModel" />
 
         <variable
+            name="data"
+            type="String" />
+        <variable
             name="otpHandler"
             type="com.nightout.handlers.OtpHandler" />
     </data>

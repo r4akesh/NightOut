@@ -64,6 +64,7 @@ class AppConstant {
         const val STORY_LIST = "STORY_LIST"
         const val ISFROM_ShareListActivity = "ISFROM_ShareListActivity"
         const val ISFROM_SAVEDLIST_Activity = "ISFROM_SAVEDLIST_Activity"
+        const val ISFROM_FEATURED_BARCRWAL = "ISFROM_FEATURED_BARCRWAL"
         const val SAVEDLIST_Model = "SAVEDLIST_Model"
         const val ADDRS = "ADDRS"
         const val LATITUDE = "LATITUDE"
@@ -75,6 +76,8 @@ class AppConstant {
         const val PreBookDetail = "PreBookDetail"
         const val RATING_POJO = "RATING_POJO"
         const val isFromSelectPredefineCity = "isSelectPredefineCity"
+        const val FEATURE_LIST = "FEATURE_LIST"
+        const val FEATURE_MODEL = "FEATURE_MODEL"
 
 
 

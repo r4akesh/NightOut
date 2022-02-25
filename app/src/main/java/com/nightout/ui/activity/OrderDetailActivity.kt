@@ -152,7 +152,11 @@ class OrderDetailActivity : BaseActivity() {
         super.onClick(v)
         if (v == binding.orderDetailPay) {
            // startActivity(Intent(this@OrderDetailActivity, MyCardsActivity::class.java))
-            makePaymentApiCall()
+               if(binding.orderDetailTablNo.text.toString().isBlank()){
+                   MyApp.popErrorMsg("","Please enter table number",THIS!!)
+               }else {
+                   makePaymentApiCall()
+               }
         }
     }
 
@@ -164,6 +168,7 @@ class OrderDetailActivity : BaseActivity() {
         map.put("venue_id",detailStore.id)
         map.put("product_id",jrrItemId)
         map.put("qty", jrrItemQty)
+        map.put("table_number", binding.orderDetailTablNo.text.toString())
         map.put("payment_mode", "0")//payment_mode (0=>Online, 1=>Debit Card 2=>Credit Card)
         paymentViewModel.doPayment(map).observe(this@OrderDetailActivity, {
                 when (it.status) {

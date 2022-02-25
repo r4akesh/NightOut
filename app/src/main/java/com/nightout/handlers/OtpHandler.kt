@@ -5,6 +5,7 @@ import android.content.Intent
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.activity.OTPActivity
@@ -66,7 +67,11 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    Utills.showErrorToast(activity, it.message!!, )
+                    MyApp.popErrorMsg("",""+it.message!!,activity)
+                 //   Toast.makeText(activity, "" + it.message!!, Toast.LENGTH_LONG).show()
+                  //  Utills.showErrorToast(activity, it.message!!)
+                   activity.binding.otpPinView.setText("")
+
                 }
             }
         })

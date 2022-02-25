@@ -62,6 +62,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private var mDay: Int = 0
     private val progressDialog = CustomProgressDialog()
     var listBarcrwal = ArrayList<AllBarCrwalListResponse.Data>()
+    var listBarcrwalFeature = ArrayList<DashboardModel.Venue>()
     private lateinit var commonViewModel: CommonViewModel
 
     var mMarkerPoints: ArrayList<LatLng>? = null
@@ -72,10 +73,12 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     var barcrwalId : String= ""
     var isFromShareListActivity=false
     var isFromSaveListActivity=false
+    var isFromFeaturedBarcrwal=false
     var publicPrivetValue="1"
     var REQCODE_CreateBarCrwlSuccess = 999
     lateinit  var venusSelectedOld : BarcrwalSavedRes.Data
     lateinit  var venusSelectedOldShare : SharedBarcrwalRes.Data
+    lateinit  var venusSelectedOldFeature : DashboardModel.FeatureBarCrawl
 
     private val REQUEST_CAMERA_PERMISSION = 1
     var imageUri: Uri? = null
@@ -105,10 +108,17 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             Log.d("TAG", "YesBlank()  ")
         }
 
+        if(intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_FEATURED_BARCRWAL,false)){
+            listBarcrwalFeature = ArrayList ()
+            listBarcrwalFeature = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.FEATURE_LIST) as ArrayList<DashboardModel.Venue>
+            sizeOfList = listBarcrwalFeature.size
+        }else{
+            //is from save,share,create barcrwl
+            listBarcrwal = ArrayList ()
+            listBarcrwal = intent.getSerializableExtra(AppConstant.PrefsName.SelectedBarcrwalList) as ArrayList<AllBarCrwalListResponse.Data>
+            sizeOfList = listBarcrwal.size
+        }
 
-        listBarcrwal = ArrayList ()
-        listBarcrwal = intent.getSerializableExtra(AppConstant.PrefsName.SelectedBarcrwalList) as ArrayList<AllBarCrwalListResponse.Data>
-        sizeOfList = listBarcrwal.size
         initView()
         setToolBar()
     }
@@ -124,21 +134,27 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
     private fun initView() {
         binding.barcrwalMapPathBtn.setOnClickListener(this@BarCrwalPathMap)
-        val supportMapFragment =
-            (supportFragmentManager.findFragmentById(R.id.barCrawlPathMap) as SupportMapFragment?)!!
+        val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.barCrawlPathMap) as SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@BarCrwalPathMap)
         mMarkerPoints = ArrayList()
         commonViewModel = CommonViewModel(this@BarCrwalPathMap)
         isFromShareListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,false)
         isFromSaveListActivity = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,false)
-        if(isFromSaveListActivity){
-            venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
-            binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
+        isFromFeaturedBarcrwal = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_FEATURED_BARCRWAL,false)
+        when {
+            isFromSaveListActivity -> {
+                venusSelectedOld= intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model) as BarcrwalSavedRes.Data
+                binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
 
-        }
-        else if(isFromShareListActivity){
-            venusSelectedOldShare = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
-            binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
+            }
+            isFromShareListActivity -> {
+                venusSelectedOldShare = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL) as SharedBarcrwalRes.Data
+                binding.barcrwalMapPathBtn.text= resources.getString(R.string.Update)
+            }
+            isFromFeaturedBarcrwal -> {
+                venusSelectedOldFeature = intent.getSerializableExtra(AppConstant.INTENT_EXTRAS.FEATURE_MODEL) as DashboardModel.FeatureBarCrawl
+                binding.barcrwalMapPathBtn.text= resources.getString(R.string.Create)
+            }
         }
     }
 
@@ -189,6 +205,19 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                 dgSpin.setSelection(1)
             }
         }
+        else if(isFromFeaturedBarcrwal){
+            dgEtBarCrwal.setText(venusSelectedOldFeature.name)
+          //  if(venusSelectedOldFeature.bar_crawl.date.isBlank()){
+                dgDateBtn.text = resources.getString(R.string.Select_Date)
+          //  }else{
+             //   dgDateBtn.text = venusSelectedOldShare.bar_crawl.date
+           // }
+
+            //(1=>Public, 2=>Private)
+            if(venusSelectedOldFeature.public_private == "2"){
+                dgSpin.setSelection(1)
+            }
+        }
         setTouchNClick(userImgBarcrwalRel)
         setTouchNClick(dgCloseBtn)
         setTouchNClick(dgDateBtn)
@@ -228,11 +257,21 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
     private fun create_update_bar_crawlAPICall() {
         var stringBuilder = StringBuilder()
-        for (i in 0 until listBarcrwal.size){
-            stringBuilder.append(listBarcrwal[i].id)
-            stringBuilder.append(",")
+        if(isFromFeaturedBarcrwal){
+            for (i in 0 until listBarcrwalFeature.size){
+                stringBuilder.append(listBarcrwalFeature[i].id)
+                stringBuilder.append(",")
 
+            }
+        }else {
+            //isFrom Share, Save, creatBarCrwal
+            for (i in 0 until listBarcrwal.size){
+                stringBuilder.append(listBarcrwal[i].id)
+                stringBuilder.append(",")
+
+            }
         }
+
         var listOfId =stringBuilder.toString().substring(0,stringBuilder.toString().length-1)
         val builder = MultipartBody.Builder()
         builder.setType(MultipartBody.FORM)
@@ -245,7 +284,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
         if(isFromShareListActivity){
             builder.addFormDataPart("saved_shared", "2")
-        }else{
+        }else if(isFromSaveListActivity || isFromFeaturedBarcrwal){
             builder.addFormDataPart("saved_shared", "1")//
         }
         if(dgDateBtn.text.toString()==resources.getString(R.string.Select_Date))
@@ -283,13 +322,13 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                             setResult(Activity.RESULT_OK)
                             finish()
                         }else {
-
+                            //isFromCreateBarCrwal and isFromFeaturedBarCrwal
                             Log.d("ok", "success: ")
                             var vv = it.data.id
                             DialogCustmYesNo.getInstance().createDialog(
                                 this@BarCrwalPathMap,
                                 "Bar crawl created Successfully.",
-                                "Do you want share the created bar crawl with Friends?",
+                                "Do you want to share the created bar crawl with your friends on Nightout?",
                                 object : DialogCustmYesNo.Dialogclick {
                                     override fun onYES() {
                                         startActivityForResult(
@@ -561,12 +600,22 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     private fun addMarkers() {
         if (googleMap != null) {
             builder = LatLngBounds.Builder()
-            for (i in 0 until listBarcrwal.size) {
-                var lat = Commons.strToDouble(listBarcrwal[i].store_lattitude)
-                var lang = Commons.strToDouble(listBarcrwal[i].store_longitude)
-                drawMarker(LatLng(lat, lang), "$i")
-               // googleMap!!.addMarker(MarkerOptions().position(LatLng(lat, lang)).title("" + i + "st Point"))
+            if(isFromFeaturedBarcrwal){
+                for (i in 0 until listBarcrwalFeature.size) {
+                    var lat = Commons.strToDouble(listBarcrwalFeature[i].store_lattitude)
+                    var lang = Commons.strToDouble(listBarcrwalFeature[i].store_longitude)
+                    drawMarker(LatLng(lat, lang), "$i")
+                    // googleMap!!.addMarker(MarkerOptions().position(LatLng(lat, lang)).title("" + i + "st Point"))
+                }
+            }else{
+                for (i in 0 until listBarcrwal.size) {
+                    var lat = Commons.strToDouble(listBarcrwal[i].store_lattitude)
+                    var lang = Commons.strToDouble(listBarcrwal[i].store_longitude)
+                    drawMarker(LatLng(lat, lang), "$i")
+                    // googleMap!!.addMarker(MarkerOptions().position(LatLng(lat, lang)).title("" + i + "st Point"))
+                }
             }
+
             val width = resources.displayMetrics.widthPixels
             val height = resources.displayMetrics.heightPixels
             val padding = (width * 0.30).toInt() // offset from edges of the map 10% of screen
@@ -587,14 +636,26 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun mapsApiDirectionsUrl(): String {
-        val origin =
-            "origin=" + listBarcrwal[indexOfList].store_lattitude + "," + listBarcrwal[indexOfList].store_longitude
-        val dest =
-            "destination=" + listBarcrwal[indexOfList + 1].store_lattitude + "," + listBarcrwal[indexOfList + 1].store_longitude
-        val sensor = "sensor=false"
-        val key = "key=" + getString(R.string.google_maps_key)
-        val parameters = "$origin&$dest&$key"
-        return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
+        var parameters = ""
+        if(isFromFeaturedBarcrwal) {
+            val origin =
+                "origin=" + listBarcrwalFeature[indexOfList].store_lattitude + "," + listBarcrwalFeature[indexOfList].store_longitude
+            val dest =
+                "destination=" + listBarcrwalFeature[indexOfList + 1].store_lattitude + "," + listBarcrwalFeature[indexOfList + 1].store_longitude
+            val sensor = "sensor=false"
+            val key = "key=" + getString(R.string.google_maps_key)
+            parameters = "$origin&$dest&$key"
+        }
+        else {
+            val origin =
+                "origin=" + listBarcrwal[indexOfList].store_lattitude + "," + listBarcrwal[indexOfList].store_longitude
+            val dest =
+                "destination=" + listBarcrwal[indexOfList + 1].store_lattitude + "," + listBarcrwal[indexOfList + 1].store_longitude
+            val sensor = "sensor=false"
+            val key = "key=" + getString(R.string.google_maps_key)
+            parameters = "$origin&$dest&$key"
+        }
+            return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
     }
 
     fun readTask(url: String) {
@@ -633,10 +694,18 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                     runOnUiThread {
                         if (polyLineOptions != null) {
                             googleMap!!.addPolyline(polyLineOptions)
-                            if (indexOfList < listBarcrwal.size - 2) {
-                                indexOfList++
-                                drawPath()
+                            if(isFromFeaturedBarcrwal) {
+                                if (indexOfList < listBarcrwalFeature.size - 2) {
+                                    indexOfList++
+                                    drawPath()
+                                }
+                            }else{
+                                if (indexOfList < listBarcrwal.size - 2) {
+                                    indexOfList++
+                                    drawPath()
+                                }
                             }
+
                         } else{
                             MyApp.popErrorMsg("","Lat-Long not found!!",THIS!!)
                         }

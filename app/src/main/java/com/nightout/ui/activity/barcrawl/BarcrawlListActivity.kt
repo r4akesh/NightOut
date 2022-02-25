@@ -107,21 +107,12 @@ class BarcrawlListActivity : BaseActivity() {
                     Intent(this@BarcrawlListActivity, BarCrwalPathMap::class.java)
                         .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
                         .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barcrwalId)
-                        .putExtra(
-                            AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity,
-                            isFromSaveListActivity
-                        )
-                        .putExtra(
-                            AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity,
-                            isFROM_ShareListActivity
-                        )
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_SAVEDLIST_Activity, isFromSaveListActivity)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_ShareListActivity, isFROM_ShareListActivity)
                         .putExtra(AppConstant.INTENT_EXTRAS.SAVEDLIST_Model, venusSelectedOld)
                         .putExtra(AppConstant.INTENT_EXTRAS.SharedList_MODEL, venusSelectedOldShare)
-
-                        .putExtra(
-                            AppConstant.INTENT_EXTRAS.CITYNAME,
-                            intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)
-                        ), REQCODE_CreateBarCrwlSuccess
+                        .putExtra(AppConstant.INTENT_EXTRAS.CITYNAME, intent.getStringExtra(AppConstant.INTENT_EXTRAS.CITYNAME)),
+                    REQCODE_CreateBarCrwlSuccess
                 )
 
             }

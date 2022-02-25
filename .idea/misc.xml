@@ -52,6 +52,7 @@
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/lost_item.xml" value="0.25" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/myorder_actvity.xml" value="0.30052083333333335" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/orderdetail_avctivity.xml" value="0.3546875" />
+        <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/otp_actvity.xml" value="0.3390625" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/pop_profile.xml" value="0.3546875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/prebookdetail_activity.xml" value="0.3546875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/prebookedlist_actvity.xml" value="0.2713541666666667" />
@@ -72,6 +73,7 @@
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/toolbar_common.xml" value="0.3067708333333333" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/venu_botmsheet_item.xml" value="0.3546875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/venu_botmsheet_item2.xml" value="0.5" />
+        <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/venu_title_botmsheet_item.xml" value="0.2989583333333333" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/venulisting_activity.xml" value="0.3067708333333333" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/venusub_item.xml" value="0.3546875" />
       </map>

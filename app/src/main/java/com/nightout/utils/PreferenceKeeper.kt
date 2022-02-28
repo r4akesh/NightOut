@@ -21,12 +21,7 @@ class PreferenceKeeper private constructor(context: Context?) {
         editor.apply()
     }
 
-   var loginResponse: LoginModel.Data?
-        get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.LOGIN_POJO, ""), LoginModel.Data::class.java)
-        set(type) {
-            val json = Gson().toJson(type)
-            prefs!!.edit().putString(AppConstant.PrefsName.LOGIN_POJO, json.toString()).apply()
-        }
+
 
     var isUserLogin: Boolean
         get() = prefs!!.getBoolean(AppConstant.PrefsName.IS_LOGIN, false)
@@ -113,15 +108,20 @@ class PreferenceKeeper private constructor(context: Context?) {
             prefs!!.edit().putString(AppConstant.PrefsName.SERVICECHARGE, cnt).apply()
         }
 
-    fun getRegisterUser(context: Context?): FSUsersModel? {
-        if (registrationModel == null) {
-            refresh(context)
+
+    var loginResponse: LoginModel.Data?
+        get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.LOGIN_POJO, ""), LoginModel.Data::class.java)
+        set(type) {
+            val json = Gson().toJson(type)
+            prefs!!.edit().putString(AppConstant.PrefsName.LOGIN_POJO, json.toString()).apply()
         }
-        //        if (registrationModel == null) {
-//            registrationModel = new CurrentUserModel();
-//        }
+
+    //CHAT CODE
+
+    fun getRegisterUser(): FSUsersModel? {
         return registrationModel
     }
+
     private fun refresh(context: Context?) {
         context?.let {
             val sp = context.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)
@@ -131,6 +131,24 @@ class PreferenceKeeper private constructor(context: Context?) {
             registrationModel = gson.fromJson<FSUsersModel>(userRow, type)
         }
     }
+
+     var  loginUser : FSUsersModel?
+        get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.PREF_LOGIN_DATA, ""), FSUsersModel::class.java)
+        set(type) {
+            val json = Gson().toJson(type)
+            prefs!!.edit().putString(AppConstant.PrefsName.PREF_LOGIN_DATA, json.toString()).apply()
+        }
+
+
+
+//        val gson = Gson()
+//        val string = gson.toJson(user)
+//        val sp = context.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)
+//        sp.edit().putString(PREF_LOGIN_DATA, string).apply()
+//        registrationModel = user
+
+
+
     companion object {
         private var keeper: PreferenceKeeper? = null
         private var context: Context? = null

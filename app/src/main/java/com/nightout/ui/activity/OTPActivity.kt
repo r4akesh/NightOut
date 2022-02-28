@@ -10,19 +10,30 @@ import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 import com.nightout.R
 import com.nightout.base.BaseActivity
+import com.nightout.chat.chatinterface.ResponseType
+import com.nightout.chat.chatinterface.WebSocketObserver
+import com.nightout.chat.chatinterface.WebSocketSingleton
+import com.nightout.chat.model.ResponseModel
+import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.OtpActvityBinding
+import com.nightout.model.FSUsersModel
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
+import com.nightout.utils.PreferenceKeeper
+import com.nightout.utils.Utills
 import com.nightout.vendor.viewmodel.OtpViewModel
 
-class OTPActivity : BaseActivity() {
+class OTPActivity : BaseActivity() , WebSocketObserver {
 
     lateinit var binding : OtpActvityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +45,7 @@ class OTPActivity : BaseActivity() {
 //        var mob = intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)
 //        Log.d("TAG", "onCreate: "+mob)
 
-
+        WebSocketSingleton.getInstant()!!.register(this)
     }
 
     private fun setPinView() {
@@ -108,8 +119,43 @@ class OTPActivity : BaseActivity() {
 
     }
 
+    override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
+        try {
+            runOnUiThread {
+                val gson = Gson()
+                if (ResponseType.RESPONSE_TYPE_LOGIN.equalsTo(type) || ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE.equalsTo(type)) {
+                    val type1 = object : TypeToken<ResponseModel<FSUsersModel?>?>() {}.type
+                    val fsUsersModelResponseModel: ResponseModel<FSUsersModel> = gson.fromJson<ResponseModel<FSUsersModel>>(response, type1)
+                    if (fsUsersModelResponseModel.getStatus_code() == 200) {
+                        UserDetails.myDetail = fsUsersModelResponseModel.getData()
+                        PreferenceKeeper.instance.loginUser  = fsUsersModelResponseModel.getData()
+                      //  Toast.makeText(this@OTPActivity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
+                        PreferenceKeeper.instance.isUserLogin = true
+                        Utills.showSuccessToast(this@OTPActivity,""+fsUsersModelResponseModel.getMessage())
+                           startActivity(Intent(this@OTPActivity, HomeActivityNew::class.java))
+                           finish()
+                        //    startActivity(Intent(this@LoginActivity, RoomListActivity::class.java))
+                        // finish()
+                    } else {
+                        Toast.makeText(this@OTPActivity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Log.d("ok chat", "onWebSocketResponse: $type")
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
+    override val activityName: String=OTPActivity::class.java.name
 
+    override fun registerFor(): Array<ResponseType> {
+        return arrayOf(
+            ResponseType.RESPONSE_TYPE_LOGIN,
+            ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE
+        )
+    }
 
 
 }

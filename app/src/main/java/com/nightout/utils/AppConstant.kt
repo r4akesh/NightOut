@@ -32,6 +32,7 @@ class AppConstant {
         const val FOOD = "food"
         const val EVENT = "event"
         const val SERVICECHARGE = "SERVICECHARGE"
+        const val PREF_LOGIN_DATA = "PREF_LOGIN_DATA"
 
 
 

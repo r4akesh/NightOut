@@ -6,6 +6,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.nightout.chat.chatinterface.WebSocketSingleton
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.activity.OTPActivity
@@ -14,8 +15,11 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
+import com.nightout.vendor.services.APIClient
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.OtpViewModel
+import org.json.JSONException
+import org.json.JSONObject
 
 
 open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: String) {
@@ -51,16 +55,12 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                            var logModel: LoginModel.Data = it.data
                            PreferenceKeeper.instance.bearerTokenSave = logModel.token
                            PreferenceKeeper.instance.loginResponse = logModel
-                           PreferenceKeeper.instance.isUserLogin = true
-                            Utills.showSuccessToast(activity,it.message)
-                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))
-                          activity.finish()
+                           fetchLoginAPI(it.data)
+//                            Utills.showSuccessToast(activity,it.message)
+//                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))
+//                          activity.finish()
                       }
-                   /* Utills.showSnackBarOnError(
-                        activity.binding.otpRootLyout,
-                        it.data?.message!!,
-                        activity
-                    )*/
+
                 }
                 Status.LOADING -> {
 
@@ -78,7 +78,29 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
     }
 
 
-      fun sendAgain(regViewModel: OtpViewModel){
+
+    private fun fetchLoginAPI(userData: LoginModel.Data) {
+        val jsonObject = JSONObject()
+            try {
+                jsonObject.put("userId", userData.id)
+                jsonObject.put("userName", userData.email)
+                jsonObject.put("firstName", userData.name)
+                jsonObject.put("password", "1111")
+                jsonObject.put("fcm_token", PreferenceKeeper.instance.fcmTokenSave)
+                jsonObject.put("type", "loginOrCreate")
+                jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_LOGIN)
+                //            mWaitingDialog.show();
+                WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+
+         }
+
+
+
+    fun sendAgain(regViewModel: OtpViewModel){
           progressDialog.show(activity)
           activity.binding.otpActivitySendAgain.visibility = View.GONE
           activity.binding.otpDidnot.visibility = View.GONE

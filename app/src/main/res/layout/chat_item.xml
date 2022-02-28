@@ -47,6 +47,23 @@
             app:layout_constraintTop_toBottomOf="@+id/chatItemTitle" />
 
 
+
+        <TextView
+            android:id="@+id/chatItemTime"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_10ssp"
+
+            android:gravity="center"
+            android:text="7"
+            android:fontFamily="@font/proximanova_reg"
+            android:textSize="@dimen/_10ssp"
+            android:textColor="@color/text_blk"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/chatItemProfile" />
+
+
         <TextView
             android:id="@+id/chatItemCount"
             android:layout_width="@dimen/_18sdp"
@@ -58,9 +75,9 @@
             android:fontFamily="@font/proximanova_reg"
             android:textSize="@dimen/_10ssp"
             android:textColor="@color/text_blk"
-            app:layout_constraintBottom_toBottomOf="@+id/chatItemProfile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/chatItemProfile" />
+
+            app:layout_constraintTop_toBottomOf="@+id/chatItemTime" />
 
         <View
             style="@style/view_line"

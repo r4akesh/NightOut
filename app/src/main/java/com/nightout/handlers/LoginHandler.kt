@@ -11,6 +11,8 @@ import com.nightout.ui.activity.RegisterActivity
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.LoginViewModel
+import org.json.JSONException
+import org.json.JSONObject
 
 open class LoginHandler(val activity: LoginActivity) {
     private lateinit var loginViewModel: LoginViewModel
@@ -46,12 +48,7 @@ open class LoginHandler(val activity: LoginActivity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
-//                    it.data?.let {user->
-//                    user.data.email
-//                    }
-                    //Utills.showSuccessToast(activity,"Logged in successfully")
-                    activity.startActivity(
-                        Intent(activity, OTPActivity::class.java)
+                    activity.startActivity(Intent(activity, OTPActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.MOBILENO, loginViewModel.PhNo!!)
                             .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.data?.email))
                 }
@@ -66,5 +63,7 @@ open class LoginHandler(val activity: LoginActivity) {
             }
         })
     }
+
+
 
 }

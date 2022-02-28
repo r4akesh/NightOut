@@ -17,9 +17,13 @@ import java.util.concurrent.TimeUnit
 
 
 object APIClient {
-    const val IMAGE_URL_WEB_SOCKET = "http://testapi.newdevpoint.in/"
-    const val BASE_URL_WEB_SOCKET = "ws://sschat-react.herokuapp.com/V1"
     const val BASE_URL = "https://nightout.ezxdemo.com/api/"
+
+    //chat
+    private const val BASE_URL_CHAT = "http://testapi.newdevpoint.in/"
+    const val IMAGE_URL = "http://testapi.newdevpoint.in/"
+    const val BASE_URL_WEB_SOCKET = "ws://sschat-react.herokuapp.com/V1"
+    private var retrofit: Retrofit? = null
     fun makeRetrofitService(): APIInterface {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -74,33 +78,38 @@ object APIClient {
     }
 
 
-    private fun provideOkHttpClientWithHeader() = if (BuildConfig.DEBUG) {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(object : Interceptor {
-            @Throws(IOException::class)
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val original: Request = chain.request()
-                val request = original.newBuilder()
-                    .header("Authorization", "Bearer ${PreferenceKeeper.instance.bearerTokenSave}")
-                    .method(original.method, original.body)
-                    .build()
-                return chain.proceed(request)
-            }
-        })
-        val client: OkHttpClient = httpClient
-            .retryOnConnectionFailure(true)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .build()
+    //chat
+    fun getClient(): Retrofit? {
+        if (retrofit == null) {
+            val httpBuilder = OkHttpClient.Builder()
+            httpBuilder.connectTimeout(60, TimeUnit.SECONDS)
+            httpBuilder.readTimeout(10, TimeUnit.MINUTES)
+            httpBuilder.writeTimeout(10, TimeUnit.MINUTES)
+            httpBuilder.retryOnConnectionFailure(true)
+            //            httpBuilder.addInterceptor(new CustomInterceptor(""));
+            val okHttpClient = httpBuilder.build()
 
-        OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
-    } else OkHttpClient
-        .Builder()
-        .build()
+            //init retrofit
+            retrofit = Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(BASE_URL_CHAT) //                    .addConverterFactory(ScalarsConverterFactory.signUp())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+        return retrofit
+    }
+
+    object KeyConstant {
+        const val REQUEST_TYPE_KEY = "request"
+        const val REQUEST_TYPE_LOGIN = "login"
+        const val REQUEST_TYPE_CREATE_CONNECTION = "create_connection"
+        const val REQUEST_TYPE_ROOM = "room"
+        const val REQUEST_TYPE_GROUP_ROOM = "group"
+        const val REQUEST_TYPE_USERS = "users"
+        const val REQUEST_TYPE_MESSAGE = "message"
+        const val REQUEST_TYPE_BLOCK_USER = "block_user"
+    }
+
+
 }

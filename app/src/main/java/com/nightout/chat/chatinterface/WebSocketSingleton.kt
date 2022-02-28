@@ -4,6 +4,7 @@ package com.nightout.chat.chatinterface;
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.nightout.chat.utility.UserDetails
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
@@ -95,19 +96,21 @@ class WebSocketSingleton : WebSocketListener(), WebSocketSubject {
     }
 
     private fun joinCommand() {
-       /*  PreferenceKeeper.instance.RegisterUser
-         PreferenceUtils.getRegisterUser(MyApp.applicationContext)?.let { userDetails ->
+        PreferenceKeeper.instance.getRegisterUser()?.let { userDetails ->
             UserDetails.myDetail = userDetails
             val jsonObject = JSONObject()
             try {
-                jsonObject.put("user_id", userDetails.id)
+                jsonObject.put(
+                    "user_id",
+                    userDetails.id
+                )
                 jsonObject.put("type", "create")
-                jsonObject.put(KeyConstant.REQUEST_TYPE_KEY, KeyConstant.REQUEST_TYPE_CREATE_CONNECTION)
+                jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_CREATE_CONNECTION)
                 getInstant()!!.sendMessage(jsonObject)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-        }*/
+        }
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {

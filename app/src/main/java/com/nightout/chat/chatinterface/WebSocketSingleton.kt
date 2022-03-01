@@ -97,7 +97,7 @@ class WebSocketSingleton : WebSocketListener(), WebSocketSubject {
 
     private fun joinCommand() {
         PreferenceKeeper.instance.getRegisterUser()?.let { userDetails ->
-            UserDetails.myDetail = userDetails
+            UserDetails.instance.myDetail = userDetails
             val jsonObject = JSONObject()
             try {
                 jsonObject.put(
@@ -114,7 +114,7 @@ class WebSocketSingleton : WebSocketListener(), WebSocketSubject {
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
-        println("received message: $text")
+        println("received message WebSocket: $text")
         notifyObserver(text)
     }
 

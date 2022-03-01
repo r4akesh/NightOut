@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
-import com.nightout.adapter.ChatAdapter
+import com.nightout.chat.adapter.ChatGroupListAdapter
 import com.nightout.chat.chatinterface.ResponseType
 import com.nightout.chat.chatinterface.WebSocketObserver
 import com.nightout.chat.chatinterface.WebSocketSingleton
@@ -24,11 +24,9 @@ import com.nightout.chat.model.RoomResponseModel
 import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.FragmentChatBinding
 import com.nightout.interfaces.OnMenuOpenListener
-import com.nightout.model.ChatModel
 import com.nightout.model.FSUsersModel
 import com.nightout.ui.activity.ChatPersonalActvity
 import com.nightout.ui.activity.CreateGroupActvity
-import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
 import org.json.JSONArray
 import org.json.JSONException
@@ -56,9 +54,9 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
         val jsonObject = JSONObject()
         try {
             val userList = JSONArray()
-          //  userList.put(UserDetails.myDetail.id)
-         //   userList.put( PreferenceKeeper.instance.loginUser?.id)
-            userList.put( 1)
+            userList.put(UserDetails.instance.myDetail.id)
+         //  userList.put( PreferenceKeeper.instance.loginUser?.id)
+            //userList.put( 1)
             jsonObject.put("type", "allRooms")
             jsonObject.put("userList", userList)
             jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_ROOM)
@@ -84,9 +82,9 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
         binding.headerChat.headerCreateGroup.setOnClickListener(this)
     }
 
-    lateinit var chatAdapter: ChatAdapter
+    lateinit var chatAdapter: ChatGroupListAdapter
     private fun setRoomList() {
-        chatAdapter = ChatAdapter(requireContext(),object:ChatAdapter.ClickListener{
+        chatAdapter = ChatGroupListAdapter(requireContext(),object: ChatGroupListAdapter.ClickListener{
             override fun onClick(item: FSRoomModel) {
                 val intent = Intent(requireActivity(), ChatPersonalActvity::class.java)
                 intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_IS_GROUP, item.isGroup)
@@ -106,18 +104,18 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
     override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
         try {
             requireActivity().runOnUiThread {
-                println("received message: $response")
+                println("received message chat: $response")
                 val gson = Gson()
                 if (ResponseType.RESPONSE_TYPE_ROOM.equalsTo(type)) {
                     if (statusCode == 200) {
                         val type1 = object : TypeToken<ResponseModel<RoomResponseModel?>?>() {}.type
-                        val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> =
-                            gson.fromJson(response, type1)
-                        UserDetails.chatUsers = roomResponseModelResponseModel.getData().userListMap
+                        val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> = gson.fromJson(response, type1)
+                        UserDetails.instance.chatUsers = roomResponseModelResponseModel.getData().userListMap
                         for (element in roomResponseModelResponseModel.getData().roomList) {
                             for (userId in element.userList) {
-                                if (userId != UserDetails.myDetail.id) {
-                                    element.senderUserDetail = UserDetails.chatUsers[userId]
+                                 if (userId != UserDetails.instance.myDetail.id) {
+                               // if (userId != PreferenceKeeper.instance.loginUser?.id) {
+                                    element.senderUserDetail = UserDetails.instance.chatUsers[userId]
                                     break
                                 }
                             }
@@ -140,9 +138,9 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                         val roomResponseModelResponseModel: ResponseModel<FSRoomModel> =
                             gson.fromJson<ResponseModel<FSRoomModel>>(response, type1)
                         for (userId in roomResponseModelResponseModel.getData().userList) {
-                            if (userId != UserDetails.myDetail.id) {
+                            if (userId != UserDetails.instance.myDetail.id) {
                                 roomResponseModelResponseModel.getData().senderUserDetail =
-                                    UserDetails.chatUsers[userId]
+                                    UserDetails.instance.chatUsers[userId]
                                 break
                             }
                         }
@@ -159,13 +157,13 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                         val tmpUserList: HashMap<String, FSUsersModel> =
                             roomResponseModelResponseModel.getData().userListMap
                         for (key in tmpUserList.keys) {
-                            UserDetails.chatUsers[key] = tmpUserList[key]!!
+                            UserDetails.instance.chatUsers[key] = tmpUserList[key]!!
                         }
                         val element: FSRoomModel =
                             roomResponseModelResponseModel.getData().newRoom!!
                         for (userId in element.userList) {
-                            if (userId != UserDetails.myDetail.id) {
-                                element.senderUserDetail = UserDetails.chatUsers[userId]
+                            if (userId != UserDetails.instance.myDetail.id) {
+                                element.senderUserDetail = UserDetails.instance.chatUsers[userId]
                                 break
                             }
                         }
@@ -192,11 +190,10 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
 
     override fun registerFor(): Array<ResponseType> {
         return arrayOf(
-            ResponseType.RESPONSE_TYPE_MESSAGES,
-            ResponseType.RESPONSE_TYPE_USER_MODIFIED,
-            ResponseType.RESPONSE_TYPE_USER_BLOCK_MODIFIED,
-            ResponseType.RESPONSE_TYPE_USER_ALL_BLOCK,
-            ResponseType.RESPONSE_TYPE_ROOM_DETAILS
+            ResponseType.RESPONSE_TYPE_ROOM,
+            ResponseType.RESPONSE_TYPE_ROOM_MODIFIED,
+            ResponseType.RESPONSE_TYPE_CREATE_ROOM,
+            ResponseType.RESPONSE_TYPE_USER_MODIFIED
         )
     }
 

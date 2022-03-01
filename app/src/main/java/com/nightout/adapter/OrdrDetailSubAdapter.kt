@@ -12,9 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.*
-import com.nightout.model.ChatModel
 import com.nightout.model.VenuDetailModel
-import com.nightout.model.VenuesModel
 
 
 class OrdrDetailSubAdapter(

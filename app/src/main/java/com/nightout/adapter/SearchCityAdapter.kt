@@ -3,21 +3,14 @@ package com.nightout.adapter
 import android.content.Context
 
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.AllbarcrawalGridItemBinding
-import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.RawCityitemBinding
-import com.nightout.databinding.VenuesItemBinding
-import com.nightout.model.ChatModel
 import com.nightout.model.SearchCityResponse
-import com.nightout.model.VenuesModel
 
 
 class SearchCityAdapter(

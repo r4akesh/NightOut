@@ -26,7 +26,7 @@ import java.io.IOException
 
 
 class WebServiceRepository(application: Activity) {
-    private var apiInterface: APIInterface = APIClient.makeRetrofitService()
+   // private var apiInterface: APIInterface = APIClient.makeRetrofitService()
     private var apiInterfaceHeader: APIInterface = APIClient.makeRetrofitServiceHeader()
     private var networkHelper: NetworkHelper = NetworkHelper(application)
     var application = application

@@ -3,8 +3,6 @@ package com.nightout.adapter
 import android.content.Context
 
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
@@ -12,13 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.CommentItemBinding
 import com.nightout.databinding.RowSelectedbarcrwalvenuBinding
 import com.nightout.model.AllBarCrwalListResponse
-import com.nightout.model.BarCrwalVenuesModel
-import com.nightout.model.ChatModel
-import com.nightout.model.CommentModel
 import com.nightout.utils.PreferenceKeeper
 
 

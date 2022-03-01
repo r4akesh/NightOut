@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.*
-import com.nightout.model.ChatModel
 import com.nightout.model.MyOrderRes
-import com.nightout.model.VenuesModel
 import com.nightout.utils.Utills
 
 

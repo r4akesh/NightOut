@@ -1,11 +1,9 @@
-package com.nightout.adapter
+package com.nightout.chat.adapter
 
 import android.content.Context
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
@@ -16,15 +14,15 @@ import com.nightout.chat.model.FSRoomModel
 import com.nightout.chat.utility.TimeShow.timeFormatYesterdayToDay
 import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.ChatItemBinding
-import com.nightout.model.ChatModel
+
 import com.nightout.model.FSUsersModel
 import java.util.ArrayList
 
 
-class ChatAdapter(
+class ChatGroupListAdapter(
     var context: Context,
     var clickListener: ClickListener, ) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ChatGroupListAdapter.ViewHolder>() {
     private val arrayList: ArrayList<FSRoomModel> = ArrayList<FSRoomModel>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ChatItemBinding = DataBindingUtil.inflate(
@@ -42,10 +40,10 @@ class ChatAdapter(
             viewHolder.binding.chatItemTitle.text = item.groupDetails!!.group_name
             viewHolder.binding.chatItemSubTitle.text = item.lastMessage
             viewHolder.binding.chatItemTime.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
-            viewHolder.binding.chatItemCount.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
+         //   viewHolder.binding.chatItemCount.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
 
-            if (item.unread != null && item.unread!![UserDetails.myDetail.id] != null) {
-                val unreadCount: Int = item.unread!![UserDetails.myDetail.id]!!
+            if (item.unread != null && item.unread!![UserDetails.instance.myDetail.id] != null) {
+                val unreadCount: Int = item.unread!![UserDetails.instance.myDetail.id]!!
                 if (unreadCount > 0) {
                     viewHolder.binding.chatItemCount.visibility = View.VISIBLE
                 } else {

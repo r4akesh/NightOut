@@ -4,8 +4,6 @@ import android.content.Context
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
@@ -14,14 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.nightout.R
-import com.nightout.databinding.AllbarcrawalGridItemBinding
-import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.RowSidemenuListBinding
-import com.nightout.databinding.VenuesItemBinding
 import com.nightout.interfaces.OnSideMenuSelectListener
-import com.nightout.model.ChatModel
 import com.nightout.model.SideMenuModel
-import com.nightout.model.VenuesModel
 
 
 class SideMenuAdapter(

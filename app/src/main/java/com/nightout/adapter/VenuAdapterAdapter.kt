@@ -1,27 +1,18 @@
 package com.nightout.adapter
 
-import android.R.attr
 import android.content.Context
 
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 
 import com.nightout.databinding.VenuItemBinding
-import com.nightout.model.ChatModel
 import com.nightout.model.VenuModel
-import com.nightout.vendor.viewmodel.VenuListViewModel
-import android.R.attr.data
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DiffUtil.DiffResult
-import android.os.Bundle
 import android.util.Log
 import androidx.annotation.Nullable
 

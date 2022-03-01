@@ -132,12 +132,22 @@ class PreferenceKeeper private constructor(context: Context?) {
         }
     }
 
-     var  loginUser : FSUsersModel?
+
+    fun loginUser(context: Context, user: FSUsersModel?) {
+        val gson = Gson()
+        val string = gson.toJson(user)
+        val sp = context.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)
+        sp.edit().putString(PREF_LOGIN_DATA, string).apply()
+        registrationModel = user
+    }
+
+
+   /* var  loginUser : FSUsersModel?
         get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.PREF_LOGIN_DATA, ""), FSUsersModel::class.java)
         set(type) {
             val json = Gson().toJson(type)
             prefs!!.edit().putString(AppConstant.PrefsName.PREF_LOGIN_DATA, json.toString()).apply()
-        }
+        }*/
 
 
 

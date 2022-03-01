@@ -10,12 +10,14 @@
 
         android:paddingTop="@dimen/_8sdp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chatItemProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:civ_border_color="@color/text_yello"
+            app:civ_border_width="@dimen/_1sdp"
             android:layout_marginStart="@dimen/_10ssp"
-            android:src="@drawable/chat_ic_1"
+            android:src="@drawable/app_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

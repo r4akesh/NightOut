@@ -16,11 +16,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.chat.chatinterface.ResponseType
-import com.nightout.chat.chatinterface.WebSocketObserver
-import com.nightout.chat.chatinterface.WebSocketSingleton
-import com.nightout.chat.model.ResponseModel
-import com.nightout.chat.utility.UserDetails
+
 import com.nightout.databinding.LoginActivityBinding
 import com.nightout.model.FSUsersModel
 import com.nightout.model.LoginModel

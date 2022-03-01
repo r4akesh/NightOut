@@ -11,12 +11,8 @@ import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.GroupItemBinding
 import com.nightout.model.AllUserRes
-import com.nightout.model.ChatModel
-import com.nightout.model.GetLostItemListModel
-import com.nightout.model.GroupListModel
 import com.nightout.utils.Utills
 
 

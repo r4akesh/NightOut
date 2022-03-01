@@ -10,15 +10,8 @@ import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.AllbarcrawalGridItemBinding
 import com.nightout.databinding.BarcrwalRootpathBinding
-import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.VenuesItemBinding
 import com.nightout.model.BarcrwalSavedRes
-import com.nightout.model.ChatModel
-import com.nightout.model.VenuesModel
-import com.nightout.utils.Commons
-import com.nightout.utils.MyApp
 
 
 class BarcrwalRootPathAdapter(

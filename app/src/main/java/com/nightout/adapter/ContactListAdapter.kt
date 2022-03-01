@@ -4,20 +4,14 @@ import android.content.Context
 import android.util.Log
 
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
 import com.nightout.databinding.GroupItemBinding
-import com.nightout.model.ChatModel
 import com.nightout.model.ContactFillterModel
-import com.nightout.model.ContactNoModel
-import com.nightout.model.GroupListModel
 import com.nightout.utils.Utills
 
 

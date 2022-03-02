@@ -57,7 +57,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textSize="12sp"
-                android:textColor="@color/colorGrey"
+                android:textColor="@color/color_8B8B8B"
                 tools:text="@tools:sample/date/hhmm" />
 
 

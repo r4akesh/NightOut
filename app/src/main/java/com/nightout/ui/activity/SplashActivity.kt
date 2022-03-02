@@ -36,11 +36,11 @@ class SplashActivity : BaseActivity() {
 
     private fun startSplash() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            if(PreferenceKeeper.instance.isUserLogin) {
-                startActivity(Intent(this@SplashActivity, HomeActivityNew::class.java))
-            }else {
+//            if(PreferenceKeeper.instance.isUserLogin) {
+//                startActivity(Intent(this@SplashActivity, HomeActivityNew::class.java))
+//            }else {
                 startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            }
+           // }
             overridePendingTransition(0,0)
             finish()
         }, 1500)

@@ -62,4 +62,5 @@
 
     <color name="color_20213A">#20213A</color>
     <color name="color_darkbg">#020a22</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -43,6 +43,7 @@ import kotlin.collections.ArrayList
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import com.bumptech.glide.request.RequestOptions
 import com.nightout.R
 import java.lang.NumberFormatException
 import java.text.DecimalFormat
@@ -78,7 +79,9 @@ class MyApp : Application() {
         private var ctx: Context? = null
 
         var SHARED_PREF_NAME = "Brng_Pref"
-
+        var USER_PROFILE_DEFAULT_GLIDE_CONFIG =
+            RequestOptions().placeholder(R.drawable.user_default_ic)
+                .error(R.drawable.user_default_ic)
         fun getEditProfile(loginActivity: EditProfileActivity): EditProfileHandler {
             return EditProfileHandler(loginActivity)
         }

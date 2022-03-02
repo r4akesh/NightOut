@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit
 
 
 object APIClient {
+    const val BASE_URL = "https://nightout.ezxdemo.com/api/"
+
     private const val BASE_URL_CHAT = "http://testapi.newdevpoint.in/"
     const val IMAGE_URL = "http://testapi.newdevpoint.in/"
     const val BASE_URL_WEB_SOCKET = "ws://sschat-react.herokuapp.com/V1"
@@ -25,7 +27,37 @@ object APIClient {
 
 
 
+    fun makeRetrofitServiceHeader(): APIInterface {
+        //val token = PreferenceKeeper.instance.loginResponse?.token
+        val token = PreferenceKeeper.instance.bearerTokenSave
+        Log.d("ok", "Bearer $token")
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor { chain ->
+            val original = chain.request()
+            val request = original.newBuilder()
+                .header("Authorization", "Bearer $token")
+                .method(original.method, original.body)
+                .build()
+            chain.proceed(request)
+        }
+        val client = httpClient
+            .retryOnConnectionFailure(true)
+            .connectTimeout(0, TimeUnit.MILLISECONDS)
+            .readTimeout(0, TimeUnit.MILLISECONDS)
+            .writeTimeout(0, TimeUnit.MILLISECONDS)
+            .addInterceptor(interceptor)
+            .build()
 
+        return Retrofit.Builder().baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build().create(APIInterface::class.java)
+
+
+    }
 
 
     //chat

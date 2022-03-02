@@ -1,38 +1,79 @@
 package com.nightout.ui.activity
 
+
+
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
+import android.graphics.Point
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.WindowManager
+import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.downloader.OnDownloadListener
+import com.downloader.request.DownloadRequest
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.base.BaseActivity
+import com.nightout.chat.activity.GroupDetailActivity
+import com.nightout.chat.activity.PlayerActivity
+import com.nightout.chat.activity.ZoomImageActivity
+import com.nightout.chat.adapter.ChatAdapter
+import com.nightout.chat.adapter.HeaderDataImpl
 import com.nightout.chat.chatinterface.ResponseType
 import com.nightout.chat.chatinterface.WebSocketObserver
 import com.nightout.chat.chatinterface.WebSocketSingleton
-import com.nightout.chat.model.ChatModel
-import com.nightout.chat.utility.PermissionClass
-import com.nightout.chat.utility.UserDetails
+import com.nightout.chat.fragment.PlayAudioFragment
+import com.nightout.chat.fragment.UploadFileProgressFragment
+import com.nightout.chat.model.*
+import com.nightout.chat.stickyheader.stickyView.StickHeaderItemDecoration
+import com.nightout.chat.utility.*
+import com.nightout.chat.utility.DownloadUtility.downloadFile
 import com.nightout.databinding.ChatpersonalActivitynewBinding
 import com.nightout.databinding.ChatpersonalActvityBinding
 import com.nightout.model.FSUsersModel
+import com.nightout.utils.MyApp
+import com.nightout.vendor.services.APIClient
+import com.theartofdev.edmodo.cropper.CropImage
+import org.apache.commons.io.FilenameUtils
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
+import java.net.MalformedURLException
+import java.net.URL
 import java.util.*
 import kotlin.Comparator
 
-class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, WebSocketObserver {
+class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, WebSocketObserver, PlayAudioFragment.PlayAudioCallback,
+    UploadFileProgressFragment.UploadFileProgressCallback {
     lateinit var binding : ChatpersonalActivitynewBinding
     private lateinit var permissionClass: PermissionClass
     private var _roomId: String? = null
     private val chatListTmp = ArrayList<ChatModel>()
     private val chatList = HashMap<Date, ArrayList<ChatModel>>()
+    private lateinit var adapter: ChatAdapter
+    private lateinit var _senderDetails: FSUsersModel
+    private var _isGroup = false
+    private var isBlocked = false
+    private var noOfNewMessages = 0
+    private var _groupDetails: FSGroupModel? = null
+    private val uploadFragment: PlayAudioFragment = PlayAudioFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +93,363 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         binding.chatUserNameConstrant.setOnClickListener(this)
         adapter = setUpRecyclerView()
         binding.chatGoToBottom.visibility = View.GONE
-
+        setAudioPlayer()
         parseExtras()
         WebSocketSingleton.getInstant()?.register(this)
     }
 
-    private fun parseExtras() {
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when (v!!.id) {
+            R.id.back_btnImage -> {
+                finish()
+            }
+            R.id.chatUnblockBtn -> {
+             //   blockOrUnblock(false)
+            }
+            R.id.chatGoToBottom -> {
+                binding.chatRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                resetNewMessageCount()
+            }
+            R.id.sendButton -> {
+                if (!binding.messageArea.text.toString().isEmpty()) {
+                    val message = binding.messageArea.text.toString()
+                    val emailFilteredString: String =
+                        StringUtilities.replaceEmailAddressWithStarsInString(message)
+                    val mobileFilteredString: String =
+                        StringUtilities.replaceMobileWithStarsInString(emailFilteredString)!!
+                    sendMessage(mobileFilteredString, ChatModel.MessageType.text, HashMap())
+                    binding.messageArea.setText("")
+                }
+            }
+            R.id.openRecorder -> {
+                binding.chatMessageWrapper.visibility = View.GONE
+                binding.chatRecordingWrapper.visibility = View.VISIBLE
+            }
+            R.id.chatAttachment -> {
+                toggleAttachmentWrapper()
+            }
+            R.id.chatCloseRecording -> {
+//                stopRecording()
+//                mStartRecording = true
+//                binding.chatMessageWrapper.visibility = View.VISIBLE
+//                binding.chatRecordingWrapper.visibility = View.GONE
+            }
+            R.id.attachmentGallery -> {
+                toggleAttachmentWrapper()
+                binding.attachmentWrapper.visibility = View.GONE
+                permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO)
+            }
+            R.id.attachmentCamera -> {
+                toggleAttachmentWrapper()
+                binding.attachmentWrapper.visibility = View.GONE
+                permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE)
+            }
+            R.id.chatStartRecording -> {
+                permissionClass.askPermission(REQUEST_RECORD_AUDIO_PERMISSION)
+            }
+            R.id.sendAudioButton -> {
+               // sendRecording()
+            }
+            R.id.attachmentContact -> {
+//                toggleAttachmentWrapper()
+//                contacts
+            }
+            R.id.chatUserNameConstrant -> {
+                if (_isGroup) {
+                    startActivity(Intent(this@ChatPersonalActvity, GroupDetailActivity::class.java))
+                }
+            }
+        }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        WebSocketSingleton.getInstant()?.register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy: ")
+        WebSocketSingleton.getInstant()?.unregister(this)
+        //        webSocket.cancel();
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop: ")
+        WebSocketSingleton.getInstant()?.unregister(this)
+
+//        mUserRef.child(currentUser.getUid()).child("isOnline").setValue(false);
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun toggleAttachmentWrapper() {
+        revealLayoutFun()
+        //  binding.attachmentWrapper.visibility = if (binding.attachmentWrapper.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+    }
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun revealLayoutFun() {
+        if (binding.attachmentWrapper.visibility == View.VISIBLE) {
+            // get the center for the clipping circle
+            val cx = binding.attachmentWrapper.width / 2
+            val cy = binding.attachmentWrapper.height / 2
+
+            // get the initial radius for the clipping circle
+            val initialRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+
+            // create the animation (the final radius is zero)
+            val anim = ViewAnimationUtils.createCircularReveal(
+                binding.attachmentWrapper,
+                cx,
+                cy,
+                initialRadius,
+                0f
+            )
+
+            // make the view invisible when the animation is done
+            anim.addListener(object : AnimatorListenerAdapter() {
+
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    binding.attachmentWrapper.visibility = View.INVISIBLE
+                }
+            })
+
+            // start the animation
+            anim.start()
+        } else {
+
+            val cx = binding.attachmentWrapper.width / 2
+            val cy = binding.attachmentWrapper.height / 2
+
+            // get the final radius for the clipping circle
+            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+
+            // create the animator for this view (the start radius is zero)
+            val anim =
+                ViewAnimationUtils.createCircularReveal(
+                    binding.attachmentWrapper,
+                    cx,
+                    cy,
+                    0f,
+                    finalRadius
+                )
+            // make the view visible and start the animation
+            binding.attachmentWrapper.visibility = View.VISIBLE
+            anim.start()
+
+        }
+
+    }
+    private fun setAudioPlayer() {
+        uploadFragment.setPlayAudioCallback(this)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.add(R.id.audioPlayerFragment, uploadFragment)
+        ft.commit()
+    }
+
+
+    private fun setUpRecyclerView(): ChatAdapter {
+        val adapter = ChatAdapter(this, object : ChatAdapter.ChatCallbacks {
+            override fun onClickDownload(
+                chatModel: ChatModel?,
+                messageContent: MediaModel?,
+                stopDownloading: Boolean,
+                onDownloadListener: OnDownloadListener?
+            ) {
+                if (chatModel!!.message_type == ChatModel.MessageType.image) {
+                    val intent = Intent(this@ChatPersonalActvity, ZoomImageActivity::class.java)
+                    intent.putExtra(ZoomImageActivity.INTENT_EXTRA_URL, messageContent?.file_url)
+                    startActivity(intent)
+                } else {
+                    downloadFile(chatModel, messageContent, stopDownloading, onDownloadListener)
+                }
+            }
+
+            override fun onClickLocation(chatModel: ChatModel?, locationModel: LocationModel?) {
+                val geoUri =
+                    "http://maps.google.com/maps?q=loc:" + locationModel!!.latitude + "," + locationModel.longitude + " (" + locationModel.name + ")"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
+                startActivity(intent)
+            }
+
+            override fun onClickContact(chatModel: ChatModel?, contactModel: ContactModel?) {
+            /*    val dialogBuilder: ContactDialog.DialogBuilder =
+                    ContactDialog.DialogBuilder(this@ChatPersonalActvity)
+                        .setOnItemClick(object : ContactDialog.OnItemClick {
+                            override fun addContactNew(dialog: ContactDialog?) {
+                                *//*	Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                                contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+
+                                contactIntent
+                                        .putExtra(ContactsContract.Intents.Insert.NAME, contactModel.getFirst_name() + " " + contactModel.getLast_name())
+                                        .putExtra(ContactsContract.Intents.Insert.PHONE, contactModel.getMobile());
+
+                                startActivityForResult(contactIntent, REQUEST_ADD_CONTACT);*//*
+                                val contactIntent = Intent(Intent.ACTION_INSERT_OR_EDIT)
+                                contactIntent.type = ContactsContract.Contacts.CONTENT_ITEM_TYPE
+                                contactIntent
+                                    .putExtra(
+                                        ContactsContract.Intents.Insert.NAME,
+                                        contactModel?.first_name + " " + contactModel?.last_name
+                                    )
+                                    .putExtra(
+                                        ContactsContract.Intents.Insert.PHONE,
+                                        contactModel?.mobile
+                                    )
+                                startActivityForResult(contactIntent, REQUEST_ADD_CONTACT)
+                            }
+
+                            override fun close(dialog: ContactDialog) {
+                                dialog.cancel()
+                            }
+                        }).setContactNumber(contactModel?.mobile!!)
+                        .setTitle(contactModel.first_name + " " + contactModel.last_name)
+                val dialog: ContactDialog = dialogBuilder.build()
+                val display = windowManager.defaultDisplay
+                val size = Point()
+                display.getSize(size)
+                val width = (size.x * 0.90).toInt()
+                //        int height = size.y;
+                dialog.show()
+                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)*/
+            }
+
+            override fun onLongClick(chatModel: ChatModel?) {
+                Toast.makeText(this@ChatPersonalActvity, "On long click ", Toast.LENGTH_SHORT).show()
+            }
+        })
+        val layoutManager = LinearLayoutManager(this)
+
+//		setData(adapter);
+        binding.chatRecyclerView.adapter = adapter
+        binding.chatRecyclerView.layoutManager = layoutManager
+        binding.chatRecyclerView.addItemDecoration(StickHeaderItemDecoration(adapter))
+        binding.chatRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                Log.d(TAG, "onScrolled: " + dx + " " + dy);
+//                if (dy > 0) { //check for scroll down
+                val layout = binding.chatRecyclerView.layoutManager as LinearLayoutManager?
+                if (layout!!.findLastVisibleItemPosition() == adapter.itemCount - 1) {
+                    resetNewMessageCount()
+                }
+
+
+//                layout.scrollToPosition();
+
+//                Log.d(TAG, "onScrolled: " + layout.findLastVisibleItemPosition() + " " + adapter.getItemCount());
+
+//                }
+            }
+        })
+        return adapter
+    }
+
+    private fun resetNewMessageCount() {
+        noOfNewMessages = 0
+        binding.chatGoToBottom.visibility = View.GONE
+        binding.chatNewMessageCount.text = noOfNewMessages.toString()
+    }
+
+    private fun downloadFile(
+        chatModel: ChatModel?,
+        appListModel: MediaModel?,
+        stopDownloading: Boolean,
+        onDownloadListener: OnDownloadListener?
+    ) {
+        val downloadUrl: String = appListModel!!.file_url
+        try {
+            val url = URL(downloadUrl)
+            val downloadFileName = FilenameUtils.getName(url.path)
+            val downloadFile: File = File(
+                DownloadUtility.getPath(
+                    applicationContext,
+                    DownloadUtility.FILE_PATH_CHAT_FILES
+                ) + "/" + downloadFileName
+            )
+            val isAppDownloaded = downloadFile.exists()
+            if (isAppDownloaded) {
+                chatModel!!.downloadStatus = ChatModel.DownloadStatus.DOWNLOADED
+                val filePath = downloadFile.absolutePath
+                when {
+                    FileOpenUtility.isVideo(filePath) -> {
+                        val intent = Intent(this, PlayerActivity::class.java)
+                        intent.putExtra(PlayerActivity.INTENT_EXTRA_FILE_PATH, filePath)
+                        startActivity(intent)
+                    }
+                    FileOpenUtility.isAudio(filePath) -> {
+                        binding.audioPlayerFragment.visibility = View.VISIBLE
+                        uploadFragment.play(filePath)
+                    }
+                    else -> {
+                        FileOpenUtility.openFile(this@ChatPersonalActvity, filePath)
+                    }
+                }
+            } else {
+                val task: DownloadRequest? =
+                    DownloadUtility.downloadList.get(MD5.stringToMD5(downloadUrl))
+                if (task == null) {
+                    DownloadUtility.downloadFile(
+                        applicationContext,
+                        DownloadUtility.getPath(
+                            applicationContext,
+                            DownloadUtility.FILE_PATH_CHAT_FILES
+                        ),
+                        downloadUrl, downloadFileName,
+                        MD5.stringToMD5(downloadUrl),
+                        onDownloadListener
+                    )
+                    chatModel!!.downloadStatus = ChatModel.DownloadStatus.DOWNLOADING
+                } else {
+                    if (stopDownloading) {
+                        task.cancel()
+                        DownloadUtility.downloadList.remove(MD5.stringToMD5(downloadUrl))
+                        chatModel!!.downloadStatus = ChatModel.DownloadStatus.PENDING
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged()
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+        }
+    }
+    private fun parseExtras() {
+        _roomId = intent.getStringExtra(INTENT_EXTRAS_KEY_ROOM_ID)
+        _isGroup = intent.getBooleanExtra(INTENT_EXTRAS_KEY_IS_GROUP, false)
+        _groupDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_GROUP_DETAILS) as FSGroupModel?
+        //        _senderDetails = (FSUsersModel) getIntent().getSerializableExtra(ChatActivity.INTENT_EXTRAS_KEY_SENDER_DETAILS);
+        val tmpSenderDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_SENDER_DETAILS)
+        if (tmpSenderDetails != null) {
+            _senderDetails = tmpSenderDetails as FSUsersModel
+           // addChatMenu()
+            if (_isGroup) {
+                setGroupDetails()
+            } else {
+                setIndividualDetails()
+            }
+            joinCommand()
+            blockList
+        } else {
+            roomInfo
+        }
+    }
+
+    private val roomInfo: Unit
+        get() {
+            val messageMap = HashMap<String?, Any?>()
+            messageMap["type"] = "roomsDetails"
+            messageMap["roomId"] = _roomId
+            messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =
+                APIClient.KeyConstant.REQUEST_TYPE_ROOM
+            WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
+        }
+
+    private fun setGroupDetails() {
+        binding.chatChatWithUserName.text = _groupDetails?.group_name
+        binding.chatChatWithUserStatus.text = _groupDetails?.about_group
+        //        Glide.with(this).setDefaultRequestOptions(userProfileDefaultOptions).load(groupInfo.getRoomImage()).into(binding.chatUserProfile);
     }
 
 
@@ -67,7 +458,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         const val INTENT_EXTRAS_KEY_GROUP_DETAILS = "groupDetails"
         const val INTENT_EXTRAS_KEY_ROOM_ID = "roomID"
         const val INTENT_EXTRAS_KEY_SENDER_DETAILS = "senderDetails"
-        private const val TAG = "ChatActivity"
+        private const val TAG = "ChatPersonalActvity"
         private const val REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE = 3
         private const val REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO = 4
         private const val REQUEST_RECORD_AUDIO_PERMISSION = 5
@@ -154,7 +545,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                         setRead()
                     } else {
                         Toast.makeText(
-                            this@ChatActivity,
+                            this@ChatPersonalActvity,
                             responseData.getString("message"),
                             Toast.LENGTH_SHORT
                         ).show()
@@ -173,11 +564,9 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                         val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> =
                             Gson().fromJson<ResponseModel<RoomResponseModel>>(response, type1)
                         for (element in roomResponseModelResponseModel.getData().userList) {
-                            UserDetails.chatUsers.put(element.id, element)
+                            UserDetails.instance.chatUsers.put(element.id, element)
                         }
-                        val roomDetails: FSRoomModel =
-                            roomResponseModelResponseModel.getData().roomList.get(0)
-                        _senderDetails = roomDetails.senderUserDetail!!
+                      //  val roomDetails: FSRoomModel = roomResponseModelResponseModel.getData().roomList.get(0)_senderDetails = roomDetails.senderUserDetail!!
                         /*for (FSRoomModel elemen  t : roomResponseModelResponseModel.getData().getRoomList()) {
                             for (String userId : element.getUserList()) {
                                 if (!userId.equals(UserDetails.myDetail.getId())) {
@@ -185,7 +574,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                                     break;
                                 }
                             }
-                        }*/joinCommand()
+                        }*/
+                            joinCommand()
                         blockList
                     } else {
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -211,13 +601,13 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     val userBlockModelResponseModel: ResponseModel<UserBlockModel> =
                         Gson().fromJson<ResponseModel<UserBlockModel>>(response, type1)
                     val element: UserBlockModel = userBlockModelResponseModel.getData()
-                    if (element.blockedTo == UserDetails.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
+                    if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
                         blockedByOtherUser()
                     }
-                    if (element.blockedTo == UserDetails.myDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
+                    if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
                         unBlockedByOtherUser()
                     }
-                    if (element.blockedTo == _senderDetails.id && element.blockedBy == UserDetails.myDetail.id && element.isBlock) {
+                    if (element.blockedTo == _senderDetails.id && element.blockedBy == UserDetails.instance.myDetail.id && element.isBlock) {
                         isBlocked = true
                     }
                 } else if (ResponseType.RESPONSE_TYPE_USER_ALL_BLOCK.equalsTo(type)) {
@@ -231,15 +621,15 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                                 type1
                             )
                         for (element in userBlockModelResponseModel.getData()) {
-                            if (element.blockedTo == UserDetails.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
+                            if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
                                 blockedByOtherUser()
                                 break
                             }
-                            if (element.blockedTo == UserDetails.myDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
+                            if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
                                 unBlockedByOtherUser()
                                 break
                             }
-                            if (element.blockedTo == _senderDetails.id && element.blockedBy == UserDetails.myDetail.id && element.isBlock) {
+                            if (element.blockedTo == _senderDetails.id && element.blockedBy == UserDetails.instance.myDetail.id && element.isBlock) {
                                 isBlocked = true
                             }
                         }
@@ -255,6 +645,37 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         }
     }
 
+    private fun blockedByOtherUser() {
+        binding.blockedWrapper.visibility = View.VISIBLE
+        binding.chatMessageWrapper.visibility = View.GONE
+    }
+
+    private fun unBlockedByOtherUser() {
+        binding.blockedWrapper.visibility = View.GONE
+        binding.chatMessageWrapper.visibility = View.VISIBLE
+    }
+    private fun setIndividualDetails() {
+        binding.chatChatWithUserName.text = _senderDetails.name
+        binding.chatChatWithUserStatus.text =
+            if (_senderDetails.isOnline) "Online" else _senderDetails.lastSeen
+
+
+        val userImage = _senderDetails.profile_image.getImageString()
+        if (userImage != null) {
+            Glide.with(this)
+                .setDefaultRequestOptions(MyApp.USER_PROFILE_DEFAULT_GLIDE_CONFIG)
+                .load(userImage)
+                .into(binding.chatUserProfile)
+        }
+    }
+    private fun setRead() {
+        val messageMap = HashMap<String?, Any?>()
+        messageMap["type"] = "roomsModify"
+        messageMap["roomId"] = _roomId
+        messageMap["unread"] = UserDetails.instance.myDetail.id
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_ROOM
+        WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
+    }
     @Throws(JSONException::class)
     private fun appendMessage(chatData: JSONObject, showMessageCount: Boolean) {
         val senderDetails: FSUsersModel =
@@ -283,7 +704,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 val headerData1 = HeaderDataImpl(R.layout.header1_item_recycler, key)
                 adapter.setHeaderAndData(chatForThatDay as List<ChatModel?>, headerData1)
             }
-            if (showMessageCount && chatModel.sender_detail.id != UserDetails.myDetail.id) {
+            if (showMessageCount && chatModel.sender_detail.id != UserDetails.instance.myDetail.id) {
                 noOfNewMessages += 1
                 binding.chatGoToBottom.visibility = View.VISIBLE
                 binding.chatNewMessageCount.text = noOfNewMessages.toString()
@@ -292,7 +713,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     layout!!.scrollToPosition(layout.findLastVisibleItemPosition() + 1)
                 }
             }
-            if (chatModel.sender_detail.id == UserDetails.myDetail.id) {
+            if (chatModel.sender_detail.id == UserDetails.instance.myDetail.id) {
                 binding.chatRecyclerView.scrollToPosition(adapter.itemCount - 1)
 
 
@@ -307,10 +728,112 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         }
     }
 
-    override val activityName: String
-        get() = TODO("Not yet implemented")
+    private fun joinCommand() {
+        val jsonObject = JSONObject()
+        try {
+            jsonObject.put("type", "allMessage")
+            jsonObject.put("room", _roomId)
+            jsonObject.put(
+                APIClient.KeyConstant.REQUEST_TYPE_KEY,
+                APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+            )
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        WebSocketSingleton.getInstant()?.sendMessage(jsonObject)
+    }
+
+    private val blockList: Unit
+        get() {
+            val jsonObject = JSONObject()
+            try {
+                jsonObject.put("type", "allBlockUser")
+                jsonObject.put("user", UserDetails.instance.myDetail.id)
+                jsonObject.put(
+                    APIClient.KeyConstant.REQUEST_TYPE_KEY,
+                    APIClient.KeyConstant.REQUEST_TYPE_BLOCK_USER
+                )
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            WebSocketSingleton.getInstant()?.sendMessage(jsonObject)
+        }
+
+    override val activityName: String =ChatPersonalActvity::class.java.name
+
 
     override fun registerFor(): Array<ResponseType> {
-        TODO("Not yet implemented")
+        return arrayOf(
+            ResponseType.RESPONSE_TYPE_MESSAGES,
+            ResponseType.RESPONSE_TYPE_USER_MODIFIED,
+            ResponseType.RESPONSE_TYPE_USER_BLOCK_MODIFIED,
+            ResponseType.RESPONSE_TYPE_USER_ALL_BLOCK,
+            ResponseType.RESPONSE_TYPE_ROOM_DETAILS
+        )
+    }
+
+    override fun closeAudioPlayer() {
+        binding.audioPlayerFragment.visibility = View.GONE
+    }
+
+    override fun uploadFinished(
+        fragmentTag: String?,
+        data: UploadFileMode?,
+        messageType: ChatModel.MessageType?,
+        date: Date?,
+        messageData: HashMap<String, Any>?
+    ) {
+        val fragment = supportFragmentManager.findFragmentByTag(fragmentTag)
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+            if (data != null) {
+                if (data.thumbnail != null && data.thumbnail.isNotEmpty()) {
+                    messageData!![MediaMetaModel.KEY_FILE_THUMB] =
+                        APIClient.IMAGE_URL + data.thumbnail
+                }
+                val messageContent = HashMap<String, Any?>()
+                val fileUrl: String =  /*APIClient.IMAGE_URL + */data.file!!
+                messageContent["file_url"] = fileUrl
+                messageContent["file_meta"] = messageData
+                sendMessage("", messageType, messageContent)
+            }
+        }
+    }
+
+    private fun sendMessage(
+        message: String,
+        messageType: ChatModel.MessageType?,
+        messageContent: HashMap<String, Any?>
+    ) {
+        val messageMap = HashMap<String?, Any?>()
+        messageMap["type"] = "addMessage"
+        messageMap["roomId"] = _roomId
+        messageMap["room"] = _roomId
+        messageMap["message"] = message
+        messageMap["message_type"] = messageType.toString()
+        //        messageMap.put("sender_id", UserDetails.myDetail.getId());
+        messageMap["sender_id"] = UserDetails.instance.myDetail.id
+        messageMap["receiver_id"] = "12312faa"
+        messageMap["message_content"] = messageContent
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =
+            APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+        //        messageMap.put("time", time);
+
+        // TODO: 27/01/21 SendMessage
+//        chatReference.add(messageMap);
+        WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
+        Timer().schedule(
+            object : TimerTask() {
+                override fun run() {
+                    binding.chatRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                    // your code here
+                }
+            },
+            500
+        )
+
+
+//        binding.chatRecyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+//        binding.chatRecyclerView.setHasFixedSize(true);
     }
 }

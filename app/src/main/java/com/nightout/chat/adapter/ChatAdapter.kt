@@ -16,15 +16,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+
+
 import com.nightout.R
 import com.nightout.chat.model.ChatModel
+import com.nightout.chat.model.ContactModel
+import com.nightout.chat.model.LocationModel
 import com.nightout.chat.model.MediaModel
 import com.nightout.chat.stickyheader.stickyView.StickHeaderRecyclerView
+import com.nightout.chat.utility.BroadCastConstants
+import com.nightout.chat.utility.DownloadUtility
+import com.nightout.chat.utility.MD5.stringToMD5
 import com.nightout.databinding.*
- /*import com.downloader.Error
+  import com.downloader.Error
 import com.downloader.OnDownloadListener
 import com.downloader.request.DownloadRequest
-import org.apache.commons.io.FilenameUtils*/
+import org.apache.commons.io.FilenameUtils
 import java.io.File
 import java.net.MalformedURLException
 import java.net.URL
@@ -68,13 +75,13 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
                 )
                 RightLocationViewHolder(binding)
             }
-//            ROW_TYPE_RIGHT_CONTACT -> {
-//                val binding: RowRightChatContactBinding = DataBindingUtil.inflate(
-//                    LayoutInflater.from(parent.context),
-//                    R.layout.row_right_chat_contact, parent, false
-//                )
-//                RightContactViewHolder(binding)
-//            }
+            ROW_TYPE_RIGHT_CONTACT -> {
+                val binding: RowRightChatContactBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.row_right_chat_contact, parent, false
+                )
+                RightContactViewHolder(binding)
+            }
             ROW_TYPE_LEFT_TEXT, ROW_TYPE_LEFT_REPlAY -> {
                 val binding: RowLeftChatTextBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -110,13 +117,13 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
                 )
                 LeftLocationViewHolder(binding)
             }
-//            ROW_TYPE_LEFT_CONTACT -> {
-//                val binding: RowLeftChatContactBinding = DataBindingUtil.inflate(
-//                    LayoutInflater.from(parent.context),
-//                    R.layout.row_left_chat_contact, parent, false
-//                )
-//                LeftContactViewHolder(binding)
-//            }
+            ROW_TYPE_LEFT_CONTACT -> {
+                val binding: RowLeftChatContactBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.row_left_chat_contact, parent, false
+                )
+                LeftContactViewHolder(binding)
+            }
             else -> HeaderViewHolder(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.header1_item_recycler, parent, false)
@@ -190,17 +197,21 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class RightImageViewHolder(var binding: RowRightChatImageBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: MediaModel = `object`.message_content as MediaModel
-            Glide.with(context).load(messageContent.file_url).into(binding.chatRightImageImage)
-            binding.chatRightImageTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickDownload(
-                    `object`,
-                    messageContent,
-                    `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
-                    null
-                )
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: MediaModel = `object`.message_content as MediaModel
+                Glide.with(context).load(messageContent.file_url).into(binding.chatRightImageImage)
+                binding.chatRightImageTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickDownload(
+                        `object`,
+                        messageContent,
+                        `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
+                        null
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -208,25 +219,29 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class RightVideoViewHolder(var binding: RowRightChatVideoBinding) :
         MediaViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: MediaModel = `object`.message_content as MediaModel
-            val onDownloadListener = super.getDownloadListener(position, `object`, messageContent)
-            Log.d(TAG, "bindData: " + messageContent.file_meta.thumbnail)
-            Glide.with(context).load(messageContent.file_meta.thumbnail)
-                .into(binding.chatRightVideoImage)
-            binding.chatRightVideoTime.text = `object`.message_on
-            binding.chatRightVideoTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickDownload(
-                    `object`,
-                    messageContent,
-                    `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
-                    onDownloadListener
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: MediaModel = `object`.message_content as MediaModel
+                val onDownloadListener = super.getDownloadListener(position, `object`, messageContent)
+                Log.d(TAG, "bindData: " + messageContent.file_meta.thumbnail)
+                Glide.with(context).load(messageContent.file_meta.thumbnail)
+                    .into(binding.chatRightVideoImage)
+                binding.chatRightVideoTime.text = `object`.message_on
+                binding.chatRightVideoTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickDownload(
+                        `object`,
+                        messageContent,
+                        `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
+                        onDownloadListener
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 
@@ -243,30 +258,34 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class RightDocViewHolder(var binding: RowRightChatDocBinding) :
         MediaViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: MediaModel = `object`.message_content as MediaModel
-            val onDownloadListener = super.getDownloadListener(position, `object`, messageContent)
-            Log.d(TAG, "bindData: " + messageContent.file_meta.thumbnail)
-            binding.chatRightDocFileName.text = messageContent.file_url
-            binding.chatRightDocTime.text = `object`.message_on
             try {
-                val url = URL(messageContent.file_url)
-                binding.chatRightDocFileName.text = FilenameUtils.getName(url.path)
-                binding.chatRightDocType.text = FilenameUtils.getExtension(url.path)
-            } catch (e: MalformedURLException) {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: MediaModel = `object`.message_content as MediaModel
+                val onDownloadListener = super.getDownloadListener(position, `object`, messageContent)
+                Log.d(TAG, "bindData: " + messageContent.file_meta.thumbnail)
+                binding.chatRightDocFileName.text = messageContent.file_url
+                binding.chatRightDocTime.text = `object`.message_on
+                try {
+                    val url = URL(messageContent.file_url)
+                    binding.chatRightDocFileName.text = FilenameUtils.getName(url.path)
+                    binding.chatRightDocType.text = FilenameUtils.getExtension(url.path)
+                } catch (e: MalformedURLException) {
+                    e.printStackTrace()
+                }
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickDownload(
+                        `object`,
+                        messageContent,
+                        `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
+                        onDownloadListener
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
                 e.printStackTrace()
-            }
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickDownload(
-                    `object`,
-                    messageContent,
-                    `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
-                    onDownloadListener
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
             }
         }
 
@@ -283,20 +302,23 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class RightLocationViewHolder(var binding: RowRightChatLocationBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: LocationModel = `object`.message_content as LocationModel
-            binding.chatRightLocationName.text = messageContent.name
-            binding.chatRightLocationAddress.text = messageContent.address
-            binding.chatRightLocationTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickLocation(
-                    `object`,
-                    messageContent
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: LocationModel = `object`.message_content as LocationModel
+                binding.chatRightLocationName.text = messageContent.name
+                binding.chatRightLocationAddress.text = messageContent.address
+                binding.chatRightLocationTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickLocation(
+                        `object`,
+                        messageContent
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
             }
         }
     }
@@ -304,21 +326,25 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class RightContactViewHolder(var binding: RowRightChatContactBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: ContactModel = `object`.message_content as ContactModel
-            val fullName: String = messageContent.first_name + " " + messageContent.last_name
-            binding.chatRightContactName.text = fullName
-            binding.chatRightContactNumber.text = messageContent.mobile
-            binding.chatRightContactTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickContact(
-                    `object`,
-                    messageContent
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: ContactModel = `object`.message_content as ContactModel
+                val fullName: String = messageContent.first_name + " " + messageContent.last_name
+                binding.chatRightContactName.text = fullName
+                binding.chatRightContactNumber.text = messageContent.mobile
+                binding.chatRightContactTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickContact(
+                        `object`,
+                        messageContent
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -326,20 +352,24 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class LeftLocationViewHolder(var binding: RowLeftChatLocationBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: LocationModel = `object`.message_content as LocationModel
-            binding.chatLeftLocationName.text = messageContent.name
-            binding.chatLeftLocationAddress.text = messageContent.address
-            binding.chatLeftLocationTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickLocation(
-                    `object`,
-                    messageContent
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: LocationModel = `object`.message_content as LocationModel
+                binding.chatLeftLocationName.text = messageContent.name
+                binding.chatLeftLocationAddress.text = messageContent.address
+                binding.chatLeftLocationTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickLocation(
+                        `object`,
+                        messageContent
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -347,21 +377,25 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class LeftContactViewHolder(var binding: RowLeftChatContactBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: ContactModel = `object`.message_content as ContactModel
-            val fullName: String = messageContent.first_name + " " + messageContent.last_name
-            binding.chatLeftContactName.text = fullName
-            binding.chatLeftContactNumber.text = messageContent.mobile
-            binding.chatLeftContactTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickContact(
-                    `object`,
-                    messageContent
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: ContactModel = `object`.message_content as ContactModel
+                val fullName: String = messageContent.first_name + " " + messageContent.last_name
+                binding.chatLeftContactName.text = fullName
+                binding.chatLeftContactNumber.text = messageContent.mobile
+                binding.chatLeftContactTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickContact(
+                        `object`,
+                        messageContent
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -369,13 +403,17 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class LeftTextViewHolder(var binding: RowLeftChatTextBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            binding.chatLeftTextMessage.text = `object`.message
-            binding.chatLeftTextUserName.text = `object`.sender_detail.name
-            binding.chatLeftTextTime.text = `object`.message_on
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                binding.chatLeftTextMessage.text = `object`.message
+                binding.chatLeftTextUserName.text = `object`.sender_detail.name
+                binding.chatLeftTextTime.text = `object`.message_on
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -383,17 +421,21 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class LeftImageViewHolder(var binding: RowLeftChatImageBinding) :
         BaseViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val chatModel: ChatModel = getDataInPosition(position)!!
-            val messageContent: MediaModel = chatModel.message_content as MediaModel
-            Glide.with(context).load(messageContent.file_url).into(binding.chatLeftImageImage)
-            binding.chatLeftImageTime.text = chatModel.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickDownload(
-                    chatModel,
-                    messageContent,
-                    chatModel.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
-                    null
-                )
+            try {
+                val chatModel: ChatModel = getDataInPosition(position)!!
+                val messageContent: MediaModel = chatModel.message_content as MediaModel
+                Glide.with(context).load(messageContent.file_url).into(binding.chatLeftImageImage)
+                binding.chatLeftImageTime.text = chatModel.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickDownload(
+                        chatModel,
+                        messageContent,
+                        chatModel.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
+                        null
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -472,24 +514,28 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
     internal inner class LeftVideoViewHolder(var binding: RowLeftChatVideoBinding) :
         MediaViewHolder(binding.root) {
         override fun bindData(position: Int) {
-            val `object`: ChatModel = getDataInPosition(position)!!
-            val messageContent: MediaModel = `object`.message_content as MediaModel
-            val onDownloadListener = super.getDownloadListener(position, `object`, messageContent)
-            Log.d(TAG, "bindData: " + messageContent.file_meta.thumbnail)
-            Glide.with(context).load(messageContent.file_meta!!.thumbnail)
-                .into(binding.chatLeftViewImage)
-            binding.chatLeftViewTime.text = `object`.message_on
-            binding.root.setOnClickListener {
-                chatCallbacks.onClickDownload(
-                    `object`,
-                    messageContent,
-                    `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
-                    onDownloadListener
-                )
-            }
-            binding.root.setOnLongClickListener {
-                chatCallbacks.onLongClick(`object`)
-                true
+            try {
+                val `object`: ChatModel = getDataInPosition(position)!!
+                val messageContent: MediaModel = `object`.message_content as MediaModel
+                val onDownloadListener = super.getDownloadListener(position, `object`, messageContent)
+                Log.d(TAG, "bindData: " + messageContent.file_meta.thumbnail)
+                Glide.with(context).load(messageContent.file_meta!!.thumbnail)
+                    .into(binding.chatLeftViewImage)
+                binding.chatLeftViewTime.text = `object`.message_on
+                binding.root.setOnClickListener {
+                    chatCallbacks.onClickDownload(
+                        `object`,
+                        messageContent,
+                        `object`.downloadStatus === ChatModel.DownloadStatus.DOWNLOADING,
+                        onDownloadListener
+                    )
+                }
+                binding.root.setOnLongClickListener {
+                    chatCallbacks.onLongClick(`object`)
+                    true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 

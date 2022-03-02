@@ -11,9 +11,7 @@
         android:id="@+id/chatWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        tools:context=".activities.ChatActivity">
+        android:background="@drawable/background_gray">
 
 
         <ImageView
@@ -26,97 +24,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
             app:srcCompat="@drawable/bg_chat" />
-        <!--app:srcCompat="@drawable/bg_chat"-->
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/header_top_ic"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/conBackBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/header_top_ic"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/back_btnImage"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:padding="5dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/back_ic_toolbar"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:id="@+id/chatUserNameConstrant"
-                app:layout_constraintEnd_toStartOf="@+id/chatMenu"
-                app:layout_constraintStart_toEndOf="@+id/chatUserProfile"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/chatChatWithUserName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:text="Chat rdtgdfgfd"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/chatChatWithUserStatus"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:gravity="start"
-                    android:text="Chat"
-                    android:textColor="@color/colorGreyAlpha"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/chatChatWithUserName"
-                    app:weight="light" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/chatMenu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="2dp"
-                android:padding="10dp"
+                android:id="@+id/back_btnImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back_ic_toolbar"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_menu_blk"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/chatUserProfile"
@@ -128,9 +66,47 @@
                 android:layout_marginBottom="2dp"
                 android:src="@drawable/user_default_ic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/conBackBtn"
+                app:layout_constraintStart_toEndOf="@+id/back_btnImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
+
+
+            <TextView
+                android:id="@+id/chatChatWithUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="Chat"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/chatUserProfile"
+                app:layout_constraintTop_toTopOf="@+id/chatUserProfile" />
+
+
+            <TextView
+                android:id="@+id/chatChatWithUserStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="start"
+                android:text="Chat"
+                android:textColor="@color/text_gray2"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/chatUserProfile"
+                app:layout_constraintTop_toBottomOf="@+id/chatChatWithUserName" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -246,8 +222,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:visibility="gone"
                 android:text="Un-blocked"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -285,7 +261,7 @@
 
                 android:paddingEnd="10dp"
                 android:text="Record"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/chatCloseRecording"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -298,7 +274,7 @@
                 android:layout_marginRight="16dp"
                 android:gravity="start"
                 android:text="00:00:01"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/sendAudioButton"
@@ -445,7 +421,7 @@
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarLayout" />

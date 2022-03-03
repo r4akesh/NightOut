@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.model.FSUsersModel
 import com.nightout.model.LoginModel
+import java.util.HashMap
 
 /**
  * Class is used to save user data in preference.
@@ -117,6 +118,13 @@ class PreferenceKeeper private constructor(context: Context?) {
         }
 
     //CHAT CODE
+
+    var myUserDetail : FSUsersModel
+    get() = Gson().fromJson(prefs!!.getString(AppConstant.PrefsName.FSUsersModel_POJO,""),FSUsersModel::class.java)
+    set(type){
+        val json = Gson().toJson(type)
+        prefs!!.edit().putString(AppConstant.PrefsName.FSUsersModel_POJO,json.toString()).apply()
+    }
 
     fun getRegisterUser(): FSUsersModel? {
         return registrationModel

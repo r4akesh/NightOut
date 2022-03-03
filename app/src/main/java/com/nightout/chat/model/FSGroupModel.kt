@@ -10,6 +10,14 @@ class FSGroupModel : Serializable {
     @SerializedName("about_group")
     var about_group = ""
 
+    @SerializedName("about_pic")
+    var about_pic = ""
+
+    @SerializedName("create_date")
+    var create_date = ""
+
+    @SerializedName("thumbnail")
+    var thumbnail = ""
 
 
 }

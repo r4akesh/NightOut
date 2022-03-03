@@ -47,7 +47,7 @@
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/barcrwalmappath_actvity.xml" value="0.2609375" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/bookticket_actviity.xml" value="0.3546875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/chat_item.xml" value="0.32447916666666665" />
-        <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/chatpersonal_activitynew.xml" value="0.31302083333333336" />
+        <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/chatpersonal_activitynew.xml" value="0.25" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/chatpersonal_actvity.xml" value="0.31302083333333336" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/chossesvenues_actvity.xml" value="0.31302083333333336" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/comment_item.xml" value="0.3375" />
@@ -62,6 +62,7 @@
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/filter_main_item.xml" value="0.3390625" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/filter_subitem.xml" value="0.3390625" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/food_subitem.xml" value="0.26145833333333335" />
+        <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/fragment_chat.xml" value="0.31875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/fragment_home.xml" value="0.3546875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/fragment_play_audio.xml" value="0.26145833333333335" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/fragment_upload_file.xml" value="0.3" />
@@ -99,6 +100,7 @@
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/row_right_chat_location.xml" value="0.2859375" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/row_right_chat_text.xml" value="0.2859375" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/row_right_chat_video.xml" value="0.2859375" />
+        <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/row_spin_item.xml" value="0.3390625" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/roworderdetail_item.xml" value="0.30104166666666665" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/saved_item.xml" value="0.28958333333333336" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/layout/shared_item.xml" value="0.30885416666666665" />

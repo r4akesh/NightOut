@@ -23,8 +23,8 @@ class UserDetails {
             }
     }
 
-    var chatUsers: HashMap<String, FSUsersModel> = HashMap<String, FSUsersModel>()
-    lateinit var  myDetail:FSUsersModel
+    // var chatUsers: HashMap<String, FSUsersModel> = HashMap<String, FSUsersModel>()
+    //lateinit var  myDetail:FSUsersModel
 //	public static boolean isGroup = false;
     //	public static FSGroupModel groupDetails;
 }

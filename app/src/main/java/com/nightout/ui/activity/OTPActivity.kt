@@ -127,7 +127,8 @@ class OTPActivity : BaseActivity() , WebSocketObserver {
                     val type1 = object : TypeToken<ResponseModel<FSUsersModel?>?>() {}.type
                     val fsUsersModelResponseModel: ResponseModel<FSUsersModel> = gson.fromJson<ResponseModel<FSUsersModel>>(response, type1)
                     if (fsUsersModelResponseModel.getStatus_code() == 200) {
-                        UserDetails.instance.myDetail = fsUsersModelResponseModel.getData()
+                        //UserDetails.instance.myDetail = fsUsersModelResponseModel.getData()
+                        PreferenceKeeper.instance.myUserDetail = fsUsersModelResponseModel.getData()
                          PreferenceKeeper.instance.loginUser(THIS!!, fsUsersModelResponseModel.getData())
                       //  Toast.makeText(this@OTPActivity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
                         PreferenceKeeper.instance.isUserLogin = true

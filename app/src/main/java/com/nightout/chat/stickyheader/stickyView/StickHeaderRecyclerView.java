@@ -13,6 +13,7 @@ import com.nightout.chat.model.ChatModel;
 import com.nightout.chat.model.StickyMainData;
 import com.nightout.chat.stickyheader.stickyData.HeaderData;
 import com.nightout.chat.utility.UserDetails;
+import com.nightout.utils.PreferenceKeeper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public abstract class StickHeaderRecyclerView<D extends ChatModel, H extends Hea
 
 
 		//For Right Side
-		if (item.getSender_detail().getId().equals(UserDetails.Companion.getInstance().myDetail.getId())) {
+		if (item.getSender_detail().getId().equals(PreferenceKeeper.getInstance().getMyUserDetail().getId())) {
 			switch (item.getMessage_type()) {
 				case text:
 					return ROW_TYPE_RIGHT_TEXT;

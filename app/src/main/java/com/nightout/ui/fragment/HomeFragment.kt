@@ -371,7 +371,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                             } catch (e: Exception) {
                                 mMap?.clear()
                                 allRecordsList = ArrayList()
-                                setListAllRecord()
+                                if(activity!=null) {
+                                setListAllRecord()}
                             }
                         }
                     }

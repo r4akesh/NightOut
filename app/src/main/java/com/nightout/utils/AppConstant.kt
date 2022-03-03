@@ -33,6 +33,7 @@ class AppConstant {
         const val EVENT = "event"
         const val SERVICECHARGE = "SERVICECHARGE"
         const val PREF_LOGIN_DATA = "PREF_LOGIN_DATA"
+        const val FSUsersModel_POJO = "FSUsersModel_POJO"
 
 
 

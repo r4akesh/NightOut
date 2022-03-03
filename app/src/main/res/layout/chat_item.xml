@@ -43,6 +43,7 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:fontFamily="@font/proximanova_reg"
             android:text="SubTitle"
+            android:singleLine="true"
             android:textColor="@color/white_second"
             app:layout_constraintEnd_toStartOf="@+id/chatItemCount"
             app:layout_constraintStart_toEndOf="@+id/chatItemProfile"

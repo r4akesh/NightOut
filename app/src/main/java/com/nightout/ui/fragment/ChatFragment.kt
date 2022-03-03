@@ -27,6 +27,8 @@ import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.FSUsersModel
 import com.nightout.ui.activity.ChatPersonalActvity
 import com.nightout.ui.activity.CreateGroupActvity
+import com.nightout.utils.MyApp
+import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
 import org.json.JSONArray
 import org.json.JSONException
@@ -37,6 +39,7 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
 
     lateinit var binding : FragmentChatBinding
     private var onMenuOpenListener: OnMenuOpenListener? = null
+    lateinit var chatAdapter: ChatGroupListAdapter
 
     constructor(onMenuOpenListener: OnMenuOpenListener) : this() {
         this.onMenuOpenListener = onMenuOpenListener
@@ -54,7 +57,7 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
         val jsonObject = JSONObject()
         try {
             val userList = JSONArray()
-            userList.put(UserDetails.instance.myDetail.id)
+            userList.put(PreferenceKeeper.instance.myUserDetail.id)
          //  userList.put( PreferenceKeeper.instance.loginUser?.id)
             //userList.put( 1)
             jsonObject.put("type", "allRooms")
@@ -82,7 +85,7 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
         binding.headerChat.headerCreateGroup.setOnClickListener(this)
     }
 
-    lateinit var chatAdapter: ChatGroupListAdapter
+
     private fun setRoomList() {
         chatAdapter = ChatGroupListAdapter(requireContext(),object: ChatGroupListAdapter.ClickListener{
             override fun onClick(item: FSRoomModel) {
@@ -91,6 +94,7 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                 intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_GROUP_DETAILS, item.groupDetails)
                 intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_ROOM_ID, item.roomId)
                 intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_SENDER_DETAILS, item.senderUserDetail)
+                intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_PARTICIPENT_SIZE, item.userList.size.toString())
                 startActivity(intent)
             }
 
@@ -110,12 +114,14 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                     if (statusCode == 200) {
                         val type1 = object : TypeToken<ResponseModel<RoomResponseModel?>?>() {}.type
                         val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> = gson.fromJson(response, type1)
-                        UserDetails.instance.chatUsers = roomResponseModelResponseModel.getData().userListMap
+                        MyApp.saveUserDetailChatUsers(roomResponseModelResponseModel.getData().userListMap)
+                      //  UserDetails.instance.chatUsers = roomResponseModelResponseModel.getData().userListMap
                         for (element in roomResponseModelResponseModel.getData().roomList) {
                             for (userId in element.userList) {
-                                 if (userId != UserDetails.instance.myDetail.id) {
+                                 if (userId != PreferenceKeeper.instance.myUserDetail.id) {
                                // if (userId != PreferenceKeeper.instance.loginUser?.id) {
-                                    element.senderUserDetail = UserDetails.instance.chatUsers[userId]
+                                    //element.senderUserDetail = UserDetails.instance.chatUsers[userId]
+                                    element.senderUserDetail = MyApp.fetchUserDetailChatUsers().get(userId)
                                     break
                                 }
                             }
@@ -138,9 +144,9 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                         val roomResponseModelResponseModel: ResponseModel<FSRoomModel> =
                             gson.fromJson<ResponseModel<FSRoomModel>>(response, type1)
                         for (userId in roomResponseModelResponseModel.getData().userList) {
-                            if (userId != UserDetails.instance.myDetail.id) {
-                                roomResponseModelResponseModel.getData().senderUserDetail =
-                                    UserDetails.instance.chatUsers[userId]
+                            if (userId != PreferenceKeeper.instance.myUserDetail.id) {
+                              //  roomResponseModelResponseModel.getData().senderUserDetail = UserDetails.instance.chatUsers[userId]
+                                roomResponseModelResponseModel.getData().senderUserDetail = MyApp.fetchUserDetailChatUsers().get(userId)
                                 break
                             }
                         }
@@ -154,16 +160,17 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                             object : TypeToken<ResponseModel<RoomNewResponseModel?>?>() {}.type
                         val roomResponseModelResponseModel: ResponseModel<RoomNewResponseModel> =
                             gson.fromJson(response, type1)
-                        val tmpUserList: HashMap<String, FSUsersModel> =
-                            roomResponseModelResponseModel.getData().userListMap
+                        val tmpUserList: HashMap<String, FSUsersModel> = roomResponseModelResponseModel.getData().userListMap
                         for (key in tmpUserList.keys) {
-                            UserDetails.instance.chatUsers[key] = tmpUserList[key]!!
+                           // UserDetails.instance.chatUsers[key] = tmpUserList[key]!!
+                            MyApp.fetchUserDetailChatUsers()[key] = tmpUserList[key]!!
                         }
                         val element: FSRoomModel =
                             roomResponseModelResponseModel.getData().newRoom!!
                         for (userId in element.userList) {
-                            if (userId != UserDetails.instance.myDetail.id) {
-                                element.senderUserDetail = UserDetails.instance.chatUsers[userId]
+                            if (userId != PreferenceKeeper.instance.myUserDetail.id) {
+                              //  element.senderUserDetail = UserDetails.instance.chatUsers[userId]
+                                element.senderUserDetail = MyApp.fetchUserDetailChatUsers()[userId]
                                 break
                             }
                         }

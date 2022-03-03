@@ -6,18 +6,12 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
-import android.graphics.Point
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewAnimationUtils
-import android.view.WindowManager
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
@@ -30,7 +24,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.chat.activity.GroupDetailActivity
 import com.nightout.chat.activity.PlayerActivity
 import com.nightout.chat.activity.ZoomImageActivity
 import com.nightout.chat.adapter.ChatAdapter
@@ -43,17 +36,16 @@ import com.nightout.chat.fragment.UploadFileProgressFragment
 import com.nightout.chat.model.*
 import com.nightout.chat.stickyheader.stickyView.StickHeaderItemDecoration
 import com.nightout.chat.utility.*
-import com.nightout.chat.utility.DownloadUtility.downloadFile
 import com.nightout.databinding.ChatpersonalActivitynewBinding
-import com.nightout.databinding.ChatpersonalActvityBinding
 import com.nightout.model.FSUsersModel
 import com.nightout.utils.MyApp
+import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
-import com.theartofdev.edmodo.cropper.CropImage
 import org.apache.commons.io.FilenameUtils
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
+import java.io.Serializable
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
@@ -81,7 +73,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         binding = DataBindingUtil.setContentView(this@ChatPersonalActvity,R.layout.chatpersonal_activitynew)
         permissionClass = PermissionClass(this, this)
         binding.attachmentWrapper.visibility = View.INVISIBLE
-        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+       // this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         binding.sendButton.setOnClickListener(this)
         binding.backBtnImage.setOnClickListener(this)
         binding.chatAttachment.setOnClickListener(this)
@@ -157,7 +149,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             }
             R.id.chatUserNameConstrant -> {
                 if (_isGroup) {
-                    startActivity(Intent(this@ChatPersonalActvity, GroupDetailActivity::class.java))
+                    startActivity(Intent(this@ChatPersonalActvity, GroupInfoActvity::class.java))
                 }
             }
         }
@@ -419,13 +411,14 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         _roomId = intent.getStringExtra(INTENT_EXTRAS_KEY_ROOM_ID)
         _isGroup = intent.getBooleanExtra(INTENT_EXTRAS_KEY_IS_GROUP, false)
         _groupDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_GROUP_DETAILS) as FSGroupModel?
-        //        _senderDetails = (FSUsersModel) getIntent().getSerializableExtra(ChatActivity.INTENT_EXTRAS_KEY_SENDER_DETAILS);
+                var listsize =   getIntent().getStringExtra(INTENT_EXTRAS_KEY_PARTICIPENT_SIZE)
+
         val tmpSenderDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_SENDER_DETAILS)
         if (tmpSenderDetails != null) {
             _senderDetails = tmpSenderDetails as FSUsersModel
            // addChatMenu()
             if (_isGroup) {
-                setGroupDetails()
+                setGroupDetails(listsize)
             } else {
                 setIndividualDetails()
             }
@@ -446,9 +439,10 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
         }
 
-    private fun setGroupDetails() {
+    private fun setGroupDetails(listsizeParicipent: String?) {
         binding.chatChatWithUserName.text = _groupDetails?.group_name
-        binding.chatChatWithUserStatus.text = _groupDetails?.about_group
+    //    binding.chatChatWithUserStatus.text = _groupDetails?.about_group
+        binding.chatChatWithUserStatus.text = "$listsizeParicipent Participants"
         //        Glide.with(this).setDefaultRequestOptions(userProfileDefaultOptions).load(groupInfo.getRoomImage()).into(binding.chatUserProfile);
     }
 
@@ -458,6 +452,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         const val INTENT_EXTRAS_KEY_GROUP_DETAILS = "groupDetails"
         const val INTENT_EXTRAS_KEY_ROOM_ID = "roomID"
         const val INTENT_EXTRAS_KEY_SENDER_DETAILS = "senderDetails"
+        const val INTENT_EXTRAS_KEY_PARTICIPENT_SIZE = "INTENT_EXTRAS_KEY_PARTICIPENT_SIZE"
         private const val TAG = "ChatPersonalActvity"
         private const val REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE = 3
         private const val REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO = 4
@@ -564,7 +559,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                         val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> =
                             Gson().fromJson<ResponseModel<RoomResponseModel>>(response, type1)
                         for (element in roomResponseModelResponseModel.getData().userList) {
-                            UserDetails.instance.chatUsers.put(element.id, element)
+                            //UserDetails.instance.chatUsers.put(element.id, element)
+                            MyApp.fetchUserDetailChatUsers().put(element.id, element)
                         }
                       //  val roomDetails: FSRoomModel = roomResponseModelResponseModel.getData().roomList.get(0)_senderDetails = roomDetails.senderUserDetail!!
                         /*for (FSRoomModel elemen  t : roomResponseModelResponseModel.getData().getRoomList()) {
@@ -601,13 +597,14 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     val userBlockModelResponseModel: ResponseModel<UserBlockModel> =
                         Gson().fromJson<ResponseModel<UserBlockModel>>(response, type1)
                     val element: UserBlockModel = userBlockModelResponseModel.getData()
-                    if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
+                   // if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
+                    if (element.blockedTo == PreferenceKeeper.instance.myUserDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
                         blockedByOtherUser()
                     }
-                    if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
+                    if (element.blockedTo == PreferenceKeeper.instance.myUserDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
                         unBlockedByOtherUser()
                     }
-                    if (element.blockedTo == _senderDetails.id && element.blockedBy == UserDetails.instance.myDetail.id && element.isBlock) {
+                    if (element.blockedTo == _senderDetails.id && element.blockedBy == PreferenceKeeper.instance.myUserDetail.id && element.isBlock) {
                         isBlocked = true
                     }
                 } else if (ResponseType.RESPONSE_TYPE_USER_ALL_BLOCK.equalsTo(type)) {
@@ -621,15 +618,15 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                                 type1
                             )
                         for (element in userBlockModelResponseModel.getData()) {
-                            if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
+                            if (element.blockedTo == PreferenceKeeper.instance.myUserDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
                                 blockedByOtherUser()
                                 break
                             }
-                            if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
+                            if (element.blockedTo == PreferenceKeeper.instance.myUserDetail.id && element.blockedBy == _senderDetails.id && !element.isBlock) {
                                 unBlockedByOtherUser()
                                 break
                             }
-                            if (element.blockedTo == _senderDetails.id && element.blockedBy == UserDetails.instance.myDetail.id && element.isBlock) {
+                            if (element.blockedTo == _senderDetails.id && element.blockedBy == PreferenceKeeper.instance.myUserDetail.id && element.isBlock) {
                                 isBlocked = true
                             }
                         }
@@ -672,14 +669,15 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         val messageMap = HashMap<String?, Any?>()
         messageMap["type"] = "roomsModify"
         messageMap["roomId"] = _roomId
-        messageMap["unread"] = UserDetails.instance.myDetail.id
+        messageMap["unread"] = PreferenceKeeper.instance.myUserDetail.id
         messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_ROOM
         WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
     }
     @Throws(JSONException::class)
     private fun appendMessage(chatData: JSONObject, showMessageCount: Boolean) {
-        val senderDetails: FSUsersModel =
-            UserDetails.instance.chatUsers.get(chatData.getString("sender_id"))!!
+       // val senderDetails: FSUsersModel = UserDetails.instance.chatUsers.get(chatData.getString("sender_id"))!!
+        val senderDetails: FSUsersModel =   MyApp.fetchUserDetailChatUsers().get(chatData.getString("sender_id"))!!
+
         val chatModel = ChatModel(chatData, senderDetails)
         if (chatModel.roomId == _roomId) {
             chatListTmp.add(chatModel)
@@ -704,7 +702,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 val headerData1 = HeaderDataImpl(R.layout.header1_item_recycler, key)
                 adapter.setHeaderAndData(chatForThatDay as List<ChatModel?>, headerData1)
             }
-            if (showMessageCount && chatModel.sender_detail.id != UserDetails.instance.myDetail.id) {
+            if (showMessageCount && chatModel.sender_detail.id != PreferenceKeeper.instance.myUserDetail.id) {
                 noOfNewMessages += 1
                 binding.chatGoToBottom.visibility = View.VISIBLE
                 binding.chatNewMessageCount.text = noOfNewMessages.toString()
@@ -713,7 +711,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     layout!!.scrollToPosition(layout.findLastVisibleItemPosition() + 1)
                 }
             }
-            if (chatModel.sender_detail.id == UserDetails.instance.myDetail.id) {
+            if (chatModel.sender_detail.id == PreferenceKeeper.instance.myUserDetail.id) {
                 binding.chatRecyclerView.scrollToPosition(adapter.itemCount - 1)
 
 
@@ -748,7 +746,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             val jsonObject = JSONObject()
             try {
                 jsonObject.put("type", "allBlockUser")
-                jsonObject.put("user", UserDetails.instance.myDetail.id)
+                jsonObject.put("user", PreferenceKeeper.instance.myUserDetail.id)
                 jsonObject.put(
                     APIClient.KeyConstant.REQUEST_TYPE_KEY,
                     APIClient.KeyConstant.REQUEST_TYPE_BLOCK_USER
@@ -809,10 +807,10 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         messageMap["type"] = "addMessage"
         messageMap["roomId"] = _roomId
         messageMap["room"] = _roomId
-        messageMap["message"] = message
+        messageMap["message"] = message.trim()
         messageMap["message_type"] = messageType.toString()
         //        messageMap.put("sender_id", UserDetails.myDetail.getId());
-        messageMap["sender_id"] = UserDetails.instance.myDetail.id
+        messageMap["sender_id"] = PreferenceKeeper.instance.myUserDetail.id
         messageMap["receiver_id"] = "12312faa"
         messageMap["message_content"] = messageContent
         messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =

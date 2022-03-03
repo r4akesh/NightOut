@@ -50,9 +50,7 @@ import java.text.DecimalFormat
 import com.google.android.gms.maps.model.LatLngBounds
 
 import com.google.android.gms.maps.model.LatLng
-
-
-
+import com.nightout.model.FSUsersModel
 
 
 class MyApp : Application() {
@@ -471,11 +469,11 @@ return b;
             return bounds
         }
 
-     /*        @SuppressLint("SdCardPath")
-        fun writeVenuesList(hMap: ArrayList<VenuListModel.Data>) {
+              @SuppressLint("SdCardPath")
+        fun saveUserDetailChatUsers(hMap: HashMap<String, FSUsersModel>) {
             val path: String
             try {
-                path = "/data/data/" + ctx!!.packageName + "/VenuList.ser"
+                path = "/data/data/" + ctx!!.packageName + "/saveUserDetailChatUsers.ser"
                 val f = File(path)
                 if (f.exists()) {
                     f.delete()
@@ -496,18 +494,17 @@ return b;
 
 
         @SuppressLint("SdCardPath")
-        fun readVenuList():  ArrayList<VenuListModel.Data> {
+        fun fetchUserDetailChatUsers():  HashMap<String, FSUsersModel> {
             val path: String
-            path =
-                "/data/data/" + ctx!!.getPackageName() + "/VenuList.ser"
+            path = "/data/data/" + ctx!!.getPackageName() + "/saveUserDetailChatUsers.ser"
             val f = File(path)
-            var hMap:  ArrayList<VenuListModel.Data> =  ArrayList<VenuListModel.Data>()
+            var hMap:  HashMap<String, FSUsersModel> =  HashMap<String, FSUsersModel>()
             if (f.exists()) {
                 try {
                     System.gc()
                     val fileIn = FileInputStream(path)
                     val innn = ObjectInputStream(fileIn)
-                    hMap = innn.readObject() as  ArrayList<VenuListModel.Data>
+                    hMap = innn.readObject() as  HashMap<String, FSUsersModel>
                     innn.close()
                     fileIn.close()
                 } catch (e: StreamCorruptedException) {
@@ -526,7 +523,7 @@ return b;
                 }
             }
             return hMap
-        }*/
+        }
 
     }
 

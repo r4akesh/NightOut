@@ -16,6 +16,8 @@ import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.ChatItemBinding
 
 import com.nightout.model.FSUsersModel
+import com.nightout.utils.PreferenceKeeper
+import com.nightout.utils.Utills
 import java.util.ArrayList
 
 
@@ -42,8 +44,9 @@ class ChatGroupListAdapter(
             viewHolder.binding.chatItemTime.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
          //   viewHolder.binding.chatItemCount.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
 
-            if (item.unread != null && item.unread!![UserDetails.instance.myDetail.id] != null) {
-                val unreadCount: Int = item.unread!![UserDetails.instance.myDetail.id]!!
+            Utills.setImageNormal(context,viewHolder.binding.chatItemProfile,item.groupDetails!!.about_pic)
+            if (item.unread != null && item.unread!![PreferenceKeeper.instance.myUserDetail.id] != null) {
+                val unreadCount: Int = item.unread!![PreferenceKeeper.instance.myUserDetail.id]!!
                 if (unreadCount > 0) {
                     viewHolder.binding.chatItemCount.visibility = View.VISIBLE
                 } else {

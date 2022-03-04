@@ -80,6 +80,7 @@ class AppConstant {
         const val isFromSelectPredefineCity = "isSelectPredefineCity"
         const val FEATURE_LIST = "FEATURE_LIST"
         const val FEATURE_MODEL = "FEATURE_MODEL"
+        const val ROOM_ID = "ROOM_ID"
 
 
 

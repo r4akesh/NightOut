@@ -96,15 +96,12 @@ class WebSocketSingleton : WebSocketListener(), WebSocketSubject {
     }
 
     private fun joinCommand() {
-        PreferenceKeeper.instance.getRegisterUser()?.let { userDetails ->
+        PreferenceKeeper.instance.myUserDetail?.let { userDetails ->
             //UserDetails.instance.myDetail = userDetails
             PreferenceKeeper.instance.myUserDetail = userDetails
             val jsonObject = JSONObject()
             try {
-                jsonObject.put(
-                    "user_id",
-                    userDetails.id
-                )
+                jsonObject.put("user_id", userDetails.id)
                 jsonObject.put("type", "create")
                 jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_CREATE_CONNECTION)
                 getInstant()!!.sendMessage(jsonObject)

@@ -1,30 +1,53 @@
-package com.nightout.ui.activity
+package com.nightout.chat.activity
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.GroupChatImageAdapter
-import com.nightout.adapter.GroupListAdapter
 import com.nightout.base.BaseActivity
+import com.nightout.chat.chatinterface.ResponseType
+import com.nightout.chat.chatinterface.WebSocketObserver
+import com.nightout.chat.chatinterface.WebSocketSingleton
 import com.nightout.databinding.GroupinfoActvityBinding
 import com.nightout.model.GroupChatImgModel
-import com.nightout.model.GroupListModel
+import com.nightout.utils.AppConstant
+import com.nightout.utils.PreferenceKeeper
+import org.json.JSONObject
 
-class GroupInfoActvity : BaseActivity() {
+class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     lateinit var groupChatImageAdapter : GroupChatImageAdapter
     lateinit var binding : GroupinfoActvityBinding
-
+    var roomID=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
      //   setContentView(R.layout.groupinfo_actvity)
         binding = DataBindingUtil.setContentView(this@GroupInfoActvity,R.layout.groupinfo_actvity)
         setToolBar()
+        setTouchNClick(binding.grupInfoToolBar.toolbarCreateGrop)
         setHorizonatlDummyList()
         setFrendListDummy()
+        roomID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.ROOM_ID).toString()
+        WebSocketSingleton.getInstant()!!.register(this)
+    }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        if(v== binding.grupInfoToolBar.toolbarCreateGrop){
+            val jsonObject = JSONObject()
+            jsonObject.put("type", "removeUser")
+            jsonObject.put("userId", PreferenceKeeper.instance.myUserDetail.id)
+            jsonObject.put("roomId", roomID)
+            jsonObject.put("request", "room")
+            jsonObject.put("room_type","group")
+
+            WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
+        }
     }
 
     private fun setToolBar() {
@@ -81,5 +104,33 @@ class GroupInfoActvity : BaseActivity() {
             it.layoutManager = LinearLayoutManager(this@GroupInfoActvity,LinearLayoutManager.HORIZONTAL,false)
             it.adapter = groupChatImageAdapter
         }
+    }
+
+    override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
+        try {
+            runOnUiThread {
+                Log.d("ok", "received message GroupInfo: $response")
+                if (ResponseType.RESPONSE_TYPE_REMOVE_USER.equalsTo(type)) {
+                    Log.d("ok", "exit sucess ")
+                }else{
+                    Log.d("ok", "exit else ")
+                }
+            }
+        }
+      catch (e:Exception){
+
+      }
+
+    }
+
+    override val activityName: String = GroupInfoActvity::class.java.name
+
+
+    override fun registerFor(): Array<ResponseType> {
+        return arrayOf(
+            ResponseType.RESPONSE_TYPE_REMOVE_USER
+
+        )
+
     }
 }

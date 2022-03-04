@@ -1,15 +1,22 @@
-package com.nightout.ui.activity
+package com.nightout.chat.activity
 
 
 
 import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CancellationSignal
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
+import android.util.Size
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.Toast
@@ -24,8 +31,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.chat.activity.PlayerActivity
-import com.nightout.chat.activity.ZoomImageActivity
 import com.nightout.chat.adapter.ChatAdapter
 import com.nightout.chat.adapter.HeaderDataImpl
 import com.nightout.chat.chatinterface.ResponseType
@@ -38,14 +43,15 @@ import com.nightout.chat.stickyheader.stickyView.StickHeaderItemDecoration
 import com.nightout.chat.utility.*
 import com.nightout.databinding.ChatpersonalActivitynewBinding
 import com.nightout.model.FSUsersModel
+import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
+import com.theartofdev.edmodo.cropper.CropImage
 import org.apache.commons.io.FilenameUtils
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.File
-import java.io.Serializable
+import java.io.*
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
@@ -65,7 +71,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     private var noOfNewMessages = 0
     private var _groupDetails: FSGroupModel? = null
     private val uploadFragment: PlayAudioFragment = PlayAudioFragment()
-
+    private var isSetWallpaper = false
+    private   val VIDEO_DIRECTORY = "/demonuts"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,7 +156,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             }
             R.id.chatUserNameConstrant -> {
                 if (_isGroup) {
-                    startActivity(Intent(this@ChatPersonalActvity, GroupInfoActvity::class.java))
+                    startActivity(Intent(this@ChatPersonalActvity, GroupInfoActvity::class.java)
+                        .putExtra(AppConstant.INTENT_EXTRAS.ROOM_ID,_roomId))
                 }
             }
         }
@@ -414,6 +422,9 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 var listsize =   getIntent().getStringExtra(INTENT_EXTRAS_KEY_PARTICIPENT_SIZE)
 
         val tmpSenderDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_SENDER_DETAILS)
+        if (_isGroup) {
+            setGroupDetails(listsize)
+        }
         if (tmpSenderDetails != null) {
             _senderDetails = tmpSenderDetails as FSUsersModel
            // addChatMenu()
@@ -476,8 +487,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 
     override fun permissionGranted(flag: Int) {
         when (flag) {
-          //  REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE -> selectCameraImage()  //doLater
-         //   REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO -> showPicVideoDialog()
+           REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE -> selectCameraImage()
+            REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO -> showPicVideoDialog()
 //            REQUEST_RECORD_AUDIO_PERMISSION -> {
 //                onRecord(mStartRecording)
 //                if (mStartRecording) {
@@ -491,13 +502,13 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     }
 
     override fun listOfPermission(flag: Int): Array<String> {
-       /* if (flag == REQUEST_RECORD_AUDIO_PERMISSION) {
-            return arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO
-            )
-        }*/   if (flag == REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE || flag == REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO) {
+        /* if (flag == REQUEST_RECORD_AUDIO_PERMISSION) {
+             return arrayOf(
+                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                 Manifest.permission.RECORD_AUDIO
+             )
+         }*/   if (flag == REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE || flag == REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO) {
             return arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -511,6 +522,49 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             Manifest.permission.RECORD_AUDIO
         )
     }
+
+    private fun showPicVideoDialog() {
+        val pictureDialog = AlertDialog.Builder(this)
+        pictureDialog.setTitle("Select Action")
+        val pictureDialogItems = arrayOf(
+            "Select video from gallery",
+            "Record video from camera"
+        )
+        pictureDialog.setItems(
+            pictureDialogItems
+        ) { dialog, which ->
+            when (which) {
+                0 -> chooseVideoFromGallery()
+                1 -> takeVideoFromCamera()
+            }
+        }
+        pictureDialog.show()
+    }
+    private fun chooseVideoFromGallery() {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        )
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+    private fun takeVideoFromCamera() {
+        val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+        startActivityForResult(intent, CAMERA)
+    }
+
+    private fun selectCameraImage() {
+//		CropImage.activity().start(this, AddPostBottomSheetFragment.this);
+        isSetWallpaper = false
+        CropImage.activity().start(this)
+
+//		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+//				MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//
+//		galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//		startActivityForResult(galleryIntent, GALLERY);
+    }
+
 
     override fun onWebSocketResponse(
         response: String,
@@ -757,7 +811,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             WebSocketSingleton.getInstant()?.sendMessage(jsonObject)
         }
 
-    override val activityName: String =ChatPersonalActvity::class.java.name
+    override val activityName: String = ChatPersonalActvity::class.java.name
 
 
     override fun registerFor(): Array<ResponseType> {
@@ -820,18 +874,239 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         // TODO: 27/01/21 SendMessage
 //        chatReference.add(messageMap);
         WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
-        Timer().schedule(
-            object : TimerTask() {
-                override fun run() {
-                    binding.chatRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
-                    // your code here
-                }
-            },
-            500
-        )
+        try {
+            if(adapter.itemCount>0){
+                Timer().schedule(
+                    object : TimerTask() {
+                        override fun run() {
+                            binding.chatRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                            // your code here
+                        }
+                    },
+                    500
+                )
+            }
+
+        } catch (e: Exception) {
+        }
 
 
 //        binding.chatRecyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
 //        binding.chatRecyclerView.setHasFixedSize(true);
+    }
+    private fun uploadImageFormUri(resultUri: Uri) {
+        val imagePath = resultUri.path
+        try {
+            val thumbnailFile = File(cacheDir, "image.jpg")
+            thumbnailFile.createNewFile()
+            thumbnailFile.exists()
+            val bitmap: Bitmap?
+            bitmap = if (Build.VERSION.SDK_INT <= 29) {
+                ThumbnailUtils.createImageThumbnail(
+                    imagePath!!,
+                    MediaStore.Images.Thumbnails.MINI_KIND
+                )
+            } else {
+                // TODO: 4/17/2020 here we will do code for crete thumnail for latest api version 29 bcoz createVideoThumbnail is depricate for this version
+                val signal = CancellationSignal()
+                val size = Size(100, 100)
+                val file = File(imagePath)
+                ThumbnailUtils.createImageThumbnail(
+                    file,
+                    size, signal
+                )
+            }
+            val bos = ByteArrayOutputStream()
+            bitmap!!.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos)
+            val bitmapData = bos.toByteArray()
+
+            //write the bytes in file
+            var fos: FileOutputStream? = null
+            try {
+                fos = FileOutputStream(thumbnailFile)
+                val file = File(imagePath)
+                if (file.exists()) {
+                    val fileMeta = HashMap<String, Any>()
+                    fileMeta[MediaMetaModel.KEY_FILE_TYPE] =
+                        MediaMetaModel.MediaType.imageJPG.toString()
+                    addFragment(file, thumbnailFile, ChatModel.MessageType.image, fileMeta)
+                    Log.d(TAG, "onActivityResult: $file")
+                }
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+            if (fos != null) {
+                fos.write(bitmapData)
+                fos.flush()
+                fos.close()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun addFragment(
+        file: File,
+        thumb: File?,
+        messageType: ChatModel.MessageType,
+        messageMeta: HashMap<String, Any>
+    ) {
+        val ft = supportFragmentManager.beginTransaction()
+        val uploadFragment = UploadFileProgressFragment()
+        ft.add(R.id.uploadFileWrapper, uploadFragment, uploadFragment.fragmentTag)
+        ft.commit()
+        uploadFragment.uploadFiles(file, thumb, messageType, messageMeta, this)
+    }
+    private fun getPath(uri: Uri): String? {
+        val projection = arrayOf(MediaStore.Video.Media.DATA)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        return if (cursor != null) {
+            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            val column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(column_index)
+        } else null
+    }
+    fun saveVideoToInternalStorage(filePath: String?) {
+        val newFile: File
+        try {
+            val currentFile = File(filePath)
+            val wallpaperDirectory = File(Environment.getExternalStorageDirectory().toString() + VIDEO_DIRECTORY)
+            newFile = File(wallpaperDirectory, Calendar.getInstance().timeInMillis.toString() + ".mp4")
+            if (!wallpaperDirectory.exists()) {
+                wallpaperDirectory.mkdirs()
+            }
+            if (currentFile.exists()) {
+                val `in`: InputStream = FileInputStream(currentFile)
+                val out: OutputStream = FileOutputStream(newFile)
+
+                // Copy the bits from instream to outstream
+                val buf = ByteArray(1024)
+                var len: Int
+                while (`in`.read(buf).also { len = it } > 0) {
+                    out.write(buf, 0, len)
+                }
+                `in`.close()
+                out.close()
+                Log.v("vii", "Video file saved successfully.")
+            } else {
+                Log.v("vii", "Video saving failed. Source file missing.")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun uploadVideoFormUri(contentURI: Uri) {
+        val selectedVideoPath = getPath(contentURI)
+        Log.d("path", selectedVideoPath!!)
+        saveVideoToInternalStorage(selectedVideoPath)
+        try {
+            val thumbnailFile = File(cacheDir, "image.jpg")
+            thumbnailFile.createNewFile()
+            //			thumbnailFile.exists();
+            Log.d(TAG, "onActivityResult: " + thumbnailFile.exists())
+            //Convert bitmap to byte array
+            try {
+                var bitmap: Bitmap? = null
+                bitmap = if (Build.VERSION.SDK_INT <= 29) {
+                    ThumbnailUtils.createVideoThumbnail(
+                        selectedVideoPath,
+                        MediaStore.Images.Thumbnails.MINI_KIND
+                    )
+                } else {
+                    // TODO: 4/17/2020 here we will do code for crete thumbnail for latest api version 29 because createVideoThumbnail is deprecated for this version
+                    val signal = CancellationSignal()
+                    val size = Size(100, 100)
+                    val file = File(selectedVideoPath)
+                    ThumbnailUtils.createVideoThumbnail(file, size, signal)
+                }
+                val bos = ByteArrayOutputStream()
+                bitmap?.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos)
+                val bitMapData = bos.toByteArray()
+
+                //write the bytes in file
+                var fos: FileOutputStream? = null
+                try {
+                    fos = FileOutputStream(thumbnailFile)
+                    val file = File(selectedVideoPath)
+                    if (file.exists()) {
+                        val fileMeta = HashMap<String, Any>()
+                        fileMeta[MediaMetaModel.KEY_FILE_TYPE] =
+                            MediaMetaModel.MediaType.videoMP4.toString()
+                        addFragment(file, thumbnailFile, ChatModel.MessageType.video, fileMeta)
+                        Log.d(TAG, "onActivityResult: $file")
+                    }
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                }
+                try {
+                    if (fos != null) {
+                        fos.write(bitMapData)
+                        fos.flush()
+                        fos.close()
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                val resultUri: Uri?
+                if (result != null) {
+                    resultUri = result.uri
+                    if (resultUri != null) {
+                        if (isSetWallpaper) {
+                          //  setWallpaper(resultUri) //doLater
+                        } else {
+                            uploadImageFormUri(resultUri)
+                        }
+                    }
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error: Exception
+                if (result != null) {
+                    error = result.error
+                    error.printStackTrace()
+                }
+            }
+        } else if (requestCode == GALLERY) {
+            if (data != null) {
+                val contentURI = data.data
+                contentURI?.let { uploadVideoFormUri(it) }
+            }
+        } else if (requestCode == CAMERA) {
+            if (data != null) {
+                val contentURI = data.data
+                contentURI?.let { uploadVideoFormUri(it) }
+            }
+        } else if (requestCode == REQUEST_SELECT_CONTACTS && resultCode == RESULT_OK) {
+//            if (data != null) {
+//                val extras = data.extras
+//                if (extras != null) {
+//                    val contacts = extras.getString(ContactListActivity.INTENT_SELECTED_CONTACTS)
+//                    val gson = Gson()
+//                    val type = object : TypeToken<ArrayList<ContactModel?>?>() {}.type
+//                    Log.d("ContactList: ", contacts!!)
+//                    val contactList: ArrayList<ContactModel> = gson.fromJson(contacts, type)
+//                    for (element in contactList) {
+//                        sendMessage("", ChatModel.MessageType.contact, element.list)
+//                    }
+//                    println(contactList)
+//                }
+//            }
+        }
     }
 }

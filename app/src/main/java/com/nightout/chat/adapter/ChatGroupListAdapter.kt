@@ -44,7 +44,7 @@ class ChatGroupListAdapter(
             viewHolder.binding.chatItemTime.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
          //   viewHolder.binding.chatItemCount.text = timeFormatYesterdayToDay(item.lastMessageTime, "yyyy-MM-dd'T'HH:mm:ss.SSS")
 
-            Utills.setImageNormal(context,viewHolder.binding.chatItemProfile,item.groupDetails!!.about_pic)
+            Utills.setImageFullPath(context,viewHolder.binding.chatItemProfile,item.groupDetails!!.about_pic)
             if (item.unread != null && item.unread!![PreferenceKeeper.instance.myUserDetail.id] != null) {
                 val unreadCount: Int = item.unread!![PreferenceKeeper.instance.myUserDetail.id]!!
                 if (unreadCount > 0) {

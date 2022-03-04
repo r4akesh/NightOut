@@ -21,11 +21,10 @@ import com.nightout.chat.model.FSRoomModel
 import com.nightout.chat.model.ResponseModel
 import com.nightout.chat.model.RoomNewResponseModel
 import com.nightout.chat.model.RoomResponseModel
-import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.FragmentChatBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.FSUsersModel
-import com.nightout.ui.activity.ChatPersonalActvity
+import com.nightout.chat.activity.ChatPersonalActvity
 import com.nightout.ui.activity.CreateGroupActvity
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
@@ -115,6 +114,7 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
                         val type1 = object : TypeToken<ResponseModel<RoomResponseModel?>?>() {}.type
                         val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> = gson.fromJson(response, type1)
                         MyApp.saveUserDetailChatUsers(roomResponseModelResponseModel.getData().userListMap)
+                        var vv = MyApp.fetchUserDetailChatUsers()
                       //  UserDetails.instance.chatUsers = roomResponseModelResponseModel.getData().userListMap
                         for (element in roomResponseModelResponseModel.getData().roomList) {
                             for (userId in element.userList) {

@@ -339,49 +339,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                 >
 
                 <ImageView
                     android:id="@+id/attachmentLocation"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/attachmentGallery"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/attachmentCamera"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_icon_camera_attach" />
+
+                    app:srcCompat="@drawable/ic_icon_location_attach" />
 
                 <ImageView
                     android:id="@+id/attachmentCamera"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
 
-                    app:layout_constraintBottom_toBottomOf="@+id/attachmentLocation"
-                    app:layout_constraintEnd_toStartOf="@+id/attachmentLocation"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/attachmentLocation"
                     app:srcCompat="@drawable/ic_icon_camera_attach" />
 
                 <ImageView
                     android:id="@+id/attachmentGallery"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
 
-                    app:layout_constraintBottom_toBottomOf="@+id/attachmentLocation"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/attachmentLocation"
-                    app:layout_constraintTop_toTopOf="@+id/attachmentLocation"
-                    app:srcCompat="@drawable/ic_icon_camera_attach" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:srcCompat="@drawable/ic_icon_gallery" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

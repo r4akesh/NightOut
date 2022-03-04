@@ -223,6 +223,13 @@ class Utills {
                     .placeholder(R.drawable.no_image).into(it)
             }
         }
+
+        fun setImageFullPath(context: Context?, imageView: ImageView?, url: String?) {
+            imageView?.let {
+                Glide.with(context!!).load(url).centerCrop()
+                    .placeholder(R.drawable.app_icon).into(it)
+            }
+        }
         fun phoneNoUKFormat(phno:String):String{
           return  PhoneNumberUtils.formatNumber(phno,"US")
         }

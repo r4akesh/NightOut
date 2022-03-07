@@ -13,7 +13,10 @@ import com.nightout.R
 import com.nightout.callbacks.OnSelectOptionListener
 
 
-class SelectSourceBottomSheetFragment(private val onSelectOptionListener: OnSelectOptionListener) :
+class SelectSourceBottomSheetFragment(
+    private val onSelectOptionListener: OnSelectOptionListener,
+    s: String
+) :
     BottomSheetDialogFragment() {
     private lateinit var  cameraImageView:ImageView
     private lateinit var galleryImageView:ImageView

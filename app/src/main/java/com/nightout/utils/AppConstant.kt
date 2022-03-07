@@ -81,6 +81,7 @@ class AppConstant {
         const val FEATURE_LIST = "FEATURE_LIST"
         const val FEATURE_MODEL = "FEATURE_MODEL"
         const val ROOM_ID = "ROOM_ID"
+        const val ISFROM_PUSH = "ISFROM_PUSH"
 
 
 

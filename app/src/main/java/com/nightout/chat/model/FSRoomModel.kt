@@ -26,6 +26,10 @@ class FSRoomModel {
 
     @SerializedName("type")
     private var type = ""
+
+    @SerializedName("create_time")
+      var create_time = ""
+
     var senderUserDetail: FSUsersModel? = null
 
     @SerializedName("createBy")

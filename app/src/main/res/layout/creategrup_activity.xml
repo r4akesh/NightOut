@@ -177,6 +177,8 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_5sdp"
+                tools:visibility="visible"
+                android:visibility="invisible"
                 android:text="@string/Select_All"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/_12ssp"

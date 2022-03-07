@@ -36,7 +36,7 @@
 
             android:layout_marginEnd="@dimen/_10ssp"
             android:scaleType="fitXY"
-            android:src="@drawable/grupinfo_ic"
+            android:src="@drawable/no_image"
             app:layout_constraintTop_toBottomOf="@+id/constrentToolbar" />
 
         <TextView

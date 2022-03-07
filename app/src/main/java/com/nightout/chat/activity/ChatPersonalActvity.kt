@@ -43,6 +43,7 @@ import com.nightout.chat.stickyheader.stickyView.StickHeaderItemDecoration
 import com.nightout.chat.utility.*
 import com.nightout.databinding.ChatpersonalActivitynewBinding
 import com.nightout.model.FSUsersModel
+import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
@@ -73,6 +74,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     private val uploadFragment: PlayAudioFragment = PlayAudioFragment()
     private var isSetWallpaper = false
     private   val VIDEO_DIRECTORY = "/demonuts"
+   var  isFromPush=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +96,25 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         binding.chatGoToBottom.visibility = View.GONE
         setAudioPlayer()
         parseExtras()
-        WebSocketSingleton.getInstant()?.register(this)
+      //  WebSocketSingleton.getInstant()?.register(this)
+    }
+
+
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+         isFromPush=  intent?.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH,false)!!
+    }
+
+    override fun onBackPressed() {
+        if(isFromPush){
+            val i = Intent(this, HomeActivityNew::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
+        }else {
+            super.onBackPressed()
+        }
+
     }
 
     override fun onClick(v: View?) {
@@ -609,6 +629,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 //                        }
                 } else if (ResponseType.RESPONSE_TYPE_ROOM_DETAILS.equalsTo(type)) {
                     if (statusCode == 200) {
+                        Log.d(TAG, "received message roomdetail: $response")
                         val type1 = object : TypeToken<ResponseModel<RoomResponseModel?>?>() {}.type
                         val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> =
                             Gson().fromJson<ResponseModel<RoomResponseModel>>(response, type1)
@@ -750,12 +771,15 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             val keys = ArrayList(chatList.keys)
             keys.sort()
             adapter.clearAll()
+            var mChatList = ArrayList<ChatModel>()
             for (key in keys) {
-                val chatForThatDay = chatList[key]!!
+                val chatForThatDay: ArrayList<ChatModel> = chatList[key]!!
                 //										HeaderDataImpl headerData1 = new HeaderDataImpl(R.layout.header1_item_recycler, key);
                 val headerData1 = HeaderDataImpl(R.layout.header1_item_recycler, key)
+                mChatList.addAll(chatForThatDay)
                 adapter.setHeaderAndData(chatForThatDay as List<ChatModel?>, headerData1)
             }
+            Log.d(TAG, "appendMessage: "+mChatList)
             if (showMessageCount && chatModel.sender_detail.id != PreferenceKeeper.instance.myUserDetail.id) {
                 noOfNewMessages += 1
                 binding.chatGoToBottom.visibility = View.VISIBLE
@@ -811,18 +835,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             WebSocketSingleton.getInstant()?.sendMessage(jsonObject)
         }
 
-    override val activityName: String = ChatPersonalActvity::class.java.name
 
-
-    override fun registerFor(): Array<ResponseType> {
-        return arrayOf(
-            ResponseType.RESPONSE_TYPE_MESSAGES,
-            ResponseType.RESPONSE_TYPE_USER_MODIFIED,
-            ResponseType.RESPONSE_TYPE_USER_BLOCK_MODIFIED,
-            ResponseType.RESPONSE_TYPE_USER_ALL_BLOCK,
-            ResponseType.RESPONSE_TYPE_ROOM_DETAILS
-        )
-    }
 
     override fun closeAudioPlayer() {
         binding.audioPlayerFragment.visibility = View.GONE
@@ -867,8 +880,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         messageMap["sender_id"] = PreferenceKeeper.instance.myUserDetail.id
         messageMap["receiver_id"] = "12312faa"
         messageMap["message_content"] = messageContent
-        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =
-            APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
         //        messageMap.put("time", time);
 
         // TODO: 27/01/21 SendMessage
@@ -957,6 +969,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         ft.commit()
         uploadFragment.uploadFiles(file, thumb, messageType, messageMeta, this)
     }
+
     private fun getPath(uri: Uri): String? {
         val projection = arrayOf(MediaStore.Video.Media.DATA)
         val cursor = contentResolver.query(uri, projection, null, null, null)
@@ -969,6 +982,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             cursor.getString(column_index)
         } else null
     }
+
     fun saveVideoToInternalStorage(filePath: String?) {
         val newFile: File
         try {
@@ -1108,5 +1122,17 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 //                }
 //            }
         }
+    }
+
+    override val activityName: String = ChatPersonalActvity::class.java.name
+
+    override fun registerFor(): Array<ResponseType> {
+        return arrayOf(
+            ResponseType.RESPONSE_TYPE_MESSAGES,
+            ResponseType.RESPONSE_TYPE_USER_MODIFIED,
+            ResponseType.RESPONSE_TYPE_USER_BLOCK_MODIFIED,
+            ResponseType.RESPONSE_TYPE_USER_ALL_BLOCK,
+            ResponseType.RESPONSE_TYPE_ROOM_DETAILS
+        )
     }
 }

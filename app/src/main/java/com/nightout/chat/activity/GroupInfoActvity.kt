@@ -5,19 +5,29 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.google.gson.reflect.TypeToken
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.nightout.R
 import com.nightout.adapter.GroupChatImageAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.chat.chatinterface.ResponseType
 import com.nightout.chat.chatinterface.WebSocketObserver
 import com.nightout.chat.chatinterface.WebSocketSingleton
+import com.nightout.chat.model.FSRoomModel
+import com.nightout.chat.model.ResponseModel
+import com.nightout.chat.model.RoomResponseModel
 import com.nightout.databinding.GroupinfoActvityBinding
 import com.nightout.model.GroupChatImgModel
 import com.nightout.utils.AppConstant
+import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
+import com.nightout.utils.Utills
+import com.nightout.vendor.services.APIClient
 import org.json.JSONObject
+import java.util.HashMap
 
 class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     lateinit var groupChatImageAdapter : GroupChatImageAdapter
@@ -31,14 +41,16 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
         setToolBar()
         setTouchNClick(binding.grupInfoToolBar.toolbarCreateGrop)
         setHorizonatlDummyList()
-        setFrendListDummy()
+
         roomID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.ROOM_ID).toString()
         WebSocketSingleton.getInstant()!!.register(this)
+        roomInfo//get detail
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
         if(v== binding.grupInfoToolBar.toolbarCreateGrop){
+
             val jsonObject = JSONObject()
             jsonObject.put("type", "removeUser")
             jsonObject.put("userId", PreferenceKeeper.instance.myUserDetail.id)
@@ -50,6 +62,15 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
         }
     }
 
+    private val roomInfo: Unit
+        get() {
+            val messageMap = HashMap<String?, Any?>()
+            messageMap["type"] = "roomsDetails"
+            messageMap["roomId"] = roomID
+            messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_ROOM
+            WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
+        }
+
     private fun setToolBar() {
          binding.grupInfoToolBar.toolbarTitle.setText("Group Information")
          binding.grupInfoToolBar.toolbar3dot.visibility=GONE
@@ -60,19 +81,8 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
          binding.grupInfoToolBar.toolbarBack.setOnClickListener { finish() }
     }
 
-    private fun setFrendListDummy() {
-       /* var list = ArrayList<GroupListModel>()
-        list.add(GroupListModel("Cameron Williamson", "Software Engineer", R.drawable.grp1, false))
-        list.add(GroupListModel("Bessie Cooper", "Product Photographer", R.drawable.grp2, false))
-        list.add(GroupListModel("Jane Cooper", "Interior Designer", R.drawable.grp3, true))
-
-        list.add(GroupListModel("Cameron Williamson", "Software Engineer", R.drawable.grp1, false))
-        list.add(GroupListModel("Bessie Cooper", "Product Photographer", R.drawable.grp2, false))
-        list.add(GroupListModel("Jane Cooper", "Interior Designer", R.drawable.grp3, true))
-        list.add(GroupListModel("Cameron Williamson", "Software Engineer", R.drawable.grp1, false))
-        list.add(GroupListModel("Bessie Cooper", "Product Photographer", R.drawable.grp2, false))
-        list.add(GroupListModel("Jane Cooper", "Interior Designer", R.drawable.grp3, false))
-        groupListAdapter = GroupListAdapter(this@GroupInfoActvity, list,false, object : GroupListAdapter.ClickListener {
+    private fun setFrendListDummy(rsData: ResponseModel<RoomResponseModel>) {
+       /* groupListAdapter = GroupListAdapter(this@GroupInfoActvity, list,false, object : GroupListAdapter.ClickListener {
                 override fun onClickChk(pos: Int) {
 
                 }
@@ -111,8 +121,38 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             runOnUiThread {
                 Log.d("ok", "received message GroupInfo: $response")
                 if (ResponseType.RESPONSE_TYPE_REMOVE_USER.equalsTo(type)) {
-                    Log.d("ok", "exit sucess ")
-                }else{
+                    Log.d("ok", "exit success ")
+                }
+                else if (ResponseType.RESPONSE_TYPE_ROOM_DETAILS.equalsTo(type)) {
+                    if (statusCode == 200) {
+                        val type1 = object : TypeToken<ResponseModel<RoomResponseModel?>?>() {}.type
+                        val roomResponseModelResponseModel: ResponseModel<RoomResponseModel> =
+                            Gson().fromJson<ResponseModel<RoomResponseModel>>(response, type1)
+                        for (element in roomResponseModelResponseModel.getData().userList) {
+                            //UserDetails.instance.chatUsers.put(element.id, element)
+                            MyApp.fetchUserDetailChatUsers().put(element.id, element)
+                        }
+                        setFrendListDummy(roomResponseModelResponseModel)
+                        setData(roomResponseModelResponseModel.getData().roomList[0])
+
+                        //  val roomDetails: FSRoomModel = roomResponseModelResponseModel.getData().roomList.get(0)_senderDetails = roomDetails.senderUserDetail!!
+                        /*for (FSRoomModel elemen  t : roomResponseModelResponseModel.getData().getRoomList()) {
+                            for (String userId : element.getUserList()) {
+                                if (!userId.equals(UserDetails.myDetail.getId())) {
+                                    element.setSenderUserDetail(UserDetails.chatUsers.get(userId));
+                                    break;
+                                }
+                            }
+                        }*/
+                       // joinCommand()
+
+                    } else {
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+                else{
                     Log.d("ok", "exit else ")
                 }
             }
@@ -123,13 +163,24 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
 
     }
 
+    private fun setData(gData: FSRoomModel) {
+        try {
+            binding.groupInfoActvitityDate.text = MyApp.dateZoneToDateFormat(gData?.create_time)
+            binding.groupInfoActvitityName.text = gData?.groupDetails?.group_name
+            Utills.setImageFullPath(this@GroupInfoActvity,binding.groupInfoActvitityImage,gData?.groupDetails?.about_pic)
+        } catch (e: Exception) {
+        }
+
+
+    }
+
     override val activityName: String = GroupInfoActvity::class.java.name
 
 
     override fun registerFor(): Array<ResponseType> {
         return arrayOf(
-            ResponseType.RESPONSE_TYPE_REMOVE_USER
-
+            ResponseType.RESPONSE_TYPE_REMOVE_USER ,
+            ResponseType.RESPONSE_TYPE_ROOM_DETAILS
         )
 
     }

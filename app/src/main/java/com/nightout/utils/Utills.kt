@@ -1,6 +1,8 @@
 package com.nightout.utils
 
 import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.CAMERA
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -118,7 +120,7 @@ class Utills {
         }
 
         fun checkingPermissionIsEnabledOrNot(mContext: Context): Boolean {
-            val cameraPermission = ContextCompat.checkSelfPermission(mContext,
+          /*  val cameraPermission = ContextCompat.checkSelfPermission(mContext,
                 Manifest.permission.CAMERA
             )
             val readStoragePermission =
@@ -128,7 +130,10 @@ class Utills {
             val locationPermission = ContextCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
-            return cameraPermission == PackageManager.PERMISSION_GRANTED && readStoragePermission == PackageManager.PERMISSION_GRANTED && writeStoragePermission == PackageManager.PERMISSION_GRANTED && locationPermission == PackageManager.PERMISSION_GRANTED
+            return cameraPermission == PackageManager.PERMISSION_GRANTED && readStoragePermission == PackageManager.PERMISSION_GRANTED && writeStoragePermission == PackageManager.PERMISSION_GRANTED && locationPermission == PackageManager.PERMISSION_GRANTED*/
+            val cameraPermission = mContext.packageManager.checkPermission(CAMERA,mContext.packageName)
+            val locationPermission = mContext.packageManager.checkPermission(ACCESS_FINE_LOCATION,mContext.packageName)
+            return cameraPermission == PackageManager.PERMISSION_GRANTED  && locationPermission == PackageManager.PERMISSION_GRANTED
         }
 
         fun requestMultiplePermission(activity: Activity,requestPermissionCode:Int) {

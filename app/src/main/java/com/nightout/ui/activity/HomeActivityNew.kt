@@ -11,7 +11,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -39,7 +38,6 @@ import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import kotlinx.android.synthetic.main.drawer_layout_new.*
 import kotlinx.android.synthetic.main.drawer_layout_new.view.*
-import kotlinx.android.synthetic.main.home_actvitynew.view.*
 
 class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListener {
     lateinit var binding: HomeActvitynewBinding
@@ -139,8 +137,8 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
             )
             binding.bottomMyProfile.setTextColor(ContextCompat.getColor(this, R.color.white))
             currentFragment = fragmentManager!!.findFragmentById(R.id.mainContainer)
-            if (currentFragment !is ChatFragment) {
-                showFragment(ChatFragment(this))
+            if (currentFragment !is ChatRoomListFragment) {
+                showFragment(ChatRoomListFragment(this))
             }
         }
         else if(v==binding.bottomBarCrawl){

@@ -19,11 +19,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DecodeFormat
 import com.github.drjacky.imagepicker.ImagePicker
 import com.nightout.R
 import com.nightout.base.BaseActivity
@@ -148,7 +145,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     }
 
     fun onSelectImage() {
-        selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this)
+        selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this, "")
         selectSourceBottomSheetFragment.show(
             this@LostItemDetailsActvity.supportFragmentManager,
             "selectSourceBottomSheetFragment"

@@ -1,11 +1,13 @@
 package com.nightout.ui.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -17,6 +19,8 @@ import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -56,9 +60,15 @@ import org.json.JSONObject
 import java.io.File
 import java.util.HashMap
 import com.google.gson.reflect.TypeToken
-import com.nightout.chat.activity.ChatPersonalActvity
+import com.lassi.common.utils.KeyUtils
+import com.lassi.data.media.MiMedia
+import com.lassi.domain.media.LassiOption
+import com.lassi.domain.media.MediaType
+import com.lassi.presentation.builder.Lassi
+import com.nightout.callbacks.OnSelectOptionListener
+import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 
-class CreateGroupActvity : BaseActivity(), WebSocketObserver {
+class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionListener {
     lateinit var binding: CreategrupActivityBinding
     private val REQUEST_CAMERA_PERMISSION = 1
     var imageUri: Uri? = null
@@ -75,7 +85,9 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
     var contactsInfoList = ArrayList<ContactNoModel>()
     var listFilter = ArrayList<ContactFillterModel.Data>()
     lateinit var contactListAdapter: ContactListAdapter
-
+    private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
+    lateinit var commonViewModel : CommonViewModel
+    var imagePathUploded = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@CreateGroupActvity, R.layout.creategrup_activity)
@@ -115,19 +127,19 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
     }
     override fun onStart() {
         super.onStart()
-        WebSocketSingleton.Companion.getInstant()!!.register(this)
+        WebSocketSingleton.getInstant()!!.register(this)
     }
 
     override fun onStop() {
         super.onStop()
         Log.i("ok CreateGroupActvity", "onStop: ")
-        WebSocketSingleton.Companion.getInstant()!!.unregister(this)
+        WebSocketSingleton.getInstant()!!.unregister(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.i("ok CreateGroupActvity", "onDestroy: ")
-        WebSocketSingleton.Companion.getInstant()!!.unregister(this)
+        WebSocketSingleton.getInstant()!!.unregister(this)
     }
 
     private fun createGroupCommand() {
@@ -147,12 +159,14 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
             val groupDetails = JSONObject()
             groupDetails.put("group_name", binding.crateGroupName.text.toString())
             groupDetails.put("about_group", "This is a Group")
+            groupDetails.put("about_pic", imagePathUploded)
             jsonObject.put("group_details", groupDetails)
+            jsonObject.put("create_date", Commons.millsToDateFormat(System.currentTimeMillis()))
             jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_ROOM)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        WebSocketSingleton.getInstant()!!.register(this)
+       // WebSocketSingleton.getInstant()!!.register(this)
         WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
     }
 
@@ -169,6 +183,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
 
     }
 
+    @SuppressLint("Range")
     private fun getAllContactsFrmDevice(): ArrayList<ContactNoModel> {
         //  progressDialog.show(this@ContactListNewActvity, "")
         var contactId: String? = null
@@ -253,6 +268,18 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
                 }
                 return
             }
+            requestPermissionCode -> if (grantResults.isNotEmpty()) {
+                val cameraPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                val readStoragePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED
+                val writeStoragePermission = grantResults[2] == PackageManager.PERMISSION_GRANTED
+                val locationPermission = grantResults[3] == PackageManager.PERMISSION_GRANTED
+                if (cameraPermission && readStoragePermission && writeStoragePermission && locationPermission) {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG)
+                        .show()
+                } else {
+                    //Utils.requestMultiplePermission(this,requestPermissionCode)
+                }
+            }
         }
 
     }
@@ -333,7 +360,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
         super.onClick(v)
         when {
             v==binding.createGroupProfileRel -> {
-                onSelectImage()
+                onSelectImage2()
             }
             v== binding.headerCreateGroup->{
                 createGroupCommand()
@@ -360,12 +387,25 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
         }
     }
 
+    private fun onSelectImage2() {
+        if (!Utills.checkingPermissionIsEnabledOrNot(this)) {
+            Utills.requestMultiplePermission(this, requestPermissionCode)
+        }else{
+            selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this, "")
+            selectSourceBottomSheetFragment.show(
+                supportFragmentManager,
+                "selectSourceBottomSheetFragment"
+            )
+        }
+    }
+
 
     private fun initView() {
          setTouchNClick(binding.createGroupProfileRel)
          setTouchNClick(binding.crateGroupSelectAll)
          setTouchNClick(binding.headerCreateGroup)
         contactFillterViewModel = CommonViewModel(this@CreateGroupActvity)
+        commonViewModel = CommonViewModel(this@CreateGroupActvity)
         binding.crateGroupSelectAll.isChecked = false
     }
 
@@ -492,7 +532,9 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
             startCropActivity(imageUri!!)
 
 
-        }else if (requestCode == RequestCodeGallery && resultCode == AppCompatActivity.RESULT_OK && data != null) { //camera
+        }
+
+        else if (requestCode == RequestCodeGallery && resultCode == AppCompatActivity.RESULT_OK && data != null) { //camera
             val extras: Bundle = data.extras!!
             val imageBitmap = extras["data"] as Bitmap?
             imageUri = Utills.getImageUri(this@CreateGroupActvity, imageBitmap!!)
@@ -500,23 +542,31 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
             startCropActivity(imageUri!!)
 
         }
-        else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                try {  val bitmap: Bitmap?
+                try {
+                    val bitmap: Bitmap?
                     binding.createGroupProfile.setImageBitmap(null)
                     imageUrl = result.originalUri
                     val resultUri = result.uri
 
                     if (Build.VERSION.SDK_INT < 28) {
                         bitmap =
-                            MediaStore.Images.Media.getBitmap(this@CreateGroupActvity.contentResolver, resultUri)
+                            MediaStore.Images.Media.getBitmap(
+                                this@CreateGroupActvity.contentResolver,
+                                resultUri
+                            )
                     } else {
-                        val source = ImageDecoder.createSource(this@CreateGroupActvity.contentResolver, resultUri)
+                        val source = ImageDecoder.createSource(
+                            this@CreateGroupActvity.contentResolver,
+                            resultUri
+                        )
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                     binding.createGroupProfile.setImageBitmap(bitmap)
-                    setBody(bitmap!!, "image")
+                    setBody(bitmap!!, "file")
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -525,6 +575,19 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
             }
         }
 
+        else if (requestCode == ImagePicker.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // by this point we have the camera photo on disk
+                val takenImage = BitmapFactory.decodeFile(ImagePicker.photoFile!!.absolutePath)
+
+
+                binding.createGroupProfile.setImageBitmap(takenImage)
+
+                // venueViewModel.venueLogo = setBody(takenImage!!, "image")
+
+
+            }
+        }
     }
 
     private fun setBody(bitmap: Bitmap, flag: String): MultipartBody.Part {
@@ -536,13 +599,49 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
 //            activity.binding.iconName.text = this.filePath!!.name
 //        }
 
-        body = MultipartBody.Part.createFormData(
-            flag,
-            this.filePath!!.name,
-            reqFile
-        )
+        body = MultipartBody.Part.createFormData(flag, this.filePath!!.name, reqFile)
+        val builder = MultipartBody.Builder()
+        builder.setType(MultipartBody.FORM)
+        builder.addFormDataPart("room_id", "image_name_ios"+System.currentTimeMillis())
+        if (body != null) {
+            //  builder.addPart(editProfileViewModel.profilePic!!)
+            builder.addPart(body!!)
+        } else {
+            builder.addFormDataPart("file", "")
+        }
+        uploadChatImage(builder.build())
+
 
         return body!!
+    }
+
+
+    private fun uploadChatImage(requestBody: MultipartBody) {
+        progressDialog.show(this@CreateGroupActvity)
+        commonViewModel.uploadChatImg(requestBody).observe(this@CreateGroupActvity, {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let {
+                      //  Utills.showDefaultToast( this@CreateGroupActvity,  it.message!!, )
+                            imagePathUploded=   it.image_path+"/"+it.data.file
+                        Log.d("ok", "imagePathUploded: "+imagePathUploded)
+                    }
+
+                }
+                Status.LOADING -> {
+                    Log.d("ok", "LOADING: ")
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                    Log.d("ok", "ERROR: ")
+                    Utills.showErrorToast( this@CreateGroupActvity,  it.message!!, )
+                }
+            }
+        })
+
+
+
     }
 
     private fun startCropActivity(imageUri: Uri) {
@@ -553,6 +652,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
             .start(this@CreateGroupActvity)
     }
     var fsUsersList: java.util.ArrayList<FSUsersModel> = java.util.ArrayList<FSUsersModel>()
+
     override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) =
         try {
             runOnUiThread {
@@ -593,7 +693,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
                         }
                         val element: FSRoomModel = roomResponseModelResponseModel.getData().newRoom!!
                       //  if (element.createBy == UserDetails.myDetail.id) {
-                        if (element.createBy == PreferenceKeeper.instance.myUserDetail.id) {
+                       /* if (element.createBy == PreferenceKeeper.instance.myUserDetail.id) {
                             for (userId in element.userList) {
                                 if (userId != PreferenceKeeper.instance.myUserDetail.id) {
                                     element.senderUserDetail =  MyApp.fetchUserDetailChatUsers()[userId]
@@ -604,23 +704,24 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
                             // TODO: in Group details need to add the users details
 
 
-                            if(element.isGroup){
-                                val intent = Intent(this, ChatPersonalActvity::class.java)
-                                intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_IS_GROUP,element.isGroup)
-                                intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_ROOM_ID, element.roomId)
-                                intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_GROUP_DETAILS,element.groupDetails)
-                                intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_PARTICIPENT_SIZE, element.userList.size.toString())
-                                startActivity(intent)
-                                finish()
-                            }/*else{
-                                val intent = Intent(this, ChatActivity::class.java)
-                                intent.putExtra(ChatActivity.INTENT_EXTRAS_KEY_IS_GROUP,element.isGroup)
-                                intent.putExtra(ChatActivity.INTENT_EXTRAS_KEY_ROOM_ID, element.roomId)
-                                intent.putExtra(ChatActivity.INTENT_EXTRAS_KEY_SENDER_DETAILS,element.senderUserDetail)
-                                startActivity(intent)
-                                finish()
-                            }*/
-                        }
+                            *//*  if(element.isGroup){
+                                  val intent = Intent(this, ChatPersonalActvity::class.java)
+                                  intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_IS_GROUP,element.isGroup)
+                                  intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_ROOM_ID, element.roomId)
+                                  intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_GROUP_DETAILS,element.groupDetails)
+                                  intent.putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_PARTICIPENT_SIZE, element.userList.size.toString())
+                                  startActivity(intent)
+                                  finish()
+                              }else{
+                                  val intent = Intent(this, ChatActivity::class.java)
+                                  intent.putExtra(ChatActivity.INTENT_EXTRAS_KEY_IS_GROUP,element.isGroup)
+                                  intent.putExtra(ChatActivity.INTENT_EXTRAS_KEY_ROOM_ID, element.roomId)
+                                  intent.putExtra(ChatActivity.INTENT_EXTRAS_KEY_SENDER_DETAILS,element.senderUserDetail)
+                                  startActivity(intent)
+                                  finish()
+                              }*//*
+                        }*/
+                        finish()
 
                         //                    startActivity(new Intent(RoomListActivity.this, RoomListActivity.class));
                     } else {
@@ -656,4 +757,83 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver {
             ResponseType.RESPONSE_TYPE_CHECK_ROOM
         )
     }
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onOptionSelect(option: String) {
+        if (option == "camera") {
+            selectSourceBottomSheetFragment.dismiss()
+            ImagePicker.onCaptureImage(this)
+        } else {
+            selectSourceBottomSheetFragment.dismiss()
+            val intent = Lassi(this)
+                .with(LassiOption.GALLERY)
+                .setMaxCount(1)
+                .setGridSize(3)
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+            if (!selectedMedia.isNullOrEmpty()) {
+                val bitmap: Bitmap?
+
+                try {
+                    binding.createGroupProfile.setImageBitmap(null)
+                } catch (e: Exception) {
+                    Log.d("ok", ""+e)
+                }
+
+
+                imageUrl = Uri.parse(selectedMedia[0].path)
+
+                println("results>>>>>>>" + Uri.parse(selectedMedia[0].path))
+                val resultUri = Uri.parse(selectedMedia[0].path)
+                try {
+                    bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                    binding.createGroupProfile.setImageBitmap(bitmap)
+                    setBody(bitmap!!, "file")
+
+                    /* bitmap = if (Build.VERSION.SDK_INT < 28) {
+                         MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+                     } else {
+                         val source = ImageDecoder.createSource(this.contentResolver, resultUri)
+                         ImageDecoder.decodeBitmap(source)
+                     }*/
+/*
+                    if (isPremisesImageSelection) {
+                        binding.premisesImageAddBtn.visibility = View.GONE
+                        binding.premisesLicenseImage.setImageBitmap(bitmap)
+                        isPremisesImageSelection = false
+                        venueViewModel.premisesImage =
+                            setBody(bitmap!!, "premises_license_image")
+
+                    }*/
+
+
+                    /*  val builder = MultipartBody.Builder()
+                 builder.setType(MultipartBody.FORM)
+                 builder.addPart(body!!)*/
+
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+
+        }
+
+    }
+
+
+    companion object {
+        const val requestPermissionCode = 101
+    }
+
 }

@@ -53,6 +53,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var fillterResViewModel: LiveData<ApiSampleResource<FillterRes>>
     lateinit var allUserResViewModel: LiveData<ApiSampleResource<AllUserRes>>
     lateinit var doPayment: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var chatUploadImg: LiveData<ApiSampleResource<ChatImgUploadResponse>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
         cmsResponse = webServiceRepository.aboutCMS()
@@ -264,4 +265,9 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         myOrderResViewModel = webServiceRepository.myOrder()
         return myOrderResViewModel
     }
+    fun uploadChatImg(requestBody: MultipartBody): LiveData<ApiSampleResource<ChatImgUploadResponse>> {
+        chatUploadImg = webServiceRepository.chatUploadImg(requestBody)
+        return chatUploadImg
+    }
+
 }

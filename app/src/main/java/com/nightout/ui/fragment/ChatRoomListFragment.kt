@@ -34,7 +34,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.HashMap
 
-class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
+class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
 
     lateinit var binding : FragmentChatBinding
     private var onMenuOpenListener: OnMenuOpenListener? = null
@@ -51,6 +51,23 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
         joinCommand()
         return binding.root
     }
+    override fun onStart() {
+        super.onStart()
+        WebSocketSingleton.getInstant()?.register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("ok", "onDestroy: ")
+        WebSocketSingleton.getInstant()?.unregister(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("ok", "onStop: ")
+       /// WebSocketSingleton.getInstant()?.unregister(this)
+    }
+
 
     private fun joinCommand() {
         val jsonObject = JSONObject()
@@ -193,7 +210,7 @@ class ChatFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
         }
     }
 
-    override val activityName: String = ChatFragment::class.java.name
+    override val activityName: String = ChatRoomListFragment::class.java.name
 
     override fun registerFor(): Array<ResponseType> {
         return arrayOf(

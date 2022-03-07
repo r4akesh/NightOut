@@ -12,8 +12,10 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.nightout.R
+import com.nightout.chat.activity.ChatPersonalActvity
 import com.nightout.ui.activity.NotificationActivity
 import com.nightout.ui.activity.SplashActivity
+import com.nightout.utils.AppConstant
 import com.nightout.utils.PreferenceKeeper
 
 
@@ -38,7 +40,13 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
     }
 
     private fun sendNotification(title: String?, messageBody: String?) {
-        val intent = Intent(this, NotificationActivity::class.java)
+        val intent : Intent
+        if(title!!.contains("New message from"))
+            intent = Intent(this, ChatPersonalActvity::class.java)
+                .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH,true)
+        else
+          intent = Intent(this, NotificationActivity::class.java)
+              .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH,true)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0 /* Request code */, intent,

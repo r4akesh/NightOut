@@ -173,4 +173,9 @@ interface APIInterface {
 
     @POST("add_venue_review")
     fun add_venue_reviewAPI(@Body params: HashMap<String, String>): Call<ResponseBody>
+
+
+    @POST("upload_chat_file")
+    fun upload_chat_fileAPI(@Body requestBody: MultipartBody): Call<ResponseBody>
+
 }

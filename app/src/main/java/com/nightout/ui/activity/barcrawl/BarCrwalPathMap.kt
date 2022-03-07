@@ -536,11 +536,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 //            activity.binding.iconName.text = this.filePath!!.name
 //        }
 
-        body = MultipartBody.Part.createFormData(
-            flag,
-            this.filePath!!.name,
-            reqFile
-        )
+        body = MultipartBody.Part.createFormData(flag, this.filePath!!.name, reqFile)
 
         return body!!
     }

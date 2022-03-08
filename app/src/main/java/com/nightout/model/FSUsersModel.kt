@@ -22,6 +22,8 @@ class FSUsersModel : Serializable {
     @SerializedName("last_seen")
     var lastSeen = ""
 
+
+
     @SerializedName("is_online")
     var isOnline = false
     var isChecked = false

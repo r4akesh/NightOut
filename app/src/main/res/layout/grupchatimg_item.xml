@@ -6,34 +6,40 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_60sdp"
-        app:cardCornerRadius="@dimen/_4sdp"
+        android:layout_height="@dimen/_60sdp"
         android:layout_margin="@dimen/_5sdp"
         app:cardBackgroundColor="@color/white"
-        android:layout_height="@dimen/_60sdp">
+        app:cardCornerRadius="@dimen/_4sdp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/grupchatimgitemImage"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_1sdp"
-            android:src="@drawable/grupimg1"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/grupchatimgitemClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/close_redimg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/grupchatimgitemImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/no_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_border_color="@color/text_yello"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="5dp" />
+
+
+
+            <ImageView
+                android:id="@+id/grupchatimgitemClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/close_redimg"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 

@@ -1,4 +1,4 @@
-package com.nightout.ui.activity
+package com.nightout.chat.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -70,10 +70,6 @@ import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 
 class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionListener {
     lateinit var binding: CreategrupActivityBinding
-    private val REQUEST_CAMERA_PERMISSION = 1
-    var imageUri: Uri? = null
-    var RequestCodeCamera = 100
-    var RequestCodeGallery = 200
     private var imageUrl: Uri? = null
     private var filePath: File? = null
     private lateinit var reqFile: RequestBody
@@ -93,9 +89,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         binding = DataBindingUtil.setContentView(this@CreateGroupActvity, R.layout.creategrup_activity)
         initView()
         setToolbar()
-
-
-
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             progressDialog.show(this@CreateGroupActvity, "")
             GlobalScope.launch (Dispatchers.Main){
@@ -111,16 +104,10 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                         override fun onYES() {
                             finish()
                         }
-
-                        override fun onNO() {
-
-                        }
-
-                    })
-
+                        override fun onNO() {}
+                        })
                 }
             }
-
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
@@ -152,14 +139,15 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         val jsonObject = JSONObject()
         try {
             usersList.put(PreferenceKeeper.instance.myUserDetail.id)
-            jsonObject.put("userList", usersList)
-            jsonObject.put("type", "createRoom")
-            jsonObject.put("room_type", "group")
-            jsonObject.put("createBy", PreferenceKeeper.instance.myUserDetail.id)
             val groupDetails = JSONObject()
             groupDetails.put("group_name", binding.crateGroupName.text.toString())
             groupDetails.put("about_group", "This is a Group")
             groupDetails.put("about_pic", imagePathUploded)
+
+            jsonObject.put("userList", usersList)
+            jsonObject.put("type", "createRoom")
+            jsonObject.put("room_type", "group")
+            jsonObject.put("createBy", PreferenceKeeper.instance.myUserDetail.id)
             jsonObject.put("group_details", groupDetails)
             jsonObject.put("create_date", Commons.millsToDateFormat(System.currentTimeMillis()))
             jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_ROOM)
@@ -171,17 +159,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     }
 
 
-    private fun joinCommand() {
-        val jsonObject = JSONObject()
-        try {
-            jsonObject.put("type", "allUsers")
-            jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_USERS)
-            //			jsonObject.put("room", roomId);
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
 
-    }
 
     @SuppressLint("Range")
     private fun getAllContactsFrmDevice(): ArrayList<ContactNoModel> {
@@ -434,157 +412,47 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         }
     }
 
-    fun onSelectImage() {
-        try {
-            val dialog = Dialog(this@CreateGroupActvity)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.window!!.decorView.setBackgroundResource(android.R.color.transparent)
-            dialog.setCancelable(true)
-            dialog.setContentView(R.layout.pop_profile)
-            dialog.show()
-            val txtGallery = dialog.findViewById<View>(R.id.layoutGallery) as LinearLayout
-            val txtCamera = dialog.findViewById<View>(R.id.layoutCamera) as LinearLayout
-            txtCamera.setOnClickListener { v: View? ->
-                val currentAPIVersion = Build.VERSION.SDK_INT
-                if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                    if (ActivityCompat.checkSelfPermission(
-                            this@CreateGroupActvity,
-                            Manifest.permission.CAMERA
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        ActivityCompat.requestPermissions(
-                            this@CreateGroupActvity,
-                            arrayOf(
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                            ),
-                            REQUEST_CAMERA_PERMISSION
-                        )
-                    } else {
-                        selectCameraImage()
-                        dialog.dismiss()
-                    }
-                } else {
-                    selectCameraImage()
-                    dialog.dismiss()
-                }
-            }
-            txtGallery.setOnClickListener { v: View? ->
-                val currentAPIVersion = Build.VERSION.SDK_INT
-                if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                    arrayOf(
-                        if (ActivityCompat.checkSelfPermission(
-                                this@CreateGroupActvity,
-                                Manifest.permission.CAMERA
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            ActivityCompat.requestPermissions(
-                                this@CreateGroupActvity,
-                                arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE
-                                ),
-                                2
-                            )
-                        } else {
-                            dialog.dismiss()
-                            val intent =
-                                Intent(
-                                    Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                )
-                            intent.type = "image/*"
-//                            intent.type = "*/*";
-                            intent.action = Intent.ACTION_PICK
-                            startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-                        }
-                    )
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+            if (!selectedMedia.isNullOrEmpty()) {
+                val bitmap: Bitmap?
 
-                } else {
-                    dialog.dismiss()
-                    val intent =
-                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    intent.type = "image/*"
-//                    intent.type = "*/*";
-                    intent.action = Intent.ACTION_PICK
-                    startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+                try {
+                    binding.createGroupProfile.setImageBitmap(null)
+                } catch (e: Exception) {
+                    Log.d("ok", ""+e)
+                }
+
+
+                imageUrl = Uri.parse(selectedMedia[0].path)
+
+                println("results>>>>>>>" + Uri.parse(selectedMedia[0].path))
+                val resultUri = Uri.parse(selectedMedia[0].path)
+                try {
+                    bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                    binding.createGroupProfile.setImageBitmap(bitmap)
+                    setBody(bitmap!!, "file")
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
-    private fun selectCameraImage() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
-            startActivityForResult(takePictureIntent, RequestCodeGallery)
-        }
 
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RequestCodeCamera && resultCode == AppCompatActivity.RESULT_OK && data != null) {//Gallery
-            imageUri = data.data
-            startCropActivity(imageUri!!)
-
-
-        }
-
-        else if (requestCode == RequestCodeGallery && resultCode == AppCompatActivity.RESULT_OK && data != null) { //camera
-            val extras: Bundle = data.extras!!
-            val imageBitmap = extras["data"] as Bitmap?
-            imageUri = Utills.getImageUri(this@CreateGroupActvity, imageBitmap!!)
-            Log.d("TAG", "iamgedsfas:: $imageUri")
-            startCropActivity(imageUri!!)
-
-        }
-
-        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
-                try {
-                    val bitmap: Bitmap?
-                    binding.createGroupProfile.setImageBitmap(null)
-                    imageUrl = result.originalUri
-                    val resultUri = result.uri
-
-                    if (Build.VERSION.SDK_INT < 28) {
-                        bitmap =
-                            MediaStore.Images.Media.getBitmap(
-                                this@CreateGroupActvity.contentResolver,
-                                resultUri
-                            )
-                    } else {
-                        val source = ImageDecoder.createSource(
-                            this@CreateGroupActvity.contentResolver,
-                            resultUri
-                        )
-                        bitmap = ImageDecoder.decodeBitmap(source)
-                    }
-                    binding.createGroupProfile.setImageBitmap(bitmap)
-                    setBody(bitmap!!, "file")
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    // Utills.showSnackBarFromTop(userImgBarcrwal, "catch-> $e", this@CreateGroupActvity)
-                }
-            }
-        }
-
-        else if (requestCode == ImagePicker.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == ImagePicker.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
-                val takenImage = BitmapFactory.decodeFile(ImagePicker.photoFile!!.absolutePath)
-
-
-                binding.createGroupProfile.setImageBitmap(takenImage)
-
-                // venueViewModel.venueLogo = setBody(takenImage!!, "image")
-
+                val bitmap: Bitmap = BitmapFactory.decodeFile(ImagePicker.photoFile!!.absolutePath)
+                binding.createGroupProfile.setImageBitmap(bitmap)
+                //  var vv=  Uri.fromFile(File(ImagePicker.photoFile!!.absolutePath))
+                // startCropActivity(vv)
+               setBody(bitmap!!, "file")
 
             }
         }
@@ -594,11 +462,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         val filePath = Utills.saveImage(this@CreateGroupActvity, bitmap)
         this.filePath = File(filePath)
         reqFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), this.filePath!!)
-
-//        if (flag == "store_logo") {
-//            activity.binding.iconName.text = this.filePath!!.name
-//        }
-
         body = MultipartBody.Part.createFormData(flag, this.filePath!!.name, reqFile)
         val builder = MultipartBody.Builder()
         builder.setType(MultipartBody.FORM)
@@ -651,7 +514,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
             .setAspectRatio(1, 1)
             .start(this@CreateGroupActvity)
     }
-    var fsUsersList: java.util.ArrayList<FSUsersModel> = java.util.ArrayList<FSUsersModel>()
+
 
     override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) =
         try {
@@ -776,60 +639,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
-            if (!selectedMedia.isNullOrEmpty()) {
-                val bitmap: Bitmap?
-
-                try {
-                    binding.createGroupProfile.setImageBitmap(null)
-                } catch (e: Exception) {
-                    Log.d("ok", ""+e)
-                }
-
-
-                imageUrl = Uri.parse(selectedMedia[0].path)
-
-                println("results>>>>>>>" + Uri.parse(selectedMedia[0].path))
-                val resultUri = Uri.parse(selectedMedia[0].path)
-                try {
-                    bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
-                    binding.createGroupProfile.setImageBitmap(bitmap)
-                    setBody(bitmap!!, "file")
-
-                    /* bitmap = if (Build.VERSION.SDK_INT < 28) {
-                         MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-                     } else {
-                         val source = ImageDecoder.createSource(this.contentResolver, resultUri)
-                         ImageDecoder.decodeBitmap(source)
-                     }*/
-/*
-                    if (isPremisesImageSelection) {
-                        binding.premisesImageAddBtn.visibility = View.GONE
-                        binding.premisesLicenseImage.setImageBitmap(bitmap)
-                        isPremisesImageSelection = false
-                        venueViewModel.premisesImage =
-                            setBody(bitmap!!, "premises_license_image")
-
-                    }*/
-
-
-                    /*  val builder = MultipartBody.Builder()
-                 builder.setType(MultipartBody.FORM)
-                 builder.addPart(body!!)*/
-
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-
-        }
-
-    }
 
 
     companion object {

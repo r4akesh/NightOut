@@ -6,9 +6,12 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nightout.chat.utility.DownloadUtility;
 import com.nightout.model.FSUsersModel;
+import com.nightout.utils.MyApp;
 
 
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +38,7 @@ public class ChatModel implements StickyMainData {
     private DownloadStatus downloadStatus = DownloadStatus.PENDING;
     private Date createdDate;
     private MessageType message_type;
-
+    private String media = "";
 
     public <T> Object getContent(){
         return real_content;
@@ -48,6 +51,7 @@ public class ChatModel implements StickyMainData {
 
         message = rawData.getString("message");
         roomId = rawData.getString("roomId");
+        media = rawData.getString("media");
 
 
         message_type = MessageType.getValueFromEnum(rawData.getString("message_type"));
@@ -60,7 +64,7 @@ public class ChatModel implements StickyMainData {
             case image:
             case video:
             case document: {
-               /* try {
+                 try {
                     JSONObject messageContent = rawData.getJSONObject("message_content");
 
                     Gson gson = new Gson();
@@ -76,7 +80,7 @@ public class ChatModel implements StickyMainData {
                         String downloadFileName = FilenameUtils.getName(url.getPath());
 
 
-                        File downloadFile = new File(DownloadUtility.getPath(AppApplication.Companion.getApplicationContext(), DownloadUtility.FILE_PATH_CHAT_FILES) + "/" + downloadFileName);
+                        File downloadFile = new File(DownloadUtility.getPath(MyApp.Companion.getAppContext(), DownloadUtility.FILE_PATH_CHAT_FILES) + "/" + downloadFileName);
                         isAppDownloaded = downloadFile.exists();
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
@@ -90,7 +94,7 @@ public class ChatModel implements StickyMainData {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                break;*/
+                break;
             }
             case contact:
             case location: {
@@ -150,6 +154,14 @@ public class ChatModel implements StickyMainData {
 
     public void setMessage_type(MessageType message_type) {
         this.message_type = message_type;
+    }
+
+    public String getMedia() {
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
     }
 
     public String getRoomId() {

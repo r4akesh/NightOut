@@ -216,7 +216,7 @@
             android:screenOrientation="portrait"
              />
         <activity
-            android:name=".ui.activity.CreateGroupActvity"
+            android:name=".chat.activity.CreateGroupActvity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />

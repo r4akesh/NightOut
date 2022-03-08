@@ -31,6 +31,7 @@ import com.nightout.databinding.*
   import com.downloader.Error
 import com.downloader.OnDownloadListener
 import com.downloader.request.DownloadRequest
+import com.nightout.utils.Utills
 import org.apache.commons.io.FilenameUtils
 import java.io.File
 import java.net.MalformedURLException
@@ -200,7 +201,8 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
             try {
                 val `object`: ChatModel = getDataInPosition(position)!!
                 val messageContent: MediaModel = `object`.message_content as MediaModel
-                Glide.with(context).load(messageContent.file_url).into(binding.chatRightImageImage)
+              //  Glide.with(context).load(messageContent.file_url).into(binding.chatRightImageImage)
+                Utills.setImageFullPath(context,binding.chatRightImageImage,messageContent.file_url)
                 binding.chatRightImageTime.text = `object`.message_on
                 binding.root.setOnClickListener {
                     chatCallbacks.onClickDownload(

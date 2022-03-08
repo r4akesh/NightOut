@@ -291,8 +291,6 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         jobj.put("filter",jarr)
         jobj.put("city",city.trim())
 
-
-
         progressDialog.show(requireActivity(), "")
         try {
             homeViewModel.dashBoard(jobj).observe(requireActivity(), {
@@ -412,6 +410,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         }
         dgOkBtn.setOnClickListener {
             adDialog.dismiss()
+            if(requireActivity()!=null)
             startActivity(Intent(requireActivity(), RatingListActvity::class.java))
         }
 

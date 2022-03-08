@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.GrupchatimgItemBinding
 import com.nightout.model.GroupChatImgModel
+import com.nightout.utils.Utills
 
 
 class GroupChatImageAdapter(
     var context: Context,
-    var arrayList: ArrayList<GroupChatImgModel>,
+    var arrayList: ArrayList<String>,
     var clickListener: ClickListener,
 ) :
     RecyclerView.Adapter<GroupChatImageAdapter.ViewHolder>() {
@@ -32,13 +33,7 @@ class GroupChatImageAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-
-
-
-        viewHolder.binding.grupchatimgitemImage.setImageResource(arrayList[position].imgProfile)
-
-
+        Utills.setImageFullPath(context,viewHolder.binding.grupchatimgitemImage,arrayList[position])
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)
 

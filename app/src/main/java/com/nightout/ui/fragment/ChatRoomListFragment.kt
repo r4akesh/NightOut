@@ -25,7 +25,7 @@ import com.nightout.databinding.FragmentChatBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.FSUsersModel
 import com.nightout.chat.activity.ChatPersonalActvity
-import com.nightout.ui.activity.CreateGroupActvity
+import com.nightout.chat.activity.CreateGroupActvity
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient

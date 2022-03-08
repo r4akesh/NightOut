@@ -45,7 +45,7 @@ class WebServiceRepository(application: Activity) {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     when (response.code()) {
                         200 -> {
-                            val data = response.body()?.string()!!
+                            val data: String = response.body()?.string()!!
                             try {
                                 val dataResponse = fromJson<ContactFillterModel>(data)
                                 venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))

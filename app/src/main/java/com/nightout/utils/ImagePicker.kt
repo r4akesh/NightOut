@@ -21,8 +21,7 @@ class ImagePicker {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             photoFile = getPhotoFileUri(photoFileName, context)
             if (photoFile != null) {
-                val fileProvider: Uri =
-                    FileProvider.getUriForFile(context, "com.nightout.fileProvider", photoFile!!)
+                val fileProvider: Uri = FileProvider.getUriForFile(context, "com.nightout.fileProvider", photoFile!!)
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
                 if (intent.resolveActivity(context.packageManager) != null) {
                     startActivityForResult(

@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.nightout.R
 import com.nightout.adapter.GroupChatImageAdapter
+
 import com.nightout.base.BaseActivity
+import com.nightout.chat.adapter.GroupListInfoAdapter
 import com.nightout.chat.chatinterface.ResponseType
 import com.nightout.chat.chatinterface.WebSocketObserver
 import com.nightout.chat.chatinterface.WebSocketSingleton
@@ -20,7 +22,7 @@ import com.nightout.chat.model.FSRoomModel
 import com.nightout.chat.model.ResponseModel
 import com.nightout.chat.model.RoomResponseModel
 import com.nightout.databinding.GroupinfoActvityBinding
-import com.nightout.model.GroupChatImgModel
+import com.nightout.model.FSUsersModel
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
@@ -40,11 +42,17 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
         binding = DataBindingUtil.setContentView(this@GroupInfoActvity,R.layout.groupinfo_actvity)
         setToolBar()
         setTouchNClick(binding.grupInfoToolBar.toolbarCreateGrop)
-        setHorizonatlDummyList()
+
 
         roomID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.ROOM_ID).toString()
         WebSocketSingleton.getInstant()!!.register(this)
         roomInfo//get detail
+        var  allChatMsg = intent.getStringArrayListExtra(AppConstant.INTENT_EXTRAS.ALLCHAT_MSG) as ArrayList<String>
+        Log.d("TAG", "onCreate: "+allChatMsg)
+        if(allChatMsg.size>0){
+            setHorizonatlList(allChatMsg)
+            binding.groupInfoActvitityView.visibility= VISIBLE
+        }
     }
 
     override fun onClick(v: View?) {
@@ -82,7 +90,17 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     }
 
     private fun setFrendListDummy(rsData: ResponseModel<RoomResponseModel>) {
-       /* groupListAdapter = GroupListAdapter(this@GroupInfoActvity, list,false, object : GroupListAdapter.ClickListener {
+        var selectedUserList = ArrayList<FSUsersModel>()
+        for(i in 0 until rsData.getData().roomList[0].userList.size){
+            var userID= rsData.getData().roomList[0].userList[i]
+            for(j in 0 until rsData.getData().userList.size){
+                if(userID == rsData.getData().userList[j].id){
+                    selectedUserList.add( rsData.getData().userList[j])
+                }
+            }
+        }
+        binding.groupInfoActvitityTotParticipants.text = ""+selectedUserList.size+" Participants"
+       var  groupListAdapter = GroupListInfoAdapter(this@GroupInfoActvity, selectedUserList,false, object : GroupListInfoAdapter.ClickListener {
                 override fun onClickChk(pos: Int) {
 
                 }
@@ -93,17 +111,12 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             it.layoutManager =
                 LinearLayoutManager(this@GroupInfoActvity, LinearLayoutManager.VERTICAL, false)
             it.adapter = groupListAdapter
-        }*/
+        }
     }
 
 
-    private fun setHorizonatlDummyList() {
-        var list = ArrayList<GroupChatImgModel>()
-        list.add(GroupChatImgModel(R.drawable.grupimg1))
-        list.add(GroupChatImgModel(R.drawable.grupimg2))
-        list.add(GroupChatImgModel(R.drawable.grupimg3))
-        list.add(GroupChatImgModel(R.drawable.grupimg4))
-       groupChatImageAdapter =  GroupChatImageAdapter(this@GroupInfoActvity,list,object :GroupChatImageAdapter.ClickListener{
+    private fun setHorizonatlList(allChatMsgList: ArrayList<String>) {
+       groupChatImageAdapter =  GroupChatImageAdapter(this@GroupInfoActvity,allChatMsgList,object :GroupChatImageAdapter.ClickListener{
            override fun onClick(pos: Int) {
 
            }
@@ -165,10 +178,17 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
 
     private fun setData(gData: FSRoomModel) {
         try {
-            binding.groupInfoActvitityDate.text = MyApp.dateZoneToDateFormat(gData?.create_time)
+
             binding.groupInfoActvitityName.text = gData?.groupDetails?.group_name
+            try {
+                binding.groupInfoActvitityDate.text = "Created "+MyApp.dateZoneToDateFormat(gData?.create_time)
+            } catch (e: Exception) {
+            }
             Utills.setImageFullPath(this@GroupInfoActvity,binding.groupInfoActvitityImage,gData?.groupDetails?.about_pic)
+
+            Log.d("received message", "setData image: "+gData?.groupDetails?.about_pic)
         } catch (e: Exception) {
+            Log.d("TAG", "setData: "+e)
         }
 
 

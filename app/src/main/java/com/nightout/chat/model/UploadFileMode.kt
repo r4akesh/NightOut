@@ -2,7 +2,10 @@ package com.nightout.chat.model
 
 import com.google.gson.annotations.SerializedName
 
-class UploadFileMode {
+//{"status":{"error":false,"status":{"message":"Success","code":200}},
+//    "data":{"status":200,"file_path":"http://testapi.newdevpoint.in/files/0e535aad60d8c4edbbc67aacd6968bbe.jpg"}}
+
+  class UploadFileMode {
     @SerializedName("thumbnail")
     val thumbnail: String? = null
 

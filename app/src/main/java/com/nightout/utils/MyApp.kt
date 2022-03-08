@@ -62,7 +62,7 @@ class MyApp : Application() {
         // init preference keeper
         PreferenceKeeper.setContext(applicationContext)
         application = this
-        ctx = applicationContext
+        Companion.ctx = applicationContext
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         val builder = VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
@@ -80,6 +80,11 @@ class MyApp : Application() {
         var USER_PROFILE_DEFAULT_GLIDE_CONFIG =
             RequestOptions().placeholder(R.drawable.user_default_ic)
                 .error(R.drawable.user_default_ic)
+
+        fun getAppContext() : Context {
+            return ctx!!
+        }
+
         fun getEditProfile(loginActivity: EditProfileActivity): EditProfileHandler {
             return EditProfileHandler(loginActivity)
         }
@@ -152,17 +157,17 @@ class MyApp : Application() {
         }
 
          fun dateZoneToDateFormat(date: String): String {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
-            val date: Date =
-                dateFormat.parse(date) //You will get date object relative to server/client timezone wherever it is parsed
-            // dateFormat.parse("2017-04-26T20:55:00.000Z") //You will get date object relative to server/client timezone wherever it is parsed
-            //2021-04-20T08:27:38.000000Z
-            //  val formatter = SimpleDateFormat("MMM dd, yyyy HH:mm") //If you need time just put specific format for time like 'HH:mm:ss'
-            val formatter = SimpleDateFormat("MMM dd, yyyy")
+             try {
+                 val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+                 val date: Date = dateFormat.parse(date) //You will get date object relative to server/client timezone wherever it is parsed
+                 val formatter = SimpleDateFormat("dd MMM yyyy")
 
-            val dateStr: String = formatter.format(date)
-            return dateStr
-        }
+                 val dateStr: String = formatter.format(date)
+                 return dateStr
+             } catch (e: Exception) {
+                 return ""
+             }
+         }
 
         fun dateZonetoDateFormat2(date: String): String {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")

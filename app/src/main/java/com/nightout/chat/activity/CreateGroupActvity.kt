@@ -60,13 +60,17 @@ import org.json.JSONObject
 import java.io.File
 import java.util.HashMap
 import com.google.gson.reflect.TypeToken
-import com.lassi.common.utils.KeyUtils
+/*import com.lassi.common.utils.KeyUtils
 import com.lassi.data.media.MiMedia
 import com.lassi.domain.media.LassiOption
 import com.lassi.domain.media.MediaType
-import com.lassi.presentation.builder.Lassi
+import com.lassi.presentation.builder.Lassi*/
 import com.nightout.callbacks.OnSelectOptionListener
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
+import androidx.core.app.ActivityCompat.startActivityForResult
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.options
+
 
 class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionListener {
     lateinit var binding: CreategrupActivityBinding
@@ -84,6 +88,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
     lateinit var commonViewModel : CommonViewModel
     var imagePathUploded = ""
+    lateinit var usersList : JSONArray
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@CreateGroupActvity, R.layout.creategrup_activity)
@@ -130,12 +135,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     }
 
     private fun createGroupCommand() {
-        val usersList = JSONArray()
-        for (i in 0 until listFilter.size ){
-            if(listFilter[i].isChk){
-                usersList.put(listFilter[i].uid)
-            }
-        }
+
         val jsonObject = JSONObject()
         try {
             usersList.put(PreferenceKeeper.instance.myUserDetail.id)
@@ -301,7 +301,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                             progressDialog.dialog.dismiss()
                             try {
 
-                             Utills.showDefaultToast(this@CreateGroupActvity, it.message!!, )
+                             Utills.showDefaultToast(this@CreateGroupActvity, it.message!!)
 
                             } catch (e: Exception) {
                             }
@@ -341,7 +341,15 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                 onSelectImage2()
             }
             v== binding.headerCreateGroup->{
-                createGroupCommand()
+                usersList = JSONArray()
+                for (i in 0 until listFilter.size ){
+                    if(listFilter[i].isChk){
+                        usersList.put(listFilter[i].uid)
+                    }
+                }
+                if(isValidInput()) {
+                    createGroupCommand()
+                }
             }
             binding.crateGroupSelectAll==v -> {
                 if( binding.crateGroupSelectAll.isChecked){
@@ -365,6 +373,20 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         }
     }
 
+    private fun isValidInput(): Boolean {
+
+        if(binding.crateGroupName.text.toString().isBlank()){
+            MyApp.popErrorMsg("","Please enter group name ",THIS!!)
+            return false
+        }
+        else if(usersList.length()<2){
+            MyApp.popErrorMsg("","Please select at lest 2 contacts",THIS!!)
+            return false
+        }
+        return true
+
+    }
+
     private fun onSelectImage2() {
         if (!Utills.checkingPermissionIsEnabledOrNot(this)) {
             Utills.requestMultiplePermission(this, requestPermissionCode)
@@ -379,6 +401,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
 
 
     private fun initView() {
+        usersList = JSONArray()
          setTouchNClick(binding.createGroupProfileRel)
          setTouchNClick(binding.crateGroupSelectAll)
          setTouchNClick(binding.headerCreateGroup)
@@ -412,7 +435,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+  /*  @RequiresApi(Build.VERSION_CODES.Q)
     private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
@@ -439,8 +462,19 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                 }
             }
         }
-    }
+    }*/
 
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // use the returned uri
+            val uriContent = result.uriContent
+            val uriFilePath = result.getUriFilePath(THIS!!) // optional usage
+            Log.d("pic", ": "+uriFilePath)
+        } else {
+            // an error occurred
+            val exception = result.error
+        }
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -449,12 +483,44 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 val bitmap: Bitmap = BitmapFactory.decodeFile(ImagePicker.photoFile!!.absolutePath)
-                binding.createGroupProfile.setImageBitmap(bitmap)
-                //  var vv=  Uri.fromFile(File(ImagePicker.photoFile!!.absolutePath))
-                // startCropActivity(vv)
-               setBody(bitmap!!, "file")
+               // binding.createGroupProfile.setImageBitmap(bitmap)9march
+                   var vv=  Uri.fromFile(File(ImagePicker.photoFile!!.absolutePath))
+                performCrop(vv);
+              // setBody(bitmap!!, "file") 9march
 
             }
+        }
+
+    }
+
+    private fun performCrop(picUri: Uri?) {
+        try {
+            cropImage.launch(
+                options {
+                    setGuidelines(com.canhub.cropper.CropImageView.Guidelines.ON)
+                }
+            )
+
+            //start picker to get image for cropping from only gallery and then use the image in
+            //cropping activity
+//            cropImage.launch(
+//                options {
+//                    setImagePickerContractOptions(
+//                        PickImageContractOptions(includeGallery = true, includeCamera = false)
+//                    )
+//                }
+//            )
+
+            // start cropping activity for pre-acquired image saved on the device and customize settings
+            cropImage.launch(
+                options(uri = picUri) {
+                    setGuidelines(com.canhub.cropper.CropImageView.Guidelines.ON)
+                    setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+                }
+            )
+
+        } catch (e: Exception) {
+            Log.d("TAG", "performCrop: "+e)
         }
     }
 
@@ -498,7 +564,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     Log.d("ok", "ERROR: ")
-                    Utills.showErrorToast( this@CreateGroupActvity,  it.message!!, )
+                    Utills.showErrorToast(this@CreateGroupActvity, it.message!!)
                 }
             }
         })
@@ -624,17 +690,28 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     override fun onOptionSelect(option: String) {
         if (option == "camera") {
             selectSourceBottomSheetFragment.dismiss()
-            ImagePicker.onCaptureImage(this)
+             ImagePicker.onCaptureImage(this)
+
+
+         /*   val intent = Lassi(this)
+                .with(LassiOption.CAMERA_AND_GALLERY)
+                .setMaxCount(1)
+                .setGridSize(3)
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)*/
+
         } else {
             selectSourceBottomSheetFragment.dismiss()
-            val intent = Lassi(this)
+           /* val intent = Lassi(this)
                 .with(LassiOption.GALLERY)
                 .setMaxCount(1)
                 .setGridSize(3)
                 .setMediaType(MediaType.IMAGE)
                 .setCompressionRation(10)
                 .build()
-            receiveData.launch(intent)
+            receiveData.launch(intent)*/
         }
     }
 

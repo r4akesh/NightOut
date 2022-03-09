@@ -9,8 +9,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler
 import com.bumptech.glide.Glide
 import com.nightout.R
+import com.nightout.base.BaseActivity
 
-class ZoomImageActivity : AppCompatActivity() {
+class ZoomImageActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +34,7 @@ class ZoomImageActivity : AppCompatActivity() {
         conBackBtn.setOnClickListener(View.OnClickListener { v: View? -> finish() })
     }
 
-    fun onClick(v: View?) {}
+
 
     companion object {
         const val INTENT_EXTRA_URL = "INTENT_EXTRA_URL"

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.nightout.chat.chatinterface.WebSocketSingleton
+import com.nightout.model.FSUsersModel
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.activity.OTPActivity
@@ -55,6 +56,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                            var logModel: LoginModel.Data = it.data
                            PreferenceKeeper.instance.bearerTokenSave = logModel.token
                            PreferenceKeeper.instance.loginResponse = logModel
+                           PreferenceKeeper.instance.myUserDetail = FSUsersModel()
                            fetchLoginAPI(it.data)
 //                            Utills.showSuccessToast(activity,it.message)
 //                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))

@@ -102,7 +102,7 @@ public class ChatModel implements StickyMainData {
                     JSONObject messageContent = rawData.getJSONObject("message_content");
 
                     Gson gson = new Gson();
-                    Type type = new TypeToken<ContactModel>() {
+                    Type type = new TypeToken<LocationModel>() {
                     }.getType();
                     message_content = gson.fromJson(messageContent.toString(), type);
 
@@ -126,7 +126,8 @@ public class ChatModel implements StickyMainData {
 //		String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tempDate);
 
 
-            message_on = new SimpleDateFormat("HH:mm:ss").format(messageDate);
+           // message_on = new SimpleDateFormat("HH:mm:ss").format(messageDate);
+            message_on = new SimpleDateFormat("hh:mm aa").format(messageDate);//show am-pm
 
             String tmpDate = new SimpleDateFormat("yyyy-MM-dd").format(messageDate);
             createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(tmpDate + " 12:00:00");

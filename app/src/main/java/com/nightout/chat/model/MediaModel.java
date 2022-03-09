@@ -8,7 +8,8 @@ public class MediaModel {
     MediaMetaModel file_meta;
 
     public String getFile_url() {
-        return APIClient.IMAGE_URL + file_url;
+       // return APIClient.IMAGE_URL + file_url;
+        return  file_url;
     }
 
     public void setFile_url(String file_url) {

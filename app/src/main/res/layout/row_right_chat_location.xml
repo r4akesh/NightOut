@@ -9,27 +9,31 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="300dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/bg_right_chat"
-            android:orientation="vertical"
+            android:background="@drawable/shape_bg_incoming_bubble"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <ImageView
-                android:id="@+id/chatLeftDocType"
-                android:layout_width="21dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_chat_location"
+                android:id="@+id/chatRightLocationImage"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:layout_marginStart="3dp"
+
+                android:layout_marginEnd="9dp"
+                android:layout_marginTop="3dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/no_image"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,46 +47,57 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:maxLines="1"
+                android:minLines="1"
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/chatLeftDocType"
+                app:layout_constraintStart_toEndOf="@+id/chatRightLocationImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@tools:sample/lorem" />
 
             <TextView
                 android:id="@+id/chatRightLocationAddress"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginStart="3dp"
+                android:maxLines="2"
+                android:minLines="1"
                 android:text="ZIP"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:fontFamily="@font/proximanova_reg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/chatRightLocationName"
-                app:layout_constraintTop_toBottomOf="@+id/chatRightLocationName" />
+                app:layout_constraintTop_toBottomOf="@+id/chatRightLocationImage" />
+
+
+            <TextView
+                android:id="@+id/chatRightLocationTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="12:15 pm"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/color_8B8B8B"
+                android:textSize="12sp"
+                android:paddingBottom="2dp"
+                app:layout_constraintTop_toBottomOf="@+id/chatRightLocationAddress"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/chatRightLocationTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="12:15 pm"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

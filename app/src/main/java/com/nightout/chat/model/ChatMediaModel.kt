@@ -18,7 +18,11 @@ data class ChatMediaModel(
 
     data class MessageContent(
         val file_meta: FileMeta,
-        val file_url: String
+        val file_url: String,
+        val latitude: String,
+        val longitude: String,
+        val address: String,
+        val name: String
     ):Serializable
 
     data class FileMeta(

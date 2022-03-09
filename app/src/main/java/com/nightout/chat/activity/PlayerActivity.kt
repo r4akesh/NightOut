@@ -19,11 +19,12 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.nightout.R
+import com.nightout.base.BaseActivity
 
 /**
  * A fullscreen activity to play audio or video streams.
  */
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : BaseActivity() {
     private var playbackStateListener: PlaybackStateListener? = null
     private var playerView: PlayerView? = null
     private var player: SimpleExoPlayer? = null
@@ -128,7 +129,8 @@ class PlayerActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+              // or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                )
         playerView!!.useArtwork = false
         playerView!!.controllerHideOnTouch = false
     }

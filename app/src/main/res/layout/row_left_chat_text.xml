@@ -35,6 +35,8 @@
                 android:paddingRight="5dp"
                 android:singleLine="true"
                 android:textSize="13sp"
+                android:textColor="@color/color_darkbg"
+                android:fontFamily="@font/proximanova_reg"
                 android:layout_height="wrap_content"/>
 
             <TextView
@@ -45,6 +47,7 @@
                 android:paddingLeft="7dp"
                 android:paddingRight="5dp"
                 android:layout_marginTop="2dp"
+                android:fontFamily="@font/proximanova_reg"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 tools:text="@tools:sample/lorem" />
@@ -59,7 +62,9 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:textSize="12sp"
-                android:textColor="@color/color_8B8B8B"
+                android:text="time"
+                android:fontFamily="@font/proximanova_reg"
+                android:textColor="@color/text_whitegray"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chatLeftTextMessage"
 

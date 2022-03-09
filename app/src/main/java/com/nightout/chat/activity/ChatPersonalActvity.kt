@@ -30,13 +30,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.downloader.OnDownloadListener
 import com.downloader.request.DownloadRequest
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.lassi.common.utils.KeyUtils
-import com.lassi.data.media.MiMedia
-import com.lassi.domain.media.LassiOption
-import com.lassi.domain.media.MediaType
-import com.lassi.presentation.builder.Lassi
+
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.callbacks.OnSelectOptionListener
@@ -87,6 +87,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     var mChatListAllMsg = ArrayList<ChatModel>()
     var listMedia = ArrayList<String>()
     private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
+    var LAUNCH_GOOGLE_ADDRESS = 102
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // setContentView(R.layout.chatpersonal_actvity)
@@ -179,6 +181,14 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 binding.attachmentWrapper.visibility = View.GONE
                // permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE)
             }
+            R.id.attachmentLocation->{
+                toggleAttachmentWrapper()
+                Places.initialize(this@ChatPersonalActvity, resources.getString(R.string.google_place_picker_key))
+                val fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
+                val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList).build(this@ChatPersonalActvity)
+                startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
+                overridePendingTransition(0,0)
+            }
             R.id.chatStartRecording -> {
                 permissionClass.askPermission(REQUEST_RECORD_AUDIO_PERMISSION)
             }
@@ -217,7 +227,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             selectSourceBottomSheetFragment.dismiss()
             ImagePicker.onCaptureImage(this)
         } else {
-            selectSourceBottomSheetFragment.dismiss()
+          /*  selectSourceBottomSheetFragment.dismiss()
             val intent = Lassi(this)
                 .with(LassiOption.GALLERY)
                 .setMaxCount(1)
@@ -225,7 +235,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 .setMediaType(MediaType.IMAGE)
                 .setCompressionRation(10)
                 .build()
-            receiveData.launch(intent)
+            receiveData.launch(intent)*/
         }
     }
 
@@ -276,8 +286,21 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 
             }
         }
-    }
+        else if(requestCode==LAUNCH_GOOGLE_ADDRESS && resultCode==Activity.RESULT_OK){
+            val place = Autocomplete.getPlaceFromIntent(data!!)
+            var lat = place.latLng?.latitude
+            var lang = place.latLng?.longitude
+            val messageContent = HashMap<String, Any?>()
 
+            messageContent["name"] = place.address
+            messageContent["address"] = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lang+"&zoom=12&size=400x400&key=AIzaSyBrwXwOTaLkh10-1l6ZLWuPQK9jr5h3tOM"
+            messageContent["latitude"] = lat
+            messageContent["longitude"] = lang
+
+            sendMessageLocation(messageContent)
+        }
+    }
+/*
     private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
@@ -291,7 +314,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 }
             }
         }
-    }
+    }*/
 
 
     override fun onStart() {
@@ -901,27 +924,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 adapter.setHeaderAndData(chatForThatDay as List<ChatModel?>, headerData1)
             }
             Log.d(TAG, "appendMessage: "+mChatListAllMsg)
-             // listMedia = ArrayList<String>()
-           /* try {
-                for (i in 0 until mChatListAllMsg.size ){
-                    //if(mChatListAllMsg[i].message_type.equals("IMAGE") || mChatListAllMsg[i].message_type.equals("VIDEO")){
-                        if(mChatListAllMsg[i].message_type.name.isNotBlank()){
-                            if(mChatListAllMsg[i].message_type.name.lowercase().equals("image")){
-                                var vv =mChatListAllMsg[i].message_content ///as
-                                // MediaModel
-                                val gson = Gson()
-                                val json = gson.toJson(vv)
-                                var jb  = JSONObject(json)
 
-                                Log.d(TAG, "appendMessage: "+jb)
-                              //  listMedia.add(vv.file_url)
-                            }
-                        }
-
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, "appendMessage: "+e)
-            }*/
 
             if (showMessageCount && chatModel.sender_detail.id != PreferenceKeeper.instance.myUserDetail.id) {
                 noOfNewMessages += 1
@@ -996,7 +999,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             supportFragmentManager.beginTransaction().remove(fragment).commit()
             if (data != null) {
                 if (data.data.file_path != null && data.data.file_path.isNotEmpty()) {
-                    messageData!![MediaMetaModel.KEY_FILE_THUMB] = APIClient.IMAGE_URL + data.data.file_path
+                  //  messageData!![MediaMetaModel.KEY_FILE_THUMB] = APIClient.IMAGE_URL + data.data.file_path
+                    messageData!![MediaMetaModel.KEY_FILE_THUMB] =  data.data.file_path
                 }
                 val messageContent = HashMap<String, Any?>()
                 val fileUrl: String =  /*APIClient.IMAGE_URL + */data.data.file_path!!
@@ -1040,14 +1044,43 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     500
                 )
             }
-
         } catch (e: Exception) {
         }
-
-
-//        binding.chatRecyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
-//        binding.chatRecyclerView.setHasFixedSize(true);
     }
+
+    private fun sendMessageLocation(messageContent: HashMap<String, Any?>) {
+        val messageMap = HashMap<String?, Any?>()
+        messageMap["type"] = "addMessage"
+        messageMap["roomId"] = _roomId
+        messageMap["room"] = _roomId
+        messageMap["message"] = ""
+        messageMap["message_type"] = ChatModel.MessageType.location.toString()
+        messageMap["sender_id"] = PreferenceKeeper.instance.myUserDetail.id
+        messageMap["receiver_id"] = "12312faa"
+        messageMap["message_content"] = messageContent
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+        //        messageMap.put("time", time);
+
+        // TODO: 27/01/21 SendMessage
+//        chatReference.add(messageMap);
+        WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
+        try {
+            if(adapter.itemCount>0){
+                Timer().schedule(
+                    object : TimerTask() {
+                        override fun run() {
+                            binding.chatRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                            // your code here
+                        }
+                    },
+                    500
+                )
+            }
+        } catch (e: Exception) {
+        }
+    }
+
+
     private fun uploadImageFormUri(resultUri: Uri) {
         val imagePath = resultUri.path
         try {

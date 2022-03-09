@@ -1,6 +1,7 @@
 package com.nightout.ui.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.media.Image
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -20,6 +21,7 @@ import android.util.Log
 
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Handler
@@ -71,6 +73,8 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.teresaholfeld.stories.StoriesProgressView
 import java.net.URI
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+
 
 
 import java.text.ParseException
@@ -111,9 +115,49 @@ class Demo : BaseActivity() {
 
        /* showStories()*/
 
+        binding.btnPicker.setOnClickListener {
+           // getPicker()
+        }
 
 
     }
+
+/*    private fun getPicker() {
+        val intent = Lassi(this)
+            .with(LassiOption.CAMERA_AND_GALLERY)
+            .setMaxCount(4)
+            .setGridSize(2)
+            .setPlaceHolder(R.drawable.ic_image_placeholder)
+            .setErrorDrawable(R.drawable.ic_image_placeholder)
+            .setSelectionDrawable(R.drawable.ic_checked_media)
+            .setStatusBarColor(R.color.colorPrimaryDark)
+            .setToolbarColor(R.color.colorPrimary)
+            .setToolbarResourceColor(android.R.color.white)
+            .setProgressBarColor(R.color.colorAccent)
+            .setCropType(CropImageView.CropShape.OVAL)
+            .setCropAspectRatio(1, 1)
+            .setCompressionRation(10)
+            .setMinFileSize(0)
+            .setMaxFileSize(1000)
+            .enableActualCircleCrop()
+            .setSupportedFileTypes("jpg", "jpeg", "png", "webp", "gif")
+            .enableFlip()
+            .enableRotate()
+            .build()
+        receiveData.launch(intent)
+    }*/
+
+
+
+   /* private val receiveData =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+                if (!selectedMedia.isNullOrEmpty()) {
+                    Log.d("pic", "onActivityResult: "+selectedMedia)
+                }
+            }
+        }*/
 
 /*
     fun showStories() {

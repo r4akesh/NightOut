@@ -17,6 +17,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.telephony.PhoneNumberUtils
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -230,9 +231,16 @@ class Utills {
         }
 
         fun setImageFullPath(context: Context?, imageView: ImageView?, url: String?) {
-            imageView?.let {
-                Glide.with(context!!).load(url).centerCrop()
-                    .placeholder(R.drawable.app_icon).into(it)
+            try {
+                imageView?.let {
+                    Glide.with(context!!).load(url)
+                        .centerCrop()
+                        .placeholder(R.drawable.app_icon)
+                        .error((R.drawable.nodata_founf_img))
+                        .into(it)
+                }
+            } catch (e: Exception) {
+                Log.d("Glide", "setImageFullPath: "+e)
             }
         }
         fun phoneNoUKFormat(phno:String):String{

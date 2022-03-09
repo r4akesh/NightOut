@@ -307,8 +307,10 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
             try {
                 val `object`: ChatModel = getDataInPosition(position)!!
                 val messageContent: LocationModel = `object`.message_content as LocationModel
-                binding.chatRightLocationName.text = messageContent.name
-                binding.chatRightLocationAddress.text = messageContent.address
+                Utills.setImageFullPath(context,binding.chatRightLocationImage,messageContent.address)
+
+               // binding.chatRightLocationName.text = messageContent.name
+                binding.chatRightLocationAddress.text = messageContent.name
                 binding.chatRightLocationTime.text = `object`.message_on
                 binding.root.setOnClickListener {
                     chatCallbacks.onClickLocation(
@@ -357,8 +359,9 @@ class ChatAdapter(private val context: Context, private val chatCallbacks: ChatC
             try {
                 val `object`: ChatModel = getDataInPosition(position)!!
                 val messageContent: LocationModel = `object`.message_content as LocationModel
-                binding.chatLeftLocationName.text = messageContent.name
-                binding.chatLeftLocationAddress.text = messageContent.address
+                Utills.setImageFullPath(context,binding.imageView3,messageContent.address)
+              //  binding.chatLeftLocationName.text = messageContent.name
+                binding.chatLeftLocationAddress.text = messageContent.name
                 binding.chatLeftLocationTime.text = `object`.message_on
                 binding.root.setOnClickListener {
                     chatCallbacks.onClickLocation(

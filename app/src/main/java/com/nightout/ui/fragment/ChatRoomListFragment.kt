@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -150,8 +152,13 @@ class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObse
                                 roomListGroup.add(roomResponseModelResponseModel.getData().roomList[i])
                             }
                         }
-                        if(roomListGroup.size>0)
-                        chatAdapter.addAll(roomListGroup)
+                        if(roomListGroup.size>0) {
+                            chatAdapter.addAll(roomListGroup)
+                            binding.chtGrpItemNoDataConstrent.visibility=GONE
+                        }
+                        else{
+                            binding.chtGrpItemNoDataConstrent.visibility=VISIBLE
+                        }
                     } else {
                         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
                     }

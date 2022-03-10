@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -21,7 +22,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import com.github.drjacky.imagepicker.ImagePicker
+import com.lassi.common.utils.KeyUtils
+import com.lassi.data.media.MiMedia
+import com.lassi.domain.media.LassiOption
+import com.lassi.domain.media.MediaType
+import com.lassi.presentation.builder.Lassi
+//import com.github.drjacky.imagepicker.ImagePicker
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.callbacks.OnSelectOptionListener
@@ -222,95 +228,147 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
         binding.lostItemToolBar.toolbarTitle.setText("Lost Item Details")
 
     }
-
-    override fun onOptionSelect(option: String) {
-        if (option == "camera") {
-          /*  selectSourceBottomSheetFragment.dismiss()
-            cameraLauncher.launch(
-                ImagePicker.with(this@LostItemDetailsActvity)
-                    .cameraOnly().createIntent()
-            )*/
-            selectSourceBottomSheetFragment.dismiss()
-            val currentAPIVersion = Build.VERSION.SDK_INT
-            if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                if (ActivityCompat.checkSelfPermission(
-                        THIS!!,
-                        Manifest.permission.CAMERA
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(
-                        THIS!!,
-                        arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        ),
-                        REQUEST_CAMERA_PERMISSION
-                    )
-                } else {
-                    selectCameraImage()
-
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+            if (!selectedMedia.isNullOrEmpty()) {
+                val bitmap: Bitmap?
+                bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                //imageUrl = Uri.parse(selectedMedia[0].path)
+                try {
+                    binding.lostItemImg.setImageBitmap(null)
+                    binding.lostItemImg.setImageBitmap(bitmap)
+                } catch (e: Exception) {
+                    Log.d("crashImage", "onActivityResult: "+e)
                 }
-            } else {
-                selectCameraImage()
 
-            }
-        } else {
-         /*   selectSourceBottomSheetFragment.dismiss()
-            galleryLauncher.launch(
-                ImagePicker.with(this@LostItemDetailsActvity)
-                    .galleryOnly()
-                    .galleryMimeTypes( // no gif images at all
-                        mimeTypes = arrayOf(
-                            "image/png",
-                            "image/jpg",
-                            "image/jpeg"
-                        )
-                    )
-                    .createIntent()
-            )*/
-            selectSourceBottomSheetFragment.dismiss()
-            val currentAPIVersion = Build.VERSION.SDK_INT
-            if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                arrayOf(
-                    if (ActivityCompat.checkSelfPermission(
-                            THIS!!,
-                            Manifest.permission.CAMERA
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        ActivityCompat.requestPermissions(
-                            THIS!!,
-                            arrayOf(
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                            ),
-                            2
-                        )
-                    } else {
-                     //   dialog.dismiss()
-                        val intent =
-                            Intent(
-                                Intent.ACTION_PICK,
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                            )
-                        intent.type = "image/*"
-//                            intent.type = "*/*";
-                        intent.action = Intent.ACTION_PICK
-                        THIS!!.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-                    }
-                )
+                setBody(bitmap!!, "profile")
 
-            } else {
-               // dialog.dismiss()
-                val intent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                intent.type = "image/*"
-//                    intent.type = "*/*";
-                intent.action = Intent.ACTION_PICK
-                startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+
+
+
+
             }
         }
+    }
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onOptionSelect(option: String) {
+
+        if (option == "camera") {
+            selectSourceBottomSheetFragment.dismiss()
+            //  ImagePicker.onCaptureImage(this)
+            val intent = Lassi(this)
+                .with(LassiOption.CAMERA)
+                .setMaxCount(1)
+                .setGridSize(3)
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)
+
+        } else {
+            selectSourceBottomSheetFragment.dismiss()
+            val intent = Lassi(this)
+                .with(LassiOption.GALLERY)
+                .setMaxCount(1)
+                .setGridSize(3)
+
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)
+
+
+        }
+
+//        if (option == "camera") {
+//          /*  selectSourceBottomSheetFragment.dismiss()
+//            cameraLauncher.launch(
+//                ImagePicker.with(this@LostItemDetailsActvity)
+//                    .cameraOnly().createIntent()
+//            )*/
+//            selectSourceBottomSheetFragment.dismiss()
+//            val currentAPIVersion = Build.VERSION.SDK_INT
+//            if (currentAPIVersion >= Build.VERSION_CODES.M) {
+//                if (ActivityCompat.checkSelfPermission(
+//                        THIS!!,
+//                        Manifest.permission.CAMERA
+//                    ) != PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    ActivityCompat.requestPermissions(
+//                        THIS!!,
+//                        arrayOf(
+//                            Manifest.permission.CAMERA,
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                            Manifest.permission.READ_EXTERNAL_STORAGE
+//                        ),
+//                        REQUEST_CAMERA_PERMISSION
+//                    )
+//                } else {
+//                    selectCameraImage()
+//
+//                }
+//            } else {
+//                selectCameraImage()
+//
+//            }
+//        } else {
+//         /*   selectSourceBottomSheetFragment.dismiss()
+//            galleryLauncher.launch(
+//                ImagePicker.with(this@LostItemDetailsActvity)
+//                    .galleryOnly()
+//                    .galleryMimeTypes( // no gif images at all
+//                        mimeTypes = arrayOf(
+//                            "image/png",
+//                            "image/jpg",
+//                            "image/jpeg"
+//                        )
+//                    )
+//                    .createIntent()
+//            )*/
+//            selectSourceBottomSheetFragment.dismiss()
+//            val currentAPIVersion = Build.VERSION.SDK_INT
+//            if (currentAPIVersion >= Build.VERSION_CODES.M) {
+//                arrayOf(
+//                    if (ActivityCompat.checkSelfPermission(
+//                            THIS!!,
+//                            Manifest.permission.CAMERA
+//                        ) != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        ActivityCompat.requestPermissions(
+//                            THIS!!,
+//                            arrayOf(
+//                                Manifest.permission.CAMERA,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                                Manifest.permission.READ_EXTERNAL_STORAGE
+//                            ),
+//                            2
+//                        )
+//                    } else {
+//                     //   dialog.dismiss()
+//                        val intent =
+//                            Intent(
+//                                Intent.ACTION_PICK,
+//                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//                            )
+//                        intent.type = "image/*"
+////                            intent.type = "*/*";
+//                        intent.action = Intent.ACTION_PICK
+//                        THIS!!.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+//                    }
+//                )
+//
+//            } else {
+//               // dialog.dismiss()
+//                val intent =
+//                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                intent.type = "image/*"
+////                    intent.type = "*/*";
+//                intent.action = Intent.ACTION_PICK
+//                startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+//            }
+//        }
     }
     private fun selectCameraImage() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -336,7 +394,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
         }
 
     private fun parseError(activityResult: ActivityResult) {
-        if (activityResult.resultCode == ImagePicker.RESULT_ERROR) {
+     /*   if (activityResult.resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(
                 this@LostItemDetailsActvity,
                 ImagePicker.getError(activityResult.data),
@@ -349,7 +407,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
                 "You have cancelled the image upload process.",
                 this@LostItemDetailsActvity
             )
-        }
+        }*/
     }
 
     private fun startCropActivity(imageUri: Uri) {

@@ -111,7 +111,7 @@ class OrderDetailActivity : BaseActivity() {
             var serviceChrg=PreferenceKeeper.instance.SERVICE_CHARGE?.toInt()
             var grndTot=totPrice+serviceChrg!!
             binding.orderDetailTotAmt.text= resources.getString(R.string.currency_sumbol) +grndTot
-            binding.orderDetailPay.text= "Pay "+resources.getString(R.string.currency_sumbol) +binding.orderDetailTotAmt.text.toString()
+            binding.orderDetailPay.text= "Pay " +binding.orderDetailTotAmt.text.toString()
             binding.orderDetailServChrgeAmt.text=  resources.getString(R.string.currency_sumbol) +PreferenceKeeper.instance.SERVICE_CHARGE
 
             setListOrder()

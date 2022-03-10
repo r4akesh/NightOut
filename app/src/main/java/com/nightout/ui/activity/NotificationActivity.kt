@@ -2,10 +2,12 @@ package com.nightout.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-import com.nightout.adapter.NotificationAdpter
+import com.nightout.adapter.NotificationReadAdpter
+import com.nightout.adapter.NotificationUnreadAdpter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityNotificationBinding
 import com.nightout.model.NotificationResponse
@@ -37,7 +39,14 @@ class NotificationActivity : BaseActivity() {
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
                     it.data?.let {
-                        setList(it.data)
+                        if(it.data.unread.size>0) {
+                            binding.notificationUnread.visibility=VISIBLE
+                            setListUnread(it.data.unread)
+                        }
+                          if(it.data.read.size>0) {
+                            binding.notificationread.visibility=VISIBLE
+                            setListRead(it.data.read)
+                        }
                     }
                 }
                 Status.LOADING->{
@@ -54,17 +63,31 @@ class NotificationActivity : BaseActivity() {
             }
         })
     }
-
-    lateinit var notificationAdpter: NotificationAdpter
-    private fun setList(dataList: ArrayList<NotificationResponse.Data>) {
-        notificationAdpter = NotificationAdpter(this@NotificationActivity,dataList,object:NotificationAdpter.ClickListener{
+    lateinit var notificationReadAdpter: NotificationReadAdpter
+    private fun setListRead(readList: ArrayList<NotificationResponse.Read>) {
+        notificationReadAdpter = NotificationReadAdpter(this@NotificationActivity,readList,object:NotificationReadAdpter.ClickListener{
             override fun onClickChk(pos: Int) {
 
             }
 
         })
 
-        binding.notificationRecyle.also {
+        binding.notificationRecyleread.also {
+            it.layoutManager= LinearLayoutManager(this@NotificationActivity,LinearLayoutManager.VERTICAL,false)
+            it.adapter = notificationReadAdpter
+        }
+    }
+
+    lateinit var notificationAdpter: NotificationUnreadAdpter
+    private fun setListUnread(dataList: ArrayList<NotificationResponse.Unread>) {
+        notificationAdpter = NotificationUnreadAdpter(this@NotificationActivity,dataList,object:NotificationUnreadAdpter.ClickListener{
+            override fun onClickChk(pos: Int) {
+
+            }
+
+        })
+
+        binding.notificationRecyleUnread.also {
             it.layoutManager= LinearLayoutManager(this@NotificationActivity,LinearLayoutManager.VERTICAL,false)
             it.adapter = notificationAdpter
         }

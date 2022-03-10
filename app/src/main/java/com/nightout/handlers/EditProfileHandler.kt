@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.location.Address
 import android.location.Geocoder
@@ -25,13 +26,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.bumptech.glide.Glide
-import com.github.drjacky.imagepicker.ImagePicker
+//import com.github.drjacky.imagepicker.ImagePicker
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.lassi.common.utils.KeyUtils
+import com.lassi.data.media.MiMedia
+import com.lassi.domain.media.LassiOption
+import com.lassi.domain.media.MediaType
+import com.lassi.presentation.builder.Lassi
 import com.nightout.R
 import com.nightout.callbacks.OnSelectOptionListener
+import com.nightout.chat.activity.CreateGroupActvity
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.EditProfileActivity
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
@@ -64,6 +71,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     var LAUNCH_GOOGLE_ADDRESS2 = 1006
     var RequestCodeCamera = 100
     var RequestCodeGallery = 200
+    private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
 
 //    init {
 //        editProfileViewModel = EditProfileViewModel(activity)
@@ -84,67 +92,79 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     private val REQUEST_CAMERA_PERMISSION = 1
     var imageUri: Uri? = null
       fun onSelectImage() {
-        try {
-            val dialog = Dialog(activity)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.window!!.decorView.setBackgroundResource(android.R.color.transparent)
-            dialog.setCancelable(true)
-            dialog.setContentView(R.layout.pop_profile)
-            dialog.show()
-            val txtGallery = dialog.findViewById<View>(R.id.layoutGallery) as LinearLayout
-            val txtCamera = dialog.findViewById<View>(R.id.layoutCamera) as LinearLayout
-            txtCamera.setOnClickListener { v: View? ->
-                val currentAPIVersion = Build.VERSION.SDK_INT
-                if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                    if (ActivityCompat.checkSelfPermission(
-                            activity,
-                            Manifest.permission.CAMERA
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        ActivityCompat.requestPermissions(
-                            activity,
-                            arrayOf(
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                            ),
-                            REQUEST_CAMERA_PERMISSION
-                        )
-                    } else {
-                        selectCameraImage()
-                        dialog.dismiss()
-                    }
-                } else {
-                    selectCameraImage()
-                    dialog.dismiss()
-                }
-            }
-            txtGallery.setOnClickListener { v: View? ->
-                val currentAPIVersion = Build.VERSION.SDK_INT
-                if (currentAPIVersion >= Build.VERSION_CODES.M) {
-                    arrayOf(if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 2)
-                        } else {
-                            dialog.dismiss()
-                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                            intent.type = "image/*"
-//                            intent.type = "*/*";
-                            intent.action = Intent.ACTION_PICK
-                            activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-                        }
-                    )
+//        try {
+//            val dialog = Dialog(activity)
+//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//            dialog.window!!.decorView.setBackgroundResource(android.R.color.transparent)
+//            dialog.setCancelable(true)
+//            dialog.setContentView(R.layout.pop_profile)
+//            dialog.show()
+//            val txtGallery = dialog.findViewById<View>(R.id.layoutGallery) as LinearLayout
+//            val txtCamera = dialog.findViewById<View>(R.id.layoutCamera) as LinearLayout
+//            txtCamera.setOnClickListener { v: View? ->
+//                val currentAPIVersion = Build.VERSION.SDK_INT
+//                if (currentAPIVersion >= Build.VERSION_CODES.M) {
+//                    if (ActivityCompat.checkSelfPermission(
+//                            activity,
+//                            Manifest.permission.CAMERA
+//                        ) != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        ActivityCompat.requestPermissions(
+//                            activity,
+//                            arrayOf(
+//                                Manifest.permission.CAMERA,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                                Manifest.permission.READ_EXTERNAL_STORAGE
+//                            ),
+//                            REQUEST_CAMERA_PERMISSION
+//                        )
+//                    } else {
+//                        selectCameraImage()
+//                        dialog.dismiss()
+//                    }
+//                } else {
+//                    selectCameraImage()
+//                    dialog.dismiss()
+//                }
+//            }
+//            txtGallery.setOnClickListener { v: View? ->
+//                val currentAPIVersion = Build.VERSION.SDK_INT
+//                if (currentAPIVersion >= Build.VERSION_CODES.M) {
+//                    arrayOf(if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 2)
+//                        } else {
+//                            dialog.dismiss()
+//                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                            intent.type = "image/*"
+////                            intent.type = "*/*";
+//                            intent.action = Intent.ACTION_PICK
+//                            activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+//                        }
+//                    )
+//
+//                } else {
+//                    dialog.dismiss()
+//                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                    intent.type = "image/*"
+////                    intent.type = "*/*";
+//                    intent.action = Intent.ACTION_PICK
+//                    activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
+//                }
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+    }
 
-                } else {
-                    dialog.dismiss()
-                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    intent.type = "image/*"
-//                    intent.type = "*/*";
-                    intent.action = Intent.ACTION_PICK
-                    activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+    fun onSelectImage2(){
+        if (!Utills.checkingPermissionIsEnabledOrNot(activity)) {
+            Utills.requestMultiplePermission(activity, CreateGroupActvity.requestPermissionCode)
+        }else{
+            selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this, "")
+            selectSourceBottomSheetFragment.show(
+               activity.supportFragmentManager,
+                "selectSourceBottomSheetFragment"
+            )
         }
     }
 
@@ -200,30 +220,36 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
 
     }
 
-/*
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onOptionSelect(option: String) {
         if (option == "camera") {
             selectSourceBottomSheetFragment.dismiss()
-            cameraLauncher.launch(
-                ImagePicker.with(activity)
-                    .cameraOnly().createIntent()
-            )
+            //  ImagePicker.onCaptureImage(this)
+            val intent = Lassi(activity)
+                .with(LassiOption.CAMERA)
+                .setMaxCount(1)
+                .setGridSize(3)
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)
+
         } else {
             selectSourceBottomSheetFragment.dismiss()
-            galleryLauncher.launch(
-                ImagePicker.with(activity)
-                    .galleryOnly()
-                    .galleryMimeTypes( // no gif images at all
-                        mimeTypes = arrayOf(
-                            "image/png",
-                            "image/jpg",
-                            "image/jpeg"
-                        )
-                    )
-                    .createIntent()
-            )
+            val intent = Lassi(activity)
+                .with(LassiOption.GALLERY)
+                .setMaxCount(1)
+                .setGridSize(3)
+
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)
+
+
         }
-    }*/
+    }
 
     private val cameraLauncher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -240,7 +266,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
         }
 
     private fun parseError(activityResult: ActivityResult) {
-        if (activityResult.resultCode == ImagePicker.RESULT_ERROR) {
+       /* if (activityResult.resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(activity, ImagePicker.getError(activityResult.data), Toast.LENGTH_SHORT)
                 .show()
         } else {
@@ -249,7 +275,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                 "You have cancelled the image upload process.",
                 activity
             )
-        }
+        }*/
     }
 
     private fun startCropActivity(imageUri: Uri) {
@@ -260,86 +286,122 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
             .start(activity)
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RequestCodeCamera && resultCode == AppCompatActivity.RESULT_OK && data != null) {//Gallery
-            imageUri = data.data
-            startCropActivity(imageUri!!)
-
-           /* Glide.with(this)
-                .asBitmap()
-                .load(imageUri)
-                .centerCrop()
-                .into(binding.profilePic)
-            addProfile()*/
-        }else if (requestCode == RequestCodeGallery && resultCode == AppCompatActivity.RESULT_OK && data != null) { //camera
-            val extras: Bundle = data.extras!!
-            val imageBitmap = extras["data"] as Bitmap?
-            imageUri = getImageUri(activity,imageBitmap!!)
-            Log.d("TAG", "iamgedsfas:: $imageUri")
-            startCropActivity(imageUri!!)
-           /* val image = imageUri
-            Glide.with(this)
-                .asBitmap()
-                .load(image)
-                .centerCrop()
-                .into(binding.profilePic)
-            addProfile()*/
-        }
-
-
-      else   if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val imageUri = CropImage.getPickImageResultUri(activity, data)
-            if (CropImage.isReadExternalStoragePermissionsRequired(activity, imageUri)) {
-                // mCropImageUri = imageUri
-                activity.requestPermissions(
-                    listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
-                    0
-                )
-            } else {
-                startCropActivity(imageUri)
-            }
-
-        }
-
-      else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private val receiveData = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+           // activity.binding.userProfile.setImageResource(R.drawable.app_icon)
+           val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+            if (!selectedMedia.isNullOrEmpty()) {
                 val bitmap: Bitmap?
-                activity.binding.userProfile.setImageBitmap(null)
-                imageUrl = result.originalUri
-                val resultUri = result.uri
+
+//                try {
+//                    activity.binding.userProfile.setImageBitmap(null)
+//                } catch (e: Exception) {
+//                    Log.d("ok", ""+e)
+//                }
+
+
+                imageUrl = Uri.parse(selectedMedia[0].path)
+
+                println("results>>>>>>>" + Uri.parse(selectedMedia[0].path))
+                val resultUri = Uri.parse(selectedMedia[0].path)
                 try {
-                    if (Build.VERSION.SDK_INT < 28) {
-                        bitmap =
-                            MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
-                    } else {
-                        val source = ImageDecoder.createSource(activity.contentResolver, resultUri)
-                        bitmap = ImageDecoder.decodeBitmap(source)
-                    }
-                    if(bitmap!=null){
+                    bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                    if(bitmap!=null)
                     activity.binding.userProfile.setImageBitmap(bitmap)
-                    setBody(bitmap!!, "profile")}
-                    else{
-                        MyApp.popErrorMsg("","bitmap is null",activity)
-                    }
-                    //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
-                    //  Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
+                   // activity.binding.userProfile.setImageURI(resultUri)
+                   // activity.binding.userProfile.setImageResource(R.drawable.app_icon)
+
+                    setBody(bitmap!!, "profile")
+
+
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    Utills.showSnackBarFromTop(activity.binding.etFName, "catch-> $e", activity)
                 }
             }
         }
+    }
 
-     /*  else if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
-            val place = Autocomplete.getPlaceFromIntent(data!!)
-            activity.binding.editProfileLocation.text = place.address
-         //   activity.binding.editProfileLocation2.setText(place.address)
-            getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
-        }*/
-       else if (requestCode == LAUNCH_GOOGLE_ADDRESS2 && resultCode == Activity.RESULT_OK) {
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        /* if (requestCode == RequestCodeCamera && resultCode == AppCompatActivity.RESULT_OK && data != null) {//Gallery
+             imageUri = data.data
+             startCropActivity(imageUri!!)
+
+            /* Glide.with(this)
+                 .asBitmap()
+                 .load(imageUri)
+                 .centerCrop()
+                 .into(binding.profilePic)
+             addProfile()*/
+         }else if (requestCode == RequestCodeGallery && resultCode == AppCompatActivity.RESULT_OK && data != null) { //camera
+             val extras: Bundle = data.extras!!
+             val imageBitmap = extras["data"] as Bitmap?
+             imageUri = getImageUri(activity,imageBitmap!!)
+             Log.d("TAG", "iamgedsfas:: $imageUri")
+             startCropActivity(imageUri!!)
+            /* val image = imageUri
+             Glide.with(this)
+                 .asBitmap()
+                 .load(image)
+                 .centerCrop()
+                 .into(binding.profilePic)
+             addProfile()*/
+         }
+
+
+       else   if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+             val imageUri = CropImage.getPickImageResultUri(activity, data)
+             if (CropImage.isReadExternalStoragePermissionsRequired(activity, imageUri)) {
+                 // mCropImageUri = imageUri
+                 activity.requestPermissions(
+                     listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                     0
+                 )
+             } else {
+                 startCropActivity(imageUri)
+             }
+
+         }
+
+       else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+             val result = CropImage.getActivityResult(data)
+             if (resultCode == Activity.RESULT_OK) {
+                 val bitmap: Bitmap?
+                 activity.binding.userProfile.setImageBitmap(null)
+                 imageUrl = result.originalUri
+                 val resultUri = result.uri
+                 try {
+                     if (Build.VERSION.SDK_INT < 28) {
+                         bitmap =
+                             MediaStore.Images.Media.getBitmap(activity.contentResolver, resultUri)
+                     } else {
+                         val source = ImageDecoder.createSource(activity.contentResolver, resultUri)
+                         bitmap = ImageDecoder.decodeBitmap(source)
+                     }
+                     if(bitmap!=null){
+                     activity.binding.userProfile.setImageBitmap(bitmap)
+                     setBody(bitmap!!, "profile")}
+                     else{
+                         MyApp.popErrorMsg("","bitmap is null",activity)
+                     }
+                     //  editProfileViewModel.profilePic = setBody(bitmap!!, "profile")
+                     //  Log.d("TAG", "onActivityResult: "+editProfileViewModel.profilePic)
+                 } catch (e: Exception) {
+                     e.printStackTrace()
+                     Utills.showSnackBarFromTop(activity.binding.etFName, "catch-> $e", activity)
+                 }
+             }
+         }
+
+        else if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
+             val place = Autocomplete.getPlaceFromIntent(data!!)
+             activity.binding.editProfileLocation.text = place.address
+          //   activity.binding.editProfileLocation2.setText(place.address)
+             getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
+         }*/
+         if (requestCode == LAUNCH_GOOGLE_ADDRESS2 && resultCode == Activity.RESULT_OK) {
             val place = Autocomplete.getPlaceFromIntent(data!!)
             activity.binding.editProfileLocation2.text = place.address
            // getAddrsFrmLatlang(place.latLng!!.latitude,place.latLng!!.longitude)
@@ -393,6 +455,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                         var logModel: LoginModel.Data = it.data
                         PreferenceKeeper.instance.loginResponse = logModel
                         Log.d("ok", "SUCCESS: ")
+
                         activity.finish()
                     }
 
@@ -409,7 +472,5 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
         })
     }
 
-    override fun onOptionSelect(option: String) {
-        TODO("Not yet implemented")
-    }
+
 }

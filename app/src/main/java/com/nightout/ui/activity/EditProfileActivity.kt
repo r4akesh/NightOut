@@ -44,6 +44,6 @@ class EditProfileActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        binding.editProfileHandler!!.onActivityResult(requestCode,resultCode,data)
+    //    binding.editProfileHandler!!.onActivityResult(requestCode,resultCode,data)
     }
 }

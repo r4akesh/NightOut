@@ -36,6 +36,11 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lassi.common.utils.KeyUtils
+import com.lassi.data.media.MiMedia
+import com.lassi.domain.media.LassiOption
+import com.lassi.domain.media.MediaType
+import com.lassi.presentation.builder.Lassi
 
 import com.nightout.R
 import com.nightout.base.BaseActivity
@@ -57,7 +62,7 @@ import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 import com.nightout.utils.*
 import com.nightout.vendor.services.APIClient
-import com.theartofdev.edmodo.cropper.CropImage
+//import com.theartofdev.edmodo.cropper.CropImage
 import org.apache.commons.io.FilenameUtils
 import org.json.JSONException
 import org.json.JSONObject
@@ -111,7 +116,19 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         listMedia = ArrayList<String>()
         parseExtras()
 
-      //  WebSocketSingleton.getInstant()?.register(this)
+        binding.chatRecyclerView.addOnLayoutChangeListener(View.OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if (bottom < oldBottom) {
+                binding.chatRecyclerView.postDelayed(Runnable {
+                    if(adapter.itemCount>0) {
+                        binding.chatRecyclerView.scrollToPosition(
+                            binding.chatRecyclerView.getAdapter()?.getItemCount()!! - 1
+                        )
+                    }
+                }, 10)
+            }
+        })
+
+        //  WebSocketSingleton.getInstant()?.register(this)
     }
 
 
@@ -171,7 +188,20 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             }
             R.id.attachmentGallery -> {
                 toggleAttachmentWrapper()
-                onSelectImage()
+
+                val intent = Lassi(this)
+                    .with(LassiOption.CAMERA_AND_GALLERY)
+                    .setMaxCount(1)
+                    .setGridSize(3)
+                    .setMinTime(5) // for MediaType.VIDEO only
+                    .setMaxTime(30) // for MediaType.VIDEO only
+                    .setMediaType(MediaType.VIDEO)
+                    .setCompressionRation(10)
+                    .disableCrop()
+                    .build()
+                receiveDataVideo.launch(intent)
+
+               // onSelectImage()
                 binding.attachmentWrapper.visibility = View.GONE
                // permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO)
             }
@@ -225,9 +255,16 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     override fun onOptionSelect(option: String) {
         if (option == "camera") {
             selectSourceBottomSheetFragment.dismiss()
-            ImagePicker.onCaptureImage(this)
+            val intent = Lassi(this)
+                .with(LassiOption.CAMERA)
+                .setMaxCount(1)
+                .setGridSize(3)
+                .setMediaType(MediaType.IMAGE)
+                .setCompressionRation(10)
+                .build()
+            receiveData.launch(intent)
         } else {
-          /*  selectSourceBottomSheetFragment.dismiss()
+           selectSourceBottomSheetFragment.dismiss()
             val intent = Lassi(this)
                 .with(LassiOption.GALLERY)
                 .setMaxCount(1)
@@ -235,13 +272,13 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 .setMediaType(MediaType.IMAGE)
                 .setCompressionRation(10)
                 .build()
-            receiveData.launch(intent)*/
+            receiveData.launch(intent)
         }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+       /* if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 val resultUri: Uri?
@@ -262,7 +299,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     error.printStackTrace()
                 }
             }
-        } else if (requestCode == GALLERY) {
+        }*/
+         if (requestCode == GALLERY) {
             if (data != null) {
                 val contentURI = data.data
                 contentURI?.let { uploadVideoFormUri(it) }
@@ -300,7 +338,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             sendMessageLocation(messageContent)
         }
     }
-/*
+
     private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
@@ -314,9 +352,23 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 }
             }
         }
-    }*/
+    }
 
-
+    private val receiveDataVideo = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+            if (!selectedMedia.isNullOrEmpty()) {
+                val resultUri = Uri.parse(selectedMedia[0].path)
+                Log.d("TAG", ": "+resultUri)
+                try {
+                    //  var   bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                    uploadVideoFormUri(resultUri)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
     override fun onStart() {
         super.onStart()
         WebSocketSingleton.getInstant()?.register(this)
@@ -713,7 +765,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     private fun selectCameraImage() {
  		//CropImage.activity().start(this, AddPostBottomSheetFragment.this);
         isSetWallpaper = false
-        CropImage.activity().start(this)
+   //     CropImage.activity().start(this)
 
 //		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
 //				MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -757,11 +809,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                         //                        binding.chatNewMessageCount
                         setRead()
                     } else {
-                        Toast.makeText(
-                            this@ChatPersonalActvity,
-                            responseData.getString("message"),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                       // Toast.makeText(this@ChatPersonalActvity, responseData.getString("message"), Toast.LENGTH_SHORT).show()
                     }
 
 
@@ -1189,7 +1237,10 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     }
 
     private fun uploadVideoFormUri(contentURI: Uri) {
-        val selectedVideoPath = getPath(contentURI)
+     // val selectedVideoPath = getPath(contentURI)
+       // val selectedVideoPath = FileUtils.getPath(THIS!!,contentURI)
+         var selectedVideoPath =contentURI.toString()
+
         Log.d("path", selectedVideoPath!!)
         saveVideoToInternalStorage(selectedVideoPath)
         try {

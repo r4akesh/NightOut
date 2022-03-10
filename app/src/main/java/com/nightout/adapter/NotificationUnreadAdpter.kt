@@ -4,24 +4,18 @@ import android.content.Context
 import android.util.Log
 
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.databinding.DataBindingUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.GroupItemBinding
 import com.nightout.databinding.RowNotificationLayoutBinding
 import com.nightout.model.*
-import com.nightout.utils.Commons
 import com.nightout.utils.MyApp
-import com.nightout.utils.Utills
 
 
-class NotificationAdpter(var context: Context, var arrayList: ArrayList<NotificationResponse.Data>, var clickListener: ClickListener, ) : RecyclerView.Adapter<NotificationAdpter.ViewHolder>() {
+class NotificationUnreadAdpter(var context: Context, var arrayList: ArrayList<NotificationResponse.Unread>, var clickListener: ClickListener, ) : RecyclerView.Adapter<NotificationUnreadAdpter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

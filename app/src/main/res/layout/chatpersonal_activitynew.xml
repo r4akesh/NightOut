@@ -346,32 +346,28 @@
 
                 <ImageView
                     android:id="@+id/attachmentLocation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     app:srcCompat="@drawable/ic_icon_location_attach" />
 
                 <ImageView
                     android:id="@+id/attachmentCamera"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
 
                     app:srcCompat="@drawable/ic_icon_camera_attach" />
 
                 <ImageView
                     android:id="@+id/attachmentGallery"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+
 
                     app:srcCompat="@drawable/ic_icon_gallery" />
             </LinearLayout>

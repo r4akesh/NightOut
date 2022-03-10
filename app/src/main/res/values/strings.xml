@@ -246,5 +246,7 @@
     <string name="Rating">Rating</string>
     <string name="Please_give_rating">Please give the rating</string>
     <string name="Please_give_review">Please give the review</string>
+    <string name="You_not_created_group">You have not created any group yet, Please create group for chat </string>
+
 
 </resources>

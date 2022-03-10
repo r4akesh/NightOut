@@ -60,16 +60,16 @@ import org.json.JSONObject
 import java.io.File
 import java.util.HashMap
 import com.google.gson.reflect.TypeToken
-/*import com.lassi.common.utils.KeyUtils
+ import com.lassi.common.utils.KeyUtils
 import com.lassi.data.media.MiMedia
 import com.lassi.domain.media.LassiOption
 import com.lassi.domain.media.MediaType
-import com.lassi.presentation.builder.Lassi*/
+import com.lassi.presentation.builder.Lassi
 import com.nightout.callbacks.OnSelectOptionListener
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 import androidx.core.app.ActivityCompat.startActivityForResult
-import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.options
+//import com.canhub.cropper.CropImageContract
+//import com.canhub.cropper.options
 
 
 class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionListener {
@@ -78,7 +78,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     private var filePath: File? = null
     private lateinit var reqFile: RequestBody
     var body: MultipartBody.Part? = null
-
     lateinit var contactFillterViewModel : CommonViewModel
     val REQUEST_READ_CONTACTS = 80
     private val progressDialog = CustomProgressDialog()
@@ -89,6 +88,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     lateinit var commonViewModel : CommonViewModel
     var imagePathUploded = ""
     lateinit var usersList : JSONArray
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@CreateGroupActvity, R.layout.creategrup_activity)
@@ -135,7 +135,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     }
 
     private fun createGroupCommand() {
-
         val jsonObject = JSONObject()
         try {
             usersList.put(PreferenceKeeper.instance.myUserDetail.id)
@@ -154,11 +153,8 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-       // WebSocketSingleton.getInstant()!!.register(this)
         WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
     }
-
-
 
 
     @SuppressLint("Range")
@@ -252,8 +248,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                 val writeStoragePermission = grantResults[2] == PackageManager.PERMISSION_GRANTED
                 val locationPermission = grantResults[3] == PackageManager.PERMISSION_GRANTED
                 if (cameraPermission && readStoragePermission && writeStoragePermission && locationPermission) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show()
                 } else {
                     //Utils.requestMultiplePermission(this,requestPermissionCode)
                 }
@@ -374,7 +369,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     }
 
     private fun isValidInput(): Boolean {
-
         if(binding.crateGroupName.text.toString().isBlank()){
             MyApp.popErrorMsg("","Please enter group name ",THIS!!)
             return false
@@ -435,7 +429,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         }
     }
 
-  /*  @RequiresApi(Build.VERSION_CODES.Q)
+    @RequiresApi(Build.VERSION_CODES.Q)
     private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
@@ -462,22 +456,11 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                 }
             }
         }
-    }*/
-
-    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-        if (result.isSuccessful) {
-            // use the returned uri
-            val uriContent = result.uriContent
-            val uriFilePath = result.getUriFilePath(THIS!!) // optional usage
-            Log.d("pic", ": "+uriFilePath)
-        } else {
-            // an error occurred
-            val exception = result.error
-        }
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+ /*   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ImagePicker.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -491,38 +474,9 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
             }
         }
 
-    }
+    }*/
 
-    private fun performCrop(picUri: Uri?) {
-        try {
-            cropImage.launch(
-                options {
-                    setGuidelines(com.canhub.cropper.CropImageView.Guidelines.ON)
-                }
-            )
 
-            //start picker to get image for cropping from only gallery and then use the image in
-            //cropping activity
-//            cropImage.launch(
-//                options {
-//                    setImagePickerContractOptions(
-//                        PickImageContractOptions(includeGallery = true, includeCamera = false)
-//                    )
-//                }
-//            )
-
-            // start cropping activity for pre-acquired image saved on the device and customize settings
-            cropImage.launch(
-                options(uri = picUri) {
-                    setGuidelines(com.canhub.cropper.CropImageView.Guidelines.ON)
-                    setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                }
-            )
-
-        } catch (e: Exception) {
-            Log.d("TAG", "performCrop: "+e)
-        }
-    }
 
     private fun setBody(bitmap: Bitmap, flag: String): MultipartBody.Part {
         val filePath = Utills.saveImage(this@CreateGroupActvity, bitmap)
@@ -543,7 +497,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
 
         return body!!
     }
-
 
     private fun uploadChatImage(requestBody: MultipartBody) {
         progressDialog.show(this@CreateGroupActvity)
@@ -572,15 +525,6 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
 
 
     }
-
-    private fun startCropActivity(imageUri: Uri) {
-        CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
-            .setMultiTouchEnabled(true)
-            .setOutputCompressQuality(100)
-            .setAspectRatio(1, 1)
-            .start(this@CreateGroupActvity)
-    }
-
 
     override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) =
         try {
@@ -690,28 +634,29 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     override fun onOptionSelect(option: String) {
         if (option == "camera") {
             selectSourceBottomSheetFragment.dismiss()
-             ImagePicker.onCaptureImage(this)
-
-
-         /*   val intent = Lassi(this)
-                .with(LassiOption.CAMERA_AND_GALLERY)
+           //  ImagePicker.onCaptureImage(this)
+            val intent = Lassi(this)
+                .with(LassiOption.CAMERA)
                 .setMaxCount(1)
                 .setGridSize(3)
                 .setMediaType(MediaType.IMAGE)
                 .setCompressionRation(10)
                 .build()
-            receiveData.launch(intent)*/
+            receiveData.launch(intent)
 
         } else {
             selectSourceBottomSheetFragment.dismiss()
-           /* val intent = Lassi(this)
+             val intent = Lassi(this)
                 .with(LassiOption.GALLERY)
                 .setMaxCount(1)
                 .setGridSize(3)
+
                 .setMediaType(MediaType.IMAGE)
                 .setCompressionRation(10)
                 .build()
-            receiveData.launch(intent)*/
+            receiveData.launch(intent)
+
+
         }
     }
 

@@ -35,8 +35,7 @@ class ImagePicker {
         }
 
         private fun getPhotoFileUri(fileName: String, context: Context): File {
-            val mediaStorageDir =
-                File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG)
+            val mediaStorageDir = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG)
 
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
 

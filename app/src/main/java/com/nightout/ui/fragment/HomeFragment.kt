@@ -363,8 +363,13 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                 }else{
                                     mMap?.clear()
                                     allRecordsList = ArrayList()
-                                    setListAllRecord()
-                                    MyApp.ShowTost(requireActivity(),"Venues not available in $city")
+                                    if(requireActivity()!=null) {
+                                        setListAllRecord()
+                                        MyApp.ShowTost(
+                                            requireActivity(),
+                                            "Venues not available in $city"
+                                        )
+                                    }
                                 }
                             } catch (e: Exception) {
                                 mMap?.clear()

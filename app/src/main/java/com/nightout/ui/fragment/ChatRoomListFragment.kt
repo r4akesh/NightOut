@@ -28,6 +28,7 @@ import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.FSUsersModel
 import com.nightout.chat.activity.ChatPersonalActvity
 import com.nightout.chat.activity.CreateGroupActvity
+import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
@@ -52,6 +53,14 @@ class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObse
         initView()
         joinCommand()
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(MyApp.getStatus(AppConstant.INTENT_EXTRAS.IsUserExitClickBtn)){
+            joinCommand()
+            MyApp.setStatus(AppConstant.INTENT_EXTRAS.IsUserExitClickBtn,false)
+        }
     }
     override fun onStart() {
         super.onStart()
@@ -157,6 +166,7 @@ class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObse
                             binding.chtGrpItemNoDataConstrent.visibility=GONE
                         }
                         else{
+                            chatAdapter.addAll(ArrayList<FSRoomModel>())
                             binding.chtGrpItemNoDataConstrent.visibility=VISIBLE
                         }
                     } else {
@@ -198,6 +208,7 @@ class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObse
                                 break
                             }
                         }
+                        binding.chtGrpItemNoDataConstrent.visibility=GONE
                         chatAdapter.addOrUpdate(element)
                     } else if (ResponseType.RESPONSE_TYPE_USER_MODIFIED.equalsTo(type)) {
                         Log.d("ok", "received message: $response")

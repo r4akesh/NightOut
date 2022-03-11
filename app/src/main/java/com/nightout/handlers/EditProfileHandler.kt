@@ -49,8 +49,7 @@ import com.nightout.utils.Utills
 import com.nightout.utils.Utills.Companion.getImageUri
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.EditProfileViewModel
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -254,14 +253,14 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     private val cameraLauncher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
-                startCropActivity(uri)
+                //startCropActivity(uri)
             } else parseError(it)
         }
 
     private val galleryLauncher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
-                startCropActivity(uri)
+             //   startCropActivity(uri)
             } else parseError(it)
         }
 
@@ -278,13 +277,13 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
         }*/
     }
 
-    private fun startCropActivity(imageUri: Uri) {
+  /*  private fun startCropActivity(imageUri: Uri) {
         CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
             .setMultiTouchEnabled(true)
             .setOutputCompressQuality(100)
             .setAspectRatio(1, 1)
             .start(activity)
-    }
+    }*/
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private val receiveData = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

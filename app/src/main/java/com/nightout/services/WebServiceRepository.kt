@@ -2872,8 +2872,8 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
-    fun doPayment(jbj:JSONObject): LiveData<ApiSampleResource<BaseModel>> {
-        val venueListResponseModel = MutableLiveData<ApiSampleResource<BaseModel>>()
+    fun doPayment(jbj:JSONObject): LiveData<ApiSampleResource<PlaceOrderResponse>> {
+        val venueListResponseModel = MutableLiveData<ApiSampleResource<PlaceOrderResponse>>()
         val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jbj.toString())
         if (networkHelper.isNetworkConnected()) {
             val responseBody: Call<ResponseBody> = apiInterfaceHeader.make_paymentAPI(body)
@@ -2883,7 +2883,7 @@ class WebServiceRepository(application: Activity) {
                         200 -> {
                             val data = response.body()?.string()!!
                             try {
-                                val dataResponse = fromJson<BaseModel>(data)
+                                val dataResponse = fromJson<PlaceOrderResponse>(data)
 
                                 venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
                             } catch (ex: Exception) {

@@ -167,7 +167,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         try {
             mMap = googleMap
             googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
@@ -201,36 +201,41 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         latitudeUpdated = offset+mLat
                         longitudeUpdated = offset+mLang
                         val positionAddrs = LatLng(latitudeUpdated, longitudeUpdated)
-                        val marker: Marker = mMap!!.addMarker(MarkerOptions().position(positionAddrs))
-                        marker.title =dashList.all_records[i].sub_records[j].store_name
-                        marker.snippet = dashList.all_records[i].sub_records[j].store_address
+                        val marker: Marker? = mMap!!.addMarker(MarkerOptions().position(positionAddrs))
+                        marker?.title =dashList.all_records[i].sub_records[j].store_name
+                        marker?.snippet = dashList.all_records[i].sub_records[j].store_address
                         
                         when {
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.BAR -> {
-                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
                             }
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.PUB -> {
-                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
                             }
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.CLUB -> {
-                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
                             }
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.FOOD -> {
-                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
                             }
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim()==AppConstant.PrefsName.EVENT -> {
-                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
                             }
                         }
-                        builder.include(marker.position)
+                        marker?.position?.let { builder.include(it) }
                     }
                 }
                 try {
                     val bounds = builder.build()
                     val padding2 = 110
-                    val cu = CameraUpdateFactory.newLatLngBounds(MyApp.adjustBoundsForMaxZoomLevel(bounds), padding2)
+                    val cu = MyApp.adjustBoundsForMaxZoomLevel(bounds)?.let {
+                        CameraUpdateFactory.newLatLngBounds(
+                            it, padding2)
+                    }
                     //googleMap.moveCamera(cu);
-                    mMap?.animateCamera(cu)
+                    if (cu != null) {
+                        mMap?.animateCamera(cu)
+                    }
                 } catch (e: Exception) {
                     Log.e("Exception>>>", "" + e)
                 }

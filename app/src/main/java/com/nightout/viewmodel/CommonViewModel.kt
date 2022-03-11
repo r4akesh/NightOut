@@ -52,7 +52,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var prebookedCancelViewModel: LiveData<ApiSampleResource<PreBookCancelRes>>
     lateinit var fillterResViewModel: LiveData<ApiSampleResource<FillterRes>>
     lateinit var allUserResViewModel: LiveData<ApiSampleResource<AllUserRes>>
-    lateinit var doPayment: LiveData<ApiSampleResource<BaseModel>>
+    lateinit var doPayment: LiveData<ApiSampleResource<PlaceOrderResponse>>
     lateinit var chatUploadImg: LiveData<ApiSampleResource<ChatImgUploadResponse>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
@@ -84,7 +84,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
         return dsahModel
     }
 
-    fun doPayment(jbj:JSONObject): LiveData<ApiSampleResource<BaseModel>> {
+    fun doPayment(jbj:JSONObject): LiveData<ApiSampleResource<PlaceOrderResponse>> {
         doPayment = webServiceRepository.doPayment(jbj)
         return doPayment
     }

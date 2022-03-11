@@ -110,7 +110,7 @@ class SearchCityActivity : BaseActivity(), OnMapReadyCallback {
         binding.srchBarCrawlToolBar.toolbarCreateGrop.visibility = View.GONE
     }
 
-    override fun onMapReady(p0: GoogleMap?) {
+    override fun onMapReady(p0: GoogleMap) {
         gMap = p0!!
         p0!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
     }

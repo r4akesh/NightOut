@@ -226,7 +226,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 latitudeUpdated = offset+mLat
                 longitudeUpdated = offset+mLang
                 val positionAddrs = LatLng(latitudeUpdated, longitudeUpdated)
-                val marker: Marker = googleMap!!.addMarker(MarkerOptions().position(positionAddrs))
+                val marker: Marker = googleMap!!.addMarker(MarkerOptions().position(positionAddrs))!!
                 marker.title =venuDataList[i].store_name
                 marker.snippet = venuDataList[i].store_address
                 when {
@@ -252,7 +252,7 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 runOnUiThread(Runnable {
                     val bounds = builder.build()
                     val padding2 = 110
-                    val cu = CameraUpdateFactory.newLatLngBounds(MyApp.adjustBoundsForMaxZoomLevel(bounds), padding2)
+                    val cu = CameraUpdateFactory.newLatLngBounds(MyApp.adjustBoundsForMaxZoomLevel(bounds)!!, padding2)
                     //googleMap.moveCamera(cu);
                     googleMap?.animateCamera(cu)
                 })

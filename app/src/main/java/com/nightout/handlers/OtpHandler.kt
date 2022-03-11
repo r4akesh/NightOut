@@ -6,7 +6,12 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import com.google.gson.Gson
+import com.nightout.chat.chatinterface.ResponseType
+import com.nightout.chat.chatinterface.WebSocketObserver
 import com.nightout.chat.chatinterface.WebSocketSingleton
+import com.nightout.chat.model.ResponseModel
 import com.nightout.model.FSUsersModel
 import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivityNew
@@ -21,9 +26,11 @@ import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.OtpViewModel
 import org.json.JSONException
 import org.json.JSONObject
+import com.google.gson.reflect.TypeToken
+import kotlin.math.log
 
-
-open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: String) {
+open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: String):
+    WebSocketObserver {
     private lateinit var regViewModel: OtpViewModel
     private val progressDialog = CustomProgressDialog()
 
@@ -41,10 +48,11 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
             map["device_type"] = "1"
             map["email"] = email
             otpCall(map, activity)
+            WebSocketSingleton.getInstant()!!.register(this)
         }
     }
 
-
+   lateinit var userData : LoginModel.Data
     private fun otpCall(map: HashMap<String, String>, activity: OTPActivity) {
         progressDialog.show(activity)
         regViewModel.otp(map).observe(activity, {
@@ -57,7 +65,9 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                            PreferenceKeeper.instance.bearerTokenSave = logModel.token
                            PreferenceKeeper.instance.loginResponse = logModel
                            PreferenceKeeper.instance.myUserDetail = FSUsersModel()
-                           fetchLoginAPI(it.data)
+                           userData= it.data
+                           Log.d("ok chat", "fetchLoginAPI call11: ")
+                           fetchLoginAPI()
 //                            Utills.showSuccessToast(activity,it.message)
 //                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))
 //                          activity.finish()
@@ -81,9 +91,10 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
 
 
 
-    private fun fetchLoginAPI(userData: LoginModel.Data) {
+    private fun fetchLoginAPI() {
         val jsonObject = JSONObject()
             try {
+                Log.d("ok", "fetchLoginAPI44: ")
                 jsonObject.put("userId", userData.id)
                 jsonObject.put("userName", userData.email)
                 jsonObject.put("firstName", userData.name)
@@ -93,8 +104,10 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                 jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_LOGIN)
                 //            mWaitingDialog.show();
                 WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
+                Log.d("ok", "fetchLoginAPI55: ")
             } catch (e: JSONException) {
                 e.printStackTrace()
+                Log.d("ok", "fetchLoginAPI222: ")
             }
 
 
@@ -141,6 +154,54 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
 
     fun bakPressd(){
         activity.finish()
+    }
+
+    override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
+        try {
+            activity.runOnUiThread {
+                val gson = Gson()
+                println("received message otp: $response")
+                if (ResponseType.RESPONSE_TYPE_LOGIN.equalsTo(type) || ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE.equalsTo(type)) {
+                    val type1 = object : TypeToken<ResponseModel<FSUsersModel?>?>() {}.type
+                    val fsUsersModelResponseModel: ResponseModel<FSUsersModel> = gson.fromJson<ResponseModel<FSUsersModel>>(response, type1)
+                    if (fsUsersModelResponseModel.getStatus_code() == 200) {
+                        //UserDetails.instance.myDetail = fsUsersModelResponseModel.getData()
+                        PreferenceKeeper.instance.myUserDetail = fsUsersModelResponseModel.getData()
+                        PreferenceKeeper.instance.loginUser(activity, fsUsersModelResponseModel.getData())
+                        //  Toast.makeText(this@OTPActivity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
+                        PreferenceKeeper.instance.isUserLogin = true
+                        Utills.showSuccessToast(activity,""+fsUsersModelResponseModel.getMessage())
+                        activity.startActivity(Intent(activity, HomeActivityNew::class.java))
+                        activity.finish()
+                        //    startActivity(Intent(this@LoginActivity, RoomListActivity::class.java))
+                        // finish()
+                    }
+                    else if(fsUsersModelResponseModel.getStatus_code() == 404){
+                        Log.d("ok chat", "fetchLoginAPI call333: $type")
+                        fetchLoginAPI()
+                    }
+                    else {
+                        Log.d("ok chat", "elseeee: $type")
+                        Toast.makeText(activity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Log.d("ok chat", "onWebSocketResponse: $type")
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("ok chat", "Exception: $type"+e)
+            e.printStackTrace()
+        }
+    }
+
+    override val activityName:  String = OTPActivity::class.java.name
+
+
+    override fun registerFor(): Array<ResponseType> {
+        return arrayOf(
+            ResponseType.RESPONSE_TYPE_LOGIN,
+            ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE
+        )
     }
 
 }

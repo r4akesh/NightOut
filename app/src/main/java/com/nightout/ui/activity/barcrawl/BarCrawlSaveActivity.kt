@@ -49,7 +49,7 @@ class BarCrawlSaveActivity : BaseActivity() ,OnMapReadyCallback {
 //        binding.addBarCrawlToolBar.toolbarCreateGrop.visibility= View.VISIBLE
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap!!
         val success = googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
     }

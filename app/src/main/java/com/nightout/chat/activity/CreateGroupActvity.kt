@@ -46,8 +46,7 @@ import com.nightout.utils.*
 import com.nightout.vendor.services.APIClient
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -178,7 +178,7 @@ class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
     }
 
 
-    override fun onMapReady(po: GoogleMap?) {
+    override fun onMapReady(po: GoogleMap) {
         googleMap = po!!
       googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
         if(barCrwalListShare!=null) {
@@ -204,7 +204,7 @@ class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
             val height = resources.displayMetrics.heightPixels
             val padding = (width * 0.30).toInt() // offset from edges of the map 10% of screen
             bounds = builder!!.build()
-            val cu = CameraUpdateFactory.newLatLngBounds(bounds,width,height, padding)
+            val cu = CameraUpdateFactory.newLatLngBounds(bounds!!,width,height, padding)
             googleMap.animateCamera(cu)
         }
 

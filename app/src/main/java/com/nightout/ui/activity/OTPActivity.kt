@@ -33,7 +33,7 @@ import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.nightout.vendor.viewmodel.OtpViewModel
 
-class OTPActivity : BaseActivity() , WebSocketObserver {
+class OTPActivity : BaseActivity() {
 
     lateinit var binding : OtpActvityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class OTPActivity : BaseActivity() , WebSocketObserver {
 //        var mob = intent.getStringExtra(AppConstant.INTENT_EXTRAS.MOBILENO)
 //        Log.d("TAG", "onCreate: "+mob)
 
-        WebSocketSingleton.getInstant()!!.register(this)
+
     }
 
     private fun setPinView() {
@@ -119,7 +119,7 @@ class OTPActivity : BaseActivity() , WebSocketObserver {
 
     }
 
-    override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
+    /*override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
         try {
             runOnUiThread {
                 val gson = Gson()
@@ -137,7 +137,11 @@ class OTPActivity : BaseActivity() , WebSocketObserver {
                           finish()
                         //    startActivity(Intent(this@LoginActivity, RoomListActivity::class.java))
                         // finish()
-                    } else {
+                    }
+                    else if(fsUsersModelResponseModel.getStatus_code() == 404){
+
+                    }
+                    else {
                         Toast.makeText(this@OTPActivity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
                     }
                 } else {
@@ -156,7 +160,7 @@ class OTPActivity : BaseActivity() , WebSocketObserver {
             ResponseType.RESPONSE_TYPE_LOGIN,
             ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE
         )
-    }
+    }*/
 
 
 }

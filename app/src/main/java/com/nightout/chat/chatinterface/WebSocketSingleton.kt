@@ -65,6 +65,7 @@ class WebSocketSingleton : WebSocketListener(), WebSocketSubject {
             }
         } catch (e: JSONException) {
             e.printStackTrace()
+            Log.d("ok", "notifyObserver: catch "+e)
         }
     }
 

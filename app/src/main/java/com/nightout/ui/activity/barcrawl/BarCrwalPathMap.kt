@@ -44,8 +44,7 @@ import com.nightout.model.*
 import com.nightout.ui.activity.ContactListNewActvity
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -497,7 +496,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             startCropActivity(imageUri!!)
 
         }
-        else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+      /*  else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 try {  val bitmap: Bitmap?
@@ -520,7 +519,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                    // Utills.showSnackBarFromTop(userImgBarcrwal, "catch-> $e", this@BarCrwalPathMap)
                 }
             }
-        }
+        }*/
         else if(requestCode == REQCODE_CreateBarCrwlSuccess && resultCode== Activity.RESULT_OK){
             setResult(Activity.RESULT_OK)
             finish()
@@ -542,11 +541,11 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun startCropActivity(imageUri: Uri) {
-        CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
+     /*   CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
             .setMultiTouchEnabled(true)
             .setOutputCompressQuality(100)
             .setAspectRatio(1, 1)
-            .start(this@BarCrwalPathMap)
+            .start(this@BarCrwalPathMap)*/
     }
 
     private fun showDatePicker() {
@@ -575,7 +574,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
         datePickerDialog.show()
     }
 
-    override fun onMapReady(p0: GoogleMap?) {
+    override fun onMapReady(p0: GoogleMap) {
         googleMap = p0!!
         p0!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
         addMarkers()
@@ -616,7 +615,7 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
             val height = resources.displayMetrics.heightPixels
             val padding = (width * 0.30).toInt() // offset from edges of the map 10% of screen
             bounds = builder!!.build()
-            val cu = CameraUpdateFactory.newLatLngBounds(bounds,width,height, padding)
+            val cu = CameraUpdateFactory.newLatLngBounds(bounds!!,width,height, padding)
             googleMap.animateCamera(cu)
         }
 

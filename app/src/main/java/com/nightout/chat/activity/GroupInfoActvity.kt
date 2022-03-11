@@ -1,5 +1,7 @@
 package com.nightout.chat.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -35,7 +37,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     lateinit var groupChatImageAdapter : GroupChatImageAdapter
     lateinit var binding : GroupinfoActvityBinding
     var roomID=""
-
+        var isExitGroupClick= false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
      //   setContentView(R.layout.groupinfo_actvity)
@@ -58,14 +60,14 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     override fun onClick(v: View?) {
         super.onClick(v)
         if(v== binding.grupInfoToolBar.toolbarCreateGrop){
-
+            //exit group
             val jsonObject = JSONObject()
             jsonObject.put("type", "removeUser")
             jsonObject.put("userId", PreferenceKeeper.instance.myUserDetail.id)
             jsonObject.put("roomId", roomID)
             jsonObject.put("request", "room")
             jsonObject.put("room_type","group")
-
+            isExitGroupClick=true
             WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
         }
     }
@@ -133,8 +135,12 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
         try {
             runOnUiThread {
                 Log.d("ok", "received message GroupInfo: $response")
-                if (ResponseType.RESPONSE_TYPE_REMOVE_USER.equalsTo(type)) {
-                    Log.d("ok", "exit success ")
+                if (ResponseType.RESPONSE_TYPE_ROOM_MODIFIED.equalsTo(type)) {
+                    if(isExitGroupClick) {
+                        MyApp.setStatus(AppConstant.INTENT_EXTRAS.IsUserExitClickBtn,true)
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
                 }
                 else if (ResponseType.RESPONSE_TYPE_ROOM_DETAILS.equalsTo(type)) {
                     if (statusCode == 200) {
@@ -199,7 +205,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
 
     override fun registerFor(): Array<ResponseType> {
         return arrayOf(
-            ResponseType.RESPONSE_TYPE_REMOVE_USER ,
+            ResponseType.RESPONSE_TYPE_ROOM_MODIFIED ,
             ResponseType.RESPONSE_TYPE_ROOM_DETAILS
         )
 

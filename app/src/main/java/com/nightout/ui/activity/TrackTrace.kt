@@ -187,7 +187,7 @@ class TrackTrace : BaseActivity(), OnMapReadyCallback {
         supportMapFragment.getMapAsync(this@TrackTrace)
     }
 
-    override fun onMapReady(googleMapp: GoogleMap?) {
+    override fun onMapReady(googleMapp: GoogleMap) {
         googleMap = googleMapp
       googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
 

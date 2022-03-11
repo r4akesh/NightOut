@@ -308,7 +308,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
         })
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap!!
         val success = googleMap!!.setMapStyle(MapStyleOptions(resources.getString(R.string.style_json)))//set night mode
     }
@@ -320,4 +320,8 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
         finish()
         super.onBackPressed()
     }
+
+
+
+
 }

@@ -109,7 +109,7 @@ class DemoMap : BaseActivity(), OnMapReadyCallback {
                         polyLineOptions.color(Color.BLUE)
                     }
                     runOnUiThread{
-                        googleMap!!.addPolyline(polyLineOptions)
+                        googleMap!!.addPolyline(polyLineOptions!!)
                     }
 
                 } catch (e: Exception) {

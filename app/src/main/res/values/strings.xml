@@ -247,6 +247,7 @@
     <string name="Please_give_rating">Please give the rating</string>
     <string name="Please_give_review">Please give the review</string>
     <string name="You_not_created_group">You have not created any group yet, Please create group for chat </string>
+    <string name="stripe_publshKey">pk_test_51IbQmBKW6MNKpHFWpqq3aHTFmYO49plf0zu2iHlfbm7K6lAHAXTidjgT3HqBLcMFIazkLupHazOzI6W5L10WyXUo009KGYHY5t</string>
 
 
 </resources>

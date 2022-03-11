@@ -1,7 +1,6 @@
 package com.nightout.chat.activity
 
 
-
 import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -22,6 +21,7 @@ import android.util.Size
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
@@ -72,9 +72,10 @@ import java.net.URL
 import java.util.*
 import kotlin.Comparator
 
-class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, WebSocketObserver, PlayAudioFragment.PlayAudioCallback,
+class ChatPersonalActvity : BaseActivity(), PermissionClass.PermissionRequire, WebSocketObserver,
+    PlayAudioFragment.PlayAudioCallback,
     UploadFileProgressFragment.UploadFileProgressCallback, OnSelectOptionListener {
-    lateinit var binding : ChatpersonalActivitynewBinding
+    lateinit var binding: ChatpersonalActivitynewBinding
     private lateinit var permissionClass: PermissionClass
     private var _roomId: String? = null
     private val chatListTmp = ArrayList<ChatModel>()
@@ -87,8 +88,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     private var _groupDetails: FSGroupModel? = null
     private val uploadFragment: PlayAudioFragment = PlayAudioFragment()
     private var isSetWallpaper = false
-    private   val VIDEO_DIRECTORY = "/demonuts"
-   var  isFromPush=false
+    private val VIDEO_DIRECTORY = "/demonuts"
+    var isFromPush = false
     var mChatListAllMsg = ArrayList<ChatModel>()
     var listMedia = ArrayList<String>()
     private lateinit var selectSourceBottomSheetFragment: SelectSourceBottomSheetFragment
@@ -96,11 +97,14 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // setContentView(R.layout.chatpersonal_actvity)
-        binding = DataBindingUtil.setContentView(this@ChatPersonalActvity,R.layout.chatpersonal_activitynew)
+        // setContentView(R.layout.chatpersonal_actvity)
+        binding = DataBindingUtil.setContentView(
+            this@ChatPersonalActvity,
+            R.layout.chatpersonal_activitynew
+        )
         permissionClass = PermissionClass(this, this)
         binding.attachmentWrapper.visibility = View.INVISIBLE
-       // this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        // this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         binding.sendButton.setOnClickListener(this)
         binding.backBtnImage.setOnClickListener(this)
         binding.chatAttachment.setOnClickListener(this)
@@ -119,7 +123,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         binding.chatRecyclerView.addOnLayoutChangeListener(View.OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (bottom < oldBottom) {
                 binding.chatRecyclerView.postDelayed(Runnable {
-                    if(adapter.itemCount>0) {
+                    if (adapter.itemCount > 0) {
                         binding.chatRecyclerView.scrollToPosition(
                             binding.chatRecyclerView.getAdapter()?.getItemCount()!! - 1
                         )
@@ -132,18 +136,17 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     }
 
 
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-         isFromPush=  intent?.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH,false)!!
+        isFromPush = intent?.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH, false)!!
     }
 
     override fun onBackPressed() {
-        if(isFromPush){
+        if (isFromPush) {
             val i = Intent(this, HomeActivityNew::class.java)
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(i)
-        }else {
+        } else {
             super.onBackPressed()
         }
 
@@ -156,7 +159,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 finish()
             }
             R.id.chatUnblockBtn -> {
-             //   blockOrUnblock(false)
+                //   blockOrUnblock(false)
             }
             R.id.chatGoToBottom -> {
                 binding.chatRecyclerView.smoothScrollToPosition(adapter.itemCount - 1)
@@ -201,29 +204,35 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     .build()
                 receiveDataVideo.launch(intent)
 
-               // onSelectImage()
+                // onSelectImage()
                 binding.attachmentWrapper.visibility = View.GONE
-               // permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO)
+                // permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO)
             }
             R.id.attachmentCamera -> {
                 toggleAttachmentWrapper()
                 onSelectImage()
                 binding.attachmentWrapper.visibility = View.GONE
-               // permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE)
+                // permissionClass.askPermission(REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE)
             }
-            R.id.attachmentLocation->{
+            R.id.attachmentLocation -> {
                 toggleAttachmentWrapper()
-                Places.initialize(this@ChatPersonalActvity, resources.getString(R.string.google_place_picker_key))
-                val fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
-                val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList).build(this@ChatPersonalActvity)
+                Places.initialize(
+                    this@ChatPersonalActvity,
+                    resources.getString(R.string.google_place_picker_key)
+                )
+                val fieldList =
+                    Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME)
+                val intent =
+                    Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fieldList)
+                        .build(this@ChatPersonalActvity)
                 startActivityForResult(intent, LAUNCH_GOOGLE_ADDRESS)
-                overridePendingTransition(0,0)
+                overridePendingTransition(0, 0)
             }
             R.id.chatStartRecording -> {
                 permissionClass.askPermission(REQUEST_RECORD_AUDIO_PERMISSION)
             }
             R.id.sendAudioButton -> {
-               // sendRecording()
+                // sendRecording()
             }
             R.id.attachmentContact -> {
 //                toggleAttachmentWrapper()
@@ -231,19 +240,27 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             }
             R.id.chatUserNameConstrant -> {
                 if (_isGroup) {
-                    startActivity(Intent(this@ChatPersonalActvity, GroupInfoActvity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.ROOM_ID,_roomId)
-                        .putExtra(AppConstant.INTENT_EXTRAS.ALLCHAT_MSG,listMedia)
+                    startForResultGroupInfo.launch(
+                        Intent(this@ChatPersonalActvity, GroupInfoActvity::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.ROOM_ID, _roomId)
+                            .putExtra(AppConstant.INTENT_EXTRAS.ALLCHAT_MSG, listMedia)
                     )
                 }
             }
         }
     }
 
+    val startForResultGroupInfo =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                finish()
+            }
+        }
+
     private fun onSelectImage() {
         if (!Utills.checkingPermissionIsEnabledOrNot(this)) {
             Utills.requestMultiplePermission(this, CreateGroupActvity.requestPermissionCode)
-        }else{
+        } else {
             selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this, "")
             selectSourceBottomSheetFragment.show(
                 supportFragmentManager,
@@ -264,7 +281,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 .build()
             receiveData.launch(intent)
         } else {
-           selectSourceBottomSheetFragment.dismiss()
+            selectSourceBottomSheetFragment.dismiss()
             val intent = Lassi(this)
                 .with(LassiOption.GALLERY)
                 .setMaxCount(1)
@@ -278,29 +295,29 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-       /* if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == RESULT_OK) {
-                val resultUri: Uri?
-                if (result != null) {
-                    resultUri = result.uri
-                    if (resultUri != null) {
-                        if (isSetWallpaper) {
-                            //  setWallpaper(resultUri) //doLater
-                        } else {
-                            uploadImageFormUri(resultUri)
-                        }
-                    }
-                }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error: Exception
-                if (result != null) {
-                    error = result.error
-                    error.printStackTrace()
-                }
-            }
-        }*/
-         if (requestCode == GALLERY) {
+        /* if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+             val result = CropImage.getActivityResult(data)
+             if (resultCode == RESULT_OK) {
+                 val resultUri: Uri?
+                 if (result != null) {
+                     resultUri = result.uri
+                     if (resultUri != null) {
+                         if (isSetWallpaper) {
+                             //  setWallpaper(resultUri) //doLater
+                         } else {
+                             uploadImageFormUri(resultUri)
+                         }
+                     }
+                 }
+             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                 val error: Exception
+                 if (result != null) {
+                     error = result.error
+                     error.printStackTrace()
+                 }
+             }
+         }*/
+        if (requestCode == GALLERY) {
             if (data != null) {
                 val contentURI = data.data
                 contentURI?.let { uploadVideoFormUri(it) }
@@ -310,28 +327,25 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 val contentURI = data.data
                 contentURI?.let { uploadVideoFormUri(it) }
             }
-        }
-
-
-       else  if (requestCode == ImagePicker.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        } else if (requestCode == ImagePicker.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 //val bitmap: Bitmap = BitmapFactory.decodeFile(ImagePicker.photoFile!!.absolutePath)
 
-                  var mUri=  Uri.fromFile(File(ImagePicker.photoFile!!.absolutePath))
+                var mUri = Uri.fromFile(File(ImagePicker.photoFile!!.absolutePath))
                 uploadImageFormUri(mUri)
 
 
             }
-        }
-        else if(requestCode==LAUNCH_GOOGLE_ADDRESS && resultCode==Activity.RESULT_OK){
+        } else if (requestCode == LAUNCH_GOOGLE_ADDRESS && resultCode == Activity.RESULT_OK) {
             val place = Autocomplete.getPlaceFromIntent(data!!)
             var lat = place.latLng?.latitude
             var lang = place.latLng?.longitude
             val messageContent = HashMap<String, Any?>()
 
             messageContent["name"] = place.address
-            messageContent["address"] = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lang+"&zoom=12&size=400x400&key=AIzaSyBrwXwOTaLkh10-1l6ZLWuPQK9jr5h3tOM"
+            messageContent["address"] =
+                "https://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lang + "&zoom=12&size=400x400&key=AIzaSyBrwXwOTaLkh10-1l6ZLWuPQK9jr5h3tOM"
             messageContent["latitude"] = lat
             messageContent["longitude"] = lang
 
@@ -339,36 +353,41 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         }
     }
 
-    private val receiveData = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
-            if (!selectedMedia.isNullOrEmpty()) {
-                val resultUri = Uri.parse(selectedMedia[0].path)
-                try {
-               //  var   bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
-                    uploadImageFormUri(resultUri)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+    private val receiveData =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val selectedMedia =
+                    it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+                if (!selectedMedia.isNullOrEmpty()) {
+                    val resultUri = Uri.parse(selectedMedia[0].path)
+                    try {
+                        //  var   bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                        uploadImageFormUri(resultUri)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
-    }
 
-    private val receiveDataVideo = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val selectedMedia = it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
-            if (!selectedMedia.isNullOrEmpty()) {
-                val resultUri = Uri.parse(selectedMedia[0].path)
-                Log.d("TAG", ": "+resultUri)
-                try {
-                    //  var   bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
-                    uploadVideoFormUri(resultUri)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+    private val receiveDataVideo =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val selectedMedia =
+                    it.data?.getSerializableExtra(KeyUtils.SELECTED_MEDIA) as ArrayList<MiMedia>
+                if (!selectedMedia.isNullOrEmpty()) {
+                    val resultUri = Uri.parse(selectedMedia[0].path)
+                    Log.d("TAG", ": " + resultUri)
+                    try {
+                        //  var   bitmap = BitmapFactory.decodeFile(selectedMedia[0].path)
+                        uploadVideoFormUri(resultUri)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
-    }
+
     override fun onStart() {
         super.onStart()
         WebSocketSingleton.getInstant()?.register(this)
@@ -395,6 +414,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         revealLayoutFun()
         //  binding.attachmentWrapper.visibility = if (binding.attachmentWrapper.visibility == View.VISIBLE) View.GONE else View.VISIBLE
     }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun revealLayoutFun() {
         if (binding.attachmentWrapper.visibility == View.VISIBLE) {
@@ -483,11 +503,11 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             }
 
             override fun onClickContact(chatModel: ChatModel?, contactModel: ContactModel?) {
-            /*    val dialogBuilder: ContactDialog.DialogBuilder =
-                    ContactDialog.DialogBuilder(this@ChatPersonalActvity)
-                        .setOnItemClick(object : ContactDialog.OnItemClick {
-                            override fun addContactNew(dialog: ContactDialog?) {
-                                *//*	Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                /*    val dialogBuilder: ContactDialog.DialogBuilder =
+                        ContactDialog.DialogBuilder(this@ChatPersonalActvity)
+                            .setOnItemClick(object : ContactDialog.OnItemClick {
+                                override fun addContactNew(dialog: ContactDialog?) {
+                                    *//*	Intent contactIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
                                 contactIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
 
                                 contactIntent
@@ -525,7 +545,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             }
 
             override fun onLongClick(chatModel: ChatModel?) {
-                Toast.makeText(this@ChatPersonalActvity, "On long click ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChatPersonalActvity, "On long click ", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
         val layoutManager = LinearLayoutManager(this)
@@ -622,13 +643,19 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             e.printStackTrace()
         }
     }
+
     private fun parseExtras() {
         _roomId = intent.getStringExtra(INTENT_EXTRAS_KEY_ROOM_ID)
         _isGroup = intent.getBooleanExtra(INTENT_EXTRAS_KEY_IS_GROUP, false)
-        _groupDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_GROUP_DETAILS) as FSGroupModel?
-        Utills.setImageFullPath(this@ChatPersonalActvity,binding.chatUserProfile,_groupDetails?.about_pic)
+        _groupDetails =
+            intent.getSerializableExtra(INTENT_EXTRAS_KEY_GROUP_DETAILS) as FSGroupModel?
+        Utills.setImageFullPath(
+            this@ChatPersonalActvity,
+            binding.chatUserProfile,
+            _groupDetails?.about_pic
+        )
 
-                var listsize =   getIntent().getStringExtra(INTENT_EXTRAS_KEY_PARTICIPENT_SIZE)
+        var listsize = getIntent().getStringExtra(INTENT_EXTRAS_KEY_PARTICIPENT_SIZE)
 
         val tmpSenderDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_SENDER_DETAILS)
         if (_isGroup) {
@@ -636,7 +663,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         }
         if (tmpSenderDetails != null) {
             _senderDetails = tmpSenderDetails as FSUsersModel
-           // addChatMenu()
+            // addChatMenu()
             if (_isGroup) {
                 setGroupDetails(listsize)
             } else {
@@ -661,7 +688,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 
     private fun setGroupDetails(listsizeParicipent: String?) {
         binding.chatChatWithUserName.text = _groupDetails?.group_name
-    //    binding.chatChatWithUserStatus.text = _groupDetails?.about_group
+        //    binding.chatChatWithUserStatus.text = _groupDetails?.about_group
         binding.chatChatWithUserStatus.text = "$listsizeParicipent Participants"
         //        Glide.with(this).setDefaultRequestOptions(userProfileDefaultOptions).load(groupInfo.getRoomImage()).into(binding.chatUserProfile);
     }
@@ -692,11 +719,12 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionClass.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
     override fun permissionDeny() {}
 
     override fun permissionGranted(flag: Int) {
         when (flag) {
-           REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE -> selectCameraImage()
+            REQUEST_READ_STORAGE_FOR_UPLOAD_IMAGE -> selectCameraImage()
             REQUEST_READ_STORAGE_FOR_UPLOAD_VIDEO -> showPicVideoDialog()
 //            REQUEST_RECORD_AUDIO_PERMISSION -> {
 //                onRecord(mStartRecording)
@@ -749,6 +777,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         }
         pictureDialog.show()
     }
+
     private fun chooseVideoFromGallery() {
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
@@ -763,9 +792,9 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     }
 
     private fun selectCameraImage() {
- 		//CropImage.activity().start(this, AddPostBottomSheetFragment.this);
+        //CropImage.activity().start(this, AddPostBottomSheetFragment.this);
         isSetWallpaper = false
-   //     CropImage.activity().start(this)
+        //     CropImage.activity().start(this)
 
 //		Intent galleryIntent = new Intent(Intent.ACTION_PICK,
 //				MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -773,6 +802,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
 //		galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 //		startActivityForResult(galleryIntent, GALLERY);
     }
+
     inline fun <reified T> fromJson(json: String): T {
         return Gson().fromJson(json, object : TypeToken<T>() {}.type)
     }
@@ -795,8 +825,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                             val nthObject = jsonObject.getJSONObject(i)
                             appendMessage(nthObject, false)
                             val dataResponse = fromJson<ChatMediaModel>(nthObject.toString())
-                            if(dataResponse.message_type.lowercase()== "image")
-                            {
+                            if (dataResponse.message_type.lowercase() == "image") {
                                 listMedia.add(dataResponse.message_content.file_url)
                             }
                         }
@@ -809,7 +838,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                         //                        binding.chatNewMessageCount
                         setRead()
                     } else {
-                       // Toast.makeText(this@ChatPersonalActvity, responseData.getString("message"), Toast.LENGTH_SHORT).show()
+                        // Toast.makeText(this@ChatPersonalActvity, responseData.getString("message"), Toast.LENGTH_SHORT).show()
                     }
 
 
@@ -829,7 +858,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                             //UserDetails.instance.chatUsers.put(element.id, element)
                             MyApp.fetchUserDetailChatUsers().put(element.id, element)
                         }
-                      //  val roomDetails: FSRoomModel = roomResponseModelResponseModel.getData().roomList.get(0)_senderDetails = roomDetails.senderUserDetail!!
+                        //  val roomDetails: FSRoomModel = roomResponseModelResponseModel.getData().roomList.get(0)_senderDetails = roomDetails.senderUserDetail!!
                         /*for (FSRoomModel elemen  t : roomResponseModelResponseModel.getData().getRoomList()) {
                             for (String userId : element.getUserList()) {
                                 if (!userId.equals(UserDetails.myDetail.getId())) {
@@ -838,7 +867,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                                 }
                             }
                         }*/
-                            joinCommand()
+                        joinCommand()
                         blockList
                     } else {
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -864,7 +893,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                     val userBlockModelResponseModel: ResponseModel<UserBlockModel> =
                         Gson().fromJson<ResponseModel<UserBlockModel>>(response, type1)
                     val element: UserBlockModel = userBlockModelResponseModel.getData()
-                   // if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
+                    // if (element.blockedTo == UserDetails.instance.myDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
                     if (element.blockedTo == PreferenceKeeper.instance.myUserDetail.id && element.blockedBy == _senderDetails.id && element.isBlock) {
                         blockedByOtherUser()
                     }
@@ -918,6 +947,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         binding.blockedWrapper.visibility = View.GONE
         binding.chatMessageWrapper.visibility = View.VISIBLE
     }
+
     private fun setIndividualDetails() {
         binding.chatChatWithUserName.text = _senderDetails.name
         binding.chatChatWithUserStatus.text =
@@ -932,6 +962,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 .into(binding.chatUserProfile)
         }
     }
+
     private fun setRead() {
         val messageMap = HashMap<String?, Any?>()
         messageMap["type"] = "roomsModify"
@@ -940,10 +971,12 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_ROOM
         WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
     }
+
     @Throws(JSONException::class)
     private fun appendMessage(chatData: JSONObject, showMessageCount: Boolean) {
-       // val senderDetails: FSUsersModel = UserDetails.instance.chatUsers.get(chatData.getString("sender_id"))!!
-        val senderDetails: FSUsersModel =   MyApp.fetchUserDetailChatUsers().get(chatData.getString("sender_id"))!!
+        // val senderDetails: FSUsersModel = UserDetails.instance.chatUsers.get(chatData.getString("sender_id"))!!
+        val senderDetails: FSUsersModel =
+            MyApp.fetchUserDetailChatUsers().get(chatData.getString("sender_id"))!!
 
         val chatModel = ChatModel(chatData, senderDetails)
         if (chatModel.roomId == _roomId) {
@@ -963,7 +996,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             val keys = ArrayList(chatList.keys)
             keys.sort()
             adapter.clearAll()
-              mChatListAllMsg = ArrayList<ChatModel>()
+            mChatListAllMsg = ArrayList<ChatModel>()
             for (key in keys) {
                 val chatForThatDay: ArrayList<ChatModel> = chatList[key]!!
                 //										HeaderDataImpl headerData1 = new HeaderDataImpl(R.layout.header1_item_recycler, key);
@@ -971,7 +1004,7 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
                 mChatListAllMsg.addAll(chatForThatDay)
                 adapter.setHeaderAndData(chatForThatDay as List<ChatModel?>, headerData1)
             }
-            Log.d(TAG, "appendMessage: "+mChatListAllMsg)
+            Log.d(TAG, "appendMessage: " + mChatListAllMsg)
 
 
             if (showMessageCount && chatModel.sender_detail.id != PreferenceKeeper.instance.myUserDetail.id) {
@@ -1030,7 +1063,6 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         }
 
 
-
     override fun closeAudioPlayer() {
         binding.audioPlayerFragment.visibility = View.GONE
     }
@@ -1047,8 +1079,8 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             supportFragmentManager.beginTransaction().remove(fragment).commit()
             if (data != null) {
                 if (data.data.file_path != null && data.data.file_path.isNotEmpty()) {
-                  //  messageData!![MediaMetaModel.KEY_FILE_THUMB] = APIClient.IMAGE_URL + data.data.file_path
-                    messageData!![MediaMetaModel.KEY_FILE_THUMB] =  data.data.file_path
+                    //  messageData!![MediaMetaModel.KEY_FILE_THUMB] = APIClient.IMAGE_URL + data.data.file_path
+                    messageData!![MediaMetaModel.KEY_FILE_THUMB] = data.data.file_path
                 }
                 val messageContent = HashMap<String, Any?>()
                 val fileUrl: String =  /*APIClient.IMAGE_URL + */data.data.file_path!!
@@ -1074,14 +1106,15 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         messageMap["sender_id"] = PreferenceKeeper.instance.myUserDetail.id
         messageMap["receiver_id"] = "12312faa"
         messageMap["message_content"] = messageContent
-        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =
+            APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
         //        messageMap.put("time", time);
 
         // TODO: 27/01/21 SendMessage
 //        chatReference.add(messageMap);
         WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
         try {
-            if(adapter.itemCount>0){
+            if (adapter.itemCount > 0) {
                 Timer().schedule(
                     object : TimerTask() {
                         override fun run() {
@@ -1106,14 +1139,15 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         messageMap["sender_id"] = PreferenceKeeper.instance.myUserDetail.id
         messageMap["receiver_id"] = "12312faa"
         messageMap["message_content"] = messageContent
-        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =
+            APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
         //        messageMap.put("time", time);
 
         // TODO: 27/01/21 SendMessage
 //        chatReference.add(messageMap);
         WebSocketSingleton.getInstant()?.sendMessage(JSONObject(messageMap))
         try {
-            if(adapter.itemCount>0){
+            if (adapter.itemCount > 0) {
                 Timer().schedule(
                     object : TimerTask() {
                         override fun run() {
@@ -1210,8 +1244,10 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
         val newFile: File
         try {
             val currentFile = File(filePath)
-            val wallpaperDirectory = File(Environment.getExternalStorageDirectory().toString() + VIDEO_DIRECTORY)
-            newFile = File(wallpaperDirectory, Calendar.getInstance().timeInMillis.toString() + ".mp4")
+            val wallpaperDirectory =
+                File(Environment.getExternalStorageDirectory().toString() + VIDEO_DIRECTORY)
+            newFile =
+                File(wallpaperDirectory, Calendar.getInstance().timeInMillis.toString() + ".mp4")
             if (!wallpaperDirectory.exists()) {
                 wallpaperDirectory.mkdirs()
             }
@@ -1237,9 +1273,9 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
     }
 
     private fun uploadVideoFormUri(contentURI: Uri) {
-     // val selectedVideoPath = getPath(contentURI)
-       // val selectedVideoPath = FileUtils.getPath(THIS!!,contentURI)
-         var selectedVideoPath =contentURI.toString()
+        // val selectedVideoPath = getPath(contentURI)
+        // val selectedVideoPath = FileUtils.getPath(THIS!!,contentURI)
+        var selectedVideoPath = contentURI.toString()
 
         Log.d("path", selectedVideoPath!!)
         saveVideoToInternalStorage(selectedVideoPath)
@@ -1298,7 +1334,6 @@ class ChatPersonalActvity : BaseActivity(),PermissionClass.PermissionRequire, We
             e.printStackTrace()
         }
     }
-
 
 
     override val activityName: String = ChatPersonalActvity::class.java.name

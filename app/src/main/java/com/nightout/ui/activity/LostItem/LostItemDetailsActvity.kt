@@ -37,8 +37,7 @@ import com.nightout.model.GetLostItemListModel
 import com.nightout.model.LostItemDetailCstmModel
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 import com.nightout.utils.*
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -381,7 +380,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
-                startCropActivity(uri)
+               // startCropActivity(uri)
             } else parseError(it)
         }
 
@@ -389,7 +388,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
-                startCropActivity(uri)
+              //  startCropActivity(uri)
             } else parseError(it)
         }
 
@@ -410,18 +409,18 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
         }*/
     }
 
-    private fun startCropActivity(imageUri: Uri) {
+  /*  private fun startCropActivity(imageUri: Uri) {
         CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
             .setMultiTouchEnabled(true)
             .setOutputCompressQuality(100)
             .setAspectRatio(1, 1)
             .start(this@LostItemDetailsActvity)
-    }
+    }*/
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+      /*  if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageUri = CropImage.getPickImageResultUri(this@LostItemDetailsActvity, data)
             if (CropImage.isReadExternalStoragePermissionsRequired(
                     this@LostItemDetailsActvity,
@@ -437,11 +436,11 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
                 startCropActivity(imageUri)
             }
 
-        }
+        }*/
 
-       else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
+      // else  if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        //    val result = CropImage.getActivityResult(data)
+         /*   if (resultCode == Activity.RESULT_OK) {
                 var bitmap: Bitmap?
                 binding.lostItemImg.setImageBitmap(null)
                 var imageUrl = result.originalUri
@@ -478,37 +477,37 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
                     )
                 }
             }
-        }
-        else if(requestCode == requestCodeChooseVenuseActivity && resultCode==Activity.RESULT_OK){
+        }*/
+          if(requestCode == requestCodeChooseVenuseActivity && resultCode==Activity.RESULT_OK){
             setResult(Activity.RESULT_OK)
             finish()
             overridePendingTransition(0,0)
         }
-       else if (requestCode == RequestCodeCamera && resultCode == RESULT_OK && data != null) {//Gallery
+     /*  else if (requestCode == RequestCodeCamera && resultCode == RESULT_OK && data != null) {//Gallery
             imageUriNew = data.data
             startCropActivity(imageUriNew!!)
 
-            /* Glide.with(this)
+            *//* Glide.with(this)
                  .asBitmap()
                  .load(imageUri)
                  .centerCrop()
                  .into(binding.profilePic)
-             addProfile()*/
-        }
-        else if (requestCode == RequestCodeGallery && resultCode == RESULT_OK && data != null) { //camera
+             addProfile()*//*
+        }*/
+     /*   else if (requestCode == RequestCodeGallery && resultCode == RESULT_OK && data != null) { //camera
             val extras: Bundle = data.extras!!
             val imageBitmap = extras["data"] as Bitmap?
             imageUriNew = Utills.getImageUri(THIS!!, imageBitmap!!)
             Log.d("TAG", "iamgedsfas:: $imageUriNew")
             startCropActivity(imageUriNew!!)
-            /* val image = imageUri
+            *//* val image = imageUri
              Glide.with(this)
                  .asBitmap()
                  .load(image)
                  .centerCrop()
                  .into(binding.profilePic)
-             addProfile()*/
-        }
+             addProfile()*//*
+        }*/
 
     }
 

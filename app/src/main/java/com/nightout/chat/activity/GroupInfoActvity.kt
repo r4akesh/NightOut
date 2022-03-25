@@ -9,6 +9,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.google.gson.reflect.TypeToken
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -38,12 +40,14 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     lateinit var binding : GroupinfoActvityBinding
     var roomID=""
         var isExitGroupClick= false
+    var imageGrpUrl=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
      //   setContentView(R.layout.groupinfo_actvity)
         binding = DataBindingUtil.setContentView(this@GroupInfoActvity,R.layout.groupinfo_actvity)
         setToolBar()
         setTouchNClick(binding.grupInfoToolBar.toolbarCreateGrop)
+        setTouchNClick(binding.groupInfoEditImg)
 
 
         roomID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.ROOM_ID).toString()
@@ -70,6 +74,34 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             isExitGroupClick=true
             WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
         }
+        else if(v==binding.groupInfoEditImg){
+            registerFroResultGrupEdit.launch(
+                Intent(this@GroupInfoActvity,CreateGroupActvity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_EDITGROUP,true)
+                    .putExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME,binding.groupInfoActvitityName.text.toString())
+                    .putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,imageGrpUrl)
+                    .putExtra(AppConstant.INTENT_EXTRAS.GROUP_ROOMID,roomID)
+            )
+
+        }
+    }
+
+    var registerFroResultGrupEdit = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode==Activity.RESULT_OK){
+           binding.groupInfoActvitityName.text= it.data?.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME)
+            imageGrpUrl= it.data?.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL).toString()
+            Utills.setImageFullPath(this@GroupInfoActvity,binding.groupInfoActvitityImage,imageGrpUrl)
+        }
+    }
+
+    override fun onBackPressed() {
+        var myIntent= Intent()
+        myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME,binding.groupInfoActvitityName.text.toString())
+        myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,imageGrpUrl)
+        myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,imageGrpUrl)
+       // myIntent.putExtra(AppConstant.INTENT_EXTRAS.IS_GROUP_MODIFIED,true)
+        setResult(Activity.RESULT_OK,myIntent);
+        super.onBackPressed()
     }
 
     private val roomInfo: Unit
@@ -138,6 +170,8 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
                 if (ResponseType.RESPONSE_TYPE_ROOM_MODIFIED.equalsTo(type)) {
                     if(isExitGroupClick) {
                         MyApp.setStatus(AppConstant.INTENT_EXTRAS.IsUserExitClickBtn,true)
+                        var myIntnt = Intent()
+                        myIntnt.putExtra(AppConstant.INTENT_EXTRAS.IS_GROUP_EXIT,true)
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
@@ -191,7 +225,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             } catch (e: Exception) {
             }
             Utills.setImageFullPath(this@GroupInfoActvity,binding.groupInfoActvitityImage,gData?.groupDetails?.about_pic)
-
+              imageGrpUrl= gData?.groupDetails?.about_pic.toString()
             Log.d("received message", "setData image: "+gData?.groupDetails?.about_pic)
         } catch (e: Exception) {
             Log.d("TAG", "setData: "+e)

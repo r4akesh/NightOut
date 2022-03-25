@@ -84,6 +84,12 @@ class AppConstant {
         const val ISFROM_PUSH = "ISFROM_PUSH"
         const val ALLCHAT_MSG = "ALLCHAT_MSG"
         const val IsUserExitClickBtn = "IsUserExitClickBtn"
+        const val ISFROM_EDITGROUP = "ISFROM_EDITGROUP"
+        const val GROUP_NAME = "GROUP_NAME"
+        const val GROUP_IMG_URL = "GROUP_IMG_URL"
+        const val GROUP_ROOMID = "GROUP_ROOMID"
+        const val IS_GROUP_EXIT = "IS_GROUP_EXIT"
+        const val IS_GROUP_MODIFIED = "IS_GROUP_MODIFIED"
 
 
 

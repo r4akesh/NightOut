@@ -16,6 +16,7 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -87,13 +88,25 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     lateinit var commonViewModel : CommonViewModel
     var imagePathUploded = ""
     lateinit var usersList : JSONArray
-
+    var isFromEditGroup=false
+    var roomID=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@CreateGroupActvity, R.layout.creategrup_activity)
         initView()
         setToolbar()
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+          isFromEditGroup = intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.ISFROM_EDITGROUP,false)
+        if(isFromEditGroup){
+            binding.headerCreateGroup.text=resources.getString(R.string.updateGroup)
+            binding.crateGroupName.setText(intent.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME))
+            Utills.setImageFullPath(this@CreateGroupActvity,binding.createGroupProfile,intent.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL))
+            binding.crateGroupAddPerson.visibility=GONE
+            binding.crateGroupSelectAll.visibility=GONE
+            binding.crateGroupRecycle.visibility=GONE
+            roomID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_ROOMID).toString()
+            imagePathUploded = intent.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL).toString()//set older img first
+        }else{
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             progressDialog.show(this@CreateGroupActvity, "")
             GlobalScope.launch (Dispatchers.Main){
                 contactsInfoList = getAllContactsFrmDevice()
@@ -114,7 +127,8 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
             }
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_READ_CONTACTS)
-        }
+        }   }
+
     }
     override fun onStart() {
         super.onStart()
@@ -132,6 +146,27 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         Log.i("ok CreateGroupActvity", "onDestroy: ")
         WebSocketSingleton.getInstant()!!.unregister(this)
     }
+
+    private fun updateGroup() {
+        val jsonObject = JSONObject()
+
+        try {
+            val groupDetails = JSONObject()
+            groupDetails.put("group_name", binding.crateGroupName.text.toString())
+            groupDetails.put("about_group", "This is a Group")
+            groupDetails.put("about_pic", imagePathUploded)
+
+            jsonObject.put("type", "roomsModify")
+            jsonObject.put("group_details", groupDetails)
+            jsonObject.put("roomId", roomID)
+            jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_ROOM)
+            jsonObject.put("room_type", "group")
+        } catch (e: Exception) {
+        }
+        WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
+
+    }
+
 
     private fun createGroupCommand() {
         val jsonObject = JSONObject()
@@ -270,7 +305,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
         jsnObjMain.put("contact_list", jarr)
         try {
             contactFillterViewModel.getContactAll(jsnObjMain)
-                .observe(this@CreateGroupActvity, {
+                .observe(this@CreateGroupActvity) {
                     when (it.status) {
                         Status.SUCCESS -> {
                             try {
@@ -286,7 +321,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
 
                                 }
                             } catch (e: Exception) {
-                                Log.d("ok", "getAllContactsAPICAll: "+e.toString())
+                                Log.d("ok", "getAllContactsAPICAll: " + e.toString())
                             }
                         }
                         Status.LOADING -> {
@@ -295,14 +330,14 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                             progressDialog.dialog.dismiss()
                             try {
 
-                             Utills.showDefaultToast(this@CreateGroupActvity, it.message!!)
+                                Utills.showDefaultToast(this@CreateGroupActvity, it.message!!)
 
                             } catch (e: Exception) {
                             }
 
                         }
                     }
-                })
+                }
         } catch (e: Exception) {
             Log.d("ok", "contact_listAPICAll: "+e)
         }
@@ -335,15 +370,24 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                 onSelectImage2()
             }
             v== binding.headerCreateGroup->{
-                usersList = JSONArray()
-                for (i in 0 until listFilter.size ){
-                    if(listFilter[i].isChk){
-                        usersList.put(listFilter[i].uid)
+                if(isFromEditGroup){
+                    if(binding.crateGroupName.text.toString().isBlank()){
+                        MyApp.popErrorMsg("","Please enter group name ",THIS!!)
+                    }else{
+                        updateGroup()
+                    }
+                }else{
+                    usersList = JSONArray()
+                    for (i in 0 until listFilter.size ){
+                        if(listFilter[i].isChk){
+                            usersList.put(listFilter[i].uid)
+                        }
+                    }
+                    if(isValidInput()) {
+                        createGroupCommand()
                     }
                 }
-                if(isValidInput()) {
-                    createGroupCommand()
-                }
+
             }
             binding.crateGroupSelectAll==v -> {
                 if( binding.crateGroupSelectAll.isChecked){
@@ -366,6 +410,8 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
             }
         }
     }
+
+
 
     private fun isValidInput(): Boolean {
         if(binding.crateGroupName.text.toString().isBlank()){
@@ -499,14 +545,14 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
 
     private fun uploadChatImage(requestBody: MultipartBody) {
         progressDialog.show(this@CreateGroupActvity)
-        commonViewModel.uploadChatImg(requestBody).observe(this@CreateGroupActvity, {
+        commonViewModel.uploadChatImg(requestBody).observe(this@CreateGroupActvity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let {
-                      //  Utills.showDefaultToast( this@CreateGroupActvity,  it.message!!, )
-                            imagePathUploded=   it.image_path+"/"+it.data.file
-                        Log.d("ok", "imagePathUploded: "+imagePathUploded)
+                        //  Utills.showDefaultToast( this@CreateGroupActvity,  it.message!!, )
+                        imagePathUploded = it.image_path + "/" + it.data.file
+                        Log.d("ok", "imagePathUploded: " + imagePathUploded)
                     }
 
                 }
@@ -519,8 +565,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                     Utills.showErrorToast(this@CreateGroupActvity, it.message!!)
                 }
             }
-        })
-
+        }
 
 
     }
@@ -550,7 +595,21 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
                         Toast.makeText(this@AllUsersListActivity, message, Toast.LENGTH_SHORT)
                             .show()
                     }*/
-                } else if (ResponseType.RESPONSE_TYPE_CREATE_ROOM.equalsTo(type)) {
+                }
+                else if (ResponseType.RESPONSE_TYPE_ROOM_MODIFIED.equalsTo(type)) {
+                    if (statusCode == 200) {
+                        val type1 = object : TypeToken<ResponseModel<FSRoomModel?>?>() {}.type
+                        val roomResponseModelResponseModel: ResponseModel<FSRoomModel> = gson.fromJson<ResponseModel<FSRoomModel>>(response, type1)
+                        var myIntent= Intent()
+                        myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME,roomResponseModelResponseModel.getData().groupDetails?.group_name)
+                        myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,roomResponseModelResponseModel.getData().groupDetails?.about_pic)
+                        setResult(Activity.RESULT_OK,myIntent);
+                        finish();
+                    }}
+
+
+
+                else if (ResponseType.RESPONSE_TYPE_CREATE_ROOM.equalsTo(type)) {
                     if (statusCode == 200) {
                         val type1 = object : TypeToken<ResponseModel<RoomNewResponseModel?>?>() {}.type
                         val roomResponseModelResponseModel: ResponseModel<RoomNewResponseModel> = gson.fromJson<ResponseModel<RoomNewResponseModel>>(response, type1)
@@ -625,6 +684,7 @@ class CreateGroupActvity : BaseActivity(), WebSocketObserver, OnSelectOptionList
     override fun registerFor(): Array<ResponseType> {
         return arrayOf(
             ResponseType.RESPONSE_TYPE_USERS,
+            ResponseType.RESPONSE_TYPE_ROOM_MODIFIED,
             ResponseType.RESPONSE_TYPE_CREATE_ROOM,
             ResponseType.RESPONSE_TYPE_CHECK_ROOM
         )

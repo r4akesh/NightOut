@@ -175,8 +175,7 @@ class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObse
                 } else if (ResponseType.RESPONSE_TYPE_ROOM_MODIFIED.equalsTo(type)) {
                     if (statusCode == 200) {
                         val type1 = object : TypeToken<ResponseModel<FSRoomModel?>?>() {}.type
-                        val roomResponseModelResponseModel: ResponseModel<FSRoomModel> =
-                            gson.fromJson<ResponseModel<FSRoomModel>>(response, type1)
+                        val roomResponseModelResponseModel: ResponseModel<FSRoomModel> = gson.fromJson<ResponseModel<FSRoomModel>>(response, type1)
                         for (userId in roomResponseModelResponseModel.getData().userList) {
                             if (userId != PreferenceKeeper.instance.myUserDetail.id) {
                               //  roomResponseModelResponseModel.getData().senderUserDetail = UserDetails.instance.chatUsers[userId]

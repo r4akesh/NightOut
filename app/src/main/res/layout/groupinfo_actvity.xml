@@ -67,12 +67,13 @@
             app:layout_constraintTop_toBottomOf="@+id/groupInfoActvitityName" />
 
         <ImageView
+            android:id="@+id/groupInfoEditImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10ssp"
-            android:visibility="gone"
+
             tools:visibility="visible"
-            android:src="@drawable/arrow_right_yello48"
+            android:src="@drawable/ic_edit_profile"
             app:layout_constraintBottom_toBottomOf="@+id/groupInfoActvitityDate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/groupInfoActvitityName" />

@@ -298,7 +298,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
         progressDialog.show(requireActivity(), "")
         try {
-            homeViewModel.dashBoard(jobj).observe(requireActivity(), {
+            homeViewModel.dashBoard(jobj).observe(requireActivity()) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
@@ -306,69 +306,82 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         it.data?.let { users ->
                             try {
                                 setBottomSheet()
-                                dashList = DashboardModel.Data(ArrayList(),ArrayList(),ArrayList(),ArrayList(),ArrayList(),"","")
+                                dashList = DashboardModel.Data(
+                                    ArrayList(),
+                                    ArrayList(),
+                                    ArrayList(),
+                                    ArrayList(),
+                                    ArrayList(),
+                                    "",
+                                    ""
+                                )
                                 dashList.all_records = ArrayList()
                                 allRecordsList = ArrayList()
                                 //save imgPath
                                 dashList = users.data
-                                if(dashList.noti_count == "0"){
-                                    binding.headerHome.headerNotificationText.visibility=GONE
-                                }else{
-                                    binding.headerHome.headerNotificationText.visibility= VISIBLE
-                                    binding.headerHome.headerNotificationText.text = dashList.noti_count
-                                    if( binding.headerHome.headerNotificationText.text.toString().isBlank()){
-                                        binding.headerHome.headerNotificationText.visibility=GONE
+                                if (dashList.noti_count == "0") {
+                                    binding.headerHome.headerNotificationText.visibility = GONE
+                                } else {
+                                    binding.headerHome.headerNotificationText.visibility = VISIBLE
+                                    binding.headerHome.headerNotificationText.text =
+                                        dashList.noti_count
+                                    if (binding.headerHome.headerNotificationText.text.toString()
+                                            .isBlank()
+                                    ) {
+                                        binding.headerHome.headerNotificationText.visibility = GONE
                                     }
                                 }
                                 //reviewPopUp
                                 try {
-                                    if(dashList.venue_review_remaning.toInt()>0){
-                                        if(!DataManager.instance.isFirstShowPopupReview) {
+                                    if (dashList.venue_review_remaning.toInt() > 0) {
+                                        if (!DataManager.instance.isFirstShowPopupReview) {
                                             showPopUpReview()
-                                            DataManager.instance.isFirstShowPopupReview=true
+                                            DataManager.instance.isFirstShowPopupReview = true
                                         }
-                                     }
+                                    }
                                 } catch (e: Exception) {
                                 }
                                 //   PreferenceKeeper.instance.imgPathSave = it.imgPath + "/"
-                                PreferenceKeeper.instance.imgPathSave = "https://nightout.ezxdemo.com/storage/"
+                                PreferenceKeeper.instance.imgPathSave =
+                                    "https://nightout.ezxdemo.com/storage/"
                                 //setStory
-                                if (!(dashList.stories == null ||dashList.stories.size <= 0)) {
-                                    if(activity!=null)
-                                    setListStory(users.data.stories)
-                                }else{
-                                    binding.btmShhetInclue.bottomSheetStory.visibility=GONE
+                                if (!(dashList.stories == null || dashList.stories.size <= 0)) {
+                                    if (activity != null)
+                                        setListStory(users.data.stories)
+                                } else {
+                                    binding.btmShhetInclue.bottomSheetStory.visibility = GONE
                                 }
                                 //featuredBarCrawl
-                                if(dashList.feature_bar_crawl==null || dashList.feature_bar_crawl.size==0){
-                                    binding.btmShhetInclue.bottomSheetFeature.visibility=GONE
-                                }else{
+                                if (dashList.feature_bar_crawl == null || dashList.feature_bar_crawl.size == 0) {
+                                    binding.btmShhetInclue.bottomSheetFeature.visibility = GONE
+                                } else {
                                     setFeatureList(dashList.feature_bar_crawl)
                                 }
 
 
-                                if (!(dashList.all_records == null ||dashList.all_records.size <= 0)) {
-                                    if(activity!=null) {
+                                if (!(dashList.all_records == null || dashList.all_records.size <= 0)) {
+                                    if (activity != null) {
                                         allRecordsList.addAll(dashList.all_records)
                                         //save service charge
-                                        PreferenceKeeper.instance.SERVICE_CHARGE = dashList.service_charge[0].charge
+                                        PreferenceKeeper.instance.SERVICE_CHARGE =
+                                            dashList.service_charge[0].charge
                                         setListAllRecord()
-                                        var isSetMarkerCall=true
-                                        while (mMap!=null && isSetMarkerCall) {
-                                            if (dashList.all_records.isNotEmpty() && dashList.all_records.size > 0 ) {
+                                        var isSetMarkerCall = true
+                                        while (mMap != null && isSetMarkerCall) {
+                                            if (dashList.all_records.isNotEmpty() && dashList.all_records.size > 0) {
                                                 mMap?.clear()
                                                 setUpMarker()
-                                                isSetMarkerCall=false
+                                                isSetMarkerCall = false
                                                 Log.e("ok", "setUpMarker: call")
 
 
                                             }
                                         }
                                     }
-                                }else{
+                                } else {
                                     mMap?.clear()
                                     allRecordsList = ArrayList()
-                                    if(requireActivity()!=null) {
+                                    if (requireActivity() != null) {
                                         setListAllRecord()
                                         MyApp.ShowTost(
                                             requireActivity(),
@@ -379,12 +392,13 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                             } catch (e: Exception) {
                                 mMap?.clear()
                                 allRecordsList = ArrayList()
-                                if(activity!=null) {
-                                setListAllRecord()}
+                                if (activity != null) {
+                                    setListAllRecord()
+                                }
                             }
                         }
                     }
-                    Status.LOADING -> { }
+                    Status.LOADING -> {}
                     Status.ERROR -> {
                         progressDialog.dialog.dismiss()
                         // progressBar.visibility = View.GONE
@@ -393,13 +407,13 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                                 requireActivity(),
                                 it.message!!,
 
-                            )
+                                )
                         } catch (e: Exception) {
                         }
                         Log.d("ok", "loginCall:ERROR ")
                     }
                 }
-            })
+            }
         } catch (e: Exception) {
         }
     }

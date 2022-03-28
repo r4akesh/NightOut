@@ -55,23 +55,22 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
    lateinit var userData : LoginModel.Data
     private fun otpCall(map: HashMap<String, String>, activity: OTPActivity) {
         progressDialog.show(activity)
-        regViewModel.otp(map).observe(activity, {
+        regViewModel.otp(map).observe(activity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     //progressBar.visibility = View.GONE
-                       it.data?.let {
-                           var logModel: LoginModel.Data = it.data
-                           PreferenceKeeper.instance.bearerTokenSave = logModel.token
-                           PreferenceKeeper.instance.loginResponse = logModel
-                           PreferenceKeeper.instance.myUserDetail = FSUsersModel()
-                           userData= it.data
-                           Log.d("ok chat", "fetchLoginAPI call11: ")
-                           fetchLoginAPI()
+                    it.data?.let {
+                        var logModel: LoginModel.Data = it.data
+                        PreferenceKeeper.instance.bearerTokenSave = logModel.token
+                        PreferenceKeeper.instance.loginResponse = logModel
+                        PreferenceKeeper.instance.myUserDetail = FSUsersModel()
+                        userData = it.data
+                        fetchLoginAPI()
 //                            Utills.showSuccessToast(activity,it.message)
 //                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))
 //                          activity.finish()
-                      }
+                    }
 
                 }
                 Status.LOADING -> {
@@ -79,14 +78,14 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
-                    MyApp.popErrorMsg("",""+it.message!!,activity)
-                 //   Toast.makeText(activity, "" + it.message!!, Toast.LENGTH_LONG).show()
-                  //  Utills.showErrorToast(activity, it.message!!)
-                   activity.binding.otpPinView.setText("")
+                    MyApp.popErrorMsg("", "" + it.message!!, activity)
+                    //   Toast.makeText(activity, "" + it.message!!, Toast.LENGTH_LONG).show()
+                    //  Utills.showErrorToast(activity, it.message!!)
+                    activity.binding.otpPinView.setText("")
 
                 }
             }
-        })
+        }
     }
 
 
@@ -94,7 +93,6 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
     private fun fetchLoginAPI() {
         val jsonObject = JSONObject()
             try {
-                Log.d("ok", "fetchLoginAPI44: ")
                 jsonObject.put("userId", userData.id)
                 jsonObject.put("userName", userData.email)
                 jsonObject.put("firstName", userData.name)
@@ -127,7 +125,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
           map["device_id"] = Settings.Secure.getString(activity?.contentResolver, Settings.Secure.ANDROID_ID)
           map["device_type"] = "1"
           map["email"] = email
-          regViewModel.otpResend(map).observe(activity, {
+          regViewModel.otpResend(map).observe(activity) {
               when (it.status) {
                   Status.SUCCESS -> {
                       progressDialog.dialog.dismiss()
@@ -138,7 +136,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                           activity,
                           it.data?.message!!,
 
-                      )
+                          )
                   }
                   Status.LOADING -> {
                       //progressBar.visibility = View.VISIBLE
@@ -149,7 +147,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                       Utills.showErrorToast(activity, it.message!!)
                   }
               }
-          })
+          }
     }
 
     fun bakPressd(){

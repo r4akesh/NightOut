@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/about_actviity.xml" value="0.2708333333333333" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/addparticient_activity.xml" value="0.28541666666666665" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/chatpersonal_activitynew.xml" value="0.28125" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/creategrup_activity.xml" value="0.29635416666666664" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/groupinfo_actvity.xml" value="0.26296296296296295" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/toolbar_common.xml" value="0.28541666666666665" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/drawable/bg_attachment_wrapper.xml" value="0.17135416666666667" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/drawable/bg_chat_download_loader.xml" value="0.20520833333333333" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/drawable/bg_chat_download_text.xml" value="0.20520833333333333" />

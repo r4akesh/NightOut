@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrentToolbar"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/addPricpentChatToolBar"
+                layout="@layout/toolbar_common" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/addPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10ssp"
+
+            android:fontFamily="@font/proximanova_reg"
+            android:text="Add Person"
+            android:textColor="@color/white_second"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/constrentToolbar" />
+
+
+        <CheckedTextView
+            android:id="@+id/addPersonSelectAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:drawableEnd="@drawable/unchk_box"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/proximanova_reg"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_5sdp"
+
+            android:text="@string/Select_All"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/addPerson"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/addPerson" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addPersonRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_10ssp"
+            android:background="@drawable/box_botomsheet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addPerson"
+            tools:listitem="@layout/group_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

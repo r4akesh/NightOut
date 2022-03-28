@@ -48,6 +48,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
         setToolBar()
         setTouchNClick(binding.grupInfoToolBar.toolbarCreateGrop)
         setTouchNClick(binding.groupInfoEditImg)
+        setTouchNClick(binding.groupInfoActvitityAddPartcipent)
 
 
         roomID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.ROOM_ID).toString()
@@ -84,6 +85,11 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             )
 
         }
+        else if(v==binding.groupInfoActvitityAddPartcipent){
+                startActivity(Intent(this@GroupInfoActvity,AddParticipnetChat::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.GROUP_LIST,selectedUserList)
+                    .putExtra(AppConstant.INTENT_EXTRAS.ROOM_ID,roomID))
+        }
     }
 
     var registerFroResultGrupEdit = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -98,9 +104,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
         var myIntent= Intent()
         myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME,binding.groupInfoActvitityName.text.toString())
         myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,imageGrpUrl)
-        myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,imageGrpUrl)
-       // myIntent.putExtra(AppConstant.INTENT_EXTRAS.IS_GROUP_MODIFIED,true)
-        setResult(Activity.RESULT_OK,myIntent);
+        setResult(Activity.RESULT_OK,myIntent)
         super.onBackPressed()
     }
 
@@ -120,11 +124,16 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
          binding.grupInfoToolBar.toolbarCreateGrop.visibility= VISIBLE
          binding.grupInfoToolBar.toolbarCreateGrop.setText("Exit Group")
         setTouchNClick(binding.grupInfoToolBar.toolbarBack)
-         binding.grupInfoToolBar.toolbarBack.setOnClickListener { finish() }
+         binding.grupInfoToolBar.toolbarBack.setOnClickListener {
+             var myIntent= Intent()
+             myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME,binding.groupInfoActvitityName.text.toString())
+             myIntent.putExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL,imageGrpUrl)
+             setResult(Activity.RESULT_OK,myIntent);
+             finish() }
     }
-
-    private fun setFrendListDummy(rsData: ResponseModel<RoomResponseModel>) {
-        var selectedUserList = ArrayList<FSUsersModel>()
+    var selectedUserList = ArrayList<FSUsersModel>()
+    private fun setFrendList(rsData: ResponseModel<RoomResponseModel>) {
+        selectedUserList = ArrayList()
         for(i in 0 until rsData.getData().roomList[0].userList.size){
             var userID= rsData.getData().roomList[0].userList[i]
             for(j in 0 until rsData.getData().userList.size){
@@ -172,7 +181,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
                         MyApp.setStatus(AppConstant.INTENT_EXTRAS.IsUserExitClickBtn,true)
                         var myIntnt = Intent()
                         myIntnt.putExtra(AppConstant.INTENT_EXTRAS.IS_GROUP_EXIT,true)
-                        setResult(Activity.RESULT_OK)
+                        setResult(Activity.RESULT_OK,myIntnt)
                         finish()
                     }
                 }
@@ -185,7 +194,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
                             //UserDetails.instance.chatUsers.put(element.id, element)
                             MyApp.fetchUserDetailChatUsers().put(element.id, element)
                         }
-                        setFrendListDummy(roomResponseModelResponseModel)
+                        setFrendList(roomResponseModelResponseModel)
                         setData(roomResponseModelResponseModel.getData().roomList[0])
 
                         //  val roomDetails: FSRoomModel = roomResponseModelResponseModel.getData().roomList.get(0)_senderDetails = roomDetails.senderUserDetail!!
@@ -211,7 +220,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             }
         }
       catch (e:Exception){
-
+          Log.d("ok", "Exception"+e)
       }
 
     }

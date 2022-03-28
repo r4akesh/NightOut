@@ -44,13 +44,15 @@ open class LoginHandler(val activity: LoginActivity) {
 
     private fun loginCall(map: HashMap<String, String>, activity: LoginActivity) {
         progressDialog.show(activity)
-        loginViewModel.doLogin(map).observe(activity, {
+        loginViewModel.doLogin(map).observe(activity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
-                    activity.startActivity(Intent(activity, OTPActivity::class.java)
+                    activity.startActivity(
+                        Intent(activity, OTPActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.MOBILENO, loginViewModel.PhNo!!)
-                            .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.data?.email))
+                            .putExtra(AppConstant.INTENT_EXTRAS.EMAILID, it.data?.data?.email)
+                    )
                 }
                 Status.LOADING -> {
                     Log.d("ok", "loginCall:LOADING ")
@@ -61,7 +63,7 @@ open class LoginHandler(val activity: LoginActivity) {
                     Utills.showErrorToast(activity, it.message!!)
                 }
             }
-        })
+        }
     }
 
 

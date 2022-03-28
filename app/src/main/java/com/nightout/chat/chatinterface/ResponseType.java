@@ -13,7 +13,8 @@ public enum ResponseType {
     RESPONSE_TYPE_ROOM_DETAILS("roomsDetails"),
     RESPONSE_TYPE_USER_BLOCK_MODIFIED("blockUser"),
     RESPONSE_TYPE_USER_ALL_BLOCK("allBlockUser"),
-    RESPONSE_TYPE_REMOVE_USER("removeUser");
+    RESPONSE_TYPE_REMOVE_USER("removeUser"),
+    RESPONSE_TYPE_ADD_USER("addUser");
 
     private final String name;
 

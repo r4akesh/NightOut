@@ -253,12 +253,12 @@ class ChatPersonalActvity : BaseActivity(), PermissionClass.PermissionRequire, W
     val startForResultGroupInfo =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                if(intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.IS_GROUP_EXIT,false)) {
+                if(result.data?.getBooleanExtra(AppConstant.INTENT_EXTRAS.IS_GROUP_EXIT,false)!!) {
                     finish()
                 }
-                else{   data not set
-                    binding.chatChatWithUserName.text= intent.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME)
-                    var imgUrl= intent.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL)
+                else{
+                    binding.chatChatWithUserName.text= result.data?.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_NAME)
+                    var imgUrl= result.data?.getStringExtra(AppConstant.INTENT_EXTRAS.GROUP_IMG_URL)
                     Glide.with(this)
                         .setDefaultRequestOptions(MyApp.USER_PROFILE_DEFAULT_GLIDE_CONFIG)
                         .load(imgUrl)

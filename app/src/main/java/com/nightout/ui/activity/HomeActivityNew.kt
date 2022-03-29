@@ -6,24 +6,33 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.adapter.SideMenuAdapter
 import com.nightout.base.BaseActivity
+import com.nightout.chat.chatinterface.ResponseType
+import com.nightout.chat.chatinterface.WebSocketObserver
+import com.nightout.chat.chatinterface.WebSocketSingleton
+import com.nightout.chat.model.ResponseModel
 
 import com.nightout.databinding.HomeActvitynewBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.interfaces.OnSideMenuSelectListener
+import com.nightout.model.FSUsersModel
 
 
 import com.nightout.model.SideMenuModel
@@ -34,12 +43,16 @@ import com.nightout.ui.activity.LostItem.LostitemActivity
 import com.nightout.ui.activity.Prebooking.PrebookedListActivity
 import com.nightout.ui.fragment.*
 import com.nightout.utils.*
+import com.nightout.vendor.services.APIClient
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import kotlinx.android.synthetic.main.drawer_layout_new.*
 import kotlinx.android.synthetic.main.drawer_layout_new.view.*
+import org.json.JSONException
+import org.json.JSONObject
 
-class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListener {
+class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListener,
+    WebSocketObserver {
     lateinit var binding: HomeActvitynewBinding
     private val endScale = 0.95f
     private var menuList:MutableList<SideMenuModel> = ArrayList()
@@ -59,6 +72,7 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         setHomeTab()
         fragmentManager = supportFragmentManager
         showFragment(HomeFragment(this))
+        WebSocketSingleton.getInstant()!!.register(this)
     }
 
     override fun onClick(v: View?) {
@@ -239,6 +253,8 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         DialogCustmYesNo.getInstance().createDialog(THIS!!,resources.getString(R.string.app_name),"Are you sure you want to logout?",object:
             DialogCustmYesNo.Dialogclick{
             override fun onYES() {
+                var userData=  PreferenceKeeper.instance.loginResponse
+               // loginOrCreateAPICALL(userData!!.id,userData.email,userData.name)
                 logoutAPICall()
 
             }
@@ -250,11 +266,32 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         })
     }
 
+    private fun loginOrCreateAPICALL(id:String,email:String, name:String) {
+        val jsonObject = JSONObject()
+        try {
+            jsonObject.put("userId", id)
+            jsonObject.put("userName", email)
+            jsonObject.put("firstName", name)
+            jsonObject.put("password", "1111")
+            jsonObject.put("fcm_token", "fgftyu")//raw data send  for stop the push
+            jsonObject.put("type", "loginOrCreate")
+            jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_LOGIN)
+            //            mWaitingDialog.show();
+            WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
+            Log.d("ok", "fetchLoginAPI55: ")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+            Log.d("ok", "fetchLoginAPI222: ")
+        }
+    }
+
+
+
     private fun logoutAPICall() {
         var map = HashMap<String,String>()
         map["device_id"] = Settings.Secure.getString(THIS!!.contentResolver, Settings.Secure.ANDROID_ID)
         customProgressDialog.show(THIS!!, "")
-        logoutViewModel.logoutUser(map).observe(THIS!!,{
+        logoutViewModel.logoutUser(map).observe(THIS!!){
             when(it.status){
                 Status.SUCCESS->{
                     customProgressDialog.dialog.dismiss()
@@ -285,7 +322,7 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
 
                 }
             }
-        })
+        }
     }
     private fun showFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
@@ -404,5 +441,52 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+    }
+
+    override fun onWebSocketResponse(
+        response: String,
+        type: String,
+        statusCode: Int,
+        message: String?
+    ) {
+        try {
+            runOnUiThread {
+                val gson = Gson()
+                println("received message otp: $response")
+                if (ResponseType.RESPONSE_TYPE_LOGIN.equalsTo(type) || ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE.equalsTo(type)) {
+                    val type1 = object : TypeToken<ResponseModel<FSUsersModel?>?>() {}.type
+                    val fsUsersModelResponseModel: ResponseModel<FSUsersModel> = gson.fromJson<ResponseModel<FSUsersModel>>(response, type1)
+                    if (fsUsersModelResponseModel.getStatus_code() == 200) {
+                        //UserDetails.instance.myDetail = fsUsersModelResponseModel.getData()
+                        Log.d("ok logout", "fetchLoginAPI call333: $type")
+                        //    startActivity(Intent(this@LoginActivity, RoomListActivity::class.java))
+                        // finish()
+                    }
+                    else if(fsUsersModelResponseModel.getStatus_code() == 404){
+                        Log.d("ok logout", "fetchLoginAPI call333: $type")
+
+                    }
+                    else {
+                        Log.d("ok logout", "elseeee: $type")
+                        Toast.makeText(THIS!!, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Log.d("ok logout", "onWebSocketResponse: $type")
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("ok logout", "Exception: $type"+e)
+            e.printStackTrace()
+        }
+    }
+
+    override val activityName: String =  HomeActivityNew::class.java.name
+
+
+    override fun registerFor(): Array<ResponseType> {
+        return arrayOf(
+            ResponseType.RESPONSE_TYPE_LOGIN,
+            ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE
+        )
     }
 }

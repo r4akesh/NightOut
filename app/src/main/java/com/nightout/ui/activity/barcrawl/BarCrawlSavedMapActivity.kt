@@ -86,7 +86,9 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
         } else if (binding.btmShhetInclue.bicyclingText == v) {
             googleMap.clear()
-            selectedMode = "transit"
+            //selectedMode = "transit"
+            selectedMode = "transit_mode=train"
+
             indexOfList = 0
             addMarkers()
             drawPath()

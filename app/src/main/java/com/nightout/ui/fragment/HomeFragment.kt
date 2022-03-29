@@ -12,6 +12,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.view.View.*
@@ -23,9 +24,11 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
@@ -37,26 +40,15 @@ import com.nightout.interfaces.ActivtyToFrag
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.*
 import com.nightout.ui.activity.*
+import com.nightout.ui.activity.Review.RatingListActvity
+import com.nightout.ui.activity.barcrawl.BarCrwalPathMap
 import com.nightout.utils.*
 import com.nightout.vendor.services.NetworkHelper
 import com.nightout.vendor.services.Status
-import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import androidx.recyclerview.widget.RecyclerView
-
 import com.nightout.viewmodel.CommonViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
-import com.nightout.ui.activity.Review.RatingListActvity
-import com.nightout.ui.activity.barcrawl.BarCrwalPathMap
+import java.util.*
 
 
 class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyToFrag {
@@ -259,27 +251,27 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             map["device_type"] = "Android"
             map["device_token"] = ""+PreferenceKeeper.instance.fcmTokenSave
             map["device_info"] = "Android Device"
-            deviceModel.userDevice(map).observe(requireActivity(), {
+            deviceModel.userDevice(map).observe(requireActivity()) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         it.data?.let { users ->
 
                         }
                     }
-                    Status.LOADING -> { }
+                    Status.LOADING -> {}
                     Status.ERROR -> {
                         try {
                             Utills.showErrorToast(
                                 requireActivity(),
                                 it.message!!,
 
-                            )
+                                )
                         } catch (e: Exception) {
                         }
                         Log.d("ok", "loginCall:ERROR ")
                     }
                 }
-            })
+            }
         } catch (e: Exception) {
         }
     }
@@ -442,6 +434,9 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     }
 
     private fun setListAllRecord() {
+//        val displayMetrics = DisplayMetrics()
+//        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+//        var width = displayMetrics.widthPixels
         allRecordAdapter = AllRecordAdapter(requireActivity(),allRecordsList,object:AllRecordAdapter.ClickListener{
             override fun onClickNext(pos: Int) {
                 startActivity(Intent(requireActivity(), VenuListActvity::class.java)

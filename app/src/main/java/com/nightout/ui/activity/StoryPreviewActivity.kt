@@ -26,7 +26,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 
 
-import kotlinx.android.synthetic.main.demo.*
+
 
 import java.util.*
 import android.media.MediaPlayer

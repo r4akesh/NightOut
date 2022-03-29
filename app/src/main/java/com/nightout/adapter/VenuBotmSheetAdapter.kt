@@ -162,8 +162,6 @@ class VenuBotmSheetAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-
-
         if (mainPos % 2 == 0)
             (viewHolder as View1ViewHolder).bind(position)
         else

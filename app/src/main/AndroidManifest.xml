@@ -28,9 +28,9 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-   <!-- <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />-->
+    <!-- <uses-permission
+         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+         tools:ignore="ScopedStorage" />-->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -243,7 +243,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
-             />
+            />
         <activity
             android:name=".chat.activity.CreateGroupActvity"
             android:configChanges="uiMode"
@@ -268,7 +268,7 @@
             android:configChanges="uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
-           />
+            />
 
 
 

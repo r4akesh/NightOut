@@ -96,13 +96,14 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                 jsonObject.put("userId", userData.id)
                 jsonObject.put("userName", userData.email)
                 jsonObject.put("firstName", userData.name)
-                jsonObject.put("password", "1111")
+                jsonObject.put("password", "123123")
                 jsonObject.put("fcm_token", PreferenceKeeper.instance.fcmTokenSave)
                 jsonObject.put("type", "loginOrCreate")
                 jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_LOGIN)
                 //            mWaitingDialog.show();
                 WebSocketSingleton.getInstant()!!.sendMessage(jsonObject)
                 Log.d("ok", "fetchLoginAPI55: ")
+
             } catch (e: JSONException) {
                 e.printStackTrace()
                 Log.d("ok", "fetchLoginAPI222: ")
@@ -154,6 +155,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
         activity.finish()
     }
 
+
     override fun onWebSocketResponse(response: String, type: String, statusCode: Int, message: String?) {
         try {
             activity.runOnUiThread {
@@ -170,6 +172,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                         PreferenceKeeper.instance.isUserLogin = true
                         Utills.showSuccessToast(activity,""+fsUsersModelResponseModel.getMessage())
                         activity.startActivity(Intent(activity, HomeActivityNew::class.java))
+                        WebSocketSingleton.getInstant()?.unregister(this)
                         activity.finish()
                         //    startActivity(Intent(this@LoginActivity, RoomListActivity::class.java))
                         // finish()

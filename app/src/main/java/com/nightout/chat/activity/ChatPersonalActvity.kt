@@ -1046,10 +1046,7 @@ class ChatPersonalActvity : BaseActivity(), PermissionClass.PermissionRequire, W
         try {
             jsonObject.put("type", "allMessage")
             jsonObject.put("room", _roomId)
-            jsonObject.put(
-                APIClient.KeyConstant.REQUEST_TYPE_KEY,
-                APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
-            )
+            jsonObject.put(APIClient.KeyConstant.REQUEST_TYPE_KEY, APIClient.KeyConstant.REQUEST_TYPE_MESSAGE)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -1116,8 +1113,7 @@ class ChatPersonalActvity : BaseActivity(), PermissionClass.PermissionRequire, W
         messageMap["sender_id"] = PreferenceKeeper.instance.myUserDetail.id
         messageMap["receiver_id"] = "12312faa"
         messageMap["message_content"] = messageContent
-        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] =
-            APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
+        messageMap[APIClient.KeyConstant.REQUEST_TYPE_KEY] = APIClient.KeyConstant.REQUEST_TYPE_MESSAGE
         //        messageMap.put("time", time);
 
         // TODO: 27/01/21 SendMessage

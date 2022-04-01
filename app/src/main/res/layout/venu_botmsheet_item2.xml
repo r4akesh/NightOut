@@ -5,9 +5,9 @@
     <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_marginStart="@dimen/_10ssp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+     >
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/venuBottmShhetItem_img"
@@ -108,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:padding="@dimen/_10sdp"
+                    android:visibility="gone"
                     android:src="@drawable/arrow_left_circle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/venuBottmShhetItem_view" />
@@ -117,10 +118,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    app:layout_constraintBottom_toBottomOf="@+id/venuBottmShhetItem_left"
-                    app:layout_constraintEnd_toStartOf="@+id/venuBottmShhetItem_right"
-                    app:layout_constraintStart_toEndOf="@+id/venuBottmShhetItem_left"
-                    app:layout_constraintTop_toTopOf="@+id/venuBottmShhetItem_left">
+                    android:padding="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/venuBottmShhetItem_view"
+
+
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -202,7 +206,7 @@
                     android:padding="@dimen/_10sdp"
                     android:src="@drawable/arrow_right_circle"
                     app:layout_constraintEnd_toEndOf="parent"
-
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/venuBottmShhetItem_view" />
 
 

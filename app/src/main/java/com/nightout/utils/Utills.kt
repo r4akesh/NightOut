@@ -9,9 +9,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
@@ -31,14 +31,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.makeramen.roundedimageview.RoundedImageView
 import com.nightout.R
-import com.nightout.model.DashboardModel
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
@@ -345,5 +344,9 @@ class Utills {
         fun showIconToast(ctx: Context, msg: String) {
             DynamicToast.make(ctx, msg, R.drawable.app_icon).show();
         }
+
+
+
+
     }
 }

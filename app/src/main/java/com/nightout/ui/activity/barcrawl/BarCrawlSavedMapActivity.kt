@@ -86,8 +86,8 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
         } else if (binding.btmShhetInclue.bicyclingText == v) {
             googleMap.clear()
-            //selectedMode = "transit"
-            selectedMode = "transit_mode=train"
+            selectedMode = "transit"
+          //  selectedMode = "transit_mode=train"
 
             indexOfList = 0
             addMarkers()
@@ -235,7 +235,13 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             "destination=" + barCrwalListSaved.venue_list[indexOfList + 1].store_lattitude + "," + barCrwalListSaved.venue_list[indexOfList + 1].store_longitude
         val sensor = "sensor=false"
         val key = "key=" + getString(R.string.google_maps_key)
-        var mode = "mode=" + selectedMode
+
+        var mode = if(selectedMode=="transit"){
+            "mode=" + selectedMode+"&transit_mode=train"
+        }else{
+            "mode=" + selectedMode
+        }
+
         val parameters = "$origin&$dest&$mode&$key"
         return "https://maps.googleapis.com/maps/api/directions/json?$parameters"
     }

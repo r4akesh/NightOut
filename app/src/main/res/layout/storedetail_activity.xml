@@ -20,29 +20,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-
-            <io.github.florent37.shapeofview.shapes.ArcView
-                android:id="@+id/arcLayout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:elevation="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                app:shape_arc_height="30dp"
-                app:shape_arc_position="bottom">
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/primary_clr"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </io.github.florent37.shapeofview.shapes.ArcView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -80,6 +65,7 @@
             android:layout_marginTop="@dimen/_150sdp"
             android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:dotsColor="@color/text_yello"
             app:dotsSize="@dimen/_7sdp"
             app:dotsStrokeWidth="0.5dp"
@@ -101,6 +87,7 @@
             app:cardCornerRadius="@dimen/_5ssp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
+
             app:layout_constraintBottom_toTopOf="@+id/storeDeatilPlaceOrder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,11 +101,11 @@
                 android:paddingTop="@dimen/_5ssp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/constrentCardLayout"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/storeDeatilLogoCard"
@@ -152,8 +139,8 @@
                         android:text="4.5"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="@+id/storeDeatilTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/storeDeatilTitle" />
 
 
@@ -171,7 +158,8 @@
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintEnd_toStartOf="@+id/storeDeatilRating"
                         app:layout_constraintStart_toEndOf="@+id/storeDeatilLogoCard"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/storeDeatilSubTitle"
@@ -213,8 +201,8 @@
                         android:text="50% off"
                         android:textColor="@color/text_yello"
                         android:textSize="@dimen/_12ssp"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="@+id/storeDeatilSubTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/storeDeatilSubTitle" />
 
                     <TextView
@@ -447,40 +435,47 @@
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilAddrs" />
 
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:id="@+id/recycleNearBy"
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilNearBy"
+                        android:layout_height="wrap_content"/>
+
+
                     <LinearLayout
                         android:id="@+id/storeDeatilLinerMenuDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5ssp"
                         android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5ssp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilNearBy">
+                        app:layout_constraintTop_toBottomOf="@+id/recycleNearBy">
 
-                       <!-- <include
-                            android:id="@+id/storeDeatilMenuDesc"
-                            layout="@layout/menu_desc"
-                            android:visibility="visible" />-->
+                        <!-- <include
+                             android:id="@+id/storeDeatilMenuDesc"
+                             layout="@layout/menu_desc"
+                             android:visibility="visible" />-->
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="@string/Description"
-                            android:textColor="@color/white"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/proximanova_reg"
+
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content"/>
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:layout_marginTop="@dimen/_5ssp"
                             android:id="@+id/storeDeatilMenuDesc"
                             android:layout_width="match_parent"
-                            android:textColor="@color/white"
-                            android:text="desc"
-                            android:fontFamily="@font/proximanova_reg"
-                            android:textSize="@dimen/_12ssp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5ssp"
                             android:background="@android:color/transparent"
-                            android:layout_height="wrap_content"/>
+                            android:fontFamily="@font/proximanova_reg"
+
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp" />
 
 
                     </LinearLayout>
@@ -511,9 +506,6 @@
                             android:textSize="@dimen/_12ssp" />
 
 
-
-
-
                         <TextView
                             android:id="@+id/storeDeatilMore"
                             android:layout_width="0dp"
@@ -537,11 +529,12 @@
                         android:layout_marginStart="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_10ssp"
                         android:layout_marginEnd="@dimen/_10ssp"
-                        android:visibility="gone"
                         android:background="@drawable/border_primaryclr"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilAllBtn">
+
                         <include
                             android:id="@+id/storeDeatilMoreDesc"
                             layout="@layout/more_desc"
@@ -606,8 +599,7 @@
             android:text="@string/Place_Order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

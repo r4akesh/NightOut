@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -228,28 +227,38 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
         }
             else if (v==binding.storeDeatilNearBy){
-                var latt= dt.store_lattitude
-                var longtude= dt.store_longitude
+                if(dt.store_lattitude.isBlank()){
+                    MyApp.popErrorMsg("","Store address not valid !!",THIS!!)
+                }else{
+                    if(MyApp.isConnectingToInternet(THIS!!)) {
+                        var latt = dt.store_lattitude
+                        var longtude = dt.store_longitude
 
-            val url: String = getUrl("26.8505", "75.7628", "train_station")
+                        val url: String = getUrl(latt, longtude, "train_station")
+                        var googleplaceData = ""
+                        Thread(Runnable {
+                            val downloadUrl = DownloadUrl()
+                            try {
+                                googleplaceData = downloadUrl.RaedTheUrl(url)
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                            runOnUiThread {
+                                var nearByPlacesList: List<java.util.HashMap<String, String>>? = null
+                                val dataParser = DataParser()
+                                nearByPlacesList = dataParser.parse(googleplaceData)
+                                Log.d("TAG", "onClick: " + nearByPlacesList)
+                                DisplayNearbyPlaces(nearByPlacesList)
+                            }
+                        }).start()
+                    }else{
+                        MyApp.popErrorMsg("",resources.getString(R.string.No_Internet),THIS!!)
+                    }
+                }
 
-         // var listt = GetNearbyPlaces().execute(url);
-            var googleplaceData=""
-            Thread(Runnable {
-                val downloadUrl = DownloadUrl()
-                try {
-                     googleplaceData = downloadUrl.RaedTheUrl(url)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                runOnUiThread {
-                    var nearByPlacesList: List<java.util.HashMap<String, String>>? = null
-                    val dataParser = DataParser()
-                    nearByPlacesList = dataParser.parse(googleplaceData)
-                    Log.d("TAG", "onClick: "+nearByPlacesList)
-                    DisplayNearbyPlaces(nearByPlacesList)
-                }
-            }).start()
+
+
+
 
         }
 
@@ -302,14 +311,13 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     private fun DisplayNearbyPlaces(nearByPlacesList: List<java.util.HashMap<String, String>>?) {
         var list = ArrayList<NearByPlaceModel>()
-        for (i in nearByPlacesList!!.indices) {
-            val markerOptions = MarkerOptions()
-            val googleNearbyPlace = nearByPlacesList[i]
-            val nameOfPlace = googleNearbyPlace["place_name"]
-            val vicinity = googleNearbyPlace["vicinity"]
-            val lat = googleNearbyPlace["lat"]!!
+       // for (i in nearByPlacesList!!.indices) {
+        for (i in 0 until 3 ) {
+            val googleNearbyPlace = nearByPlacesList?.get(i)
+            val nameOfPlace = googleNearbyPlace?.get("place_name")
+            val vicinity = googleNearbyPlace?.get("vicinity")
+            val lat = googleNearbyPlace?.get("lat")!!
             val lng = googleNearbyPlace["lng"]!!
-            Log.d("NearBy", "DisplayNearbyPlaces: $lat")
             list.add(NearByPlaceModel(lat,lng,nameOfPlace!!,vicinity!!))
         }
         setListNearBy(list)
@@ -318,6 +326,18 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     private fun setListNearBy(list: ArrayList<NearByPlaceModel>) {
         var   nearAdapter  = NearByStationAdapter(THIS!!,list,object:NearByStationAdapter.ClickListener{
             override fun onClick(pos: Int) {
+                if(dt.store_lattitude.isBlank()){
+                    MyApp.popErrorMsg("","Store address not valid !!",THIS!!)
+                }else{
+                    var sLat= dt.store_lattitude
+                    var sLong= dt.store_longitude
+                    var dLat= list[pos].latt
+                    var dLong= list[pos].logi
+                    val intent = Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr="+sLat+","+sLong+"&daddr="+dLat+","+dLong)
+                    )
+                    startActivity(intent)
+                }
 
             }
 

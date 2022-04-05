@@ -225,7 +225,8 @@ class Utills {
         fun setImageNormal(context: Context?, imageView: ImageView?, url: String?) {
             imageView?.let {
                 Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
-                    .placeholder(R.drawable.no_image).into(it)
+                    .placeholder(R.drawable.no_image)
+                    .error(R.drawable.app_icon).into(it)
             }
         }
 

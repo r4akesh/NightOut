@@ -12,26 +12,21 @@
             android:id="@+id/nearTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20ssp"
-            android:layout_marginTop="@dimen/_10ssp"
-            android:drawableStart="@drawable/marker_yello_ic"
-            android:drawablePadding="@dimen/_10ssp"
+
+             android:padding="@dimen/_5sdp"
+            android:drawableStart="@drawable/ic_map_loc"
+
+            android:drawablePadding="@dimen/_5ssp"
             android:fontFamily="@font/proximanova_reg"
             android:gravity="center|start"
             android:text="title"
-            android:textColor="@color/text_whitegray"
+            android:textColor="@color/text_yello"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/text_yello"
-            app:layout_constraintEnd_toEndOf="@+id/nearTitle"
-            app:layout_constraintStart_toStartOf="@+id/nearTitle"
-            app:layout_constraintTop_toBottomOf="@+id/nearTitle" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

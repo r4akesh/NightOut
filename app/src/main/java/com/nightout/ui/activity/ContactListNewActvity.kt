@@ -276,7 +276,7 @@ class ContactListNewActvity : BaseActivity() {
         jsnObjMain.put("contact_list", jarr)
         try {
             contactFillterViewModel.getContactFilter(jsnObjMain)
-                .observe(this@ContactListNewActvity, {
+                .observe(this@ContactListNewActvity) {
                     when (it.status) {
                         Status.SUCCESS -> {
                             try {
@@ -284,10 +284,10 @@ class ContactListNewActvity : BaseActivity() {
                                 listFilter.addAll(it.data?.data!!)
                                 if (!listFilter.isNullOrEmpty()) {
                                     setListContact()
-                                  if(isFROM_BarCrwalPathMapActvity)
-                                    binding.addContactDoneBtn.text = "Share"
+                                    if (isFROM_BarCrwalPathMapActvity)
+                                        binding.addContactDoneBtn.text = "Share"
                                     else
-                                      binding.addContactDoneBtn.text = "Add"
+                                        binding.addContactDoneBtn.text = "Add"
                                     binding.addContactDoneBtn.visibility = VISIBLE
                                     binding.contactListNoDataConstrent.visibility = GONE
                                 } else {
@@ -310,7 +310,7 @@ class ContactListNewActvity : BaseActivity() {
 
                         }
                     }
-                })
+                }
         } catch (e: Exception) {
             Log.d("ok", "contact_listAPICAll: "+e)
         }

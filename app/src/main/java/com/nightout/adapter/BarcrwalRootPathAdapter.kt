@@ -23,35 +23,33 @@ class BarcrwalRootPathAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: BarcrwalRootpathBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-            R.layout.barcrwal_rootpath, parent, false)
+        val binding: BarcrwalRootpathBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.barcrwal_rootpath, parent, false
+        )
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-       /* if(position==arrayList.size-1) {
-            viewHolder.binding.consterntPath.visibility=GONE
-            return
-        }else{
-            viewHolder.binding.consterntPath.visibility= VISIBLE
-        }*/
+
         var myPos = position
-        var valueInt: Int = myPos+65
-        val valueAlpha1 = valueInt.toChar()
+        //  var valueInt: Int = myPos+65
+        // val valueAlpha1 = valueInt.toChar()
+        val valueAlpha1 = arrayList[position].store_name
         //next value
-        valueInt+=1
-        var valueAlpha2 = valueInt.toChar()
-     ///  var dist= MyApp.getDestance(Commons.strToDouble(arrayList[position].store_lattitude),Commons.strToDouble(arrayList[position].store_longitude),arrayList[position+1].store_lattitude,arrayList[position+1].store_longitude,)
-        var dist=arrayList[position].distance
-        var dur=arrayList[position].durration
-        viewHolder.binding.textSource.text= "Point $valueAlpha1 to Point $valueAlpha2 ($dist) Duration : ($dur)"
+        //   valueInt+=1
+        var valueAlpha2 = arrayList[position + 1].store_name
+        ///  var dist= MyApp.getDestance(Commons.strToDouble(arrayList[position].store_lattitude),Commons.strToDouble(arrayList[position].store_longitude),arrayList[position+1].store_lattitude,arrayList[position+1].store_longitude,)
+        var dist = arrayList[position].distance
+        var dur = arrayList[position].durration
+        viewHolder.binding.textSource.text =
+            "$valueAlpha1 to $valueAlpha2 ($dist) Duration : ($dur)"
         //viewHolder.binding.textDest.text=arrayList[position].subTitle
 
-        if(position==arrayList.size-2) {
+        if (position == arrayList.size - 2) {
             viewHolder.binding.imgLine.visibility = INVISIBLE
             viewHolder.binding.imgSource.setImageResource(R.drawable.pin_dest_ic)
-        }
-        else {
+        } else {
             viewHolder.binding.imgLine.visibility = VISIBLE
             viewHolder.binding.imgSource.setImageResource(R.drawable.pin_source_ic)
         }
@@ -65,7 +63,7 @@ class BarcrwalRootPathAdapter(
 
 
     override fun getItemCount(): Int {
-        return if (null != arrayList) arrayList!!.size-1 else 0
+        return if (null != arrayList) arrayList!!.size - 1 else 0
     }
 
 

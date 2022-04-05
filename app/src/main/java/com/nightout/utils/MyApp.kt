@@ -10,6 +10,9 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.net.ConnectivityManager
 import android.util.DisplayMetrics
@@ -43,6 +46,9 @@ import kotlin.collections.ArrayList
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.request.RequestOptions
 import com.nightout.R
 import java.lang.NumberFormatException
@@ -369,6 +375,27 @@ class MyApp : Application() {
                 Log.d("TAG", "dismisAlrtDialog: 2"+e.toString())
             }
         }*/
+
+          fun getMarkerBitmapFromView(activity: Activity,resId: Int, strName: String, strAddrs: String): Bitmap? {
+            val customMarkerView: View = (activity.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.custom_marker, null)
+            val markerImageView = customMarkerView.findViewById(R.id.profile_image) as ImageView
+            val tvTitle = customMarkerView.findViewById(R.id.tvTitle) as TextView
+            val tvDesc = customMarkerView.findViewById(R.id.tvDesc) as TextView
+            tvTitle.text = strName
+            tvDesc.text = strAddrs
+            markerImageView.setImageResource(resId)
+            customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            customMarkerView.layout(0, 0, customMarkerView.measuredWidth, customMarkerView.measuredHeight)
+            customMarkerView.buildDrawingCache()
+            val returnedBitmap = Bitmap.createBitmap(customMarkerView.measuredWidth, customMarkerView.measuredHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(returnedBitmap)
+            canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN)
+            val drawable: Drawable? = customMarkerView.background
+            if (drawable != null) drawable.draw(canvas)
+            customMarkerView.draw(canvas)
+            return returnedBitmap
+        }
+
 
         @JvmStatic
         fun createDrawableFromView(activity: Activity, view: View): Bitmap? {

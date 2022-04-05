@@ -1,5 +1,7 @@
 package com.nightout.model
 
+import java.io.Serializable
+
 data class PlaceOrderResponse(
     val `data`: Data,
     val image_path: String,
@@ -7,7 +9,7 @@ data class PlaceOrderResponse(
     val response: String,
     val status_code: Int,
     val user_default_img: String
-) {
+):Serializable {
     data class Data(
         val amount: String,
         val created_at: String,
@@ -25,5 +27,5 @@ data class PlaceOrderResponse(
         val user_id: String,
         val vendor_id: String,
         val venue_id: String
-    )
+    ):Serializable
 }

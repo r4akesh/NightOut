@@ -29,22 +29,17 @@ class BarcrwalRootPathShareAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-       /* if(position==arrayList.size-1) {
-            viewHolder.binding.consterntPath.visibility=GONE
-            return
-        }else{
-            viewHolder.binding.consterntPath.visibility= VISIBLE
-        }*/
-        var myPos = position
-        var valueInt: Int = myPos+65
-        val valueAlpha1 = valueInt.toChar()
+
+      //  var myPos = position
+       // var valueInt: Int = myPos+65
+        val valueAlpha1 = arrayList[position].store_name
         //next value
-        valueInt+=1
-        var valueAlpha2 = valueInt.toChar()
+       // valueInt+=1
+        var valueAlpha2 = arrayList[position+1].store_name
      ///  var dist= MyApp.getDestance(Commons.strToDouble(arrayList[position].store_lattitude),Commons.strToDouble(arrayList[position].store_longitude),arrayList[position+1].store_lattitude,arrayList[position+1].store_longitude,)
         var dist=arrayList[position].distance
         var dur=arrayList[position].durration
-        viewHolder.binding.textSource.text= "Point $valueAlpha1 to Point $valueAlpha2 ($dist) Duration : ($dur)"
+        viewHolder.binding.textSource.text= "$valueAlpha1 to $valueAlpha2 ($dist) Duration : ($dur)"
         //viewHolder.binding.textDest.text=arrayList[position].subTitle
 
         if(position==arrayList.size-2) {

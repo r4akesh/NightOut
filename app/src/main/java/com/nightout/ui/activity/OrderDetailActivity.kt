@@ -155,8 +155,8 @@ class OrderDetailActivity : BaseActivity() {
                if(binding.orderDetailTablNo.text.toString().isBlank()){
                    MyApp.popErrorMsg("","Please enter table number",THIS!!)
                }else {
-                  // makePaymentApiCall()
-                   startActivity(Intent(THIS!!,CheckoutActivity::class.java))
+                   makePaymentApiCall()
+
                }
         }
     }
@@ -165,30 +165,32 @@ class OrderDetailActivity : BaseActivity() {
         progressDialog.show(this@OrderDetailActivity, "")
         var map = JSONObject()
         map.put("vendor_id", detailStore.vendor_detail.id)
-        map.put("user_id", detailStore.vendor_detail.id)
+      //  map.put("user_id", detailStore.vendor_detail.id)
         map.put("venue_id",detailStore.id)
         map.put("product_id",jrrItemId)
         map.put("qty", jrrItemQty)
         map.put("table_number", binding.orderDetailTablNo.text.toString())
         map.put("api_version","2020-08-27")
         map.put("payment_mode", "1")//payment_mode (0=>Online, 1=>Debit Card 2=>Credit Card)
-        paymentViewModel.doPayment(map).observe(this@OrderDetailActivity, {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        progressDialog.dialog.dismiss()
-                        it.data?.let { detailData ->
-                            Utills.showDefaultToast(THIS!!,detailData.message)
-                            finish()
+        paymentViewModel.doPayment(map).observe(this@OrderDetailActivity) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                        Utills.showDefaultToast(THIS!!, detailData.message)
+                        startActivity(Intent(THIS!!,CheckoutActivity::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.PLACEORDER_RES,detailData.data))
 
-                        }
-                    }
-                    Status.LOADING -> {
 
-                    }
-                    Status.ERROR -> {
-                        progressDialog.dialog.dismiss()
                     }
                 }
-            })
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                }
+            }
+        }
     }
 }

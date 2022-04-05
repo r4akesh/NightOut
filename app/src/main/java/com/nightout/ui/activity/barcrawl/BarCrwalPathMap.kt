@@ -310,17 +310,20 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
 
     private fun createBarCrewal(requestBody: MultipartBody) {
         progressDialog.show(this@BarCrwalPathMap)
-        commonViewModel.createBarCrwalWidImg(requestBody).observe(this@BarCrwalPathMap, {
+        commonViewModel.createBarCrwalWidImg(requestBody).observe(this@BarCrwalPathMap) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let {
-                        if(isFromShareListActivity || isFromSaveListActivity){
-                            Utills.showSuccessToast(THIS!!,resources.getString(R.string.barcrwal_update_suceesfully))
-                            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully=true
+                        if (isFromShareListActivity || isFromSaveListActivity) {
+                            Utills.showSuccessToast(
+                                THIS!!,
+                                resources.getString(R.string.barcrwal_update_suceesfully)
+                            )
+                            PreferenceKeeper.instance.isUpdatedBarcrwalSuccesfully = true
                             setResult(Activity.RESULT_OK)
                             finish()
-                        }else {
+                        } else {
                             //isFromCreateBarCrwal and isFromFeaturedBarCrwal
                             Log.d("ok", "success: ")
                             var vv = it.data.id
@@ -331,9 +334,19 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                                 object : DialogCustmYesNo.Dialogclick {
                                     override fun onYES() {
                                         startActivityForResult(
-                                            Intent(this@BarCrwalPathMap, ContactListNewActvity::class.java)
-                                                .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, true)
-                                                .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, it.data.id),REQCODE_CreateBarCrwlSuccess)
+                                            Intent(
+                                                this@BarCrwalPathMap,
+                                                ContactListNewActvity::class.java
+                                            )
+                                                .putExtra(
+                                                    AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity,
+                                                    true
+                                                )
+                                                .putExtra(
+                                                    AppConstant.INTENT_EXTRAS.BarcrwalID,
+                                                    it.data.id
+                                                ), REQCODE_CreateBarCrwlSuccess
+                                        )
 
                                     }
 
@@ -357,10 +370,10 @@ class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                     Log.d("ok", "ERROR: ")
-                    Utills.showErrorToast( this@BarCrwalPathMap,  it.message!!, )
+                    Utills.showErrorToast(this@BarCrwalPathMap, it.message!!,)
                 }
             }
-        })
+        }
     }
 
     private fun setSpin() {

@@ -1,6 +1,7 @@
 package com.nightout.adapter
 
 import android.content.Context
+import android.graphics.Paint
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.FacilityItemBinding
+import com.nightout.databinding.RowNearbyitemBinding
 import com.nightout.model.NearByPlaceModel
 import com.nightout.model.VenuDetailModel
 
@@ -23,9 +25,9 @@ class NearByStationAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: FacilityItemBinding = DataBindingUtil.inflate(
+        val binding: RowNearbyitemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.facility_item, parent, false
+            R.layout.row_nearbyitem, parent, false
         )
 
 
@@ -35,8 +37,8 @@ class NearByStationAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
 
-        viewHolder.binding.facilityItemTitle.text=arrayList[position].name
-
+        viewHolder.binding.nearTitle.text=arrayList[position].name
+        viewHolder.binding.nearTitle.paintFlags = viewHolder.binding.nearTitle.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         viewHolder.itemView.setOnClickListener {
             clickListener.onClick(position)
 
@@ -49,9 +51,9 @@ class NearByStationAdapter(
     }
 
 
-    inner class ViewHolder(itemView: FacilityItemBinding) :
+    inner class ViewHolder(itemView: RowNearbyitemBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: FacilityItemBinding = itemView
+        var binding: RowNearbyitemBinding = itemView
 
     }
 

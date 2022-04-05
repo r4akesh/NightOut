@@ -1,6 +1,5 @@
 package com.nightout.ui.activity.barcrawl
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +27,6 @@ import org.json.JSONObject
 import java.util.HashMap
 import com.google.gson.Gson
 import com.nightout.model.PathParseModel
-import com.nightout.model.SharedBarcrwalRes
 
 
 class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
@@ -193,7 +191,8 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             for (i in 0 until barCrwalListSaved.venue_list.size) {
                 var lat = Commons.strToDouble(barCrwalListSaved.venue_list[i].store_lattitude)
                 var lang = Commons.strToDouble(barCrwalListSaved.venue_list[i].store_longitude)
-                drawMarker(LatLng(lat, lang), "$i")
+                //drawMarker(LatLng(lat, lang), "$i")
+                drawMarker(LatLng(lat, lang), barCrwalListSaved.venue_list[i].store_name,barCrwalListSaved.venue_list[i].store_address)
                 // googleMap!!.addMarker(MarkerOptions().position(LatLng(lat, lang)).title("" + i + "st Point"))
             }
             val width = resources.displayMetrics.widthPixels
@@ -206,14 +205,19 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
 
     }
 
-    private fun drawMarker(point: LatLng, text: String) {
-        var value: Int = text.toInt() + 65
-        val c = value.toChar()
-        val markerOptions = MarkerOptions()
-        markerOptions.position(point).title("Point $c")
-            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_ic))
-        googleMap.addMarker(markerOptions)
-        builder?.include(markerOptions.position)
+    private fun drawMarker(point: LatLng, strName: String, storeAddress: String) {
+       // val markerOptions = MarkerOptions()
+        var marker: Marker? = googleMap!!.addMarker(MarkerOptions().position(point))
+        marker?.setIcon(
+            BitmapDescriptorFactory.fromBitmap(
+                MyApp.getMarkerBitmapFromView(THIS!!, R.drawable.marker_bar, strName, storeAddress)!!
+            )
+        )
+
+       // markerOptions.position(point).title("$text")
+         //   .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_ic))
+       // googleMap.addMarker(markerOptions)
+        builder?.include(marker!!.position)
     }
 
     private fun drawPath() {

@@ -71,6 +71,7 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             startActivity(
                 Intent(this@BarCrawlSavedMapActivity, ContactListNewActvity::class.java)
                     .putExtra(AppConstant.INTENT_EXTRAS.BarcrwalID, barCrwalId)
+                    .putExtra(AppConstant.PrefsName.ISFROM_BarCrwalPathMapActvity, true)
             )
             finish()
         } else if (binding.btmShhetInclue.drivingText == v) {
@@ -201,6 +202,12 @@ class BarCrawlSavedMapActivity : BaseActivity(), OnMapReadyCallback {
             bounds = builder!!.build()
             val cu = CameraUpdateFactory.newLatLngBounds(bounds!!, width, height, padding)
             googleMap.animateCamera(cu)
+
+            googleMap?.setOnMarkerClickListener {
+
+
+                  false
+            }
         }
 
     }

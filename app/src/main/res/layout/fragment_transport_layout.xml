@@ -137,6 +137,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+        <TextView
+            android:id="@+id/trnsportGoBtn"
+            android:layout_width="wrap_content"
+            android:text="GO"
+            android:textColor="@color/text_yello"
+            android:padding="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

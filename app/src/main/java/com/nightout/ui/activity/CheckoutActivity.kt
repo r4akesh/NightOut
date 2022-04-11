@@ -5,6 +5,8 @@ import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.model.PlaceOrderResponse
 import com.nightout.utils.AppConstant
+import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -24,20 +26,7 @@ class CheckoutActivity:BaseActivity() {
         customerConfig = PaymentSheet.CustomerConfiguration(fetchData.customer_id,fetchData.ephemeralKey)
         presentPaymentSheet()
     }
-    fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
-        when(paymentSheetResult) {
-            is PaymentSheetResult.Canceled -> {
-                print("Canceled")
-            }
-            is PaymentSheetResult.Failed -> {
-                print("Error: ${paymentSheetResult.error}")
-            }
-            is PaymentSheetResult.Completed -> {
-                // Display for example, an order confirmation screen
-                print("Completed")
-            }
-        }
-    }
+
 
     fun presentPaymentSheet() {
         paymentSheet.presentWithPaymentIntent(
@@ -47,8 +36,27 @@ class CheckoutActivity:BaseActivity() {
                 customer = customerConfig,
                 // Set `allowsDelayedPaymentMethods` to true if your business
                 // can handle payment methods that complete payment after a delay, like SEPA Debit and Sofort.
-                allowsDelayedPaymentMethods = true
+                allowsDelayedPaymentMethods = false//show hide other card option
             )
         )
+    }
+    fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+        when(paymentSheetResult) {
+            is PaymentSheetResult.Canceled -> {
+           //  Utills.showDefaultToast(THIS!!,)
+                Utills.showDefaultToast(THIS!!,"Payment Canceled")
+                finish()
+            }
+            is PaymentSheetResult.Failed -> {
+                Utills.showDefaultToast(THIS!!,"${paymentSheetResult.error}")
+                print("Error: ${paymentSheetResult.error}")
+                finish()
+            }
+            is PaymentSheetResult.Completed -> {
+                // Display for example, an order confirmation screen
+                Utills.showDefaultToast(THIS!!,"Payment Successfully Done")
+                finish()
+            }
+        }
     }
 }

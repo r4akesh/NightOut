@@ -162,4 +162,5 @@ dependencies {
     // implementation 'com.github.Drjacky:ImagePicker:2.1.13'
    // implementation 'com.stripe:stripe-android:16.6.1'
     implementation 'com.stripe:stripe-android:19.2.2'
+   // implementation 'com.google.android.gms:play-services:11.6.2'
 }

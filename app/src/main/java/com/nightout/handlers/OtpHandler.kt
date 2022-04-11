@@ -48,6 +48,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
             map["device_type"] = "1"
             map["email"] = email
             otpCall(map, activity)
+            //fetchLoginAPI("00","00user","user@email.com")//for fack login
             WebSocketSingleton.getInstant()!!.register(this)
         }
     }
@@ -66,7 +67,7 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                         PreferenceKeeper.instance.loginResponse = logModel
                         PreferenceKeeper.instance.myUserDetail = FSUsersModel()
                         userData = it.data
-                        fetchLoginAPI()
+                        fetchLoginAPI(userData.id,userData.name,userData.email)
 //                            Utills.showSuccessToast(activity,it.message)
 //                          activity.startActivity(Intent(activity, HomeActivityNew::class.java))
 //                          activity.finish()
@@ -90,12 +91,12 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
 
 
 
-    private fun fetchLoginAPI() {
+    private fun fetchLoginAPI(id:String,name: String,email:String) {
         val jsonObject = JSONObject()
             try {
-                jsonObject.put("userId", userData.id)
-                jsonObject.put("userName", userData.email)
-                jsonObject.put("firstName", userData.name)
+                jsonObject.put("userId", id)
+                jsonObject.put("userName", email)
+                jsonObject.put("firstName",  name)
                 jsonObject.put("password", "123123")
                 jsonObject.put("fcm_token", PreferenceKeeper.instance.fcmTokenSave)
                 jsonObject.put("type", "loginOrCreate")
@@ -160,8 +161,10 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
         try {
             activity.runOnUiThread {
                 val gson = Gson()
-                println("received message otp: $response")
+
+                Log.e("ok", "onWebSocketResponse: $response")
                 if (ResponseType.RESPONSE_TYPE_LOGIN.equalsTo(type) || ResponseType.RESPONSE_TYPE_LOGIN_OR_CREATE.equalsTo(type)) {
+                    Log.e("ok chat if", "onWebSocketResponse: $response")
                     val type1 = object : TypeToken<ResponseModel<FSUsersModel?>?>() {}.type
                     val fsUsersModelResponseModel: ResponseModel<FSUsersModel> = gson.fromJson<ResponseModel<FSUsersModel>>(response, type1)
                     if (fsUsersModelResponseModel.getStatus_code() == 200) {
@@ -178,19 +181,20 @@ open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: St
                         // finish()
                     }
                     else if(fsUsersModelResponseModel.getStatus_code() == 404){
-                        Log.d("ok chat", "fetchLoginAPI call333: $type")
-                        fetchLoginAPI()
+                        Log.e("ok", "fetchLoginAPI call333: $type")
+                        fetchLoginAPI(userData.id,userData.name,userData.email)
                     }
                     else {
-                        Log.d("ok chat", "elseeee: $type")
+                        Log.e("ok", "elseeee: $type")
                         Toast.makeText(activity, fsUsersModelResponseModel.getMessage(), Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Log.d("ok chat", "onWebSocketResponse: $type")
+                    Log.e("ok chat else", "onWebSocketResponse: $response")
+                 //   Log.d("ok chat", "onWebSocketResponse: $type")
                 }
             }
         } catch (e: Exception) {
-            Log.d("ok chat", "Exception: $type"+e)
+            Log.e("ok", "Exception: $type"+e)
             e.printStackTrace()
         }
     }

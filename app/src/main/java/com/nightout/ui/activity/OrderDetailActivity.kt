@@ -177,7 +177,7 @@ class OrderDetailActivity : BaseActivity() {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
-                        Utills.showDefaultToast(THIS!!, detailData.message)
+                      //  Utills.showDefaultToast(THIS!!, detailData.message)
                         startActivity(Intent(THIS!!,CheckoutActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.PLACEORDER_RES,detailData.data))
 
@@ -189,6 +189,7 @@ class OrderDetailActivity : BaseActivity() {
                 }
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
+                    MyApp.popErrorMsg("",it.message.toString(),THIS!!)
                 }
             }
         }

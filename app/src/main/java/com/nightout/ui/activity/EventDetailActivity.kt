@@ -49,7 +49,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
 
         venuID = intent.getStringExtra(AppConstant.INTENT_EXTRAS.VENU_ID)!!
         if (!venuID.isNullOrBlank()) {
-            Log.d("venuID", "onCreate: "+venuID)
+            Log.d("venuID", "onCreate: $venuID")
            user_venue_detailAPICALL()
         }
         if(intent.getBooleanExtra(AppConstant.INTENT_EXTRAS.iSFROMESelectBarCrwlActivity,false)){
@@ -65,7 +65,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
                 .putExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO,dt))
         }
         else if(v==binding.eventDetailBakBtn){
-            var myIntent = Intent()
+            val myIntent = Intent()
             myIntent.putExtra("resultFav",favStatus)
             setResult(Activity.RESULT_OK,myIntent)
             finish()
@@ -124,10 +124,10 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
 
     private fun user_venue_detailAPICALL() {
         progressDialog.show(this@EventDetailActivity, "")
-        var map = HashMap<String, String>()
-        map["id"] = venuID!!
+        val map = HashMap<String, String>()
+        map["id"] = venuID
 
-        userVenueDetailViewModel.userVenueDetail(map).observe(this@EventDetailActivity, {
+        userVenueDetailViewModel.userVenueDetail(map).observe(this@EventDetailActivity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
@@ -148,12 +148,12 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
                     )
                 }
             }
-        })
+        }
     }
-    fun addEvent() {
+    private fun addEvent() {
 
 
-        var intent = Intent(Intent.ACTION_INSERT)
+        val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
           //  .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, 1632990051544)
           //  .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, 1633026600000)
@@ -200,15 +200,15 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
             binding.eventDetailCocktail.text = dt.dress_code
             binding.eventDetaiAddrs.text = "Address :  ${dt.store_address}"
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.eventDetailDescription.setText(Html.fromHtml(dt.store_description, Html.FROM_HTML_MODE_COMPACT))
+                binding.eventDetailDescription.text = Html.fromHtml(dt.store_description, Html.FROM_HTML_MODE_COMPACT)
             } else {
-                binding.eventDetailDescription.setText(Html.fromHtml(dt.store_description))
+                binding.eventDetailDescription.text = Html.fromHtml(dt.store_description)
             }
-            var crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
-            var crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
-            var eventLat = (dt.store_lattitude)
-            var eventLong = (dt.store_longitude)
-            var vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
+            val crntLat = Commons.strToDouble(PreferenceKeeper.instance.currentLat!!)
+            val crntLong = Commons.strToDouble(PreferenceKeeper.instance.currentLong!!)
+            val eventLat = (dt.store_lattitude)
+            val eventLong = (dt.store_longitude)
+            val vv =MyApp.getDestance(crntLat,crntLong,eventLat,eventLong)*0.621371
             binding.eventDetailDistence.text =""+ DecimalFormat("##.##").format(vv)+" miles"
 
             //  binding.storeDeatilAddrs.text = dt.store_address
@@ -280,7 +280,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
         map["status"] = favStatus
 
 
-        doFavViewModel.doFavItem(map).observe(this@EventDetailActivity, {
+        doFavViewModel.doFavItem(map).observe(this@EventDetailActivity) {
             when (it.status) {
                 Status.SUCCESS -> {
                  //   progressDialog.dialog.dismiss()
@@ -305,7 +305,7 @@ class EventDetailActivity : BaseActivity(), OnMapReadyCallback {
                   //  progressDialog.dialog.dismiss()
                 }
             }
-        })
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

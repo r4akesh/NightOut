@@ -219,13 +219,13 @@ class Utills {
         fun setImage(context: Context?, imageView: CircleImageView?, url: String?) {
             imageView?.let {
                 Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
-                    .placeholder(R.drawable.user_default_ic).into(it)
+                    .placeholder(R.drawable.app_icon).into(it)
             }
         }
         fun setImageNormal(context: Context?, imageView: ImageView?, url: String?) {
             imageView?.let {
                 Glide.with(context!!).load(PreferenceKeeper.instance.imgPathSave+url).centerCrop()
-                    .placeholder(R.drawable.no_image)
+                    .placeholder(R.drawable.app_icon)
                     .error(R.drawable.app_icon).into(it)
             }
         }
@@ -236,7 +236,7 @@ class Utills {
                     Glide.with(context!!).load(url)
                         .centerCrop()
                         .placeholder(R.drawable.app_icon)
-                        .error((R.drawable.nodata_founf_img))
+                        .error((R.drawable.app_icon))
                         .into(it)
                 }
             } catch (e: Exception) {

@@ -42,6 +42,11 @@ class AddParticipnetChat : BaseActivity(), WebSocketObserver {
     lateinit var contactListAdapter: ContactListAdapter
     lateinit var existingFrend : ArrayList<FSUsersModel>
     var roomID=""
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@AddParticipnetChat, R.layout.addparticientchat_activity)
@@ -51,6 +56,9 @@ class AddParticipnetChat : BaseActivity(), WebSocketObserver {
         contactFillterViewModel = CommonViewModel(this@AddParticipnetChat)
         setTouchNClick(binding.addPricpentChatToolBar.toolbarCreateGrop)
         WebSocketSingleton.getInstant()!!.register(this)
+
+
+
         if (ActivityCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.READ_CONTACTS

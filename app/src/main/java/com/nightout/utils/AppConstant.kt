@@ -92,6 +92,7 @@ class AppConstant {
         const val IS_GROUP_MODIFIED = "IS_GROUP_MODIFIED"
         const val GROUP_LIST = "GROUP_LIST"
         const val PLACEORDER_RES = "PLACEORDER_RES"
+        const val ISFrom_BookTicketActivity = "ISFrom_BookTicketActivity"
 
 
 

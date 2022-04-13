@@ -45,6 +45,7 @@ class TicketConfirmActvity : BaseActivity() {
 
     private fun initView() {
         setTouchNClick(binding.ticketDownload)
+        setTouchNClick(binding.tickeCnfrmClose)
     }
 
     override fun onClick(v: View?) {
@@ -86,6 +87,9 @@ class TicketConfirmActvity : BaseActivity() {
 
             }
 
+        }
+        else if(v==binding.tickeCnfrmClose){
+            jumpToHome()
         }
     }
 

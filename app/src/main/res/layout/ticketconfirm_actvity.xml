@@ -22,12 +22,25 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="0dp">
 
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/tickeCnfrmClose"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:background="@null"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:padding="@dimen/_15sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/close_77"
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/tickeCnfrmRightImg"

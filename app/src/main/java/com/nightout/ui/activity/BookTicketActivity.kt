@@ -1,5 +1,6 @@
 package com.nightout.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -7,11 +8,13 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BookticketActviityBinding
+import com.nightout.model.BookEventMdlResponse
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
@@ -85,6 +88,7 @@ class BookTicketActivity : BaseActivity()  {
         }
     }
 
+    var REQUEST_CODE=1042
     private fun book_event_ticketAPICALL() {
         progressDialog.show(this@BookTicketActivity, "")
         var map = HashMap<String, String>()
@@ -93,28 +97,46 @@ class BookTicketActivity : BaseActivity()  {
         map["venue_id"] =pojoEvntDetl.id
         map["qty"] =""+peopleCount
         map["amount"] = pojoEvntDetl.sale_price
-        map["payment_mode"] ="0"
+        map["payment_mode"] ="1"
+        map["api_version"] ="2020-08-27"
 
-        bookEventViewModel.bookEvent(map).observe(this@BookTicketActivity, {
+        bookEventViewModel.bookEvent(map).observe(this@BookTicketActivity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
                     it.data?.let { res ->
                         Log.d("ok", "book_event_ticketAPICALL: ")
-                        startActivity(Intent (this@BookTicketActivity,TicketConfirmActvity::class.java)
-                 .putExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO,pojoEvntDetl)
-                 .putExtra(AppConstant.INTENT_EXTRAS.TOTAL_AMT,totAmt.toString())
-                 .putExtra(AppConstant.INTENT_EXTRAS.TICKET_NO,res.data.ticket_number)
-                 .putExtra(AppConstant.INTENT_EXTRAS.TICKET_URL,res.data.ticket_download))
-
+                        resBookEvent = it.data.data
+                        resultPayment.launch(Intent(THIS!!,CheckoutActivity::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.PLACEORDER_RES,it.data.data)
+                            .putExtra(AppConstant.INTENT_EXTRAS.ISFrom_BookTicketActivity,true))
                     }
                 }
-                Status.LOADING -> { }
+                Status.LOADING -> {}
                 Status.ERROR -> {
                     progressDialog.dialog.dismiss()
                 }
             }
-        })
+        }
+    }
+
+    lateinit var resBookEvent : BookEventMdlResponse.Data
+    var resultPayment= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode== Activity.RESULT_OK){
+            startActivity(
+                Intent(this@BookTicketActivity, TicketConfirmActvity::class.java)
+                    .putExtra(AppConstant.INTENT_EXTRAS.EVENTDETAIL_POJO, pojoEvntDetl)
+                    .putExtra(AppConstant.INTENT_EXTRAS.TOTAL_AMT, totAmt.toString())
+                    .putExtra(
+                        AppConstant.INTENT_EXTRAS.TICKET_NO,
+                        resBookEvent.ticket_number
+                    )
+                    .putExtra(
+                        AppConstant.INTENT_EXTRAS.TICKET_URL,
+                        resBookEvent.ticket_download
+                    )
+            )
+        }
     }
 
     private fun setData() {

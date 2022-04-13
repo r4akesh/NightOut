@@ -51,6 +51,10 @@ import com.nightout.utils.*
 import com.nightout.vendor.services.NetworkHelper
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -89,7 +93,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
     override fun onResume() {
         super.onResume()
-        Log.d("TAG", "onResume: ")
+
         if (PreferenceKeeper.instance.isNotificationOpen) {
             binding.headerHome.headerNotificationText.visibility = GONE
             PreferenceKeeper.instance.isNotificationOpen = false
@@ -131,9 +135,12 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 requireActivity()
             )
         }
-        Log.d("TAG", "onCreateView: ")
+
+
         return binding.root
     }
+
+
 
 
     override fun onClick(v: View?) {

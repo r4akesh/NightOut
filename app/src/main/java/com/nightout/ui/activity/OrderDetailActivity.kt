@@ -1,10 +1,12 @@
 package com.nightout.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
@@ -178,7 +180,7 @@ class OrderDetailActivity : BaseActivity() {
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                       //  Utills.showDefaultToast(THIS!!, detailData.message)
-                        startActivity(Intent(THIS!!,CheckoutActivity::class.java)
+                        resultCallBackk.launch(Intent(THIS!!,CheckoutActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.PLACEORDER_RES,detailData.data))
 
 
@@ -193,5 +195,17 @@ class OrderDetailActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    var resultCallBackk= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode== Activity.RESULT_OK){
+            jumpToHome()
+        }
+    }
+    private fun jumpToHome() {
+        val i = Intent(this, HomeActivityNew::class.java)
+        // set the new task and clear flags
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 }

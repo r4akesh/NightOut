@@ -76,12 +76,12 @@ class TopImgVideoAdapter(
           var playbackPosition: Long = 0
         var vPath= PreferenceKeeper.instance.imgPathSave+arrayList[position].image
         val uri = Uri.parse(vPath)
-        viewHolder.binding.videoviewInner.visibility= View.GONE
+       // viewHolder.binding.videoviewInner.visibility= View.GONE
         if(arrayList[position].type == context.resources.getString(R.string.typeFile)){
             Log.d("onBindViewHolder2", "onBindViewHolder: "+position)
             playbackStateListener = PlaybackStateListener()
             playWhenReady = true
-            viewHolder.binding.videoviewInner.visibility = View.VISIBLE
+           // viewHolder.binding.videoviewInner.visibility = View.VISIBLE
 
 
             try {
@@ -92,7 +92,7 @@ class TopImgVideoAdapter(
                     exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
                 }
 
-                viewHolder.binding.videoviewInner!!.player = exoPlayer
+                //viewHolder.binding.videoviewInner!!.player = exoPlayer
                 val mediaSource = buildMediaSource(uri)
                 exoPlayer!!.playWhenReady = playWhenReady
                 exoPlayer!!.seekTo(currentWindow, playbackPosition)
@@ -107,7 +107,7 @@ class TopImgVideoAdapter(
             Log.d("onBindViewHolder1", "onBindViewHolder: "+position)
             playWhenReady = false
             viewHolder.binding.arcLayout.visibility= View.VISIBLE
-            Utills.setImageNormal(context,viewHolder.binding.imageView, arrayList[position].image)
+            Utills.setImageNormal(context,viewHolder.binding.topImgAdpterimageView, arrayList[position].image)
 
             try {
                 if (exoPlayer == null) {
@@ -117,7 +117,7 @@ class TopImgVideoAdapter(
                     exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
                 }
 
-                viewHolder.binding.videoviewInner!!.player = exoPlayer
+              //  viewHolder.binding.videoviewInner!!.player = exoPlayer
                 val mediaSource = buildMediaSource(uri)
                 exoPlayer!!.playWhenReady = playWhenReady
                 exoPlayer!!.seekTo(currentWindow, playbackPosition)
@@ -133,9 +133,9 @@ class TopImgVideoAdapter(
             clickListener.onClick(position)
 
         }
-        viewHolder.binding.videoviewInner.setOnClickListener {
-            clickListener.onClick(position)
-        }
+//        viewHolder.binding.videoviewInner.setOnClickListener {
+//            clickListener.onClick(position)
+//        }
     }
 
     private class PlaybackStateListener : Player.EventListener {

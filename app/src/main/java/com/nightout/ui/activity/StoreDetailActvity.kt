@@ -30,6 +30,8 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -57,7 +59,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     lateinit var doAddBarCrawlModel: CommonViewModel
     lateinit var sendQueryViewModel: CommonViewModel
     lateinit var mMap: GoogleMap
-    var imageViewPagerAdapter: TopImgVideoAdapter? = null
+    var imageViewPagerAdapter: MediaRecyclerAdapter? = null
    // var imageViewPagerAdapter: ImageViewPagerAdapter? = null
     private val progressDialog = CustomProgressDialog()
     var facilityList = ArrayList<VenuDetailModel.VenueFacility>()
@@ -65,6 +67,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     var favStatus = "0"
     var addBarCrawlStatus = "0"
     var storeType = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@StoreDetailActvity, R.layout.storedetail_activity)
@@ -210,8 +213,6 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         } else if (v == binding.storeDeatilMenu) {
             binding.storeDeatilConstrentMore.visibility = GONE
             binding.storeDeatilConstrentDrinks.visibility = VISIBLE
-
-
             binding.storeDeatilMenu.setBackgroundResource(R.drawable.box_yelo)
             binding.storeDeatilMenu.setTextColor(resources.getColor(R.color.black))
             //   binding.storeDeatilDiscount.setBackgroundResource(0)
@@ -348,25 +349,54 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             it.adapter = nearAdapter
         }
     }
-
+    private fun initGlide(): RequestManager? {
+        val options = RequestOptions()
+        return Glide.with(this)
+            .setDefaultRequestOptions(options)
+    }
 
     private fun setData() {
         try {
             binding.constrentCardLayout.visibility = VISIBLE
             //setSlider
-            imageViewPagerAdapter = TopImgVideoAdapter(this@StoreDetailActvity, dt.venue_gallery,object:TopImgVideoAdapter.ClickListener{
-                override fun onClick(pos: Int) {
-                    startActivity(Intent(THIS!!,VideoPlayActvity::class.java)
-                        .putExtra(AppConstant.INTENT_EXTRAS.VIDEO_URL,PreferenceKeeper.instance.imgPathSave+dt.venue_gallery[pos].image))
-                }
 
-            })
+            //set data object
+            binding.viewPager.setMediaObjects(dt.venue_gallery as java.util.ArrayList<VenuDetailModel.VenueGallery>?)
+            imageViewPagerAdapter = MediaRecyclerAdapter(dt.venue_gallery,initGlide() !!)
+
+
             val snapHelper: SnapHelper = PagerSnapHelper()
             binding.viewPager.also {
                 binding.viewPager.layoutManager = LinearLayoutManager(THIS!!,LinearLayoutManager.HORIZONTAL,false)
                 binding.viewPager.adapter = imageViewPagerAdapter
                 snapHelper.attachToRecyclerView(binding.viewPager)
             }
+            addBottomDots(dt.venue_gallery.size)
+
+            binding.viewPager.addOnScrollListener( object: RecyclerView.OnScrollListener(){
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        Log.d("scroll", "idle")
+                        val tab: RecyclerView.LayoutManager = binding.viewPager.layoutManager as  RecyclerView.LayoutManager
+
+                     //   val currentCompletelyVisibleLab = (RecyclerView.LayoutManager).findFirstCompletelyVisibleItemPosition()
+                       // bottomDotsTransaction(newState)
+                    } else if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
+                        Log.d("scroll", "settling")
+                    } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        Log.d("scroll", "dragging")
+                    }
+
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    Log.d("scroll", "scrolling")    dfgdfgdfgf
+                }
+            })
+
+
 
           //   binding.dotsIndicator.setViewPager(binding.viewPager)
 
@@ -379,32 +409,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             binding.storeDeatilEmail.text = dt.store_email
             binding.storeDeatilAddrs.text = dt.store_address
 
-   /*         binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                    Log.d("ViewPager1", "onPageScrolled: " + position)
-                }
 
-
-                override fun onPageSelected(position: Int) {
-                    Log.d("ViewPager2", "onPageSelected: " + position)
-                    if (dt.venue_gallery[position].type == resources.getString(R.string.typeFile)) {
-                        imageViewPagerAdapter?.startPlayer()
-                    }else{
-                        imageViewPagerAdapter?.pausePlayer()
-                    }
-
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {
-                    Log.d("ViewPager3", "onPageScrollStateChanged: " + state)
-
-                }
-
-            })*/
 
 
             // fav = intent.getStringExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE)!!
@@ -452,6 +457,27 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     }
 
+    private fun addBottomDots(size: Int) {
+        var imageView: ImageView
+        for (i in 0 until size) {
+            imageView = ImageView(THIS!!)
+            imageView.setImageResource(R.drawable.circle_gray)
+            imageView.setPadding(15, 15, 15, 15)
+            binding.storeDeatiLinerDot.addView(imageView)
+        }
+        bottomDotsTransaction(0)
+    }
+
+    private fun bottomDotsTransaction(pos: Int) {
+        for (i in 0 until binding.storeDeatiLinerDot.getChildCount()) {
+            if (binding.storeDeatiLinerDot.getChildAt(i) is ImageView) {
+                (binding.storeDeatiLinerDot.getChildAt(i) as ImageView).setImageResource(R.drawable.circle_gray)
+            }
+        }
+        //Set the chosen dot on position
+        //Set the chosen dot on position
+        (binding.storeDeatiLinerDot.getChildAt(pos) as ImageView).setImageResource(R.drawable.circle_yello)
+    }
 
     private fun showMapLoc(storeLattitude: String, storeLongitude: String) {
         val latLng =
@@ -1093,4 +1119,39 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
             it.adapter = pakgAdapter
         }
     }
+
+    override fun onPause() {
+        if (binding.viewPager != null) {
+            binding.viewPager.onPausePlayer()
+        }
+        super.onPause()
+        Log.d("TAG", "onPause: ")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (binding.viewPager != null) {
+            Log.d("TAG", "onResume: ")
+            val hh = Handler()
+            hh.postDelayed({ binding.viewPager.playVideo(false) }, 2000)
+        }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        if (binding.viewPager != null) {
+            Log.d("TAG", "onResume: ")
+            val hh = Handler()
+            hh.postDelayed({ binding.viewPager.onRestartPlayer() }, 2000)
+        }
+    }
+    override fun onDestroy() {
+        if (binding.viewPager != null) {
+            binding.viewPager.releasePlayer()
+        }
+        super.onDestroy()
+
+    }
+
 }

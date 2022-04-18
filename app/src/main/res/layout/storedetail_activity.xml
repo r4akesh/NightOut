@@ -18,9 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_220sdp"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <androidx.recyclerview.widget.RecyclerView
+
+
+            <com.nightout.utils.ExoPlayerRecyclerView
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -28,9 +31,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_180sdp"
+
+            android:src="@drawable/top_curve_ic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/storeDeatilBakBtn"
@@ -74,6 +85,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator>
+
+
+        <LinearLayout
+            android:id="@+id/storeDeatiLinerDot"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_150sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -436,11 +458,11 @@
 
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
                         android:id="@+id/recycleNearBy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilNearBy"
-                        android:layout_height="wrap_content"/>
+                        app:layout_constraintTop_toBottomOf="@+id/storeDeatilNearBy" />
 
 
                     <LinearLayout

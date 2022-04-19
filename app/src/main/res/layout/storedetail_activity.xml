@@ -89,8 +89,9 @@
 
         <LinearLayout
             android:id="@+id/storeDeatiLinerDot"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginTop="@dimen/_150sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

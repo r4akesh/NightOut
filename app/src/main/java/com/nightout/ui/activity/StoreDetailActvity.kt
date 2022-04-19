@@ -377,11 +377,11 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        Log.d("scroll", "idle")
-                        val tab: RecyclerView.LayoutManager = binding.viewPager.layoutManager as  RecyclerView.LayoutManager
+                        val myLayoutManager: LinearLayoutManager = recyclerView.getLayoutManager() as LinearLayoutManager
+                        val scrollPosition = myLayoutManager.findFirstVisibleItemPosition()
+                        Log.d("scroll", "onScrollStateChanged: "+scrollPosition)
 
-                     //   val currentCompletelyVisibleLab = (RecyclerView.LayoutManager).findFirstCompletelyVisibleItemPosition()
-                       // bottomDotsTransaction(newState)
+                        bottomDotsTransaction(scrollPosition)
                     } else if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
                         Log.d("scroll", "settling")
                     } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -392,7 +392,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    Log.d("scroll", "scrolling")    dfgdfgdfgf
+                  //  Log.d("scroll", "scrolling")
                 }
             })
 
@@ -461,8 +461,8 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         var imageView: ImageView
         for (i in 0 until size) {
             imageView = ImageView(THIS!!)
-            imageView.setImageResource(R.drawable.circle_gray)
-            imageView.setPadding(15, 15, 15, 15)
+            imageView.setImageResource(R.drawable.circle_gray_dot)
+            imageView.setPadding(5, 10, 5,10 )
             binding.storeDeatiLinerDot.addView(imageView)
         }
         bottomDotsTransaction(0)
@@ -471,12 +471,10 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
     private fun bottomDotsTransaction(pos: Int) {
         for (i in 0 until binding.storeDeatiLinerDot.getChildCount()) {
             if (binding.storeDeatiLinerDot.getChildAt(i) is ImageView) {
-                (binding.storeDeatiLinerDot.getChildAt(i) as ImageView).setImageResource(R.drawable.circle_gray)
+                (binding.storeDeatiLinerDot.getChildAt(i) as ImageView).setImageResource(R.drawable.circle_gray_dot)
             }
         }
-        //Set the chosen dot on position
-        //Set the chosen dot on position
-        (binding.storeDeatiLinerDot.getChildAt(pos) as ImageView).setImageResource(R.drawable.circle_yello)
+        (binding.storeDeatiLinerDot.getChildAt(pos) as ImageView).setImageResource(R.drawable.circle_yello_dot)
     }
 
     private fun showMapLoc(storeLattitude: String, storeLongitude: String) {
@@ -1131,10 +1129,13 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
-        if (binding.viewPager != null) {
-            Log.d("TAG", "onResume: ")
-            val hh = Handler()
-            hh.postDelayed({ binding.viewPager.playVideo(false) }, 2000)
+        try {
+            if (binding.viewPager != null) {
+                Log.d("TAG", "onResume: ")
+                val hh = Handler()
+                hh.postDelayed({ binding.viewPager.playVideo(false) }, 2000)
+            }
+        } catch (e: Exception) {
         }
     }
 

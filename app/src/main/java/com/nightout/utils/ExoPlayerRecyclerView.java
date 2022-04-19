@@ -245,92 +245,96 @@ public class ExoPlayerRecyclerView extends RecyclerView {
 
     public void playVideo(boolean isEndOfList) {
 
-        int targetPosition;
+        try {
+            int targetPosition;
 
-        if (!isEndOfList) {
-            int startPosition = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
-            int endPosition = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
+            if (!isEndOfList) {
+                int startPosition = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
+                int endPosition = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
 
-            // if there is more than 2 list-items on the screen, set the difference to be 1
-            if (endPosition - startPosition > 1) {
-                endPosition = startPosition + 1;
+                // if there is more than 2 list-items on the screen, set the difference to be 1
+                if (endPosition - startPosition > 1) {
+                    endPosition = startPosition + 1;
+                }
+
+                // something is wrong. return.
+                if (startPosition < 0 || endPosition < 0) {
+                    return;
+                }
+
+                // if there is more than 1 list-item on the screen
+                if (startPosition != endPosition) {
+                    int startPositionVideoHeight = getVisibleVideoSurfaceHeight(startPosition);
+                    int endPositionVideoHeight = getVisibleVideoSurfaceHeight(endPosition);
+
+                    targetPosition = startPositionVideoHeight > endPositionVideoHeight ? startPosition : endPosition;
+                } else {
+                    targetPosition = startPosition;
+                }
+            } else {
+                targetPosition = mediaObjects.size() - 1;
             }
 
-            // something is wrong. return.
-            if (startPosition < 0 || endPosition < 0) {
+            //   Log.d(TAG, "playVideo: target position: " + targetPosition);
+
+            // video is already playing so return
+            if (targetPosition == playPosition) {
                 return;
             }
 
-            // if there is more than 1 list-item on the screen
-            if (startPosition != endPosition) {
-                int startPositionVideoHeight = getVisibleVideoSurfaceHeight(startPosition);
-                int endPositionVideoHeight = getVisibleVideoSurfaceHeight(endPosition);
-
-                targetPosition = startPositionVideoHeight > endPositionVideoHeight ? startPosition : endPosition;
-            } else {
-                targetPosition = startPosition;
+            // set the position of the list-item that is to be played
+            playPosition = targetPosition;
+            if (videoSurfaceView == null) {
+                return;
             }
-        } else {
-            targetPosition = mediaObjects.size() - 1;
-        }
 
-     //   Log.d(TAG, "playVideo: target position: " + targetPosition);
-
-        // video is already playing so return
-        if (targetPosition == playPosition) {
-            return;
-        }
-
-        // set the position of the list-item that is to be played
-        playPosition = targetPosition;
-        if (videoSurfaceView == null) {
-            return;
-        }
-
-        // remove any old surface views from previously playing videos
-        videoSurfaceView.setVisibility(INVISIBLE);
-        removeVideoView(videoSurfaceView);
-
-        int currentPosition = targetPosition - ((LinearLayoutManager) Objects.requireNonNull(getLayoutManager())).findFirstVisibleItemPosition();
-
-        View child = getChildAt(currentPosition);
-        if (child == null) {
-            return;
-        }
-
-        PlayerViewHolder holder = (PlayerViewHolder) child.getTag();
-        if (holder == null) {
-            playPosition = -1;
-            return;
-        }
-        mediaCoverImage = holder.mediaCoverImage;
-        progressBar = holder.progressBar;
-        volumeControl = holder.volumeControl;
-        viewHolderParent = holder.itemView;
-        requestManager = holder.requestManager;
-        mediaContainer = holder.mediaContainer;
-        if (mediaObjects.get(targetPosition).getType().equals("0")) {
+            // remove any old surface views from previously playing videos
             videoSurfaceView.setVisibility(INVISIBLE);
             removeVideoView(videoSurfaceView);
-            onPausePlayer();
-            Log.d(TAG, "playImage: "+targetPosition);
-            Glide.with(context)
-                    .load(PreferenceKeeper.getInstance().getImgPathSave() + mediaObjects.get(targetPosition).getImage())
-                    .into(mediaCoverImage);
-        } else {
-            Log.d(TAG, "playVideo: "+targetPosition);
-            videoSurfaceView.setPlayer(videoPlayer);
-            viewHolderParent.setOnClickListener(videoViewClickListener);
 
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
-                    context, Util.getUserAgent(context, AppName));
-            String mediaUrl = PreferenceKeeper.getInstance().getImgPathSave() + mediaObjects.get(targetPosition).getImage();
-            if (mediaUrl != null) {
-                MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                        .createMediaSource(Uri.parse(mediaUrl));
-                videoPlayer.prepare(videoSource);
-                videoPlayer.setPlayWhenReady(true);
+            int currentPosition = targetPosition - ((LinearLayoutManager) Objects.requireNonNull(getLayoutManager())).findFirstVisibleItemPosition();
+
+            View child = getChildAt(currentPosition);
+            if (child == null) {
+                return;
             }
+
+            PlayerViewHolder holder = (PlayerViewHolder) child.getTag();
+            if (holder == null) {
+                playPosition = -1;
+                return;
+            }
+            mediaCoverImage = holder.mediaCoverImage;
+            progressBar = holder.progressBar;
+            volumeControl = holder.volumeControl;
+            viewHolderParent = holder.itemView;
+            requestManager = holder.requestManager;
+            mediaContainer = holder.mediaContainer;
+            if (mediaObjects.get(targetPosition).getType().equals("0")) {
+                videoSurfaceView.setVisibility(INVISIBLE);
+                removeVideoView(videoSurfaceView);
+                onPausePlayer();
+                Log.d(TAG, "playImage: "+targetPosition);
+                Glide.with(context)
+                        .load(PreferenceKeeper.getInstance().getImgPathSave() + mediaObjects.get(targetPosition).getImage())
+                        .into(mediaCoverImage);
+            } else {
+                Log.d(TAG, "playVideo: "+targetPosition);
+                videoSurfaceView.setPlayer(videoPlayer);
+                viewHolderParent.setOnClickListener(videoViewClickListener);
+
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
+                        context, Util.getUserAgent(context, AppName));
+                String mediaUrl = PreferenceKeeper.getInstance().getImgPathSave() + mediaObjects.get(targetPosition).getImage();
+                if (mediaUrl != null) {
+                    MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                            .createMediaSource(Uri.parse(mediaUrl));
+                    videoPlayer.prepare(videoSource);
+                    videoPlayer.setPlayWhenReady(true);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

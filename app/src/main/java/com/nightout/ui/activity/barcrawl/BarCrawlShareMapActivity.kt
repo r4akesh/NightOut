@@ -1,5 +1,7 @@
 package com.nightout.ui.activity.barcrawl
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,6 +28,7 @@ import com.google.gson.Gson
 import com.nightout.adapter.BarcrwalRootPathShareAdapter
 import com.nightout.model.PathParseModel
 import com.nightout.model.SharedBarcrwalRes
+import com.nightout.ui.activity.TaxiListActivity
 
 
 class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
@@ -91,6 +94,7 @@ class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
             binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
             binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
             binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+              startActivity(Intent(THIS!!, TaxiListActivity::class.java))
         }
         else if(binding.btmShhetInclue.bicyclingText==v){
             googleMap.clear()
@@ -101,6 +105,7 @@ class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
             binding.btmShhetInclue.bicyclingText.setTextColor(THIS!!.resources.getColor(R.color.text_yello))
             binding.btmShhetInclue.drivingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
             binding.btmShhetInclue.walkingText.setTextColor(THIS!!.resources.getColor(R.color.view_line_clr))
+              openTrainWebsite()
         }
         else if(binding.btmShhetInclue.walkingText==v){
             googleMap.clear()
@@ -119,7 +124,17 @@ class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
     private fun setList(venueList: ArrayList<SharedBarcrwalRes.Venue>) {
         barcrwalRootPathAdapter = BarcrwalRootPathShareAdapter(this@BarCrawlShareMapActivity,venueList,object:BarcrwalRootPathShareAdapter.ClickListener{
             override fun onClick(pos: Int) {
-
+                if(selectedMode == "transit"){
+                    //train
+                    openTrainWebsite()
+                }else {
+                    Log.d("TAG", "onClick: " + venueList[pos].store_name)
+                    startActivity(Intent(THIS!!, TaxiListActivity::class.java)
+                            .putExtra(AppConstant.INTENT_EXTRAS.PATH_POJO, venueList)
+                            .putExtra(AppConstant.INTENT_EXTRAS.PATH_POSITION, pos)
+                            .putExtra(AppConstant.INTENT_EXTRAS.IsFROM_BarCrawlShareMapActivity, true)
+                    )
+                }
             }
 
         })
@@ -129,6 +144,15 @@ class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{
         }
     }
 
+    private fun openTrainWebsite() {
+        try {
+            val url = "https://ojp.nationalrail.co.uk/service/planjourney/search"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        } catch (e: Exception) {
+        }
+    }
     private fun setBottomSheet() {
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.btmShhetInclue.bottomSheet)

@@ -220,30 +220,18 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         latitudeUpdated = offset + mLat
                         longitudeUpdated = offset + mLang
                         val positionAddrs = LatLng(latitudeUpdated, longitudeUpdated)
-                        var marker: Marker? =
-                            mMap!!.addMarker(MarkerOptions().position(positionAddrs))
+                        var marker: Marker? = mMap!!.addMarker(MarkerOptions().position(positionAddrs))
                         marker?.snippet = "" + i + "," + j
                         // marker?.title =dashList.all_records[i].sub_records[j].store_name
                         //  marker?.snippet = dashList.all_records[i].sub_records[j].store_address
                         var strName = dashList.all_records[i].sub_records[j].store_name
                         var strAddrs = dashList.all_records[i].sub_records[j].store_address
                         when {
-                            dashList.all_records[i].sub_records[j].store_type.lowercase()
-                                .trim() == AppConstant.PrefsName.BAR -> {
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.BAR -> {
                                 //marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
-
-                                marker?.setIcon(
-                                    BitmapDescriptorFactory.fromBitmap(
-                                        getMarkerBitmapFromView(
-                                            R.drawable.marker_bar,
-                                            strName,
-                                            strAddrs
-                                        )!!
-                                    )
-                                )
+                                marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_bar, strName, strAddrs)!!))
                             }
-                            dashList.all_records[i].sub_records[j].store_type.lowercase()
-                                .trim() == AppConstant.PrefsName.PUB -> {
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.PUB -> {
                                 // marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
                                 marker?.setIcon(
                                     BitmapDescriptorFactory.fromBitmap(

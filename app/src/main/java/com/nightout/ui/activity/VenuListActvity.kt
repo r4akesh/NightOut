@@ -2,14 +2,23 @@ package com.nightout.ui.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -172,17 +181,17 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         map["store_type"] = selectedStrType
 
         customProgressDialog.show(this@VenuListActvity)
-        venuListModel.venulistData(map).observe(this@VenuListActvity, {
+        venuListModel.venulistData(map).observe(this@VenuListActvity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     customProgressDialog.dialog.hide()
                     venuDataList = ArrayList()
                     setListVenu()//for empty the list
                     it.data?.let {
-                        venuDataList=it.data
+                        venuDataList = it.data
                         setListVenu()
-                        if(!isListShow)
-                        setMarker()
+                        if (!isListShow)
+                            setMarker()
                     }
                 }
                 Status.LOADING -> {
@@ -199,22 +208,19 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                     )
                 }
             }
-        })
+        }
     }
     var mapMarker = HashMap<String, Double>()
     private fun setMarker() {
-
-            googleMap.clear()
-
-
-
+        googleMap.clear()
         val builder = LatLngBounds.Builder()
         var latitudeUpdated: Double
         var longitudeUpdated: Double
         for (i in 0 until venuDataList.size){
             var mLat=Commons.strToDouble(venuDataList[i].store_lattitude)
             var mLang=Commons.strToDouble(venuDataList[i].store_longitude)
-            if(MyApp.isValidLatLng(mLat,mLang)&& mLat>0.0 && mLang>0.0){
+            if (MyApp.isValidLatLng(mLat, mLang)){
+
                 var key= ""+mLat+mLang
                 var offset = 0.0
                 if (mapMarker.containsKey(key)) {
@@ -227,23 +233,29 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
                 longitudeUpdated = offset+mLang
                 val positionAddrs = LatLng(latitudeUpdated, longitudeUpdated)
                 val marker: Marker = googleMap!!.addMarker(MarkerOptions().position(positionAddrs))!!
-                marker.title =venuDataList[i].store_name
-                marker.snippet = venuDataList[i].store_address
+                marker.snippet = ""+i
+                var strName = venuDataList[i].store_name
+                var strAddrs = venuDataList[i].store_address
                 when {
                     venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.BAR -> {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
+                      //  marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
+                        marker.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_bar, strName, strAddrs)!!))
                     }
                     venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.PUB -> {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
+                      //  marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
+                        marker.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_pub, strName, strAddrs)!!))
                     }
                     venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.CLUB -> {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
+                       // marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
+                        marker.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_club, strName, strAddrs)!!))
                     }
                     venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.FOOD -> {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
+                     //   marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
+                        marker.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_food, strName, strAddrs)!!))
                     }
                     venuDataList[i].store_type.lowercase().trim()==AppConstant.PrefsName.EVENT -> {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
+                       // marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
+                        marker.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_event, strName, strAddrs)!!))
                     }
                 }
                 builder.include(marker.position)
@@ -261,15 +273,49 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
             } catch (e: java.lang.Exception) {
                 Log.e("Exception>>>", "" + e)
             }
-            googleMap?.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener { marker ->
-                var v = marker.id
-                var v2 = marker.id
-//                    System.out.println("snipptet>>" + arList.get(marker.snippet.toInt()))
-//                    startActivity(Intent(THIS, MakeReservationStep3::class.java).putExtra(StaticData.SportCenter, arList.get(marker.snippet.toInt())))
-            })
+           googleMap.setOnMarkerClickListener {
+               var pos = Integer.parseInt(it.snippet)
+
+               posSaveForUpdate = pos
+               var vv=venuDataList[pos].venue_gallery
+               if(selectedStrType == "5"){
+                   startActivityForResult(Intent(this@VenuListActvity, EventDetailActivity::class.java)
+                       .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                       .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
+                       .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)
+                       ,REQCODE_STOREDETAILACTIVITY)
+               }else {
+                   startActivityForResult(
+                       Intent(this@VenuListActvity, StoreDetailActvity::class.java)
+                           .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_VENULISTACTIVITY, true)
+                           .putExtra(AppConstant.INTENT_EXTRAS.VENU_ID, "" + venuDataList[pos].id)
+                           .putExtra(AppConstant.INTENT_EXTRAS.FAVROUITE_VALUE, venuDataList[pos].favrouite)
+                           .putExtra(AppConstant.INTENT_EXTRAS.StoreType, selectedStrType)
+                       ,REQCODE_STOREDETAILACTIVITY)
+               }
+               false
+           }
         }
     }
-
+    private fun getMarkerBitmapFromView(resId: Int, strName: String, strAddrs: String): Bitmap? {
+        val customMarkerView: View = (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.custom_marker, null)
+        val markerImageView = customMarkerView.findViewById(R.id.profile_image) as ImageView
+        val tvTitle = customMarkerView.findViewById(R.id.tvTitle) as TextView
+        val tvDesc = customMarkerView.findViewById(R.id.tvDesc) as TextView
+        tvTitle.text = strName
+        tvDesc.text = strAddrs
+        markerImageView.setImageResource(resId)
+        customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        customMarkerView.layout(0, 0, customMarkerView.measuredWidth, customMarkerView.measuredHeight)
+        customMarkerView.buildDrawingCache()
+        val returnedBitmap = Bitmap.createBitmap(customMarkerView.measuredWidth, customMarkerView.measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN)
+        val drawable: Drawable? = customMarkerView.background
+        if (drawable != null) drawable.draw(canvas)
+        customMarkerView.draw(canvas)
+        return returnedBitmap
+    }
     var posSaveForUpdate=0
     private fun setListVenu() {
         venuSubAdapter = VenuSubAdapter(this@VenuListActvity, venuDataList, object : VenuSubAdapter.ClickListener {
@@ -394,33 +440,33 @@ class VenuListActvity : BaseActivity(), OnMapReadyCallback {
         map["status"] = fav
 
 
-        doFavViewModel.doFavItem(map).observe(this@VenuListActvity, {
+        doFavViewModel.doFavItem(map).observe(this@VenuListActvity) {
             when (it.status) {
                 Status.SUCCESS -> {
-                  //  progressDialog.dialog.dismiss()
+                    //  progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
-                       /* try {
-                            Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
-                            if( detailData.data.status == "1"){
-                                venuDataList[pos].favrouite = "1"
-                                venuSubAdapter.notifyItemChanged(pos)
-                            }else{
-                                venuDataList[pos].favrouite = "0"
-                                venuSubAdapter.notifyItemChanged(pos)
-                            }
-                        } catch (e: Exception) {
-                        }*/
+                        /* try {
+                             Log.d("ok", "add_favouriteAPICALL: "+detailData.data.status)
+                             if( detailData.data.status == "1"){
+                                 venuDataList[pos].favrouite = "1"
+                                 venuSubAdapter.notifyItemChanged(pos)
+                             }else{
+                                 venuDataList[pos].favrouite = "0"
+                                 venuSubAdapter.notifyItemChanged(pos)
+                             }
+                         } catch (e: Exception) {
+                         }*/
                     }
                 }
                 Status.LOADING -> {
 
                 }
                 Status.ERROR -> {
-                   // progressDialog.dialog.dismiss()
+                    // progressDialog.dialog.dismiss()
                     Utills.showErrorToast(this@VenuListActvity, it.message!!)
                 }
             }
-        })
+        }
     }
 
     private fun setToolBar() {

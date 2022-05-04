@@ -31,15 +31,8 @@ class BarcrwalRootPathAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        var myPos = position
-        //  var valueInt: Int = myPos+65
-        // val valueAlpha1 = valueInt.toChar()
         val valueAlpha1 = arrayList[position].store_name
-        //next value
-        //   valueInt+=1
         var valueAlpha2 = arrayList[position + 1].store_name
-        ///  var dist= MyApp.getDestance(Commons.strToDouble(arrayList[position].store_lattitude),Commons.strToDouble(arrayList[position].store_longitude),arrayList[position+1].store_lattitude,arrayList[position+1].store_longitude,)
         var dist = arrayList[position].distance
         var dur = arrayList[position].durration
         viewHolder.binding.textSource.text =

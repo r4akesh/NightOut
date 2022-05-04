@@ -93,6 +93,11 @@ class AppConstant {
         const val GROUP_LIST = "GROUP_LIST"
         const val PLACEORDER_RES = "PLACEORDER_RES"
         const val ISFrom_BookTicketActivity = "ISFrom_BookTicketActivity"
+        const val PATH_POJO = "PATH_POJO"
+        const val PATH_POSITION = "PATH_POSITION"
+        const val IsFROM_BarCrawlSavedMapActivity = "IsFROM_BarCrawlSavedMapActivity"
+        const val IsFROM_BarCrawlShareMapActivity = "IsFROM_BarCrawlShareMapActivity"
+        const val VENU_LIST = "VENU_LIST"
 
 
 

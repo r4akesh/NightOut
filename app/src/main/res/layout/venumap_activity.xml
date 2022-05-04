@@ -9,6 +9,16 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_gray">
 
+        <fragment
+            android:id="@+id/venumap_Map"
+
+            android:layout_marginTop="@dimen/_65sdp"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrent_toolbar"
             android:layout_width="match_parent"
@@ -25,26 +35,10 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/venumap_toprecycler"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_8sdp"
-
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constrent_toolbar" />
 
 
-        <fragment
-            android:id="@+id/venumap_Map"
 
-            android:layout_marginTop="@dimen/_10sdp"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            app:layout_constraintTop_toBottomOf="@+id/venumap_toprecycler"
-            android:layout_width="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="0dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

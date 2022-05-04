@@ -21,6 +21,7 @@ import com.nightout.model.BarcrwalSavedRes
 import com.nightout.model.SharedBarcrwalRes
 import com.nightout.ui.activity.EventDetailActivity
 import com.nightout.ui.activity.StoreDetailActvity
+import com.nightout.ui.activity.VenuListMapActivity
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
@@ -144,6 +145,17 @@ class BarcrawlListActivity : BaseActivity() {
                 )
             }
         }
+        else if(v== binding.BarCrawlListToolBar.toolbar3dot){
+            if(listHr!=null && listHr.size>0) {
+                startActivity(
+                    Intent(THIS!!, VenuListMapActivity::class.java)
+                        .putExtra(AppConstant.PrefsName.SelectedBarcrwalList, listHr)
+                )
+            }
+            else{
+                MyApp.popErrorMsg("","Please select venues",THIS!!)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -166,7 +178,7 @@ class BarcrawlListActivity : BaseActivity() {
           mCity = cityName.lowercase().replace("city", "")
         map["city"] = mCity.trim()
         try {
-            getBarCrwalVieModel.venuListBarCrwl(map).observe(this@BarcrawlListActivity, {
+            getBarCrwalVieModel.venuListBarCrwl(map).observe(this@BarcrawlListActivity) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         progressDialog.dialog.dismiss()
@@ -231,7 +243,7 @@ class BarcrawlListActivity : BaseActivity() {
                         Log.d("ok", "loginCall:ERROR ")
                     }
                 }
-            })
+            }
         } catch (e: Exception) {
         }
 
@@ -414,7 +426,8 @@ class BarcrawlListActivity : BaseActivity() {
         binding.BarCrawlListToolBar.toolbarTitle.setText(resources.getString(R.string.Select_Venues))
         setTouchNClick(binding.BarCrawlListToolBar.toolbarBack)
         binding.BarCrawlListToolBar.toolbarBack.setOnClickListener { finish() }
-        binding.BarCrawlListToolBar.toolbar3dot.visibility = View.GONE
+        binding.BarCrawlListToolBar.toolbar3dot.visibility = VISIBLE
+        setTouchNClick(binding.BarCrawlListToolBar.toolbar3dot)
         binding.BarCrawlListToolBar.toolbarBell.visibility = View.GONE
         binding.BarCrawlListToolBar.toolbarCreateGrop.visibility = View.GONE
     }

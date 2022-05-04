@@ -73,6 +73,7 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         fragmentManager = supportFragmentManager
         showFragment(HomeFragment(this))
         WebSocketSingleton.getInstant()!!.register(this)
+        Log.d("vv", "fcmTokenSave: "+PreferenceKeeper.instance.fcmTokenSave)
     }
 
     override fun onClick(v: View?) {

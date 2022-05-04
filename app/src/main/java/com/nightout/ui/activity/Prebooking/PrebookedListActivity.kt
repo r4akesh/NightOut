@@ -32,28 +32,28 @@ class PrebookedListActivity : BaseActivity() {
 
     private fun pre_booking_listAPICALL() {
         customProgressDialog.show(this@PrebookedListActivity, "")
-        prebooedViewModel.prebookedList().observe(this@PrebookedListActivity,{
-            when(it.status){
-                Status.SUCCESS->{
+        prebooedViewModel.prebookedList().observe(this@PrebookedListActivity) {
+            when (it.status) {
+                Status.SUCCESS -> {
                     customProgressDialog.dialog.dismiss()
-                    it.data?.let {myData->
+                    it.data?.let { myData ->
                         dataList = ArrayList()
                         dataList = myData.data
-                            setList()
+                        setList()
                     }
                 }
-                Status.LOADING->{
+                Status.LOADING -> {
 
                 }
-                Status.ERROR->{
+                Status.ERROR -> {
                     customProgressDialog.dialog.dismiss()
-                    binding.prebookedListNoDataConstrent.visibility= VISIBLE
-                    binding.prebookedlistRecycle.visibility= GONE
+                    binding.prebookedListNoDataConstrent.visibility = VISIBLE
+                    binding.prebookedlistRecycle.visibility = GONE
                     // Utills.showSnackBarOnError(binding.lostConstrentToolbar, it.message!!, this@LostitemActivity)
 
                 }
             }
-        })
+        }
     }
 
     lateinit var preBookedListAdapter: PreBookedListAdapter

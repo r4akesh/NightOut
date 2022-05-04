@@ -138,7 +138,7 @@ class GroupInfoActvity : BaseActivity(), WebSocketObserver {
             var userID= rsData.getData().roomList[0].userList[i]
             for(j in 0 until rsData.getData().userList.size){
                 if(userID == rsData.getData().userList[j].id){
-                    selectedUserList.add( rsData.getData().userList[j])
+                        selectedUserList.add( rsData.getData().userList[j])
                 }
             }
         }

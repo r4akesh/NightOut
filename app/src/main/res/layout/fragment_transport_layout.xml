@@ -34,307 +34,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            android:id="@+id/whereLabel"
-            style="@style/textRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:padding="10dp"
-            android:text="@string/where_are_you_go"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/headerSideMenu" />
-
-        <ImageView
-            android:id="@+id/destinationLine"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:elevation="@dimen/_1sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/line"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-            app:layout_constraintHorizontal_bias="0.08"
-            app:layout_constraintStart_toStartOf="@id/constraintLayout"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/whereLabel">
-
-
-            <LinearLayout
-                android:id="@+id/pickUpContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_dark_blue"
-                android:backgroundTint="@color/color_414141"
-
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/currentLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_current_location" />
-
-                <EditText
-                    style="@style/appEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@null"
-                    android:backgroundTint="@null"
-                    android:padding="8dp"
-                    android:text="@string/dummy_user_address"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/dropContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rounded_dark_blue"
-                android:backgroundTint="@color/color_414141"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pickUpContainer">
-
-                <ImageView
-                    android:id="@+id/destinationLocation"
-                    android:layout_width="14dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="24dp"
-                    android:src="@drawable/ic_location_icon" />
-
-                <EditText
-                    style="@style/appEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@null"
-                    android:backgroundTint="@null"
-                    android:padding="9dp"
-                    android:text="@string/dummy_user_address"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constrentFirstCab"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/transportFreeNowConstrent"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="match_parent"
-                android:background="@drawable/box_white"
-                android:padding="@dimen/_5sdp"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintEnd_toStartOf="@+id/transportGettConstrent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/transportFreeNow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_free_now"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Free Now"
-                    android:textColor="@color/bg_clr_venu"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/transportGettConstrent"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="match_parent"
-                android:background="@drawable/box_white"
-                android:padding="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                app:layout_constraintEnd_toStartOf="@+id/transportOlaConstrent"
-                app:layout_constraintStart_toEndOf="@+id/transportFreeNowConstrent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/transportGett"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_gett"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="Gett"
-                    android:textColor="@color/bg_clr_venu"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/transportOlaConstrent"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="match_parent"
-                android:background="@drawable/box_white"
-                android:padding="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/transportGettConstrent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/transportOla"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_ola"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="Ola"
-                    android:textColor="@color/bg_clr_venu"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constrentFirstCab">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/transportLyftConstrent"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="match_parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                android:background="@drawable/box_white"
-                android:padding="@dimen/_5sdp"
-                app:layout_constraintEnd_toStartOf="@+id/transportUberConstrent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/transportLyft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lyft"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Lyft"
-                    android:textColor="@color/bg_clr_venu"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintBottom_toBottomOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/transportUberConstrent"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="match_parent"
-                android:background="@drawable/box_white"
-                android:padding="@dimen/_5sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/transportLyftConstrent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/transportUber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_uber"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:fontFamily="@font/proximanova_reg"
-                    android:text="Uber"
-                    android:textColor="@color/bg_clr_venu"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintBottom_toBottomOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
+
             android:layout_marginEnd="10dp"
             android:orientation="horizontal"
             android:weightSum="2"
-            app:layout_constraintBottom_toTopOf="@+id/nearTaxiList"
+            app:layout_constraintBottom_toTopOf="@+id/constraintTrainTaxi"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -342,10 +50,10 @@
                 style="@style/textRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:padding="10dp"
 
-                android:text="@string/select_your_taxi"
+                android:text="Choose Your Journey"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -353,7 +61,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:gravity="end"
                 android:orientation="vertical">
 
@@ -363,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:rotation="180"
                     android:src="@drawable/back_ic_toolbar"
                     app:tint="@color/text_yello" />
@@ -373,22 +82,88 @@
         </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nearTaxiList"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintTrainTaxi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_margin="@dimen/_15sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.84000003"
-            tools:listitem="@layout/taxi_layout">
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintTrain"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/box_white"
+                app:layout_constraintEnd_toStartOf="@+id/constraintTaxi"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/trainImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/ic_train"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Train"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintTaxi"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+
+                android:layout_marginStart="@dimen/_5sdp"
+                android:background="@drawable/box_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/constraintTrain"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/carImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_taxi"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/proximanova_reg"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Taxi"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

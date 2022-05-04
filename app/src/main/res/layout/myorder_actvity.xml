@@ -33,8 +33,23 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="10dp"
-
             app:layout_constraintTop_toBottomOf="@+id/myOrderConstrentToolbar" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/myOrderNoDataConstrent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myOrderConstrentToolbar">
+
+            <include
+                android:id="@+id/myOrderNoData"
+                layout="@layout/nodata_found" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

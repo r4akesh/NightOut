@@ -12,6 +12,7 @@
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/drawable/no_app_back.xml" value="0.165" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/about_actviity.xml" value="0.2708333333333333" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/activity_player.xml" value="0.3546875" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/activity_taxi_list.xml" value="0.3390625" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/addparticient_activity.xml" value="0.28541666666666665" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/allbarcrawal_grid_item.xml" value="0.2890625" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/barcrawl_savedmapactivity.xml" value="0.29635416666666664" />
@@ -32,19 +33,27 @@
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/image_view_item.xml" value="0.33" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/layout_btmsheet_path.xml" value="0.29635416666666664" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/mydemo.xml" value="0.29635416666666664" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/myorder_actvity.xml" value="0.2375" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/nodata_found.xml" value="0.31614583333333335" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/prebookedlist_actvity.xml" value="0.31614583333333335" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/row_nearbyitem.xml" value="0.3234375" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/row_saved_cards_layout.xml" value="0.3104166666666667" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/row_sidemenu_list.xml" value="0.29128205128205126" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/srch_city.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/storedetail_activity.xml" value="0.3390625" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/story_item.xml" value="0.303125" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/taxi_layout.xml" value="0.29635416666666664" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/ticketconfirm_actvity.xml" value="0.26296296296296295" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/toolbar_common.xml" value="0.28541666666666665" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/topimg_adapter.xml" value="0.2890625" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/venu_botmsheet_item.xml" value="0.3390625" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/venu_botmsheet_item2.xml" value="0.2921875" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/venu_title_botmsheet_item.xml" value="0.3390625" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/venulisting_activity.xml" value="0.3" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/venumap_activity.xml" value="0.3546875" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/venusub_item.xml" value="0.23541666666666666" />
         <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/layout/videoplay_actvity.xml" value="0.3390625" />
+        <entry key="..\:/OfcProjectCode/nightoutuser_android2/app/src/main/res/menu/popup_list_menu.xml" value="0.3546875" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/drawable/bg_attachment_wrapper.xml" value="0.17135416666666667" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/drawable/bg_chat_download_loader.xml" value="0.20520833333333333" />
         <entry key="..\:/newNight/nightoutuser_android2/app/src/main/res/drawable/bg_chat_download_text.xml" value="0.20520833333333333" />

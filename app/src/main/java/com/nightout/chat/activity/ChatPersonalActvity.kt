@@ -657,16 +657,9 @@ class ChatPersonalActvity : BaseActivity(), PermissionClass.PermissionRequire, W
     private fun parseExtras() {
         _roomId = intent.getStringExtra(INTENT_EXTRAS_KEY_ROOM_ID)
         _isGroup = intent.getBooleanExtra(INTENT_EXTRAS_KEY_IS_GROUP, false)
-        _groupDetails =
-            intent.getSerializableExtra(INTENT_EXTRAS_KEY_GROUP_DETAILS) as FSGroupModel?
-        Utills.setImageFullPath(
-            this@ChatPersonalActvity,
-            binding.chatUserProfile,
-            _groupDetails?.about_pic
-        )
-
+        _groupDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_GROUP_DETAILS) as FSGroupModel?
+        Utills.setImageFullPath(this@ChatPersonalActvity, binding.chatUserProfile, _groupDetails?.about_pic)
         var listsize = getIntent().getStringExtra(INTENT_EXTRAS_KEY_PARTICIPENT_SIZE)
-
         val tmpSenderDetails = intent.getSerializableExtra(INTENT_EXTRAS_KEY_SENDER_DETAILS)
         if (_isGroup) {
             setGroupDetails(listsize)

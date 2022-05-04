@@ -1,84 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
 
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_gray">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/preConstrentToolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_gray">
 
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/prebookedlistToolBar"
-            layout="@layout/toolbar_common" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/prebookedlistRecycle"
-        android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preConstrentToolbar"
-        android:layout_height="0dp"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/prebookedListNoDataConstrent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preConstrentToolbar">
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/preConstrentToolbar"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <include
+                android:id="@+id/prebookedlistToolBar"
+                layout="@layout/toolbar_common" />
 
-            <ImageView
-                android:id="@+id/img_nodata"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@null"
-                android:src="@drawable/nodata_founf_img" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:fontFamily="@font/proximanova_bold"
-                android:gravity="center_horizontal"
-                android:text="No bookings available.Your pre-bookings will be shown here."
-                android:textColor="@color/white_second"
-                android:textSize="@dimen/_14ssp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/prebookedlistRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preConstrentToolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/prebookedListNoDataConstrent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preConstrentToolbar">
+
+            <include layout="@layout/nodata_found" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -38,8 +38,8 @@
                     android:layout_marginTop="15dp">
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+
                         android:layout_height="wrap_content"
                         android:text="@string/where_are_you_go"
                         android:textSize="18sp"
@@ -56,6 +56,7 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         android:gravity="end"
+                        android:visibility="gone"
                         android:text="@string/change"
                         android:textColor="@color/text_yello"
                         android:textSize="14sp" />
@@ -66,6 +67,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/taxiConstrent"
                     android:background="@drawable/border_crawal_location_box"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp">
@@ -88,7 +90,7 @@
                         android:layout_marginStart="10dp"
                         android:padding="5dp"
                         android:textStyle="bold"
-                        android:text="@string/dummy_user_address"
+                        android:text="Source Address"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:textColor="@color/white"
                         android:textSize="16sp"
@@ -140,7 +142,7 @@
                         android:layout_marginStart="10dp"
                         android:padding="5dp"
                         android:textStyle="bold"
-                        android:text="@string/dummy_user_address"
+                        android:text="Destination Address"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:textColor="@color/white"
                         android:textSize="16sp"
@@ -152,18 +154,193 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/taxiList"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrentFirstCab"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:itemCount="5"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    tools:listitem="@layout/row_taxi_list">
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/taxiConstrent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transportFreeNowConstrent"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/box_white"
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintEnd_toStartOf="@+id/transportGettConstrent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/transportFreeNow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_free_now"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Free Now"
+                            android:textColor="@color/bg_clr_venu"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transportGettConstrent"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/box_white"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/transportOlaConstrent"
+                        app:layout_constraintStart_toEndOf="@+id/transportFreeNowConstrent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/transportGett"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_gett"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:text="Gett"
+                            android:textColor="@color/bg_clr_venu"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transportOlaConstrent"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/box_white"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/transportGettConstrent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/transportOla"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ola"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:text="Ola"
+                            android:textColor="@color/bg_clr_venu"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constrentFirstCab">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transportLyftConstrent"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        android:background="@drawable/box_white"
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/transportUberConstrent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/transportLyft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_lyft"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Lyft"
+                            android:textColor="@color/bg_clr_venu"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transportUberConstrent"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/box_white"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/transportLyftConstrent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/transportUber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_uber"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:fontFamily="@font/proximanova_reg"
+                            android:text="Uber"
+                            android:textColor="@color/bg_clr_venu"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

@@ -38,7 +38,7 @@ class MyOrderActvitiy : BaseActivity() {
         binding.myOrdersToolBar.toolbarBell.visibility = View.GONE
     }
 
-    data not found
+
     private fun myOrderAPICall() {
         customProgressDialog.show(this@MyOrderActvitiy,"")
 

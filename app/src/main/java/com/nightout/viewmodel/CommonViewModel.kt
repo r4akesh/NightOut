@@ -53,6 +53,7 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     lateinit var fillterResViewModel: LiveData<ApiSampleResource<FillterRes>>
     lateinit var allUserResViewModel: LiveData<ApiSampleResource<AllUserRes>>
     lateinit var doPayment: LiveData<ApiSampleResource<PlaceOrderResponse>>
+    lateinit var doPaymentStatus: LiveData<ApiSampleResource<BaseModel>>
     lateinit var chatUploadImg: LiveData<ApiSampleResource<ChatImgUploadResponse>>
 
     fun aboutCms(): LiveData<ApiSampleResource<AboutModelResponse>> {
@@ -87,6 +88,10 @@ class CommonViewModel (activity: Activity) : BaseObservable() {
     fun doPayment(jbj:JSONObject): LiveData<ApiSampleResource<PlaceOrderResponse>> {
         doPayment = webServiceRepository.doPayment(jbj)
         return doPayment
+    }
+    fun doPaymentChkStatus(jbj:JSONObject): LiveData<ApiSampleResource<BaseModel>> {
+        doPaymentStatus = webServiceRepository.doPaymentStaus(jbj)
+        return doPaymentStatus
     }
     fun userVenueDetail(map: HashMap<String, String>): LiveData<ApiSampleResource<VenuDetailModel>> {
         venuDetailModel = webServiceRepository.userVenueDetail(map)

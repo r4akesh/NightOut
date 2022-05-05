@@ -15,6 +15,7 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.OrderdetailAvctivityBinding
 import com.nightout.model.LocalStreModel
 import com.nightout.model.OrderDetailListModel
+import com.nightout.model.PlaceOrderResponse
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
@@ -40,14 +41,14 @@ class OrderDetailActivity : BaseActivity() {
     var jrrItemId=JSONArray()
     var jrrItemQty=JSONArray()
     lateinit var paymentViewModel: CommonViewModel
+    lateinit var paymentChkViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@OrderDetailActivity, R.layout.orderdetail_avctivity)
         paymentViewModel = CommonViewModel(this@OrderDetailActivity)
+        paymentChkViewModel = CommonViewModel(this@OrderDetailActivity)
         setToolBar()
-
-
         setData()
 
     }
@@ -163,6 +164,7 @@ class OrderDetailActivity : BaseActivity() {
         }
     }
 
+    lateinit var plceOrderRes:PlaceOrderResponse.Data
     private fun makePaymentApiCall() {
         progressDialog.show(this@OrderDetailActivity, "")
         var map = JSONObject()
@@ -180,6 +182,7 @@ class OrderDetailActivity : BaseActivity() {
                     progressDialog.dialog.dismiss()
                     it.data?.let { detailData ->
                       //  Utills.showDefaultToast(THIS!!, detailData.message)
+                        plceOrderRes = detailData.data
                         resultCallBackk.launch(Intent(THIS!!,CheckoutActivity::class.java)
                             .putExtra(AppConstant.INTENT_EXTRAS.PLACEORDER_RES,detailData.data))
 
@@ -199,9 +202,53 @@ class OrderDetailActivity : BaseActivity() {
 
     var resultCallBackk= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode== Activity.RESULT_OK){
-            jumpToHome()
+           // jumpToHome()
+            check_payment_statusAPiCAll()
         }
     }
+
+    private fun check_payment_statusAPiCAll() {
+        progressDialog.show(this@OrderDetailActivity, "")
+        var map = JSONObject()
+        map.put("id", plceOrderRes.id)
+        map.put("transaction_id", plceOrderRes.transaction_id)
+        map.put("vendor_id", plceOrderRes.vendor_id )
+        map.put("venue_id",  plceOrderRes.venue_id)
+        map.put("user_id",  plceOrderRes.user_id)
+        map.put("order_id",  plceOrderRes.order_id)
+        map.put("amount",  plceOrderRes.amount)
+        map.put("payment_mode",  plceOrderRes.payment_mode)
+        map.put("status",  plceOrderRes.status)
+        map.put("type",  plceOrderRes.type)
+        map.put("created_at",  plceOrderRes.created_at)
+        map.put("updated_at",  plceOrderRes.updated_at)
+        map.put("payment_intent_key",  plceOrderRes.payment_intent_key)
+        map.put("ephemeralKey",  plceOrderRes.ephemeralKey)
+        map.put("customer_id",  plceOrderRes.customer_id)
+        map.put("payment_status",  "confirmed")
+
+        paymentChkViewModel.doPaymentChkStatus(map).observe(this@OrderDetailActivity) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.dialog.dismiss()
+                    it.data?.let { detailData ->
+                          Utills.showDefaultToast(THIS!!, it.data.message)
+                      //  Log.d("ok", "check_payment_statusAPiCAll: "+it.data.message)
+                        jumpToHome()
+
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    progressDialog.dialog.dismiss()
+                    MyApp.popErrorMsg("",it.message.toString(),THIS!!)
+                }
+            }
+        }
+    }
+
     private fun jumpToHome() {
         val i = Intent(this, HomeActivityNew::class.java)
         // set the new task and clear flags

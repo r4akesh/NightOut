@@ -2925,6 +2925,59 @@ class WebServiceRepository(application: Activity) {
         return venueListResponseModel
     }
 
+    fun doPaymentStaus(jbj:JSONObject): LiveData<ApiSampleResource<BaseModel>> {
+        val venueListResponseModel = MutableLiveData<ApiSampleResource<BaseModel>>()
+        val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jbj.toString())
+        if (networkHelper.isNetworkConnected()) {
+            val responseBody: Call<ResponseBody> = apiInterfaceHeader.make_paymentStausAPI(body)
+            responseBody.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body()?.string()!!
+                            try {
+                                val dataResponse = fromJson<BaseModel>(data)
+
+                                venueListResponseModel.postValue(ApiSampleResource.success(response.code(),response.message(),dataResponse))
+                            } catch (ex: Exception) {
+                                ex.printStackTrace()
+                                venueListResponseModel.postValue(ApiSampleResource.error(
+                                    PARSING_ERROR,
+                                    application.resources.getString(R.string.Parsing_Problem),
+                                    null))
+                            }
+                        }
+                        204->{
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), application.resources.getString(R.string.No_data_found), null))
+                        }
+                        201,205,400,401,408,409-> {
+                            val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                            var vv=jsonObj.getString("message")
+                            venueListResponseModel.postValue(ApiSampleResource.error(response.code(), jsonObj.getString("message"), null))
+                        }
+                        500->{
+                            venueListResponseModel.postValue( ApiSampleResource.error(
+                                response.code(),
+                                application.resources.getString(R.string.Internal_server_error),
+                                null))
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    if (t is IOException) {
+                        venueListResponseModel.postValue(ApiSampleResource.error(INTERNAL_ERROR, application.resources.getString(R.string.Network_Failure), null))
+                    } else {
+                        venueListResponseModel.postValue(ApiSampleResource.error(PARSING_ERROR, application.resources.getString(R.string.Something_went_wrong), null))
+                    }
+                }
+
+            })
+        } else venueListResponseModel.postValue(ApiSampleResource.error(NO_INTERNET, application.resources.getString(R.string.No_Internet), null))
+        return venueListResponseModel
+    }
+
     fun reviewList(): LiveData<ApiSampleResource<ReviewListRes>> {
         val venueListResponseModel = MutableLiveData<ApiSampleResource<ReviewListRes>>()
         if (networkHelper.isNetworkConnected()) {

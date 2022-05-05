@@ -165,6 +165,9 @@ interface APIInterface {
     @POST("place_order")
     fun make_paymentAPI(@Body params: RequestBody): Call<ResponseBody>
 
+    @POST("check_payment_status")
+    fun make_paymentStausAPI(@Body params: RequestBody): Call<ResponseBody>
+
     @GET("venue_reviews_remaning")
     fun venue_reviews_remaningAPI(): Call<ResponseBody>
 

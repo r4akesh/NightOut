@@ -17,6 +17,7 @@ import com.nightout.ui.activity.NotificationActivity
 import com.nightout.ui.activity.SplashActivity
 import com.nightout.utils.AppConstant
 import com.nightout.utils.PreferenceKeeper
+import org.json.JSONObject
 
 
 class FirebaseMessagingServices : FirebaseMessagingService() {
@@ -31,22 +32,36 @@ class FirebaseMessagingServices : FirebaseMessagingService() {
     override fun onMessageReceived(payload: RemoteMessage) {
         super.onMessageReceived(payload)
         if (payload.notification != null) {
-          //  var type=payload.data[1].toString()
-            sendNotification(payload.notification!!.title, payload.notification!!.body)
+            var idRoom=""
+            try {
+                val data_obj: Map<String, String> = payload.data
+                //var message = Html.fromHtml(data_obj).toString()
+                var mPayloadData = data_obj["payload"]
+                var mJson = JSONObject(mPayloadData)
+                  idRoom = mJson.getString("id")//roomID
+
+                Log.d("push", "onMessageReceived: $data_obj")
+
+                sendNotification(payload.notification!!.title, payload.notification!!.body,idRoom)
+            } catch (e: Exception) {
+                Log.d("TAG", "onMessageReceived: " + e)
+                sendNotification(payload.notification!!.title, payload.notification!!.body,idRoom)
+            }
         } else {
             sendNotificationData(payload.data)
 
         }
     }
 
-    private fun sendNotification(title: String?, messageBody: String?) {
-        val intent : Intent
-        if(title!!.contains("New message from"))
+    private fun sendNotification(title: String?, messageBody: String?, roomId:String) {
+        val intent: Intent
+        if (title!!.contains("New message from"))
             intent = Intent(this, ChatPersonalActvity::class.java)
-                .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH,true)
+                .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH, true)
+            .putExtra(ChatPersonalActvity.INTENT_EXTRAS_KEY_ROOM_ID, roomId)
         else
-          intent = Intent(this, NotificationActivity::class.java)
-              .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH,true)
+            intent = Intent(this, NotificationActivity::class.java)
+                .putExtra(AppConstant.INTENT_EXTRAS.ISFROM_PUSH, true)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0 /* Request code */, intent,

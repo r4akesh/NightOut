@@ -69,7 +69,7 @@ class CheckoutActivity:BaseActivity() {
             }
             is PaymentSheetResult.Completed -> {
                 // Display for example, an order confirmation screen
-                Utills.showDefaultToast(THIS!!,"Payment Successfully Done")
+               // Utills.showDefaultToast(THIS!!,"Payment Successfully Done")
                 setResult(Activity.RESULT_OK)
 
                 finish()

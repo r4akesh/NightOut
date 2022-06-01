@@ -12,7 +12,6 @@ import com.nightout.adapter.SharedSideMenuAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarshredActivityBinding
 import com.nightout.model.InvitedBarCrwlResponse
-import com.nightout.model.SharedModel
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status

@@ -49,12 +49,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity
-            android:name=".ui.activity.SettingsActivityrrrrr"
-            android:exported="false"
-            android:label="@string/title_activity_settings_activityrrrrr" />
+
         <activity
             android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

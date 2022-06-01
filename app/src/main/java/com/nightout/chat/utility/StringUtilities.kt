@@ -1,6 +1,5 @@
 package com.nightout.chat.utility
 
-import java.util.*
 import java.util.regex.Pattern
 
 object StringUtilities {

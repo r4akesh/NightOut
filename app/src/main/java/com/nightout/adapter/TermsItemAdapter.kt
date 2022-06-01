@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.nightout.R
-import com.nightout.databinding.AllbarcrawalGridItemBinding
 import com.nightout.databinding.RowTermsCmsLayoutBinding
 import com.nightout.model.AboutModelResponse
 import kotlinx.android.synthetic.main.row_terms_cms_layout.view.*

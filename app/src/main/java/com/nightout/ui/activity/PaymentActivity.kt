@@ -5,7 +5,6 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-import com.nightout.adapter.MyCardAdapter
 import com.nightout.adapter.PaymentMethodAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityPaymentBinding

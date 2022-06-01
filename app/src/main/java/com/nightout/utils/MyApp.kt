@@ -15,48 +15,38 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.net.ConnectivityManager
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import android.util.DisplayMetrics
-
+import android.util.Log
 import android.util.Patterns
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.nightout.R
 import com.nightout.handlers.EditProfileHandler
 import com.nightout.handlers.LoginHandler
 import com.nightout.handlers.OtpHandler
 import com.nightout.handlers.RegisterHandler
-import com.nightout.model.VenuListModel
+import com.nightout.model.FSUsersModel
 import com.nightout.ui.activity.EditProfileActivity
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.ui.activity.RegisterActivity
-import com.nightout.ui.fragment.HomeFragment
-
-
 import dmax.dialog.SpotsDialog
 import java.io.*
-
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import android.os.StrictMode
-import android.os.StrictMode.VmPolicy
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.ImageView
-import android.widget.TextView
-import com.bumptech.glide.request.RequestOptions
-import com.nightout.R
-import java.lang.NumberFormatException
-import java.text.DecimalFormat
-import com.google.android.gms.maps.model.LatLngBounds
-
-import com.google.android.gms.maps.model.LatLng
-import com.nightout.model.FSUsersModel
 
 
 class MyApp : Application() {

@@ -2,18 +2,13 @@ package com.nightout.adapter
 
 import android.content.Context
 import android.graphics.Paint
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import androidx.databinding.DataBindingUtil
-
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.FacilityItemBinding
 import com.nightout.databinding.RowNearbyitemBinding
 import com.nightout.model.NearByPlaceModel
-import com.nightout.model.VenuDetailModel
 
 
 class NearByStationAdapter(

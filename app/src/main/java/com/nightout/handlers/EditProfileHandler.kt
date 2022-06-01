@@ -1,32 +1,20 @@
 package com.nightout.handlers
 
-import android.Manifest
+//import com.github.drjacky.imagepicker.ImagePicker
+
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.view.Window
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.bumptech.glide.Glide
-//import com.github.drjacky.imagepicker.ImagePicker
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -46,10 +34,8 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
-import com.nightout.utils.Utills.Companion.getImageUri
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.EditProfileViewModel
-
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -81,79 +67,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
     }
 
 
-/*    fun onSelectImageOldCode() {
-        selectSourceBottomSheetFragment = SelectSourceBottomSheetFragment(this)
-        selectSourceBottomSheetFragment.show(
-            activity.supportFragmentManager,
-            "selectSourceBottomSheetFragment"
-        )
-    }*/
-    private val REQUEST_CAMERA_PERMISSION = 1
-    var imageUri: Uri? = null
-      fun onSelectImage() {
-//        try {
-//            val dialog = Dialog(activity)
-//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            dialog.window!!.decorView.setBackgroundResource(android.R.color.transparent)
-//            dialog.setCancelable(true)
-//            dialog.setContentView(R.layout.pop_profile)
-//            dialog.show()
-//            val txtGallery = dialog.findViewById<View>(R.id.layoutGallery) as LinearLayout
-//            val txtCamera = dialog.findViewById<View>(R.id.layoutCamera) as LinearLayout
-//            txtCamera.setOnClickListener { v: View? ->
-//                val currentAPIVersion = Build.VERSION.SDK_INT
-//                if (currentAPIVersion >= Build.VERSION_CODES.M) {
-//                    if (ActivityCompat.checkSelfPermission(
-//                            activity,
-//                            Manifest.permission.CAMERA
-//                        ) != PackageManager.PERMISSION_GRANTED
-//                    ) {
-//                        ActivityCompat.requestPermissions(
-//                            activity,
-//                            arrayOf(
-//                                Manifest.permission.CAMERA,
-//                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                                Manifest.permission.READ_EXTERNAL_STORAGE
-//                            ),
-//                            REQUEST_CAMERA_PERMISSION
-//                        )
-//                    } else {
-//                        selectCameraImage()
-//                        dialog.dismiss()
-//                    }
-//                } else {
-//                    selectCameraImage()
-//                    dialog.dismiss()
-//                }
-//            }
-//            txtGallery.setOnClickListener { v: View? ->
-//                val currentAPIVersion = Build.VERSION.SDK_INT
-//                if (currentAPIVersion >= Build.VERSION_CODES.M) {
-//                    arrayOf(if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 2)
-//                        } else {
-//                            dialog.dismiss()
-//                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                            intent.type = "image/*"
-////                            intent.type = "*/*";
-//                            intent.action = Intent.ACTION_PICK
-//                            activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-//                        }
-//                    )
-//
-//                } else {
-//                    dialog.dismiss()
-//                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                    intent.type = "image/*"
-////                    intent.type = "*/*";
-//                    intent.action = Intent.ACTION_PICK
-//                    activity.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-//                }
-//            }
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-    }
+
 
     fun onSelectImage2(){
         if (!Utills.checkingPermissionIsEnabledOrNot(activity)) {
@@ -435,18 +349,13 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
 //            activity.binding.iconName.text = this.filePath!!.name
 //        }
 
-        body = MultipartBody.Part.createFormData(
-            flag,
-            this.filePath!!.name,
-            reqFile
-        )
-
+        body = MultipartBody.Part.createFormData(flag, this.filePath!!.name, reqFile)
         return body!!
     }
 
     private fun saveProfileAPICall(requestBody: MultipartBody) {
         progressDialog.show(activity)
-        editProfileViewModel.updateProfile(requestBody).observe(activity, {
+        editProfileViewModel.updateProfile(requestBody).observe(activity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.dialog.dismiss()
@@ -468,7 +377,7 @@ open class EditProfileHandler(val activity: EditProfileActivity) : OnSelectOptio
                     Utills.showErrorToast(activity, it.message!!)
                 }
             }
-        })
+        }
     }
 
 

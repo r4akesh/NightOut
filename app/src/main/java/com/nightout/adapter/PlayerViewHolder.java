@@ -10,10 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
-
 import com.nightout.R;
 import com.nightout.model.VenuDetailModel;
-import com.nightout.utils.PreferenceKeeper;
 
 /**
  * Created on : May 24, 2019
@@ -29,7 +27,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
   public ImageView mediaCoverImage, volumeControl;
   public ProgressBar progressBar;
   public RequestManager requestManager;
-  private TextView title, userHandle;
+
   private View parent;
 
   public PlayerViewHolder(@NonNull View itemView) {
@@ -38,7 +36,7 @@ public class PlayerViewHolder extends RecyclerView.ViewHolder {
     mediaContainer = itemView.findViewById(R.id.mediaContainer);
     mediaCoverImage = itemView.findViewById(R.id.ivMediaCoverImage);
  //   imageView = itemView.findViewById(R.id.imageView);
-    title = itemView.findViewById(R.id.tvTitle);
+
    // userHandle = itemView.findViewById(R.id.tvUserHandle);
     progressBar = itemView.findViewById(R.id.progressBar);
    // volumeControl = itemView.findViewById(R.id.ivVolumeControl);

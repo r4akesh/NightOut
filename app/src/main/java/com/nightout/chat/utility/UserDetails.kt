@@ -1,10 +1,6 @@
 package com.nightout.chat.utility
 
 
-import com.nightout.model.FSUsersModel
-import com.nightout.utils.DataManager
-import java.util.*
-
 class UserDetails {
     //	public static String roomId = "";
 

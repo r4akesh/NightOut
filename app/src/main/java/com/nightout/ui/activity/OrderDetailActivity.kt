@@ -3,7 +3,6 @@ package com.nightout.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,7 +13,6 @@ import com.nightout.adapter.OrdrDetailAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.OrderdetailAvctivityBinding
 import com.nightout.model.LocalStreModel
-import com.nightout.model.OrderDetailListModel
 import com.nightout.model.PlaceOrderResponse
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*

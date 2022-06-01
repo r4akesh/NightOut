@@ -18,7 +18,6 @@ import com.nightout.model.BarcrwalSavedRes
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import kotlinx.android.synthetic.main.image_view_item.*
 
 class BarCrawlSavedListActivity : BaseActivity() {
 

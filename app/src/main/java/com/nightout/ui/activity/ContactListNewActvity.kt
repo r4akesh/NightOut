@@ -2,11 +2,8 @@ package com.nightout.ui.activity
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
@@ -22,14 +19,12 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.ContactlistActvityBinding
 import com.nightout.model.ContactFillterModel
 import com.nightout.model.ContactNoModel
-import com.nightout.ui.activity.barcrawl.BarCrawlSavedListActivity
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import org.json.JSONArray
 import org.json.JSONObject
 

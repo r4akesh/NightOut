@@ -1,36 +1,21 @@
 package com.nightout.ui.activity
 
-import android.content.Intent
+
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.view.View.VISIBLE
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-
-
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.chat.chatinterface.ResponseType
-import com.nightout.chat.chatinterface.WebSocketObserver
-import com.nightout.chat.chatinterface.WebSocketSingleton
-import com.nightout.chat.model.ResponseModel
-import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.OtpActvityBinding
-import com.nightout.model.FSUsersModel
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
-import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Utills
 import com.nightout.vendor.viewmodel.OtpViewModel
 
 class OTPActivity : BaseActivity() {

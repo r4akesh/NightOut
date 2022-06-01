@@ -1,7 +1,5 @@
 package com.nightout.chat.model
 
-import java.util.*
-
 class ContactModel {
     var isSelected = false
     var first_name: String? = null

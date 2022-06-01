@@ -18,7 +18,6 @@ import com.nightout.model.BookEventMdlResponse
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
-import com.nightout.vendor.viewmodel.BookEventViewModel
 import com.nightout.viewmodel.CommonViewModel
 
 class BookTicketActivity : BaseActivity()  {

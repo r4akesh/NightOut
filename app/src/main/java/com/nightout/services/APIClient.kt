@@ -2,17 +2,11 @@ package com.nightout.vendor.services
 
 import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.nightout.BuildConfig
 import com.nightout.utils.PreferenceKeeper
-import okhttp3.Interceptor
-
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 

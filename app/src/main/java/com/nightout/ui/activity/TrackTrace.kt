@@ -30,7 +30,6 @@ import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import java.io.File
 import java.util.*
-import kotlin.collections.HashMap
 
 
 class TrackTrace : BaseActivity(), OnMapReadyCallback {

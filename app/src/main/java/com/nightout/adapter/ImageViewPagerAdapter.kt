@@ -9,7 +9,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.exoplayer2.ExoPlayer

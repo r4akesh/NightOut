@@ -3,15 +3,12 @@ package com.nightout.ui.activity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
 import com.nightout.adapter.AllRecordAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.FoodstoreActviityBinding
 import com.nightout.model.FoodStoreModel
 import com.nightout.model.SubFoodModel
-import kotlinx.android.synthetic.main.foodstore_actviity.*
-import kotlinx.android.synthetic.main.storedetail_activity.*
 
 class FoodStoreActvity : BaseActivity() {
     lateinit var binding : FoodstoreActviityBinding

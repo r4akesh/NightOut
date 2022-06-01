@@ -7,13 +7,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.model.*
-import com.nightout.utils.AppConstant
 import com.nightout.utils.AppConstant.PrefsName.INTERNAL_ERROR
 import com.nightout.utils.AppConstant.PrefsName.NO_INTERNET
 import com.nightout.utils.AppConstant.PrefsName.PARSING_ERROR
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

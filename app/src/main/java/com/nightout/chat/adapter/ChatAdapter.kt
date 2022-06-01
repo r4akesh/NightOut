@@ -16,8 +16,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-
-
+import com.downloader.Error
+import com.downloader.OnDownloadListener
+import com.downloader.request.DownloadRequest
 import com.nightout.R
 import com.nightout.chat.model.ChatModel
 import com.nightout.chat.model.ContactModel
@@ -28,9 +29,6 @@ import com.nightout.chat.utility.BroadCastConstants
 import com.nightout.chat.utility.DownloadUtility
 import com.nightout.chat.utility.MD5.stringToMD5
 import com.nightout.databinding.*
-  import com.downloader.Error
-import com.downloader.OnDownloadListener
-import com.downloader.request.DownloadRequest
 import com.nightout.utils.Utills
 import org.apache.commons.io.FilenameUtils
 import java.io.File

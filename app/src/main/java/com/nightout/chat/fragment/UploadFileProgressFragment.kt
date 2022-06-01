@@ -15,11 +15,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.chat.model.ChatModel
-import com.nightout.chat.model.ResponseModel
-
 import com.nightout.chat.model.UploadFileModeNew
 import com.nightout.databinding.FragmentUploadFileBinding
-import com.nightout.model.ContactFillterModel
 import com.nightout.services.FileUploader
 import java.io.File
 import java.util.*

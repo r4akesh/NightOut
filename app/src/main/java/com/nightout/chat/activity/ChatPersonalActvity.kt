@@ -1,6 +1,7 @@
 package com.nightout.chat.activity
 
 
+//import com.theartofdev.edmodo.cropper.CropImage
 import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,7 +9,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Build
@@ -41,7 +41,6 @@ import com.lassi.data.media.MiMedia
 import com.lassi.domain.media.LassiOption
 import com.lassi.domain.media.MediaType
 import com.lassi.presentation.builder.Lassi
-
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.callbacks.OnSelectOptionListener
@@ -56,13 +55,11 @@ import com.nightout.chat.model.*
 import com.nightout.chat.stickyheader.stickyView.StickHeaderItemDecoration
 import com.nightout.chat.utility.*
 import com.nightout.databinding.ChatpersonalActivitynewBinding
-import com.nightout.model.ChatImgUploadResponse
 import com.nightout.model.FSUsersModel
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 import com.nightout.utils.*
 import com.nightout.vendor.services.APIClient
-//import com.theartofdev.edmodo.cropper.CropImage
 import org.apache.commons.io.FilenameUtils
 import org.json.JSONException
 import org.json.JSONObject
@@ -70,7 +67,6 @@ import java.io.*
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
-import kotlin.Comparator
 
 class ChatPersonalActvity : BaseActivity(), PermissionClass.PermissionRequire, WebSocketObserver,
     PlayAudioFragment.PlayAudioCallback,

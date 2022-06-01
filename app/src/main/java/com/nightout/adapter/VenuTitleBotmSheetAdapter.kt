@@ -1,19 +1,13 @@
 package com.nightout.adapter
 
 import android.content.Context
-
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.*
-import com.nightout.model.*
+import com.nightout.databinding.VenuTitleBotmsheetItemBinding
+import com.nightout.model.VenuBotmSheetTitleModel
 
 
 class VenuTitleBotmSheetAdapter(

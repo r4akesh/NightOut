@@ -3,29 +3,23 @@ package com.nightout.ui.activity
 
 
 import android.graphics.Color
-import com.nightout.base.BaseActivity
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.GoogleMap
 import android.os.Bundle
-import com.nightout.R
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.MarkerOptions
-import com.nightout.ui.activity.DemoMap
-import com.google.android.gms.maps.CameraUpdateFactory
-import android.os.AsyncTask
 import android.util.Log
-import org.json.JSONObject
-import com.nightout.utils.PathJSONParser
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.nightout.R
+import com.nightout.base.BaseActivity
 import com.nightout.utils.HttpConnection
+import com.nightout.utils.MyApp
+import com.nightout.utils.PathJSONParser
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
-import java.util.ArrayList
-import java.util.HashMap
-import com.google.android.gms.maps.model.CameraPosition
-import com.nightout.utils.MyApp
+import org.json.JSONObject
 
 
 class DemoMap : BaseActivity(), OnMapReadyCallback {

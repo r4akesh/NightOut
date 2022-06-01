@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.ActivityContactUsBinding
-import android.widget.ArrayAdapter
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper

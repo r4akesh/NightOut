@@ -5,14 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-import com.nightout.base.BaseActivity
-
 import com.nightout.adapter.RatingListAdapter
+import com.nightout.base.BaseActivity
 import com.nightout.databinding.RatinglistActvityBinding
 import com.nightout.model.ReviewListRes
 import com.nightout.utils.AppConstant

@@ -2,27 +2,20 @@ package com.nightout.adapter
 
 import android.content.Context
 import android.graphics.Paint
-
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-
 import androidx.databinding.DataBindingUtil
-
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nightout.R
-
 import com.nightout.databinding.VenusubItemBinding
-
 import com.nightout.model.VenuListModel
-import com.nightout.model.VenuModel
 import com.nightout.utils.Commons
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
-import com.nightout.utils.Utills
 
 
 class VenuSubAdapter(

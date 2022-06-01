@@ -1,39 +1,29 @@
 package com.nightout.ui.activity
 
+
 import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import com.nightout.R
-import com.nightout.base.BaseActivity
-
 import android.content.Context
-import android.net.Uri
-import android.util.Log
-
-
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
+import android.net.Uri
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.*
 import android.view.WindowManager
-
-import android.widget.*
+import android.widget.ImageView
+import android.widget.VideoView
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-
-
-
-
-import java.util.*
-import android.media.MediaPlayer
-
-import android.widget.VideoView
+import com.nightout.R
+import com.nightout.base.BaseActivity
 import com.nightout.databinding.StoryPreviewActvityBinding
-
 import com.nightout.model.DashboardModel
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp

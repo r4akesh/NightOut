@@ -3,17 +3,11 @@ package com.nightout.ui.activity.barcrawl
 import android.app.Activity
 import android.content.Intent
 import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
-import android.widget.RelativeLayout
-import android.widget.RelativeLayout.ALIGN_PARENT_TOP
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -21,21 +15,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.SrchCityBinding
 import com.nightout.ui.activity.SearchLocationActivity
 import com.nightout.utils.*
 import java.util.*
-import com.nightout.ui.activity.EditProfileActivity
-
-import android.location.Geocoder
-
-
 
 
 class SearchCityActivity : BaseActivity(), OnMapReadyCallback {

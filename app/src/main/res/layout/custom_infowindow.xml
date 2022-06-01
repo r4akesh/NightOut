@@ -16,6 +16,7 @@
             android:id="@+id/profile_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/marker_bar"
             android:contentDescription="@null"
            />
         <TextView

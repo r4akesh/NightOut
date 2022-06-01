@@ -1,8 +1,6 @@
 package com.nightout.chat.model;
 
 
-import com.nightout.vendor.services.APIClient;
-
 public class MediaModel {
     String file_url = "";
     MediaMetaModel file_meta;

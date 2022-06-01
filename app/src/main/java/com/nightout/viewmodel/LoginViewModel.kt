@@ -1,5 +1,6 @@
 package com.nightout.vendor.viewmodel
 
+
 import android.app.Activity
 import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
@@ -8,11 +9,7 @@ import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.ApiSampleResource
-
-
-import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.WebServiceRepository
-
 
 
 class LoginViewModel(activity: Activity) : BaseObservable() {

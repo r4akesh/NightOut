@@ -1,7 +1,5 @@
 package com.nightout.model
 
-import android.net.Uri
-
 
 data class LostItemDetailCstmModel(
 

@@ -3,21 +3,15 @@ package com.nightout.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.nightout.R
-import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.VenuTitleBotmsheetItemBinding
 import com.nightout.model.DashboardModel
-import com.nightout.utils.AppConstant
-import com.nightout.utils.MyApp
-import com.nightout.utils.Utills
 import java.lang.Math.abs
 
 

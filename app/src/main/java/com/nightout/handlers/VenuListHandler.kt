@@ -2,7 +2,7 @@ package com.nightout.handlers
 
 import com.nightout.model.VenuModel
 import com.nightout.ui.activity.HomeActivityNew
-import com.nightout.utils.*
+import com.nightout.utils.DialogCustmYesNo
 
 open class VenuListHandler(val activity: HomeActivityNew) {
     private lateinit var sideMenuViewModl : VenuModel

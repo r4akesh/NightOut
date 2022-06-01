@@ -1,6 +1,5 @@
 package com.nightout.ui.activity
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -9,7 +8,6 @@ import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.CongrtulationActivityBinding
 import com.nightout.utils.AppConstant
-import nl.dionsegijn.konfetti.emitters.StreamEmitter
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 

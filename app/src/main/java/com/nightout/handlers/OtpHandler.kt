@@ -6,8 +6,8 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nightout.chat.chatinterface.ResponseType
 import com.nightout.chat.chatinterface.WebSocketObserver
 import com.nightout.chat.chatinterface.WebSocketSingleton
@@ -17,7 +17,6 @@ import com.nightout.model.LoginModel
 import com.nightout.ui.activity.HomeActivityNew
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.utils.CustomProgressDialog
-
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
@@ -26,8 +25,6 @@ import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.OtpViewModel
 import org.json.JSONException
 import org.json.JSONObject
-import com.google.gson.reflect.TypeToken
-import kotlin.math.log
 
 open class OtpHandler(val activity: OTPActivity, var mobNo: String,var email: String):
     WebSocketObserver {

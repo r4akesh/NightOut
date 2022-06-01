@@ -1,8 +1,6 @@
 package com.nightout.utils
 
-import android.net.Uri
 import com.nightout.model.LostItemDetailCstmModel
-import okhttp3.MultipartBody
 
 
 class DataManager {

@@ -1,20 +1,16 @@
 package com.nightout.vendor.viewmodel
 
+
 import android.app.Activity
 import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import com.nightout.R
 import com.nightout.model.LoginModel
-
 import com.nightout.ui.activity.RegisterActivity
 import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.ApiSampleResource
-
-
-import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.WebServiceRepository
-
 
 
 class RegViewModel(activity: Activity) : BaseObservable() {

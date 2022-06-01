@@ -2,7 +2,6 @@ package com.nightout.chat.model
 
 import com.google.gson.annotations.SerializedName
 import com.nightout.model.FSUsersModel
-import java.util.*
 
 class FSRoomModel {
     //    private boolean isOnline  = false;

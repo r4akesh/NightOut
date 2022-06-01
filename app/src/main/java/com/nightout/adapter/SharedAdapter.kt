@@ -1,23 +1,14 @@
 package com.nightout.adapter
 
 import android.content.Context
-
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-
 import androidx.databinding.DataBindingUtil
-
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.ChatItemBinding
-import com.nightout.databinding.FacilityItemBinding
 import com.nightout.databinding.SharedItemBinding
-import com.nightout.model.*
-import com.nightout.utils.Commons
-import com.nightout.utils.MyApp
+import com.nightout.model.SharedBarcrwalRes
 import com.nightout.utils.Utills
 
 

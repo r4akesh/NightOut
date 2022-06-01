@@ -1,5 +1,6 @@
 package com.nightout.ui.activity.barcrawl
 
+
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -7,8 +8,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -28,29 +27,22 @@ import com.google.android.gms.maps.model.*
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrwalmappathActvityBinding
-import com.nightout.utils.*
-import kotlinx.coroutines.*
-import org.json.JSONObject
-import java.util.*
-import com.google.android.gms.maps.model.LatLng
-
-
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.CameraUpdate
-import com.nightout.model.*
+import com.nightout.model.AllBarCrwalListResponse
+import com.nightout.model.BarcrwalSavedRes
+import com.nightout.model.DashboardModel
+import com.nightout.model.SharedBarcrwalRes
 import com.nightout.ui.activity.ContactListNewActvity
+import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import java.io.File
-import java.lang.StringBuilder
-import kotlin.collections.ArrayList
+import java.util.*
 
 
 class BarCrwalPathMap : BaseActivity(), OnMapReadyCallback {

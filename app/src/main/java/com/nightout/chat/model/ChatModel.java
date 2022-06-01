@@ -10,7 +10,6 @@ import com.nightout.chat.utility.DownloadUtility;
 import com.nightout.model.FSUsersModel;
 import com.nightout.utils.MyApp;
 
-
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONException;
 import org.json.JSONObject;

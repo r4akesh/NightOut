@@ -12,8 +12,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.model.DashboardModel
-import com.nightout.utils.AppConstant
-import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 
 //

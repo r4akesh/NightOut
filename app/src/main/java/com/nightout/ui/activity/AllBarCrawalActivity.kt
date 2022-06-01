@@ -3,12 +3,9 @@ package com.nightout.ui.activity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
-
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.AllbarActvityBinding
-import com.nightout.model.VenuesModel
 
 class AllBarCrawalActivity : BaseActivity() {
     lateinit var binding : AllbarActvityBinding

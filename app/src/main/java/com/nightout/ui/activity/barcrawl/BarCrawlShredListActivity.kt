@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -16,10 +15,12 @@ import com.nightout.adapter.SharedAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarshredActivityBinding
 import com.nightout.model.SharedBarcrwalRes
-import com.nightout.utils.*
+import com.nightout.utils.AppConstant
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.MyApp
+import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import java.lang.invoke.ConstantCallSite
 
 class BarCrawlShredListActivity : BaseActivity() {
 

@@ -19,8 +19,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -33,19 +31,11 @@ import com.nightout.adapter.VenuAdapterAdapter
 import com.nightout.adapter.VenuSubAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.VenulistingActivityBinding
-import com.nightout.model.*
+import com.nightout.model.VenuListModel
+import com.nightout.model.VenuModel
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import com.google.android.gms.maps.model.CameraPosition
-
-import com.google.android.gms.maps.model.PolylineOptions
-
-
-
 
 
 class VenuListActvity : BaseActivity(), OnMapReadyCallback {

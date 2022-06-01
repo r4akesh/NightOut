@@ -1,12 +1,9 @@
 package com.nightout.utils
 
-import org.json.JSONObject
-import org.json.JSONArray
 import com.google.android.gms.maps.model.LatLng
+import org.json.JSONArray
 import org.json.JSONException
-import java.lang.Exception
-import java.util.ArrayList
-import java.util.HashMap
+import org.json.JSONObject
 
 class PathJSONParser {
     fun parse(jObject: JSONObject): List<List<HashMap<String, String>>> {

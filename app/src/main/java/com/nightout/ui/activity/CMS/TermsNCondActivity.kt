@@ -14,8 +14,6 @@ import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 
-import kotlinx.android.synthetic.main.termncond_actviity.*
-
 
 class TermsNCondActivity : BaseActivity() {
     lateinit var  binding : TermncondActviityBinding

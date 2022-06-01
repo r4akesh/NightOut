@@ -2,16 +2,13 @@ package com.nightout.adapter
 
 import android.content.Context
 import android.util.Log
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import androidx.databinding.DataBindingUtil
-
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.databinding.RowNotificationLayoutBinding
-import com.nightout.model.*
+import com.nightout.model.NotificationResponse
 import com.nightout.utils.MyApp
 
 

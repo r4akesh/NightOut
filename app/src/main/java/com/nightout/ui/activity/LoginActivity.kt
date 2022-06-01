@@ -1,29 +1,16 @@
 package com.nightout.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
-import android.util.Log
-import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.base.BaseActivity
-
 import com.nightout.databinding.LoginActivityBinding
-import com.nightout.model.FSUsersModel
-import com.nightout.model.LoginModel
 import com.nightout.utils.MyApp
-import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.discount_desc.view.*
 
 
 class LoginActivity : BaseActivity()  {

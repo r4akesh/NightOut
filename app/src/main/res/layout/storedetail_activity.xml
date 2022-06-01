@@ -230,25 +230,29 @@
 
                     <TextView
                         android:id="@+id/storeDeatilOpenTime"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="@dimen/_7sdp"
                         android:text="Open at : 7:30 pm To 02:00 am"
                         android:textColor="@color/white_second"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="17sp"
+                        android:singleLine="true"
+                        app:layout_constraintEnd_toStartOf="@+id/storeDeatilMills"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilSubTitle" />
 
                     <TextView
+                        android:id="@+id/storeDeatilMills"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10ssp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="@dimen/_7sdp"
-                        android:layout_marginEnd="@dimen/_10ssp"
-                        android:text="2.3 miles"
+                        android:layout_marginEnd="10dp"
+                        android:text="0 miles"
                         android:textColor="@color/white_second"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="17sp"
+                        app:layout_constraintStart_toEndOf="@+id/storeDeatilOpenTime"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/storeDeatilSubTitle" />
 

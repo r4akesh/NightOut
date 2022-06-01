@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.R
+import com.nightout.chat.activity.ChatPersonalActvity
+import com.nightout.chat.activity.CreateGroupActvity
 import com.nightout.chat.adapter.ChatGroupListAdapter
 import com.nightout.chat.chatinterface.ResponseType
 import com.nightout.chat.chatinterface.WebSocketObserver
@@ -26,8 +28,6 @@ import com.nightout.chat.model.RoomResponseModel
 import com.nightout.databinding.FragmentChatBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.model.FSUsersModel
-import com.nightout.chat.activity.ChatPersonalActvity
-import com.nightout.chat.activity.CreateGroupActvity
 import com.nightout.utils.AppConstant
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
@@ -35,7 +35,6 @@ import com.nightout.vendor.services.APIClient
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.HashMap
 
 class ChatRoomListFragment() : Fragment() , View.OnClickListener , WebSocketObserver {
 

@@ -1,14 +1,14 @@
 package com.bogdwellers.pinchtozoom;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This class enables easy interpretation of multitouch gestures such as pinching, rotating etc.</p>

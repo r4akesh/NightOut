@@ -1,16 +1,12 @@
 package com.nightout.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.RowEmergencyContactBinding
-import com.nightout.databinding.RowEmergencyItemBinding
 import com.nightout.model.GetEmergencyModel
 import com.nightout.utils.Utills
 

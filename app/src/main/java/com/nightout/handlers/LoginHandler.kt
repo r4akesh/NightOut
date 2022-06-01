@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
-import com.nightout.model.LoginModel
 import com.nightout.ui.activity.LoginActivity
 import com.nightout.ui.activity.OTPActivity
 import com.nightout.ui.activity.RegisterActivity
-import com.nightout.utils.*
+import com.nightout.utils.AppConstant
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.vendor.viewmodel.LoginViewModel
-import org.json.JSONException
-import org.json.JSONObject
 
 open class LoginHandler(val activity: LoginActivity) {
     private lateinit var loginViewModel: LoginViewModel

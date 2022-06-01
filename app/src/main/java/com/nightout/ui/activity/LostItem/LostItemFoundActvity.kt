@@ -16,7 +16,6 @@ import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import java.lang.StringBuilder
 
 
 class LostItemFoundActvity : BaseActivity() {

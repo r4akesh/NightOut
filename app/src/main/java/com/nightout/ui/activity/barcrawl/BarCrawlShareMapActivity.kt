@@ -15,20 +15,18 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.gson.Gson
 import com.nightout.R
-
+import com.nightout.adapter.BarcrwalRootPathShareAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.BarcrawlSavedmapactivityBinding
+import com.nightout.model.PathParseModel
+import com.nightout.model.SharedBarcrwalRes
+import com.nightout.ui.activity.TaxiListActivity
 import com.nightout.utils.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.util.HashMap
-import com.google.gson.Gson
-import com.nightout.adapter.BarcrwalRootPathShareAdapter
-import com.nightout.model.PathParseModel
-import com.nightout.model.SharedBarcrwalRes
-import com.nightout.ui.activity.TaxiListActivity
 
 
 class BarCrawlShareMapActivity : BaseActivity() ,OnMapReadyCallback{

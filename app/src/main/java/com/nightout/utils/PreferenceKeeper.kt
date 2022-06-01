@@ -3,12 +3,10 @@ package com.nightout.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nightout.model.FSUsersModel
 import com.nightout.model.LoginModel
-import java.util.HashMap
 
 /**
  * Class is used to save user data in preference.

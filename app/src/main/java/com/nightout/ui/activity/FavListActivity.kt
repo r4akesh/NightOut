@@ -8,7 +8,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,6 @@ import com.nightout.model.FavListModelRes
 import com.nightout.utils.*
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.pranavpandey.android.dynamic.toasts.DynamicToast
 
 class FavListActivity : BaseActivity() {
     lateinit var binding : FavlistActivityBinding

@@ -11,7 +11,6 @@ import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
@@ -33,7 +32,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.makeramen.roundedimageview.RoundedImageView
@@ -50,6 +48,8 @@ import java.util.*
 class Utills {
 
     companion object {
+
+
         fun ratioOfScreen(context: Activity, ratio: Float): Int {
             val displayMetrics = DisplayMetrics()
             context.windowManager.defaultDisplay.getMetrics(displayMetrics)

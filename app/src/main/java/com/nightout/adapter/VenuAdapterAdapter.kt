@@ -1,20 +1,16 @@
 package com.nightout.adapter
 
 import android.content.Context
-
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
+import androidx.annotation.Nullable
 import androidx.databinding.DataBindingUtil
-
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-
 import com.nightout.databinding.VenuItemBinding
 import com.nightout.model.VenuModel
-import androidx.recyclerview.widget.DiffUtil
-import android.util.Log
-import androidx.annotation.Nullable
 
 
 class VenuAdapterAdapter(var context: Context, var arrayList :ArrayList<VenuModel>,var clickListener: ClickListener) : RecyclerView.Adapter<VenuAdapterAdapter.ViewHolder>() {

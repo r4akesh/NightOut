@@ -1,18 +1,14 @@
 package com.nightout.chat.stickyheader.stickyView;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.nightout.chat.adapter.ChatAdapterBase;
 import com.nightout.chat.adapter.HeaderDataImpl;
 import com.nightout.chat.model.ChatModel;
 import com.nightout.chat.model.StickyMainData;
 import com.nightout.chat.stickyheader.stickyData.HeaderData;
-import com.nightout.chat.utility.UserDetails;
 import com.nightout.utils.PreferenceKeeper;
 
 import java.util.ArrayList;

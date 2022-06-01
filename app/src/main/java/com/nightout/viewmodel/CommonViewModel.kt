@@ -3,10 +3,8 @@ package com.nightout.viewmodel
 import android.app.Activity
 import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
-import com.google.gson.JsonObject
 import com.nightout.model.*
 import com.nightout.vendor.services.ApiSampleResource
-import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.WebServiceRepository
 import okhttp3.MultipartBody
 import org.json.JSONObject

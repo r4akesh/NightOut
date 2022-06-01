@@ -12,15 +12,11 @@ import com.nightout.adapter.FillterMainAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.FillterActvityBinding
 import com.nightout.model.FillterRes
-import com.nightout.model.FoodStoreModel
-import com.nightout.model.SubFoodModel
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import kotlinx.android.synthetic.main.fillter_actvity.*
-import java.lang.StringBuilder
 
 
 class FillterActvity : BaseActivity() {

@@ -1,24 +1,18 @@
 package com.nightout.chat.adapter
 
 import android.content.Context
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.databinding.DataBindingUtil
-
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
 import com.nightout.chat.model.FSRoomModel
 import com.nightout.chat.utility.TimeShow.timeFormatYesterdayToDay
-import com.nightout.chat.utility.UserDetails
 import com.nightout.databinding.ChatItemBinding
-
 import com.nightout.model.FSUsersModel
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
-import java.util.ArrayList
 
 
 class ChatGroupListAdapter(

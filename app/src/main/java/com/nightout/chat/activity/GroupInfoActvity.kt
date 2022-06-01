@@ -7,16 +7,14 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import com.google.gson.reflect.TypeToken
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nightout.R
 import com.nightout.adapter.GroupChatImageAdapter
-
 import com.nightout.base.BaseActivity
 import com.nightout.chat.adapter.GroupListInfoAdapter
 import com.nightout.chat.chatinterface.ResponseType
@@ -33,7 +31,6 @@ import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 import com.nightout.vendor.services.APIClient
 import org.json.JSONObject
-import java.util.HashMap
 
 class GroupInfoActvity : BaseActivity(), WebSocketObserver {
     lateinit var groupChatImageAdapter : GroupChatImageAdapter

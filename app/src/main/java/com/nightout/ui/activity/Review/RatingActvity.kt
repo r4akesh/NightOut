@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
+import android.widget.RatingBar.OnRatingBarChangeListener
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nightout.R
@@ -11,8 +12,6 @@ import com.nightout.adapter.CommentAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.RatingActvityBinding
 import com.nightout.model.CommentModel
-
-import android.widget.RatingBar.OnRatingBarChangeListener
 import com.nightout.model.ReviewListRes
 import com.nightout.utils.AppConstant
 import com.nightout.utils.CustomProgressDialog

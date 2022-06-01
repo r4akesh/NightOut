@@ -9,7 +9,6 @@ import com.nightout.R
 import com.nightout.adapter.MyOrderAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.MyorderActvityBinding
-import com.nightout.databinding.RowOrderitemSecondBinding
 import com.nightout.model.MyOrderRes
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.Utills

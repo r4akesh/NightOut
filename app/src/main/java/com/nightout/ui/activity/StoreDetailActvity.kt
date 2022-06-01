@@ -359,10 +359,12 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         try {
             binding.constrentCardLayout.visibility = VISIBLE
             //setSlider
-
             //set data object
-            binding.viewPager.setMediaObjects(dt.venue_gallery as java.util.ArrayList<VenuDetailModel.VenueGallery>?)
-            imageViewPagerAdapter = MediaRecyclerAdapter(dt.venue_gallery,initGlide() !!)
+            if(dt.venue_gallery.isNotEmpty()) {
+                binding.viewPager.setMediaObjects(dt.venue_gallery as ArrayList<VenuDetailModel.VenueGallery>?)
+                imageViewPagerAdapter = MediaRecyclerAdapter(dt.venue_gallery, initGlide()!!)
+                addBottomDots(dt.venue_gallery.size)
+
 
 
             val snapHelper: SnapHelper = PagerSnapHelper()
@@ -371,7 +373,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 binding.viewPager.adapter = imageViewPagerAdapter
                 snapHelper.attachToRecyclerView(binding.viewPager)
             }
-            addBottomDots(dt.venue_gallery.size)
+
 
             binding.viewPager.addOnScrollListener( object: RecyclerView.OnScrollListener(){
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -396,7 +398,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
                 }
             })
 
-
+            }
 
           //   binding.dotsIndicator.setViewPager(binding.viewPager)
 
@@ -630,7 +632,7 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
 
     private fun addRemoveBarCrawlAPICall() {
-        //  progressDialog.show(this@StoreDetailActvity, "")
+          progressDialog.show(this@StoreDetailActvity, "")
         val map = HashMap<String, String>()
         map["venue_id"] = venuID
         map["vendor_id"] = dt.vendor_detail.id
@@ -638,24 +640,16 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
         map["status"] = addBarCrawlStatus
         map["store_type"] = dt.store_type
 
-        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetailActvity, {
+        doAddBarCrawlModel.doAddBarCrawl(map).observe(this@StoreDetailActvity) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    // progressDialog.dialog.dismiss()
+                      progressDialog.dialog.dismiss()
                     it.data?.let {
                         try {
-//                                Log.d("ok", "add_favouriteAPICALL: " + detailData.data.status)
-//                                if (detailData.data.status == "1") {
-//                                    addBarCrawlStatus = "0"
-//                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.save_fav)
-//
-//                                } else {
-//                                    addBarCrawlStatus = "1"
-//                                    binding.storeDeatilAddRemBarCrl.setImageResource(R.drawable.ic_unseleted_barcrwl)
-//                                }
-                            // MyApp.ShowTost(this@StoreDetailActvity,detailData.message)
+
+                             MyApp.ShowTost(this@StoreDetailActvity,it.message)
                         } catch (e: Exception) {
-                            // MyApp.popErrorMsg("StoreDetail",""+e.toString(),this@StoreDetailActvity)
+                            MyApp.ShowTost(this@StoreDetailActvity,e.toString())
                         }
                     }
                 }
@@ -663,11 +657,12 @@ class StoreDetailActvity : BaseActivity(), OnMapReadyCallback {
 
                 }
                 Status.ERROR -> {
-                    // progressDialog.dialog.dismiss()
+                     progressDialog.dialog.dismiss()
+                    MyApp.ShowTost(this@StoreDetailActvity, it.message!!)
                     // Utills.showSnackBarOnError(binding.rootLayoutStorDetail, it.message!!, this@StoreDetailActvity)
                 }
             }
-        })
+        }
 
     }
 

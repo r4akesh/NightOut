@@ -18,16 +18,17 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.PrebookingActivityBinding
 import com.nightout.model.VenuDetailModel
 import com.nightout.ui.activity.CongrtulationActvity
-import com.nightout.utils.*
+import com.nightout.utils.AppConstant
+import com.nightout.utils.Commons
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.MyApp
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
-import kotlinx.android.synthetic.main.prebooking_activity.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 //calendra link-https://github.com/Mulham-Raee/Horizontal-Calendar

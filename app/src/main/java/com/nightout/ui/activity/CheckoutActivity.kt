@@ -1,15 +1,12 @@
 package com.nightout.ui.activity
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.interfaces.ActivtyToFrag
 import com.nightout.model.BookEventMdlResponse
 import com.nightout.model.PlaceOrderResponse
 import com.nightout.utils.AppConstant
-import com.nightout.utils.MyApp
 import com.nightout.utils.Utills
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet

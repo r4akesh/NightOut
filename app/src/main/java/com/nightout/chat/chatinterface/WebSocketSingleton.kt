@@ -4,14 +4,11 @@ package com.nightout.chat.chatinterface;
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.nightout.chat.utility.UserDetails
-import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.vendor.services.APIClient
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
 
 // Uses the Subject interface to update all Observers
 class WebSocketSingleton : WebSocketListener(), WebSocketSubject {

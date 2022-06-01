@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nightout.R
+import com.nightout.databinding.RowFeaturedBarBinding
 import com.nightout.databinding.StoryItemBinding
 import com.nightout.model.DashboardModel
 
@@ -24,9 +25,9 @@ class FeatureBarcrwlAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: StoryItemBinding = DataBindingUtil.inflate(
+        val binding: RowFeaturedBarBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.story_item, parent, false
+            R.layout.row_featured_bar, parent, false
         )
 
 
@@ -57,9 +58,9 @@ class FeatureBarcrwlAdapter(
     }
 
 
-    inner class ViewHolder(itemView: StoryItemBinding) :
+    inner class ViewHolder(itemView: RowFeaturedBarBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        var binding: StoryItemBinding = itemView
+        var binding: RowFeaturedBarBinding = itemView
 
     }
 

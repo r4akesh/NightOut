@@ -1,12 +1,11 @@
 package com.nightout.ui.activity.LostItem
 
-import android.Manifest
+//import com.github.drjacky.imagepicker.ImagePicker
+
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,28 +15,23 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.lassi.common.utils.KeyUtils
 import com.lassi.data.media.MiMedia
 import com.lassi.domain.media.LassiOption
 import com.lassi.domain.media.MediaType
 import com.lassi.presentation.builder.Lassi
-//import com.github.drjacky.imagepicker.ImagePicker
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.callbacks.OnSelectOptionListener
-
 import com.nightout.databinding.LostitemdetailsActivityBinding
 import com.nightout.model.GetLostItemListModel
 import com.nightout.model.LostItemDetailCstmModel
 import com.nightout.ui.fragment.SelectSourceBottomSheetFragment
 import com.nightout.utils.*
-
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -281,93 +275,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
 
         }
 
-//        if (option == "camera") {
-//          /*  selectSourceBottomSheetFragment.dismiss()
-//            cameraLauncher.launch(
-//                ImagePicker.with(this@LostItemDetailsActvity)
-//                    .cameraOnly().createIntent()
-//            )*/
-//            selectSourceBottomSheetFragment.dismiss()
-//            val currentAPIVersion = Build.VERSION.SDK_INT
-//            if (currentAPIVersion >= Build.VERSION_CODES.M) {
-//                if (ActivityCompat.checkSelfPermission(
-//                        THIS!!,
-//                        Manifest.permission.CAMERA
-//                    ) != PackageManager.PERMISSION_GRANTED
-//                ) {
-//                    ActivityCompat.requestPermissions(
-//                        THIS!!,
-//                        arrayOf(
-//                            Manifest.permission.CAMERA,
-//                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                            Manifest.permission.READ_EXTERNAL_STORAGE
-//                        ),
-//                        REQUEST_CAMERA_PERMISSION
-//                    )
-//                } else {
-//                    selectCameraImage()
-//
-//                }
-//            } else {
-//                selectCameraImage()
-//
-//            }
-//        } else {
-//         /*   selectSourceBottomSheetFragment.dismiss()
-//            galleryLauncher.launch(
-//                ImagePicker.with(this@LostItemDetailsActvity)
-//                    .galleryOnly()
-//                    .galleryMimeTypes( // no gif images at all
-//                        mimeTypes = arrayOf(
-//                            "image/png",
-//                            "image/jpg",
-//                            "image/jpeg"
-//                        )
-//                    )
-//                    .createIntent()
-//            )*/
-//            selectSourceBottomSheetFragment.dismiss()
-//            val currentAPIVersion = Build.VERSION.SDK_INT
-//            if (currentAPIVersion >= Build.VERSION_CODES.M) {
-//                arrayOf(
-//                    if (ActivityCompat.checkSelfPermission(
-//                            THIS!!,
-//                            Manifest.permission.CAMERA
-//                        ) != PackageManager.PERMISSION_GRANTED
-//                    ) {
-//                        ActivityCompat.requestPermissions(
-//                            THIS!!,
-//                            arrayOf(
-//                                Manifest.permission.CAMERA,
-//                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                                Manifest.permission.READ_EXTERNAL_STORAGE
-//                            ),
-//                            2
-//                        )
-//                    } else {
-//                     //   dialog.dismiss()
-//                        val intent =
-//                            Intent(
-//                                Intent.ACTION_PICK,
-//                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//                            )
-//                        intent.type = "image/*"
-////                            intent.type = "*/*";
-//                        intent.action = Intent.ACTION_PICK
-//                        THIS!!.startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-//                    }
-//                )
-//
-//            } else {
-//               // dialog.dismiss()
-//                val intent =
-//                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                intent.type = "image/*"
-////                    intent.type = "*/*";
-//                intent.action = Intent.ACTION_PICK
-//                startActivityForResult(Intent.createChooser(intent, "Select Image"), RequestCodeCamera)
-//            }
-//        }
+
     }
     private fun selectCameraImage() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -514,8 +422,7 @@ class LostItemDetailsActvity : BaseActivity(), OnSelectOptionListener {
     private fun setBody(bitmap: Bitmap, flag: String): MultipartBody.Part {
         val filePath = Utills.saveImage(this@LostItemDetailsActvity, bitmap)
         this.filePath = File(filePath)
-        reqFile = RequestBody.create(
-            "multipart/form-data".toMediaTypeOrNull(),
+        reqFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(),
             this.filePath!!
         )
 

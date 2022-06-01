@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.AllbarcrawalGridItemBinding
 import com.nightout.databinding.RowBarcrwlOptionitemBinding
 import com.nightout.model.BarCrwlListModel
 

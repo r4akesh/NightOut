@@ -26,7 +26,6 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.EventdetailActvityBinding
 import com.nightout.model.VenuDetailModel
 import com.nightout.utils.*
-import com.nightout.vendor.services.Resource
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import java.text.DecimalFormat

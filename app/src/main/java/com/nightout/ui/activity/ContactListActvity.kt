@@ -14,11 +14,12 @@ import com.nightout.base.BaseActivity
 import com.nightout.databinding.ContactlistActvityBinding
 import com.nightout.model.ContactFillterModel
 import com.nightout.model.ContactNoModel
-import com.nightout.utils.*
+import com.nightout.utils.AppConstant
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import com.nightout.viewmodel.ContactFillterViewModel
-import com.nightout.viewmodel.SaveEmngyPhNoViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 

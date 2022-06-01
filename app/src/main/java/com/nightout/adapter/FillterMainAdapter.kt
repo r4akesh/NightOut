@@ -1,23 +1,16 @@
 package com.nightout.adapter
 
 import android.content.Context
-
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import androidx.recyclerview.widget.RecyclerView
 import com.nightout.R
-import com.nightout.databinding.DrinkItemBinding
 import com.nightout.databinding.FilterMainItemBinding
 import com.nightout.model.FillterRes
-import com.nightout.model.FoodStoreModel
-import com.nightout.model.StoreDetailDrinksModel
-import com.nightout.model.SubFoodModel
 
 
 class FillterMainAdapter(

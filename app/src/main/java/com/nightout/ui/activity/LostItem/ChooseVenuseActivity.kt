@@ -16,21 +16,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.tabs.TabLayout
 import com.nightout.R
-import com.nightout.adapter.*
+import com.nightout.adapter.AllRecordVenuseAdapter
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.ChossesvenuesActvityBinding
 import com.nightout.model.LostItemChooseVenuResponse
-import com.nightout.utils.*
+import com.nightout.utils.CustomProgressDialog
+import com.nightout.utils.DataManager
+import com.nightout.utils.MyApp
+import com.nightout.utils.Utills
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.util.*
 
 class ChooseVenuseActivity : BaseActivity() {
     lateinit var binding: ChossesvenuesActvityBinding
@@ -116,7 +117,7 @@ class ChooseVenuseActivity : BaseActivity() {
     lateinit var lostItemSubmitViewModel: CommonViewModel
     private fun addLostItemApiCall(build: MultipartBody) {
         customProgressDialog.show(this@ChooseVenuseActivity)
-        lostItemSubmitViewModel.submitLostItem(build).observe(this@ChooseVenuseActivity, {
+        lostItemSubmitViewModel.submitLostItem(build).observe(this@ChooseVenuseActivity) {
             when (it.status) {
                 Status.SUCCESS -> {
                     customProgressDialog.dialog.dismiss()
@@ -136,12 +137,12 @@ class ChooseVenuseActivity : BaseActivity() {
                             this@ChooseVenuseActivity,
                             it.message!!,
 
-                        )
+                            )
                     } catch (e: Exception) {
                     }
                 }
             }
-        })
+        }
     }
 
     private var filePath: File? = null

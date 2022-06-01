@@ -73,7 +73,8 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
         fragmentManager = supportFragmentManager
         showFragment(HomeFragment(this))
         WebSocketSingleton.getInstant()!!.register(this)
-        Log.d("vv", "fcmTokenSave: "+PreferenceKeeper.instance.fcmTokenSave)
+        Log.e("vv", "fcmTokenSave: "+PreferenceKeeper.instance.fcmTokenSave)
+        Log.e("vv", "fcmTokenSave: "+Status.SUCCESS)
     }
 
     override fun onClick(v: View?) {
@@ -362,7 +363,7 @@ class HomeActivityNew : BaseActivity(), OnMenuOpenListener,OnSideMenuSelectListe
 
     private fun setHomeTab() {
         binding.bottmHomeYello.visibility = VISIBLE
-        binding.bottomHome.setImageResource(R.drawable.btm_home_ic)
+        binding.bottomHome.setImageResource(R.drawable.bottom_home_unselect)
         binding.bottomTransport.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))
         binding.bottomTransport.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.bottomChat.setDrawableColor(ContextCompat.getColor(this, R.color.text_gray))

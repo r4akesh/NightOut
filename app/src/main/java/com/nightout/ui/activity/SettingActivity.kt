@@ -1,15 +1,11 @@
 package com.nightout.ui.activity
 
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import com.nightout.R
 import com.nightout.base.BaseActivity
-import com.nightout.databinding.ActivityContactUsBinding
 import com.nightout.databinding.ActivitySettingBinding
 import com.nightout.utils.CustomProgressDialog
 import com.nightout.utils.PreferenceKeeper

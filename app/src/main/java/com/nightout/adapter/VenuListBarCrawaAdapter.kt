@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nightout.R
-import com.nightout.databinding.RowVenuebarcrawalGridBinding
 import com.nightout.model.AllBarCrwalListResponse
-import com.nightout.model.BarCrwalVenuesModel
 import com.nightout.utils.Commons
 import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper

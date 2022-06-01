@@ -5,9 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
-import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
-
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -20,30 +18,36 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.view.View.*
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.nightout.R
-import com.nightout.adapter.*
+import com.nightout.adapter.AllRecordAdapter
+import com.nightout.adapter.FeatureBarcrwlAdapter
+import com.nightout.adapter.StoryAdapter
 import com.nightout.databinding.FragmentHomeBinding
 import com.nightout.interfaces.ActivtyToFrag
 import com.nightout.interfaces.OnMenuOpenListener
-import com.nightout.model.*
+import com.nightout.model.DashboardModel
 import com.nightout.ui.activity.*
 import com.nightout.ui.activity.Review.RatingListActvity
 import com.nightout.ui.activity.barcrawl.BarCrwalPathMap
@@ -51,10 +55,8 @@ import com.nightout.utils.*
 import com.nightout.vendor.services.NetworkHelper
 import com.nightout.vendor.services.Status
 import com.nightout.viewmodel.CommonViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -204,10 +206,8 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
             var longitudeUpdated: Double
             for (i in 0 until dashList.all_records.size) {
                 for (j in 0 until dashList.all_records[i].sub_records.size) {
-                    var mLat =
-                        Commons.strToDouble(dashList.all_records[i].sub_records[j].store_lattitude)
-                    var mLang =
-                        Commons.strToDouble(dashList.all_records[i].sub_records[j].store_longitude)
+                    var mLat = Commons.strToDouble(dashList.all_records[i].sub_records[j].store_lattitude)
+                    var mLang = Commons.strToDouble(dashList.all_records[i].sub_records[j].store_longitude)
                     if (MyApp.isValidLatLng(mLat, mLang)) {
                         var key = "" + mLat + mLang
                         var offset = 0.0
@@ -228,59 +228,24 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                         var strAddrs = dashList.all_records[i].sub_records[j].store_address
                         when {
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.BAR -> {
-                                //marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
-                                marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_bar, strName, strAddrs)!!))
+                               marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_bar))
+                               // marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_bar, strName, strAddrs)!!))
                             }
                             dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.PUB -> {
-                                // marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
-                                marker?.setIcon(
-                                    BitmapDescriptorFactory.fromBitmap(
-                                        getMarkerBitmapFromView(
-                                            R.drawable.marker_pub,
-                                            strName,
-                                            strAddrs
-                                        )!!
-                                    )
-                                )
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_pub))
+                              //  marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_pub, strName, strAddrs)!!))
                             }
-                            dashList.all_records[i].sub_records[j].store_type.lowercase()
-                                .trim() == AppConstant.PrefsName.CLUB -> {
-                                // marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
-                                marker?.setIcon(
-                                    BitmapDescriptorFactory.fromBitmap(
-                                        getMarkerBitmapFromView(
-                                            R.drawable.marker_club,
-                                            strName,
-                                            strAddrs
-                                        )!!
-                                    )
-                                )
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.CLUB -> {
+                                 marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_club))
+                              //  marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_club, strName, strAddrs)!!))
                             }
-                            dashList.all_records[i].sub_records[j].store_type.lowercase()
-                                .trim() == AppConstant.PrefsName.FOOD -> {
-                                // marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
-                                marker?.setIcon(
-                                    BitmapDescriptorFactory.fromBitmap(
-                                        getMarkerBitmapFromView(
-                                            R.drawable.marker_food,
-                                            strName,
-                                            strAddrs
-                                        )!!
-                                    )
-                                )
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.FOOD -> {
+                                marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_food))
+                               // marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_food, strName, strAddrs)!!))
                             }
-                            dashList.all_records[i].sub_records[j].store_type.lowercase()
-                                .trim() == AppConstant.PrefsName.EVENT -> {
-                                //   marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
-                                marker?.setIcon(
-                                    BitmapDescriptorFactory.fromBitmap(
-                                        getMarkerBitmapFromView(
-                                            R.drawable.marker_event,
-                                            strName,
-                                            strAddrs
-                                        )!!
-                                    )
-                                )
+                            dashList.all_records[i].sub_records[j].store_type.lowercase().trim() == AppConstant.PrefsName.EVENT -> {
+                                 marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker_event))
+                               // marker?.setIcon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.marker_event, strName, strAddrs)!!))
                             }
                         }
                         marker?.position?.let { builder.include(it) }
@@ -301,7 +266,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 } catch (e: Exception) {
                     Log.e("Exception>>>", "" + e)
                 }
-                mMap?.setOnMarkerClickListener {
+              /*  mMap?.setOnMarkerClickListener {
                     var strSnippt: String = it.snippet!!
                    var mSniptPos = strSnippt.split(",")
                     Log.d("TAG", "setUpMarker: " + strSnippt)
@@ -316,30 +281,73 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
 
                     }
                     false
-                }
+                }*/
 
             }
-            /* mMap!!.setInfoWindowAdapter(object : InfoWindowAdapter {
+               mMap!!.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
                  override fun getInfoWindow(arg0: Marker): View? {
                      val cw = ContextThemeWrapper(requireActivity(), R.style.Transparent)
                     var  inflater = cw.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
                      val layout: View = inflater.inflate(R.layout.custom_infowindow, null)
+                     val markerImageView = layout.findViewById(R.id.profile_image) as ImageView
                      val posss: String = arg0.snippet!!
                      var aa: List<String> =posss.split(",")
-                     layout.findViewById<TextView>(R.id.infoStrName).setText(dashList.all_records[Integer.parseInt( aa.get(0))].sub_records[Integer.parseInt( aa.get(1))].store_name)
-                   layout.findViewById<TextView>(R.id.infoStrAddrs).setText(dashList.all_records[Integer.parseInt( aa.get(0))].sub_records[Integer.parseInt( aa.get(1))].store_address)
+                     layout.findViewById<TextView>(R.id.tvTitle).setText(dashList.all_records[Integer.parseInt( aa.get(0))].sub_records[Integer.parseInt( aa.get(1))].store_name)
+                   layout.findViewById<TextView>(R.id.tvDesc).setText(dashList.all_records[Integer.parseInt( aa.get(0))].sub_records[Integer.parseInt( aa.get(1))].store_address)
                      var strLogo=dashList.all_records[Integer.parseInt( aa.get(0))].sub_records[Integer.parseInt( aa.get(1))].store_logo
-                 //  Utills.setImageNormal(requireActivity(), layout.findViewById<ImageView>(R.id.infoStrImg),strLogo)
-                     Glide.with(context!!).load("https://nightout.ezxdemo.com/storage/"+strLogo).centerCrop()
-                         .placeholder(R.drawable.no_image)
-                         .error(R.drawable.app_icon).into(layout.findViewById<ImageView>(R.id.infoStrImg))
+                     var i=Integer.parseInt( aa.get(0))
+                     var j=Integer.parseInt( aa.get(1))
+                     var markerIcon=R.drawable.marker_bar
+                        when {
+                            dashList.all_records[i].sub_records[j].store_type.lowercase()
+                                .trim() == AppConstant.PrefsName.BAR -> {
+                                markerIcon=R.drawable.marker_bar
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase()
+                                .trim() == AppConstant.PrefsName.PUB -> {
+                                markerIcon=R.drawable.marker_pub
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase()
+                                .trim() == AppConstant.PrefsName.CLUB -> {
+                                markerIcon=R.drawable.marker_club
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase()
+                                .trim() == AppConstant.PrefsName.FOOD -> {
+                                markerIcon=R.drawable.marker_food
+                            }
+                            dashList.all_records[i].sub_records[j].store_type.lowercase()
+                                .trim() == AppConstant.PrefsName.EVENT -> {
+                                markerIcon=R.drawable.marker_event
+                            }
+                        }
+
+
+                     Picasso.get()
+                         .load(markerIcon)
+                         .placeholder(markerIcon)
+                         .error(markerIcon)
+                         .into(markerImageView, object : Callback {
+                             override fun onSuccess() {
+                                 if (arg0.isInfoWindowShown) {
+                                     arg0.hideInfoWindow()
+                                     arg0.showInfoWindow()
+                                     Log.d("Picasso", "onSuccess: ")
+                                 }
+                             }
+
+                             override fun onError(e: java.lang.Exception?) {
+                                 Log.d("Picasso", "onError: ")
+                             }
+
+                         })
+
                      return layout
                  }
 
                  override fun getInfoContents(arg0: Marker): View? {
                          return null
                  }
-             })*/
+             })
 
 
         } catch (e: Exception) {
@@ -748,7 +756,7 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
     lateinit var featureBarcrwlAdapter: FeatureBarcrwlAdapter
 
     private fun setFeatureList(featureBarCrawlList: ArrayList<DashboardModel.FeatureBarCrawl>) {
-        featureBarcrwlAdapter = FeatureBarcrwlAdapter(
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.adapter = FeatureBarcrwlAdapter(
             requireActivity(),
             featureBarCrawlList,
             object : FeatureBarcrwlAdapter.ClickListener {
@@ -777,11 +785,26 @@ class HomeFragment() : Fragment(), OnMapReadyCallback, OnClickListener, ActivtyT
                 }
 
             })
-        binding.btmShhetInclue.bottomSheetrecyclerFeature.also {
+      /*  binding.btmShhetInclue.bottomSheetrecyclerFeature.also {
             it.layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             it.adapter = featureBarcrwlAdapter
+        }*/
+
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.clipToPadding = false
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.clipChildren = false
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.offscreenPageLimit = 3
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(MarginPageTransformer(40))
+
+        compositePageTransformer.addTransformer { page, position ->
+            val r:Float =  1 - Math.abs(position)
+            page.scaleY = 0.85f + r * 0.15f
         }
+
+        binding.btmShhetInclue.bottomSheetrecyclerFeature.setPageTransformer(compositePageTransformer)
     }
 
     private fun setListStory(listStory: ArrayList<DashboardModel.Story>) {

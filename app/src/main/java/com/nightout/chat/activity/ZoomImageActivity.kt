@@ -4,7 +4,6 @@ package com.nightout.chat.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bogdwellers.pinchtozoom.ImageMatrixTouchHandler
 import com.bumptech.glide.Glide

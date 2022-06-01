@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import com.nightout.R
 import com.nightout.base.BaseActivity
 import com.nightout.databinding.RegisterActivityBinding

@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.nightout.BuildConfig
 import com.nightout.R
 import com.nightout.databinding.ActivityProfileBinding
 import com.nightout.interfaces.OnMenuOpenListener
 import com.nightout.ui.activity.EditProfileActivity
-import com.nightout.utils.MyApp
 import com.nightout.utils.PreferenceKeeper
 import com.nightout.utils.Utills
 

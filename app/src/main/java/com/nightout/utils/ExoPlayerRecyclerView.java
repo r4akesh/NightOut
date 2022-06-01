@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -42,7 +41,6 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.nightout.R;
 import com.nightout.adapter.PlayerViewHolder;
 import com.nightout.model.VenuDetailModel;
 
@@ -314,6 +312,7 @@ public class ExoPlayerRecyclerView extends RecyclerView {
                 videoSurfaceView.setVisibility(INVISIBLE);
                 removeVideoView(videoSurfaceView);
                 onPausePlayer();
+                progressBar.setVisibility(GONE);
                 Log.d(TAG, "playImage: "+targetPosition);
                 Glide.with(context)
                         .load(PreferenceKeeper.getInstance().getImgPathSave() + mediaObjects.get(targetPosition).getImage())
